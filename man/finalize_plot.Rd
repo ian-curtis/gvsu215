@@ -16,3 +16,9 @@ A \code{ggplot} object..
 \code{finalize_plot()} is used internally to complete the plot creation process. This function uses \code{ggformula}
 to create a \code{ggplot} object and adds theme choices and size specifications.
 }
+\examples{
+library(ggformula)
+
+gf_point(mpg~hp, data = mtcars) \%>\%
+  finalize_plot()
+}

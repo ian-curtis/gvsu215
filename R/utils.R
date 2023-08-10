@@ -145,7 +145,7 @@ find_na <- function(data, formula, n = 1) {
 #'
 #' @examples
 #' check_conf_lvl(.95)
-#' try(check_conf_lvl("95%))
+#' try(check_conf_lvl("95%"))
 #' try(check_conf_lvl(95))
 check_conf_lvl <- function(level) {
 
