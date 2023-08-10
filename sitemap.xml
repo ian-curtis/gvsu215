@@ -13,10 +13,22 @@
     <loc>https://ian-curtis.github.io/gvsu215/news/index.html</loc>
   </url>
   <url>
+    <loc>https://ian-curtis.github.io/gvsu215/reference/check_conf_lvl.html</loc>
+  </url>
+  <url>
+    <loc>https://ian-curtis.github.io/gvsu215/reference/check_test.html</loc>
+  </url>
+  <url>
+    <loc>https://ian-curtis.github.io/gvsu215/reference/corr.html</loc>
+  </url>
+  <url>
     <loc>https://ian-curtis.github.io/gvsu215/reference/finalize_plot.html</loc>
   </url>
   <url>
     <loc>https://ian-curtis.github.io/gvsu215/reference/finalize_tbl.html</loc>
+  </url>
+  <url>
+    <loc>https://ian-curtis.github.io/gvsu215/reference/find_na.html</loc>
   </url>
   <url>
     <loc>https://ian-curtis.github.io/gvsu215/reference/gvsu215-package.html</loc>
@@ -25,7 +37,25 @@
     <loc>https://ian-curtis.github.io/gvsu215/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://ian-curtis.github.io/gvsu215/reference/num_sum.html</loc>
+  </url>
+  <url>
     <loc>https://ian-curtis.github.io/gvsu215/reference/one_way.html</loc>
+  </url>
+  <url>
+    <loc>https://ian-curtis.github.io/gvsu215/reference/pctile.html</loc>
+  </url>
+  <url>
+    <loc>https://ian-curtis.github.io/gvsu215/reference/plot_bar.html</loc>
+  </url>
+  <url>
+    <loc>https://ian-curtis.github.io/gvsu215/reference/plot_box.html</loc>
+  </url>
+  <url>
+    <loc>https://ian-curtis.github.io/gvsu215/reference/plot_hist.html</loc>
+  </url>
+  <url>
+    <loc>https://ian-curtis.github.io/gvsu215/reference/plot_scatter.html</loc>
   </url>
   <url>
     <loc>https://ian-curtis.github.io/gvsu215/reference/two_way.html</loc>
