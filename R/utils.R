@@ -66,6 +66,10 @@ finalize_tbl <- function(table, digits, striped = TRUE, caption = NULL, na_str =
 #' @export
 #'
 #' @examples
+#' library(ggformula)
+#'
+#' gf_point(mpg~hp, data = mtcars) %>%
+#'   finalize_plot()
 finalize_plot <- function(plot) {
 
   plot %>%
@@ -84,6 +88,20 @@ finalize_plot <- function(plot) {
 
 }
 
+#' Find missing values
+#'
+#' Used internally to calculate the number of missing values in one or two variables.
+#'
+#' @param data A data frame
+#' @param formula One or two variables in formula notation: `~var1` or `var1 ~ var2`
+#' @param n How many variables to analyze. Acceptable values are 1 or 2.
+#'
+#' @return An number (n = 1) or a list of two numbers (n = 2)
+#' @export
+#'
+#' @examples
+#' find_na(mtcars, ~cyl)
+#' find_na(mtcars, wt~cyl, n = 2)
 find_na <- function(data, formula, n = 1) {
 
   if (n == 1) {
@@ -115,16 +133,48 @@ find_na <- function(data, formula, n = 1) {
 
 }
 
+#' Check if a confidence level is entered in decimal form
+#'
+#' Used internally to detect if a user inputted a confidence level correctly (i.e., not in quotes
+#' and as a decimal).
+#'
+#' @param level The confidence level in question
+#'
+#' @return Nothing, or an error message.
+#' @export
+#'
+#' @examples
+#' check_conf_lvl(.95)
+#' try(check_conf_lvl("95%"))
+#' try(check_conf_lvl(95))
 check_conf_lvl <- function(level) {
 
   if (level > 1 | level < 0 | base::is.character(level)) {
 
-    stop("Confidence level should be given as a decimal (not in quotes).")
+    stop("Confidence level should be given as a decimal between 0 and 1, inclusive (not in quotes).")
 
   }
 
 }
 
+#' Check if an error will occur later
+#'
+#' Used internally to check if an error might occur later. We catch the error here to provide
+#' a more helpful message to users based on the most common cause of errors.
+#'
+#' @param code The code to try to run
+#'
+#' @return Nothing, or an error message.
+#' @export
+#'
+#' @examples
+#' library(stats)
+#'
+#' check_test(head(mtcars))
+#' try(check_test(head(Mtcars)))
+#'
+#' check_test(lm(wt~drat, data = mtcars))
+#' try(check_test(lm(Wt~drat, data = mtcars)))
 check_test <- function(code) {
 
   base::tryCatch(code,

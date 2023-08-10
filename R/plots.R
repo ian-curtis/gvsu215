@@ -1,3 +1,24 @@
+#' Create a simple bar plot
+#'
+#' @param data A data frame.
+#' @param formula The variable to tabulate. Should be given in formula notation, `~var`.
+#' @param type The type of plot to create. Valid options are "percent" (the default) or "count".
+#' @param fill The fill of the plot. Valid options are a character color (for one variable plots) or
+#'    a variable given in formula notation (`~var`), used to create a grouped bar plot.
+#' @param title An override for the title of the plot. A sensible default is provided.
+#' @param na_rm Should missing values be removed? Defaults to FALSE.
+#' @param ... Extra title arguments passed on to [mosaic::gf_labs()] (which feeds to [ggplot2::ggplot()]).
+#'
+#' @return A ggplot object. In an interactive session, results are viewable immediately.
+#' @export
+#'
+#' @examples
+#' plot_bar(mtcars, ~cyl)
+#' plot_bar(mtcars, ~cyl, type = "count")
+#' plot_bar(mtcars, ~cyl, type = "percent", fill = "yellowgreen")
+#'
+#' plot_bar(mtcars, ~cyl, fill = ~gear)
+#' plot_bar(mtcars, ~cyl, type = "count", fill = ~gear)
 plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A0', title = NULL, na_rm = FALSE, ...) {
 
   # error catching
@@ -123,6 +144,22 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
   }
 }
 
+#' Create a simple boxplot
+#'
+#' `plot_box()` builds a simple, pre-themed boxplot on one variable alone or grouped by another variable.
+#'
+#' @inheritParams plot_bar
+#' @param formula Variables entered in formula notation. Either `~var` for a one-variable boxplot
+#'    or `var1~var2` for a grouped boxplot where `var2` is a grouping variable.
+#' @param fill The fill color for the boxplot. Entered as a character.
+#'
+#' @return A ggplot object. In an interactive environment, results are viewable immediately.
+#' @export
+#'
+#' @examples
+#' plot_box(mtcars, ~wt)
+#' plot_box(mtcars, wt~gear, fill = 'orangered4')
+#' plot_box(mtcars, wt~gear)
 plot_box <- function(data, formula, fill = "grey80", title = NULL, na_rm = FALSE, ...) {
 
   # error catching
@@ -201,7 +238,30 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, na_rm = FALSE
 }
 
 
-plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, facet = NULL, facet_cols = NULL, title = NULL, na_rm = FALSE, ...) {
+#' Create a simple histogram
+#'
+#' `plot_hist()` builds a histogram on one variable alone or grouped by a single, categorical grouping
+#'    variable. The number of grouped plot columns can be adjusted based on the levels of the
+#'    grouping variable.
+#'
+#' @inheritParams plot_bar
+#' @param fill The fill color of the bins, entered as a character.
+#' @param binwidth The width of the bins, entered as a number.
+#' @param group A grouping (faceting) variable entered in formula syntax, `~group_var`.
+#' @param group_cols The number of columns to make in a grouped (faceted) plot. Defaults to
+#'    1 (stacked vertical plots).
+#'
+#' @return A ggplot object. In an interactive environment, results are viewable immediately.
+#' @export
+#'
+#' @examples
+#' plot_hist(mtcars, ~drat)
+#' plot_hist(mtcars, ~drat, binwidth = 0.05)
+#' plot_hist(mtcars, ~drat, binwidth = 0.05, fill = "red")
+#'
+#' plot_hist(mtcars, ~drat, binwidth = 0.05, group = ~cyl)
+#' plot_hist(mtcars, ~drat, binwidth = 0.05, group = ~cyl, group_cols = 2)
+plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = NULL, group_cols = 1, title = NULL, na_rm = FALSE, ...) {
 
   # error catching
   if (is.null(binwidth)) {
@@ -224,7 +284,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, facet = 
   str_of_var <- base::deparse(base::substitute(var))
 
 
-  if (base::is.null(facet)) {
+  if (base::is.null(group)) {
 
     n_na <- find_na(data, formula)
 
@@ -247,11 +307,11 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, facet = 
       finalize_plot()
   } else {
 
-    facet_var <- facet[[2]]
+    facet_var <- group[[2]]
     str_of_facet <- base::deparse(base::substitute(facet_var))
 
     var_na <- find_na(data, formula)
-    facet_na <- find_na(data, facet)
+    facet_na <- find_na(data, group)
 
     if (na_rm == TRUE) {
       data <- data %>%
@@ -260,7 +320,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, facet = 
     }
 
     ggformula::gf_histogram(formula, data = data, binwidth = binwidth, fill = fill, color = "grey40", alpha = 100) %>%
-      ggformula::gf_facet_wrap(facet, ncol = ifelse(is.null(facet_cols), 1, facet_cols)) %>%
+      ggformula::gf_facet_wrap(group, ncol = group_cols) %>%
       ggformula::gf_refine(ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))) %>%
       ggformula::gf_labs(y = "Count",
                          title = base::ifelse(base::is.null(title),
@@ -278,10 +338,35 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, facet = 
 }
 
 
-plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_title = "Legend", axis_lines = c("none", "both"), ...) {
+#' Create a simple scatterplot
+#'
+#' `plot_scatter()` creates a pre-themed scatterplot on two variables, optionally grouped by a
+#'    third categorical variable.
+#'
+#' @inheritParams plot_bar
+#' @param formula Variables to build the plot on. Should be entered in formula notation, `var1~var2`.
+#' @param fill The fill of the plot. Valid options are a character color (for standard scatterplots) or
+#'    a variable given in formula notation (`~var`), used to create a grouped scatterplot.
+#' @param legend_title The title of the lengend. Ignored in non-grouped plots. Default is "Legend".
+#' @param axis_lines Should major axis lines appear on the plot? Valid options are "none" or "both.
+#'    Defaults to "none".
+#' @param ls_line `r lifecycle::badge("experimental")` Should a least squares line appear on the plot?
+#'    Defaults to FALSE. Currently ignored.
+#'
+#' @return A ggplot object. In an interactive environment, results are viewable immediately.
+#' @export
+#'
+#' @examples
+#' plot_scatter(mtcars, wt~drat)
+#' plot_scatter(mtcars, wt~drat, fill = "red")
+#' plot_scatter(mtcars, wt~drat, axis_lines = "both")
+#'
+#' plot_scatter(mtcars, wt~drat, fill = ~cyl)
+#' plot_scatter(mtcars, wt~drat, fill = ~cyl, legend_title = "Cyl")
+plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_title = "Legend", axis_lines = c("none", "both"), ls_line = FALSE, ...) {
 
   # error catching
-  message("NAs always removed for scatterplots.")
+  message("NAs always removed (in pairs) for scatterplots.")
 
   if (base::is.character(fill) & legend_title != "Legend") {
     warning("Legend title argument ignored. Legends are only needed for grouped scatterplots.")

@@ -1,11 +1,34 @@
-num_sum <- function(data, formula, digits = 3, na_rm = FALSE, caption = NULL, ...) {
+#' Create numerical summaries
+#'
+#' `num_sum()` is a wrapper around `mosaic::favstats()` and creates a tidy table of summary statistics
+#'    including the min, q1, median, q3, max, mean, standard deviation, n, and missing values.
+#'
+#' @param data A data frame (or tibble).
+#' @param formula Variables to summarize given in formula notation: `~var1` or `var1~var2`.
+#'    `var1` should be numeric and `var2`, when supplied, should be a grouping variable.
+#' @param digits The number if digits to round to. Defaults to 3.
+#' @param na_rm Should missing values be removed? Defaults to FALSE.
+#' @param caption An override for the table caption. A sensible default is given.
+#'
+#' @return An object of class flextable. If in an interactive session, the table will be
+#'    viewable immediately.
+#' @export
+#'
+#' @examples
+#' # not removing NAs is not recommended
+#' num_sum(mtcars, ~wt)
+#'
+#' num_sum(mtcars, ~wt, na_rm = TRUE)
+#' num_sum(mtcars, ~wt, na_rm = TRUE, digits = 2, caption = "This is a table")
+#' num_sum(mtcars, wt~cyl, na_rm = TRUE)
+num_sum <- function(data, formula, digits = 3, na_rm = FALSE, caption = NULL) {
 
   # error catching
   if (na_rm == FALSE) {
     base::warning("Missing values *not* automatically removed from calculation. \n You may get NA values in your output.")
   }
 
-  check_test(mosaic::favstats(x = formula, data = data, na.rm = na_rm, ...))
+  check_test(mosaic::favstats(x = formula, data = data, na.rm = na_rm))
 
   # code
   if (base::length(formula) == 2) {
@@ -16,7 +39,7 @@ num_sum <- function(data, formula, digits = 3, na_rm = FALSE, caption = NULL, ..
       caption <- base::paste("Summary Statistics for", ind_str)
     }
 
-    mosaic::favstats(x = formula, data = data, na.rm = na_rm, ...) %>%
+    mosaic::favstats(x = formula, data = data, na.rm = na_rm) %>%
       tibble::as_tibble() %>%
       finalize_tbl(digits, striped = FALSE, caption = caption)
     # kableExtra::kbl(digits = digits, caption = caption) %>%
@@ -53,6 +76,25 @@ num_sum <- function(data, formula, digits = 3, na_rm = FALSE, caption = NULL, ..
 
 }
 
+#' Create percentile summaries
+#'
+#' `pctile()` is a wrapper around `mosaic::quantile()` and creates a tidy table of data values
+#'    at the given percentiles.
+#'
+#' @inheritParams num_sum
+#' @param probs A vector of percentiles to compute. Each value must be between 0 and 1, inclusive.
+#'    Defaults to 0, 25%, 50%, 75%, and 100%.
+#'
+#' @return An object of class flextable. If in an interactive session, the table will be
+#'    viewable immediately.
+#' @export
+#'
+#' @examples
+#' pctile(mtcars, ~wt)
+#' pctile(mtcars, ~wt, probs = c(.17, .3, .5, .7, .9, 1), na_rm = TRUE)
+#' pctile(mtcars, wt~cyl, na_rm = TRUE)
+#'
+#' try(pctile(mtcars, ~wt, probs = c(25, 50, 75, 100)))
 pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1), caption = NULL, na_rm = FALSE) {
 
   # error catching
@@ -112,6 +154,20 @@ pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1), cap
 }
 
 
+#' Create a simple correlation table
+#'
+#' @inheritParams num_sum
+#' @param formula Two variables given in formula notation: `var1~var2`.
+#'
+#' @return An object of class flextable. If in an interactive session, the table will be
+#'    viewable immediately.
+#' @export
+#'
+#' @examples
+#' # Not removing NAs is not recommended
+#' corr(mtcars, wt~qsec)
+#'
+#' corr(mtcars, wt~qsec, na_rm = TRUE)
 corr <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
 
   # error catching

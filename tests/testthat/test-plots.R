@@ -28,6 +28,10 @@ test_that("bar fails with mispelling", {
   expect_error(plot_bar(mtcars, ~Cyl, type = "count"))
 })
 
+test_that("bar fails with long formula", {
+  expect_error(plot_bar(mtcars, cyl~gear, type = "count"))
+})
+
 test_that("bar fails with mispelling data", {
   expect_error(plot_bar(MTCARS, ~Cyl, type = "count"))
 })
@@ -130,11 +134,11 @@ test_that("histogram fails with mispelling", {
 })
 
 test_that("group histogram works", {
-  expect_no_condition(plot_hist(mtcars, ~drat, binwidth = 0.05, facet = ~cyl))
+  expect_no_condition(plot_hist(mtcars, ~drat, binwidth = 0.05, group = ~cyl))
 })
 
 test_that("histogram works with different columns", {
-  expect_no_condition(plot_hist(mtcars, ~drat, binwidth = 0.05, facet = ~cyl, facet_cols = 2))
+  expect_no_condition(plot_hist(mtcars, ~drat, binwidth = 0.05, group = ~cyl, group_cols = 2))
 })
 
 test_that("histogram fails with many vars in formula", {
@@ -182,6 +186,10 @@ test_that("scatter warns with fill string and legend title", {
 
 test_that("group scatter works with axis lines", {
   expect_message(plot_scatter(mtcars, wt~drat, fill = ~cyl, axis_lines = "both"))
+})
+
+test_that("group scatter fails with mispelling", {
+  expect_message(plot_scatter(mtcars, wt~Drat, fill = ~cyl, axis_lines = "both"))
 })
 
 
