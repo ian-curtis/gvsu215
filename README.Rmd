@@ -1,5 +1,6 @@
 ---
 output: github_document
+always_allow_html: true
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -18,7 +19,9 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of gvsu215 is to ...
+`gvsu215` contains a series of wrapper functions around select `{mosaic}` and `{ggformula}` functions, with help from `{flextable}`. The goal is to provide introductory statistics students/learners with an easy way to generate nice-looking plots and tables without focusing on the code used to create them. All tables and plots generated from this package have been doctored and have had themes pre-applied. As such, output will not print in "messy" format to the R console and can be used interactively, including in R Markdown documents.
+
+This package was designed and tailored for Grand Valley State University (course code: STA 215) but can be used by anyone.
 
 ## Installation
 
@@ -29,23 +32,53 @@ You can install the development version of gvsu215 from [GitHub](https://github.
 devtools::install_github("ian-curtis/gvsu215")
 ```
 
-## Example
+## Prerequisites
 
-This is a basic example which shows you how to solve a common problem:
+In order to use this package, you will need a basic understanding of R syntax and how to run a function in your preferred working environment. Functions use formula syntax (e.g., `var1 ~ var2`) and thus knowledge of formulas is needed as well.
 
-```{r example}
+## Examples
+
+This package is best used for creating simple plots and charts where extensive customization is not necessary. For instance, you may just want to see summary statistics.
+
+```{r num-sum}
 library(gvsu215)
-## basic example code
+
+num_sum(mtcars, ~wt, na_rm = TRUE)
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+Or maybe you just need percentiles:
 
-```{r cars}
-summary(cars)
+```{r pctile}
+pctile(mtcars, ~wt, probs = c(0, .25, .4, .5, .6, .75, 1))
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
+There is also support for a variety of plots...
 
-You can also embed plots, for example:
+```{r plots}
+plot_bar(mtcars, ~cyl, type = "percent")
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+plot_box(mtcars, wt~gear, fill = 'orangered4', x = "Gear", y = "Weight", title = "Boxplot of Weight by Gear")
+
+plot_scatter(mtcars, wt~drat)
+```
+
+... and statistical inference.
+
+```{r inference}
+infer_prop1(mtcars, ~vs, success = 1)
+
+infer_paired(mtcars, var1 = ~drat, var2 = ~wt)
+
+infer_mean2_int(mtcars, wt~vs)
+
+suppressWarnings(infer_chisq(mtcars, cyl~gear))
+suppressWarnings(infer_chisq(mtcars, cyl~gear, type = "expected"))
+
+infer_anova(mtcars, cyl~gear, digits = 2)
+```
+
+# Help, Bug Reports, and Feature Requests
+
+Errors happen! If you come across an error you don't think you should have, feel free to [create an issue on GitHub](https://github.com/ian-curtis/gvsu215/issues). If you'd like to suggest a change or addition, you can use the issues page for that, too!
+
+
