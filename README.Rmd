@@ -1,6 +1,8 @@
 ---
-output: github_document
-always_allow_html: true
+output: 
+  html_document:
+    keep_md: true
+title: "gvsu215"
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -40,7 +42,7 @@ In order to use this package, you will need a basic understanding of R syntax an
 
 This package is best used for creating simple plots and charts where extensive customization is not necessary. For instance, you may just want to see summary statistics.
 
-```{r num-sum}
+```{r num-sum, message = FALSE}
 library(gvsu215)
 
 num_sum(mtcars, ~wt, na_rm = TRUE)
@@ -54,7 +56,7 @@ pctile(mtcars, ~wt, probs = c(0, .25, .4, .5, .6, .75, 1))
 
 There is also support for a variety of plots...
 
-```{r plots}
+```{r plots, out.width = "50%"}
 plot_bar(mtcars, ~cyl, type = "percent")
 
 plot_box(mtcars, wt~gear, fill = 'orangered4', x = "Gear", y = "Weight", title = "Boxplot of Weight by Gear")
