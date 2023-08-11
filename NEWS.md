@@ -1,3 +1,5 @@
-# gvsu215 (development version)
+# gvsu215 0.1.0
 
-* Initial CRAN submission.
+* All package functions are now useable
+* All functions are documented
+* All functions have tests
