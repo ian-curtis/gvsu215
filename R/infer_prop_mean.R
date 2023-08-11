@@ -1,3 +1,19 @@
+#' Create a summary table for a one-sample proportion interval
+#'
+#' @param data A data frame (or tibble).
+#' @param formula The variable to run the test on, in formula syntax, `~var`.
+#' @param success The data value that constitutes a "success".
+#' @param digits The number of digits to round table values to. Defaults to 3.
+#' @param conf_lvl The confidence level of the interval, entered as a value between 0 and 1.
+#'    Defaults to 0.95.
+#' @param caption An override to the table caption. A sensible default is provided.
+#'
+#' @return An object of class flextable. In an interactive environment, results are viewable immediately.
+#' @export
+#'
+#' @examples
+#' infer_prop1(mtcars, ~vs, success = 1)
+#' infer_prop1(mtcars, ~vs, success = 1, conf_lvl = .9)
 infer_prop1 <- function(data, formula, success = NULL, digits = 3, conf_lvl = 0.95, caption = NULL) {
 
   # error catching
@@ -62,6 +78,17 @@ infer_prop1 <- function(data, formula, success = NULL, digits = 3, conf_lvl = 0.
 }
 
 
+#' Create a summary table for a two-sample proportion interval
+#'
+#' @inheritParams infer_prop1
+#' @param formula The variables to run the test on, in formula syntax, `var1 ~ var2`.
+#'
+#' @return An object of class flextable. In an interactive environment, results are viewable immediately.
+#' @export
+#'
+#' @examples
+#' infer_prop2_int(mtcars, vs~am, success = 1)
+#' infer_prop2_int(mtcars, vs~am, success = 1, conf_lvl = .9)
 infer_prop2_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95, caption = NULL) {
 
   # error catching
@@ -140,6 +167,16 @@ infer_prop2_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
 
 }
 
+#' Create a summary table for a two-sample proportion test
+#'
+#' @inheritParams infer_prop2_int
+#'
+#' @return An object of class flextable. In an interactive environment, results are viewable immediately.
+#' @export
+#'
+#' @examples
+#' infer_prop2_test(mtcars, vs~am, success = 1)
+#' infer_prop2_test(mtcars, vs~am, success = 1, conf_lvl = .9, digits = 4)
 infer_prop2_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95, caption = NULL) {
 
   # error catching
@@ -205,6 +242,16 @@ infer_prop2_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
 }
 
 
+#' Create a summary table for a one-sample mean interval
+#'
+#' @inheritParams infer_prop1
+#'
+#' @return An object of class flextable. In an interactive environment, results are viewable immediately.
+#' @export
+#'
+#' @examples
+#' infer_mean1(mtcars, ~wt)
+#' infer_mean1(mtcars, ~wt, conf_lvl = .9)
 infer_mean1 <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NULL) {
 
   # error catching
@@ -253,6 +300,18 @@ infer_mean1 <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NU
 }
 
 
+#' Create a summary table for a paired means test
+#'
+#' @inheritParams infer_mean1
+#' @param var1 The first variable of the pair, entered in formula syntax `var1`.
+#' @param var2 The second variable of the pair, entered in formula syntax `var2`.
+#'
+#' @return An object of class flextable. In an interactive environment, results are viewable immediately.
+#' @export
+#'
+#' @examples
+#' infer_paired(mtcars, var1 = ~drat, var2 = ~wt)
+#' infer_paired(mtcars, var1 = ~drat, var2 = ~wt, conf_lvl = 0.9)
 infer_paired <- function(data, var1, var2, digits = 3, conf_lvl = 0.95, caption = NULL) {
 
   # error catching
@@ -316,6 +375,16 @@ infer_paired <- function(data, var1, var2, digits = 3, conf_lvl = 0.95, caption 
 }
 
 
+#' Create a summary table of a two-sample mean interval
+#'
+#' @inheritParams infer_prop2_int
+#'
+#' @return An object of class flextable. In an interactive environment, results are viewable immediately.
+#' @export
+#'
+#' @examples
+#' infer_mean2_int(mtcars, wt~vs)
+#' infer_mean2_int(mtcars, wt~vs, conf_lvl = .9)
 infer_mean2_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NULL) {
 
   # error catching
@@ -394,6 +463,16 @@ infer_mean2_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
 
 }
 
+#' Create a summary table for a two-sample mean test
+#'
+#' @inheritParams infer_prop2_int
+#'
+#' @return An object of class flextable. In an interactive environment, results are viewable immediately.
+#' @export
+#'
+#' @examples
+#' infer_mean2_test(mtcars, wt~vs)
+#' infer_mean2_test(mtcars, wt~vs, conf_lvl = .9)
 infer_mean2_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NULL) {
 
   # error catching
@@ -470,166 +549,3 @@ infer_mean2_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
   #   row_spec(0, extra_css = "border-bottom: 3px solid black")
 
 }
-
-
-infer_reg <- function(data, formula, digits = 3, caption = NULL) {
-
-  # error catching
-  check_test(stats::lm(formula, data = data))
-
-
-  # code
-  var1 <- formula[[2]]
-  str_of_var1 <- base::deparse(base::substitute(var1))
-
-  var2 <- formula[[3]]
-  str_of_var2 <- base::deparse(base::substitute(var2))
-
-
-  # n_na <- find_na(data, formula, n = 2)
-
-  # n1 <- base::nrow(data) - n_na[[1]]
-  # n2 <- base::nrow(data) - n_na[[2]]
-
-  model <-  stats::lm(formula, data = data)
-
-  a_glance <- broom::glance(model)
-
-  if (base::is.null(caption)) {
-
-    caption <- base::paste("Linear Model Coefficients Table \n",
-                           "Degrees of Freedom:", a_glance$df, "\n",
-                           "R-Squared:", round(a_glance$r.squared, digits))
-
-  } else {
-
-    caption <- base::paste(caption, "\n",
-                           "Degrees of Freedom:", a_glance$df, "\n",
-                           "R-Squared:", round(a_glance$r.squared, digits))
-
-  }
-
-  broom::tidy(model) %>%
-    dplyr::select(-statistic, -p.value) %>%
-    finalize_tbl(digits = digits, caption = caption) %>%
-    flextable::set_header_labels(term = "Term", estimate = "Estimate", std.error = "Standard Error")
-
-    # kbl(digits = 3,
-    #     caption = paste0("Linear Model Coefficients Table: <br> F-test of ",
-    #                      round(a_glance$statistic, 3), " on ", a_glance$df, " and ",
-    #                      a_glance$df.residual, " degrees of freedom with an overall p-value of ",
-    #                      overall_p, ".<br>", "R-Squared: ", round(a_glance$r.squared, 3), ".")) %>%
-    # kable_styling(c('condensed', 'bordered', 'striped'), full_width = F) %>%
-    # row_spec(0, extra_css = "border-bottom: 3px solid black")
-
-}
-
-
-infer_chisq <- function(data, formula, type = c("test", "expected", "observed"), digits = 3, caption = NULL) {
-
-  # error catching
-  type <- match.arg(type)
-
-  check_test(stats::chisq.test(mosaic::tally(formula, data = data)))
-
-  # code
-  var1 <- formula[[2]]
-  str_of_var1 <- base::deparse(base::substitute(var1))
-
-  var2 <- formula[[3]]
-  str_of_var2 <- base::deparse(base::substitute(var2))
-
-  chisq_test <- stats::chisq.test(mosaic::tally(formula, data = data))
-
-  if (type == "test") {
-
-    if (base::is.null(caption)) {
-
-      caption <- base::paste("Chi-Squared Analysis of", str_of_var1, "and", str_of_var2)
-
-    }
-
-    broom::tidy(chisq_test) %>%
-      dplyr::select(-method) %>%
-      dplyr::mutate(p.value = base::format.pval(p.value, digits = digits)) %>%
-      finalize_tbl(digits = digits, caption = caption) %>%
-      flextable::set_header_labels(statistic = "X-squared", p.value = "p-value", parameter = "df")
-    # kbl(digits = 3,
-    #     caption = paste("Chi-Squared Test of", "X", "and", "X"),
-    #     col.names = c('Statistic', 'p-value', 'Degrees of Freedom')) %>%
-    # kable_styling(c('condensed', 'bordered', 'striped'), full_width = F) %>%
-    # row_spec(0, extra_css = "border-bottom: 3px solid black")
-
-  } else if (type == "expected") {
-
-    if (base::is.null(caption)) {
-
-      caption <- base::paste("Expected Counts for", str_of_var1, "and", str_of_var2)
-
-    }
-
-    chisq_test$expected %>%
-      tibble::as_tibble(rownames = str_of_var1) %>%
-      finalize_tbl(digits = 1, caption = caption) %>%
-      flextable::vline(j = 1)
-      # kbl(digits = 3, caption = "Expected Counts for Var and Var") %>%
-      # kable_styling(c('condensed', 'bordered', 'striped'), full_width = F) %>%
-      # row_spec(0, extra_css = "border-bottom: 3px solid black")
-
-  } else if (type == "observed") {
-
-      if (base::is.null(caption)) {
-
-        caption <- base::paste("Observed Counts for", str_of_var1, "and", str_of_var2)
-
-      }
-
-    chisq_test$observed %>%
-      tibble::as_tibble() %>%
-      tidyr::pivot_wider(names_from = {{ var2 }}, values_from = n) %>%
-      janitor::adorn_totals(c("row", "col")) %>%
-      dplyr::mutate(Total = as.integer(Total)) %>%
-      finalize_tbl(digits = digits, caption = caption)
-      # kbl(caption = "Observed Counts for Var and Var") %>%
-      # kable_styling(c('condensed', 'bordered', 'striped'), full_width = F) %>%
-      # row_spec(nrow(chisq_test$observed) + 1, bold = TRUE) %>%
-      # column_spec(ncol(chisq_test$expected) + 2, bold = TRUE) %>%
-      # row_spec(0, extra_css = "border-bottom: 3px solid black")
-
-  }
-
-}
-
-infer_anova <- function(data, formula, digits = 3, caption = NULL) {
-
-  # code
-  var1 <- formula[[2]]
-  str_of_var1 <- base::deparse(base::substitute(var1))
-
-  var2 <- formula[[3]]
-  str_of_var2 <- base::deparse(base::substitute(var2))
-
-  check_test(stats::lm(formula, data = data))
-
-  if (base::is.null(caption)) {
-
-    caption <- base::paste("ANOVA Table for", str_of_var1, "vs.", str_of_var2)
-
-  }
-
-  model <-  stats::lm(formula, data = data)
-
-  broom::tidy(stats::anova(model)) %>%
-    dplyr::mutate(term = c("Between", "Within"),
-                  p.value = base::ifelse(!is.na(p.value),
-                                   base::format.pval(p.value, digits = 3),
-                                   p.value)) %>%
-    janitor::adorn_totals("row", fill = NA, cols = dplyr::starts_with(c("term", "df", "sumsq"))) %>%
-    finalize_tbl(digits = digits, caption = caption, na_str = "") %>%
-    flextable::set_header_labels(term = "Source", sumsq = "SS", meansq = "MS", statistic = "F", p.value = "p-value")
-
-}
-
-
-
-

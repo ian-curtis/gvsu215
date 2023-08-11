@@ -33,13 +33,14 @@ Defaults to "none".}
 \item{ls_line}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} Should a least squares line appear on the plot?
 Defaults to FALSE. Currently ignored.}
 
-\item{...}{Extra title arguments passed on to \code{\link[mosaic:gf_labs]{mosaic::gf_labs()}} (which feeds to \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}).}
+\item{...}{Extra title arguments passed on to \code{\link[ggformula:gf_aux]{ggformula::gf_labs()}} (which feeds to \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}).}
 }
 \value{
 A ggplot object. In an interactive environment, results are viewable immediately.
 }
 \description{
-\code{plot_scatter()} creates
+\code{plot_scatter()} creates a pre-themed scatterplot on two variables, optionally grouped by a
+third categorical variable.
 }
 \examples{
 plot_scatter(mtcars, wt~drat)

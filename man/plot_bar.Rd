@@ -28,7 +28,7 @@ a variable given in formula notation (\code{~var}), used to create a grouped bar
 
 \item{na_rm}{Should missing values be removed? Defaults to FALSE.}
 
-\item{...}{Extra title arguments passed on to \code{\link[mosaic:gf_labs]{mosaic::gf_labs()}} (which feeds to \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}).}
+\item{...}{Extra title arguments passed on to \code{\link[ggformula:gf_aux]{ggformula::gf_labs()}} (which feeds to \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}).}
 }
 \value{
 A ggplot object. In an interactive session, results are viewable immediately.
