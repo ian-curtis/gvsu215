@@ -1,5 +1,5 @@
 Package: gvsu215
-Title: Pretty Output For Select 'mosaic' and 'ggformula' Functions
+Title: Pretty Plots and Charts For Basic Statistical Concepts
 Version: 0.0.0.9000
 Authors@R: 
     person("Ian", "Curtis", , "curtisi@mail.gvsu.edu", role = c("cre", "aut", "cph"))

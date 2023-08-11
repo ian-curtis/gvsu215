@@ -7,7 +7,7 @@
 #'    a variable given in formula notation (`~var`), used to create a grouped bar plot.
 #' @param title An override for the title of the plot. A sensible default is provided.
 #' @param na_rm Should missing values be removed? Defaults to FALSE.
-#' @param ... Extra title arguments passed on to [mosaic::gf_labs()] (which feeds to [ggplot2::ggplot()]).
+#' @param ... Extra title arguments passed on to [ggformula::gf_labs()] (which feeds to [ggplot2::ggplot()]).
 #'
 #' @return A ggplot object. In an interactive session, results are viewable immediately.
 #' @export

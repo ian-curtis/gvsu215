@@ -18,7 +18,7 @@ or \code{var1~var2} for a grouped boxplot where \code{var2} is a grouping variab
 
 \item{na_rm}{Should missing values be removed? Defaults to FALSE.}
 
-\item{...}{Extra title arguments passed on to \code{\link[mosaic:gf_labs]{mosaic::gf_labs()}} (which feeds to \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}).}
+\item{...}{Extra title arguments passed on to \code{\link[ggformula:gf_aux]{ggformula::gf_labs()}} (which feeds to \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}).}
 }
 \value{
 A ggplot object. In an interactive environment, results are viewable immediately.

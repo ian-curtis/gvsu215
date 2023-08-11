@@ -189,7 +189,7 @@ test_that("group scatter works with axis lines", {
 })
 
 test_that("group scatter fails with mispelling", {
-  expect_message(plot_scatter(mtcars, wt~Drat, fill = ~cyl, axis_lines = "both"))
+  expect_error(plot_scatter(mtcars, wt~Drat, fill = ~cyl, axis_lines = "both"))
 })
 
 
