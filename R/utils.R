@@ -21,18 +21,20 @@ finalize_tbl <- function(table, digits, striped = TRUE, caption = NULL, na_str =
   if (striped == FALSE) {
     table %>%
       flextable::flextable() %>%
+      flextable::bg(bg = "#ffffff", part = "all") %>%
       flextable::colformat_double(digits = digits, na_str = na_str) %>%
       flextable::colformat_char(na_str = na_str) %>%
       flextable::colformat_lgl(na_str = na_str) %>%
       flextable::border_outer(part="all", border = big_border ) %>%
-      flextable::hline(i = 1, border = officer::fp_border(color = "black", style = "solid", width = 2), part = "header") %>%
+      flextable::hline(i = 1, border = officer::fp_border(color = "#000000", style = "solid", width = 2), part = "header") %>%
       flextable::vline(border = officer::fp_border(color = '#e1e4e5', width = 1)) %>%
       flextable::bold(bold = TRUE, part = "header") %>%
       flextable::align(align = "center", part = "header") %>%
       flextable::autofit() %>%
       flextable::fit_to_width(7.5) %>%
       flextable::set_caption(caption = flextable::as_paragraph(flextable::as_chunk(caption,
-                                                             props = officer::fp_text(font.family = "Helvetica", bold = FALSE))))
+                                                             props = officer::fp_text(font.family = "Helvetica",
+                                                                                      bold = FALSE))))
   }
 
   else if (striped == TRUE) {
@@ -41,9 +43,9 @@ finalize_tbl <- function(table, digits, striped = TRUE, caption = NULL, na_str =
       flextable::colformat_double(digits = digits, na_str = na_str) %>%
       flextable::colformat_char(na_str = na_str) %>%
       flextable::colformat_lgl(na_str = na_str) %>%
-      flextable::theme_zebra(odd_header = "#ffffff") %>%
+      flextable::theme_zebra(odd_header = "#ffffff", even_body = "#ffffff") %>%
       flextable::border_outer(part="all", border = big_border ) %>%
-      flextable::hline(border = officer::fp_border(color = "black", style = "solid", width = 2), part = "header") %>%
+      flextable::hline(border = officer::fp_border(color = "#000000", style = "solid", width = 2), part = "header") %>%
       flextable::vline(border = officer::fp_border(color = '#e1e4e5', width = 1)) %>%
       flextable::bold(bold = TRUE, part = "header") %>%
       flextable::align(align = "center", part = "header") %>%

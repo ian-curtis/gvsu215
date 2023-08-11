@@ -68,7 +68,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
       data %>%
         dplyr::mutate("{var}" := base::factor({{ var }})) %>%
         ggformula::gf_percents(formula, fill = fill) %>%
-        ggformula::gf_refine(scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)),
+        ggformula::gf_refine(ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)),
                                                 limits = c(0, 100))) %>%
         ggformula::gf_labs(title = ifelse(base::is.null(title),
                                           paste0("Simple Bar Percent of ",
@@ -450,7 +450,7 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
                          ...) %>%
       finalize_plot() %>%
       ggformula::gf_theme(axis_theme) %>%
-      gf_refine(scale_fill_brewer(palette = "Dark2"))
+      gf_refine(ggplot2::scale_fill_brewer(palette = "Dark2"))
 
 
 
