@@ -1,10 +1,9 @@
-# gvsu215 (development version)
+# gvsu215 0.1.1
 
-* general fixes to output layout and theme
+* general fixes to output layout and theme, especially to `two_way()`
 * rounding corrections
-* README corrections
-* error catching
-* `check()` notes and errors
+* `plot_scatter()` now allows for a least squares line to be drawn in
+* bug fix in `num_sum()`
 
 # gvsu215 0.1.0
 

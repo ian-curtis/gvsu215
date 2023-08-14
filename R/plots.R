@@ -350,8 +350,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = 
 #' @param legend_title The title of the lengend. Ignored in non-grouped plots. Default is "Legend".
 #' @param axis_lines Should major axis lines appear on the plot? Valid options are "none" or "both.
 #'    Defaults to "none".
-#' @param ls_line `r lifecycle::badge("experimental")` Should a least squares line appear on the plot?
-#'    Defaults to FALSE. Currently ignored.
+#' @param ls_line Should a least squares line (or lines) appear on the plot? Defaults to FALSE.
 #'
 #' @return A ggplot object. In an interactive environment, results are viewable immediately.
 #' @export
@@ -397,23 +396,41 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
 
   }
 
-
+  # non-grouping
   if (base::is.character(fill)) {
 
-    ggformula::gf_point(formula, data = data, fill = fill, color = "grey80", shape = 21, size = 2) %>%
-      ggformula::gf_labs(title = base::ifelse(base::is.null(title),
-                                              base::paste("Scatterplot of", ind_str, "by", dep_str),
-                                              title),
-                         subtitle = base::paste(ind_str, "Missing:", n_na[[1]], "|",
-                                                dep_str, "Missing:", n_na[[2]], "|",
-                                                "NAs Removed: Yes"),
-                         ...) %>%
-      finalize_plot() %>%
-      ggformula::gf_theme(axis_theme)
+    if (ls_line == FALSE) {
+
+      ggformula::gf_point(formula, data = data, fill = fill, color = "grey80", shape = 21, size = 2) %>%
+        ggformula::gf_labs(title = base::ifelse(base::is.null(title),
+                                                base::paste("Scatterplot of", ind_str, "by", dep_str),
+                                                title),
+                           subtitle = base::paste(ind_str, "Missing:", n_na[[1]], "|",
+                                                  dep_str, "Missing:", n_na[[2]], "|",
+                                                  "NAs Removed: Yes"),
+                           ...) %>%
+        finalize_plot() %>%
+        ggformula::gf_theme(axis_theme)
+
+    } else if (ls_line == TRUE) {
+
+      ggformula::gf_point(formula, data = data, fill = fill, color = "grey80", shape = 21, size = 2) %>%
+        ggformula::gf_lm(color = "darkred") %>%
+        ggformula::gf_labs(title = base::ifelse(base::is.null(title),
+                                                base::paste("Scatterplot of", ind_str, "by", dep_str),
+                                                title),
+                           subtitle = base::paste(ind_str, "Missing:", n_na[[1]], "|",
+                                                  dep_str, "Missing:", n_na[[2]], "|",
+                                                  "NAs Removed: Yes"),
+                           ...) %>%
+        finalize_plot() %>%
+        ggformula::gf_theme(axis_theme)
+
+    }
 
 
 
-  } else {
+  } else { # grouped
 
     group_var <- fill[[2]]
     group_str <- base::deparse(base::substitute(group_var))
@@ -422,7 +439,7 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
 
     fctr <- data %>%
       dplyr::select({{ group_var }}) %>%
-      is.factor()
+      base::is.factor()
 
     if (fctr == FALSE) {
 
@@ -431,11 +448,11 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
 
     }
 
-
-
     data <- data %>%
       dplyr::select({{ ind_var }}, {{ dep_var }}, {{ group_var }}) %>%
       stats::na.omit()
+
+    if (ls_line == FALSE) {
 
     ggformula::gf_point(formula, data = data, fill = fill, color = "grey80", shape = 21, size = 2) %>%
       ggformula::gf_labs(title = ifelse(base::is.null(title),
@@ -451,6 +468,28 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
       finalize_plot() %>%
       ggformula::gf_theme(axis_theme) %>%
       gf_refine(ggplot2::scale_fill_brewer(palette = "Dark2"))
+
+    } else if (ls_line == TRUE) {
+
+      # ggformula::gf_point(formula, data = data, fill = fill, color = "grey80", shape = 21, size = 2) %>%
+      #   ggformula::gf_lm(color = fill) %>%
+      ggformula::gf_lm(formula, data = data, color = fill) %>%
+        gf_point(size = 2) %>%
+        ggformula::gf_labs(title = ifelse(base::is.null(title),
+                                          base::paste0("Grouped Scatterplot of ", ind_str, " and ",
+                                                       dep_str, "\n by ", group_str),
+                                          title),
+                           fill = legend_title,
+                           subtitle = base::paste0(ind_str, " Missing: ", n_na[[1]], " | ",
+                                                   dep_str, " Missing: ", n_na[[2]], "\n",
+                                                   group_str, " Missing: ", group_na, " | ",
+                                                   "NAs Removed: Yes"),
+                           ...) %>%
+        finalize_plot() %>%
+        ggformula::gf_theme(axis_theme) %>%
+        gf_refine(ggplot2::scale_color_brewer(palette = "Dark2"))
+
+    }
 
 
 
