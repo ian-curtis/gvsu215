@@ -150,7 +150,6 @@ infer_prop2_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
   ) %>%
     finalize_tbl(digits = digits,
                  caption = caption,
-                 striped = FALSE,
                  na_str = "") %>%
     flextable::set_header_labels(var = "Variable", yay = "n Success", na = "n Missing", phat = "p-hat",
                                  se = "Standard Error", cil = base::paste(cl, "Interval Lower"),
@@ -233,7 +232,6 @@ infer_prop2_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
   ) %>%
     finalize_tbl(digits = digits,
                  caption = caption,
-                 striped = FALSE,
                  na_str = "") %>%
     flextable::set_header_labels(var = "Variable", yay = "n Success", na = "n Missing", phat = "p-hat",
                                  se = "Standard Error", p = "p-value") %>%

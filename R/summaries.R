@@ -65,10 +65,10 @@ num_sum <- function(data, formula, digits = 3, na_rm = FALSE, caption = NULL) {
       base::unique() %>%
       base::nrow()
 
-    mosaic::favstats(x = formula, data = data, na.rm = na_rm, ...) %>%
+    mosaic::favstats(x = formula, data = data, na.rm = na_rm) %>%
       tibble::as_tibble() %>%
       # dplyr::mutate(missing = c(n_na, base::rep("", times = n_lvls - 1))) %>%
-      dplyr::select(-missing) %>%
+      # dplyr::select(-missing) %>%
       finalize_tbl(digits,
                    caption = base::paste(caption, "\n", ind_str, "Missing:", n_na[[1]], "|", dep_str, "Missing:", n_na[[2]]))
       # flextable::vline(j = 9, border = officer::fp_border())
@@ -123,7 +123,8 @@ pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1), cap
       tibble::enframe() %>%
       tidyr::pivot_wider(names_from = name, values_from = value) %>%
       finalize_tbl(digits,
-                   caption = base::paste(caption, "\n", "Missing:", na)) %>%
+                   caption = base::paste(caption, "\n", "Missing:", na),
+                   striped = FALSE) %>%
       flextable::set_header_labels(name = "Percentile", value = "Value")
     # kbl(col.names = c("Percentile", "Value")) %>%
     # kable_styling(c('condensed', 'bordered', 'striped'), full_width = F) %>%
@@ -205,7 +206,8 @@ corr <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
          na_dep = na[[2]],
          corr = mosaic::cor(formula, data = data, use = base::ifelse(na_rm == FALSE, "everything", "complete"))) %>%
     finalize_tbl(digits = 3,
-                 caption = caption) %>%
+                 caption = caption,
+                 striped = FALSE) %>%
     flextable::set_header_labels(n_ind = "n₁",
                                  na_ind = "n₁ missing",
                                  n_dep = "n₂",

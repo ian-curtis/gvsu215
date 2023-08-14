@@ -68,24 +68,33 @@ two_way <- function(data, formula, row_pct = FALSE, digits = 3, caption = NULL) 
   check_test(mosaic::tally(formula, data = data))
 
   # code
-  dep_var <- formula[[2]]
-  ind_var <- formula[[3]]
-  dep_str <- base::deparse(base::substitute(ind_var))
-  ind_str <- base::deparse(base::substitute(dep_var))
+  var1 <- formula[[2]]
+  var2 <- formula[[3]]
+  var1_str <- base::deparse(base::substitute(var1))
+  var2_str <- base::deparse(base::substitute(var2))
+
+  var1_lvls <- base::length(base::unique(data[, var1_str]))
 
   if (row_pct == FALSE) {
 
     if (base::is.null(caption)) {
-      caption <- base::paste("Two-Way Counts of", ind_var, "vs.", dep_var)
+      caption <- base::paste("Two-Way Counts of", var1, "vs.", var2)
     }
 
     mosaic::tally(formula, data = data) %>%
       tibble::as_tibble() %>%
-      tidyr::pivot_wider(names_from = {{ dep_var }}, values_from = n) %>%
+      tidyr::pivot_wider(names_from = {{ var1 }}, values_from = n) %>%
       janitor::adorn_totals("col") %>%
       dplyr::mutate(Total = base::as.integer(Total)) %>%
-      finalize_tbl(digits = digits, caption = caption) #%>%
-    # flextable::set_header_labels()
+      finalize_tbl(digits = digits, caption = caption) %>%
+      flextable::add_header_row(values = c("", var1_str, ""),
+                                colwidths = c(1, var1_lvls, 1)) %>%
+      flextable::vline(j = c(1, var1_lvls + 1),
+                       border = officer::fp_border(width = 1.2)) %>%
+      flextable::hline(i = 1, part = "header") %>%
+      flextable::hline(i = 1, j = c(1, var1_lvls + 2), part = "header",
+                       border = officer::fp_border(color = NA)) %>%
+      flextable::bold(j = 1)
 
     # kableExtra::kbl(digits = digits, caption = paste("Two-Way Counts of", ind_var, "vs.", dep_var)) %>%
     # kableExtra::kable_styling(c('striped', 'bordered', 'condensed'), full_width = F) %>%

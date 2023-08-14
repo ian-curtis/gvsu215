@@ -192,6 +192,14 @@ test_that("group scatter fails with mispelling", {
   expect_error(plot_scatter(mtcars, wt~Drat, fill = ~cyl, axis_lines = "both"))
 })
 
+test_that("scatter works with least squares line", {
+  expect_message(plot_scatter(mtcars, wt~drat, fill = ~cyl, ls_line = TRUE))
+})
+
+test_that("group scatter works with least squares line", {
+  expect_message(plot_scatter(mtcars, wt~drat, fill = ~cyl, ls_line = TRUE))
+})
+
 
 
 

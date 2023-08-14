@@ -127,7 +127,7 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
     broom::tidy(chisq_test) %>%
       dplyr::select(-method) %>%
       dplyr::mutate(p.value = base::format.pval(p.value, digits = digits)) %>%
-      finalize_tbl(digits = digits, caption = caption) %>%
+      finalize_tbl(digits = digits, caption = caption, striped = FALSE) %>%
       flextable::set_header_labels(statistic = "X-squared", p.value = "p-value", parameter = "df")
     # kbl(digits = 3,
     #     caption = paste("Chi-Squared Test of", "X", "and", "X"),
