@@ -6,8 +6,7 @@ Authors@R:
 Description: A light wrapper to 'mosaic' and 'ggformula' enabling nice
     graphics in one line of code. Designed for the Grand Valley State
     University's Introductory Statistics course (STA 215).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+License: MIT + file LICENSE
 URL: https://github.com/ian-curtis/gvsu215, https://gvsu215.ianacurtis.com
 BugReports: https://github.com/ian-curtis/gvsu215/issues
 Imports: 
