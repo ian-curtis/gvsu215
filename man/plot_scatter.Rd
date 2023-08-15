@@ -30,8 +30,7 @@ a variable given in formula notation (\code{~var}), used to create a grouped sca
 \item{axis_lines}{Should major axis lines appear on the plot? Valid options are "none" or "both.
 Defaults to "none".}
 
-\item{ls_line}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} Should a least squares line appear on the plot?
-Defaults to FALSE. Currently ignored.}
+\item{ls_line}{Should a least squares line (or lines) appear on the plot? Defaults to FALSE.}
 
 \item{...}{Extra title arguments passed on to \code{\link[ggformula:gf_aux]{ggformula::gf_labs()}} (which feeds to \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}).}
 }
