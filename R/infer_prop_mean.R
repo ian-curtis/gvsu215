@@ -354,15 +354,18 @@ infer_paired <- function(data, var1, var2, digits = 3, conf_lvl = 0.95, caption 
     n = n,
     na = n_na,
     estimate = diff_t$estimate,
-    sd = "TBD",
     se = diff_t$stderr,
     t = diff_t$statistic,
     df = as.integer(diff_t$parameter),
-    p = format.pval(diff_t$p.value, digits = digits)
+    p = format.pval(diff_t$p.value, digits = digits),
+    cil = diff_t$conf.int[[1]],
+    ciu = diff_t$conf.int[[2]]
   ) %>%
     finalize_tbl(digits = digits, caption = caption, striped = FALSE) %>%
-    flextable::set_header_labels(na = "n Missing", estimate = "x-bar", sd = "Standard Deviation",
-                                 se = "Standard Error", p = "p-value")
+    flextable::set_header_labels(na = "n Missing", estimate = "x-bar",
+                                 se = "Standard Error", p = "p-value",
+                                 cil = base::paste(cl, "Interval Lower"),
+                                 ciu = base::paste(cl, "Interval Upper"))
 
 
   # kbl(digits = 3,
