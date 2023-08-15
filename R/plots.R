@@ -169,6 +169,16 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, na_rm = FALSE
   var <- formula[[2]]
   str_of_var <- base::deparse(base::substitute(var))
 
+  if (base::max(data[, str_of_var]) <= 1000000 & base::max(data[, str_of_var]) >= 0.000001) {
+
+    plot_labels <- function (x) format(x, scientific = FALSE)
+
+  } else {
+
+    plot_labels <- function (x) format(x, scientific = TRUE)
+
+  }
+
   if (length(formula) == 2) {
 
     na <- find_na(data, formula)
@@ -184,7 +194,7 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, na_rm = FALSE
     ggformula::gf_boxplot(formula, data = data, geom = "errorbar", linewidth = 2, width = 0) %>%
       ggformula::gf_boxplot(formula, data = data, fill = fill, width = 0.5, lwd = 1, color = "black",
                             outlier.shape = 21, outlier.size = 2.5, outlier.color = "grey70",
-                            outlier.fill = "black",notchwidth = 2) %>%
+                            outlier.fill = "black", notchwidth = 2) %>%
       ggformula::gf_labs(x = str_of_var,
               title = base::ifelse(base::is.null(title),
                                    base::paste("Boxplot of", str_of_var),
@@ -193,6 +203,7 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, na_rm = FALSE
                                      "NAs Removed:", base::ifelse(na_rm == FALSE, "No", "Yes")),
               ...) %>%
       finalize_plot() %>%
+      ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels)) %>%
       ggformula::gf_theme(panel.grid.major.y = ggplot2::element_blank(),
                panel.grid.major.x = ggplot2::element_line(color = "grey70", linewidth = .5),
                axis.text.y = ggplot2::element_blank(),
@@ -221,7 +232,7 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, na_rm = FALSE
     ggformula::gf_boxplot(formula, data = data, geom = "errorbar", linewidth = 2, width = 0) %>%
       ggformula::gf_boxplot(formula, data = data, fill = fill, width = 0.5, lwd = 1, color = "black",
                             outlier.shape = 21, outlier.size = 2.5, outlier.color = "grey70",
-                            outlier.fill = "black",notchwidth = 2) %>%
+                            outlier.fill = "black", notchwidth = 2) %>%
       ggformula::gf_labs(title = ifelse(base::is.null(title),
                              paste("Boxplot of", str_of_var, "by", str_of_by),
                              title),
@@ -230,6 +241,7 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, na_rm = FALSE
                                           "NAs Removed:", base::ifelse(na_rm == FALSE, "No", "Yes")),
                          ...) %>%
       finalize_plot() %>%
+      ggformula::gf_refine(ggplot2::scale_y_continuous(labels = plot_labels)) %>%
       ggformula::gf_theme(axis.text.x = ggplot2::element_text(size = 15),
                axis.text.y = ggplot2::element_text(size = 15))
 
@@ -283,6 +295,16 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = 
   var <- formula[[2]]
   str_of_var <- base::deparse(base::substitute(var))
 
+  if (base::max(data[, str_of_var]) <= 1000000 & base::max(data[, str_of_var]) >= 0.000001) {
+
+    plot_labels <- function (x) format(x, scientific = FALSE)
+
+  } else {
+
+    plot_labels <- function (x) format(x, scientific = TRUE)
+
+  }
+
 
   if (base::is.null(group)) {
 
@@ -295,6 +317,8 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = 
         stats::na.omit()
     }
 
+
+
     ggformula::gf_histogram(formula, data = data, type="count", binwidth = binwidth, fill = fill, color = 'grey40', alpha = 100) %>%
       ggformula::gf_refine(ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))) %>%
       ggformula::gf_labs(y = "Count",
@@ -304,7 +328,8 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = 
                          subtitle = base::paste("Missing:", n_na, "|", "NAs Removed:",
                                                 base::ifelse(na_rm == FALSE, "No", "Yes")),
                          ...) %>%
-      finalize_plot()
+      finalize_plot() %>%
+      ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels))
   } else {
 
     facet_var <- group[[2]]
@@ -331,6 +356,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = 
                                                 "NAs Removed:", base::ifelse(na_rm == FALSE, "No", "Yes")),
                          ...) %>%
       finalize_plot() %>%
+      ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels)) %>%
       ggformula::gf_theme(panel.border = ggplot2::element_rect(color = "black", fill = NA))
 
   }
