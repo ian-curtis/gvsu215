@@ -72,15 +72,6 @@ infer_reg <- function(data, formula, digits = 3, caption = NULL, reduced = TRUE)
                                    statistic = "t", p.value = "p-value")
 
   }
-
-  # kbl(digits = 3,
-  #     caption = paste0("Linear Model Coefficients Table: <br> F-test of ",
-  #                      round(a_glance$statistic, 3), " on ", a_glance$df, " and ",
-  #                      a_glance$df.residual, " degrees of freedom with an overall p-value of ",
-  #                      overall_p, ".<br>", "R-Squared: ", round(a_glance$r.squared, 3), ".")) %>%
-  # kable_styling(c('condensed', 'bordered', 'striped'), full_width = F) %>%
-  # row_spec(0, extra_css = "border-bottom: 3px solid black")
-
 }
 
 
@@ -129,11 +120,7 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
       dplyr::mutate(p.value = base::format.pval(p.value, digits = digits)) %>%
       finalize_tbl(digits = digits, caption = caption, striped = FALSE) %>%
       flextable::set_header_labels(statistic = "X-squared", p.value = "p-value", parameter = "df")
-    # kbl(digits = 3,
-    #     caption = paste("Chi-Squared Test of", "X", "and", "X"),
-    #     col.names = c('Statistic', 'p-value', 'Degrees of Freedom')) %>%
-    # kable_styling(c('condensed', 'bordered', 'striped'), full_width = F) %>%
-    # row_spec(0, extra_css = "border-bottom: 3px solid black")
+
 
   } else if (type == "expected") {
 
@@ -147,9 +134,6 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
       tibble::as_tibble(rownames = str_of_var1) %>%
       finalize_tbl(digits = 1, caption = caption) %>%
       flextable::vline(j = 1)
-    # kbl(digits = 3, caption = "Expected Counts for Var and Var") %>%
-    # kable_styling(c('condensed', 'bordered', 'striped'), full_width = F) %>%
-    # row_spec(0, extra_css = "border-bottom: 3px solid black")
 
   } else if (type == "observed") {
 
@@ -165,11 +149,6 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
       janitor::adorn_totals(c("row", "col")) %>%
       dplyr::mutate(Total = as.integer(Total)) %>%
       finalize_tbl(digits = digits, caption = caption)
-    # kbl(caption = "Observed Counts for Var and Var") %>%
-    # kable_styling(c('condensed', 'bordered', 'striped'), full_width = F) %>%
-    # row_spec(nrow(chisq_test$observed) + 1, bold = TRUE) %>%
-    # column_spec(ncol(chisq_test$expected) + 2, bold = TRUE) %>%
-    # row_spec(0, extra_css = "border-bottom: 3px solid black")
 
   }
 

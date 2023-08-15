@@ -104,10 +104,6 @@ two_way <- function(data, formula, row_pct = FALSE, digits = 3, caption = NULL) 
                        border = officer::fp_border(color = NA)) %>%
       flextable::bold(j = 1)
 
-    # kableExtra::kbl(digits = digits, caption = paste("Two-Way Counts of", ind_var, "vs.", dep_var)) %>%
-    # kableExtra::kable_styling(c('striped', 'bordered', 'condensed'), full_width = F) %>%
-    # kableExtra::add_header_above(c("", setNames(7, dep_str), "")) %>%
-    # kableExtra::row_spec(0, extra_css = "border-bottom: 3px solid black")
   }
 
   else if (row_pct == TRUE) {
@@ -134,11 +130,6 @@ two_way <- function(data, formula, row_pct = FALSE, digits = 3, caption = NULL) 
                        border = officer::fp_border(color = NA)) %>%
       flextable::bold(j = 1)
 
-
-    # kableExtra::kbl(digits = digits, caption = paste("Two-Way Counts (with Row Percentages) of", ind_var, "vs.", dep_var)) %>%
-    # kableExtra::kable_styling(c('striped', 'bordered', 'condensed'), full_width = F) %>%
-    # kableExtra::add_header_above(c("", setNames(7, dep_str), "")) %>%
-    # kableExtra::row_spec(0, extra_css = "border-bottom: 3px solid black")
 
   }
 
