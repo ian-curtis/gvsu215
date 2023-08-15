@@ -69,11 +69,6 @@ infer_prop1 <- function(data, formula, success = NULL, digits = 3, conf_lvl = 0.
                                  estimate = "p-hat", se = "Standard Error",
                                  conf.low = base::paste(cl, "Interval Lower"),
                                  conf.high = base::paste(cl, "Interval Upper"))
-    # kbl(digits = 3,
-    #     col.names = c("Success", "n Success", "n", "p-hat", "Standard Error", "Confidence Level", "Lower", "Upper")) %>%
-    # kable_styling(c('condensed', 'bordered'), full_width = F) %>%
-    # add_header_above(c("", "", "", "", "", "", "Confidence Interval" = 2)) %>%
-    # row_spec(0, extra_css = "border-bottom: 3px solid black")
 
 }
 
@@ -155,14 +150,6 @@ infer_prop2_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
                                  se = "Standard Error", cil = base::paste(cl, "Interval Lower"),
                                  ciu = base::paste(cl, "Interval Upper")) %>%
     flextable::vline(j = 5)
-
-
-    # kbl(digits = 3,
-    #     col.names = c("n1", "n2", "Success 1", "Success 2", "p-hat 1", "p-hat 2", "z", "Standard \n Error",
-    #                   "Confidence \n Level", "Lower", "Upper")) %>%
-    # kable_styling(c('condensed', 'bordered', 'striped'), full_width = F) %>%
-    # add_header_above(c("", "", "", "", "", "", "", "", "", "Confidence Interval" = 2)) %>%
-    # row_spec(0, extra_css = "border-bottom: 3px solid black")
 
 }
 
@@ -289,12 +276,6 @@ infer_mean1 <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NU
                                  cil = base::paste(cl, "Interval Lower"),
                                  ciu = base::paste(cl, "Interval Upper"))
 
-    # kbl(digits = 3,
-    #     col.names = c("Var", "n", "x-bar", "df", "Standard Error", "Confidence Level", "Lower", "Upper")) %>%
-    # kable_styling(c('condensed', 'bordered'), full_width = F) %>%
-    # add_header_above(c( "", "", "", "", "", "", "Confidence Interval" = 2)) %>%
-    # row_spec(0, extra_css = "border-bottom: 3px solid black")
-
 }
 
 
@@ -354,21 +335,18 @@ infer_paired <- function(data, var1, var2, digits = 3, conf_lvl = 0.95, caption 
     n = n,
     na = n_na,
     estimate = diff_t$estimate,
-    sd = "TBD",
     se = diff_t$stderr,
     t = diff_t$statistic,
     df = as.integer(diff_t$parameter),
-    p = format.pval(diff_t$p.value, digits = digits)
+    p = format.pval(diff_t$p.value, digits = digits),
+    cil = diff_t$conf.int[[1]],
+    ciu = diff_t$conf.int[[2]]
   ) %>%
     finalize_tbl(digits = digits, caption = caption, striped = FALSE) %>%
-    flextable::set_header_labels(na = "n Missing", estimate = "x-bar", sd = "Standard Deviation",
-                                 se = "Standard Error", p = "p-value")
-
-
-  # kbl(digits = 3,
-  #     caption = paste("Difference in Means Test: <br>", "Var1", "-", "Var2"),
-  #     col.names = c("Estimate", "Standard Deviation", "Standard Error", "t", "df", "p-value")) %>%
-  # kable_styling(c('condensed', 'bordered', 'striped'), full_width = F)
+    flextable::set_header_labels(na = "n Missing", estimate = "x-bar",
+                                 se = "Standard Error", p = "p-value",
+                                 cil = base::paste(cl, "Interval Lower"),
+                                 ciu = base::paste(cl, "Interval Upper"))
 
 }
 
@@ -453,12 +431,6 @@ infer_mean2_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
                                  ciu = base::paste(cl, "Interval Upper")) %>%
     flextable::vline(j = c(3, 4))
 
-  #   kbl(digits = 3,
-  #       col.names = c("x-bar\u2081", "x-bar2\u2082", "n\u2081", "n\u2082", "sd\u2081", "sd\u2082", "x-bar Difference", "Standard Error", "df", "Confidence Level", "Lower", "Upper")) %>%
-  #   kable_styling(c('condensed', 'bordered', 'striped'), full_width = F) %>%
-  #   add_header_above(c("", "", "", "", "", "", "", "", "", "", "Confidene Interval" = 2)) %>%
-  #   row_spec(0, extra_css = "border-bottom: 3px solid black")
-
 }
 
 #' Create a summary table for a two-sample mean test
@@ -540,10 +512,5 @@ infer_mean2_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
                                  se = "Standard Error",
                                  p = "p-value") %>%
     flextable::vline(j = 4)
-
-  #   kbl(digits = 3,
-  #       col.names = c("x-bar\u2081", "x-bar\u2082", "n\u2081", "n\u2082", "sd\u2081", "sd\u2082", "x-bar Difference", "Standard Error", "t", "df", "p-value")) %>%
-  #   kable_styling(c('condensed', 'bordered', 'striped'), full_width = F) %>%
-  #   row_spec(0, extra_css = "border-bottom: 3px solid black")
 
 }

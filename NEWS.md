@@ -1,3 +1,10 @@
+# gvsu215 (development version)
+
+* `two_way()` output cleaned up
+* `plot_box()` and `plot_hist()` will now not do scientific notation between certain ranges of numbers
+* `corr()` now shows the observations used (since this is not always just a sum of n1 and n2 missing)
+* added confidence interval to `infer_paired()`
+
 # gvsu215 0.1.1
 
 * general fixes to output layout and theme, especially to `two_way()`

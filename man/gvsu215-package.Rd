@@ -12,7 +12,7 @@ A light wrapper to 'mosaic' and 'ggformula' enabling nice graphics in one line o
 Useful links:
 \itemize{
   \item \url{https://github.com/ian-curtis/gvsu215}
-  \item \url{https://ian-curtis.github.io/gvsu215/}
+  \item \url{https://gvsu215.ianacurtis.com}
   \item Report bugs at \url{https://github.com/ian-curtis/gvsu215/issues}
 }
 

@@ -42,9 +42,7 @@ num_sum <- function(data, formula, digits = 3, na_rm = FALSE, caption = NULL) {
     mosaic::favstats(x = formula, data = data, na.rm = na_rm) %>%
       tibble::as_tibble() %>%
       finalize_tbl(digits, striped = FALSE, caption = caption)
-    # kableExtra::kbl(digits = digits, caption = caption) %>%
-    # kableExtra::kable_styling(c('condensed', 'bordered', 'striped'), full_width = F) %>%
-    # kableExtra::row_spec(0, extra_css = "border-bottom: 3px solid black")
+
   }
   else if (base::length(formula) == 3) {
     ind_var <- formula[[2]]
@@ -71,7 +69,6 @@ num_sum <- function(data, formula, digits = 3, na_rm = FALSE, caption = NULL) {
       # dplyr::select(-missing) %>%
       finalize_tbl(digits,
                    caption = base::paste(caption, "\n", ind_str, "Missing:", n_na[[1]], "|", dep_str, "Missing:", n_na[[2]]))
-      # flextable::vline(j = 9, border = officer::fp_border())
   }
 
 }
@@ -126,9 +123,6 @@ pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1), cap
                    caption = base::paste(caption, "\n", "Missing:", na),
                    striped = FALSE) %>%
       flextable::set_header_labels(name = "Percentile", value = "Value")
-    # kbl(col.names = c("Percentile", "Value")) %>%
-    # kable_styling(c('condensed', 'bordered', 'striped'), full_width = F) %>%
-    # row_spec(0, extra_css = "border-bottom: 3px solid black")
 
   } else if (base::length(formula) > 2) {
 
@@ -196,6 +190,16 @@ corr <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
 
   na <- find_na(data, formula, n = 2)
 
+  if (na_rm == TRUE) {
+
+    obs_used <- base::nrow(data %>% dplyr::select({{ ind_var }}, {{ dep_var }}) %>% stats::na.omit())
+
+  } else if (na_rm == FALSE) {
+
+    obs_used <- base::nrow(data %>% dplyr::select({{ ind_var }}, {{ dep_var }}))
+
+  }
+
   if (base::is.null(caption)) {
     caption <- paste("Correlation of", ind_str, "vs.", dep_str)
   }
@@ -204,6 +208,7 @@ corr <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
          na_ind = na[[1]],
          n_dep = n_dep,
          na_dep = na[[2]],
+         obs_used = obs_used,
          corr = mosaic::cor(formula, data = data, use = base::ifelse(na_rm == FALSE, "everything", "complete"))) %>%
     finalize_tbl(digits = 3,
                  caption = caption,
@@ -212,9 +217,7 @@ corr <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
                                  na_ind = "n₁ missing",
                                  n_dep = "n₂",
                                  na_dep = "n₂ missing",
+                                 obs_used = "Observations Used",
                                  corr = "Correlation")
-  # kbl(digits = 3, caption = "Correlation of MaxWeight vs. MaxHeight", col.names = c("n", "Correlation")) %>%
-  # kable_styling(c('condensed', 'bordered'), full_width = F) %>%
-  # row_spec(0, extra_css = "border-bottom: 3px solid black")
 
 }
