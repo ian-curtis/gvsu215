@@ -73,7 +73,15 @@ two_way <- function(data, formula, row_pct = FALSE, digits = 3, caption = NULL) 
   var1_str <- base::deparse(base::substitute(var1))
   var2_str <- base::deparse(base::substitute(var2))
 
-  var1_lvls <- base::length(base::unique(data[, var1_str]))
+  # data <- data %>%
+  #   dplyr::mutate("{var1}" := base::as.factor({{ var1 }}),
+  #                 "{var2}" := base::as.factor({{ var2 }}))
+
+  if (base::is.numeric(data[, var1_str])) {
+    var1_lvls <- base::length(base::unique(data[, var1_str]))
+  } else {
+    var1_lvls <- base::nrow(base::unique(data[, var1_str]))
+  }
 
   if (row_pct == FALSE) {
 
@@ -105,18 +113,28 @@ two_way <- function(data, formula, row_pct = FALSE, digits = 3, caption = NULL) 
   else if (row_pct == TRUE) {
 
     if (base::is.null(caption)) {
-      caption <- base::paste("Two-Way Counts (with Row Percentages) of", ind_var, "vs.", dep_var)
+      caption <- base::paste("Two-Way Counts (with Row Percentages) of", var1, "vs.", var2)
     }
 
     mosaic::tally(formula, data = data) %>%
       tibble::as_tibble() %>%
-      tidyr::pivot_wider(names_from = {{ dep_var }}, values_from = n) %>%
+      tidyr::pivot_wider(names_from = {{ var1 }}, values_from = n) %>%
       janitor::adorn_totals("col") %>%
       janitor::adorn_percentages("row") %>%
       janitor::adorn_pct_formatting(digits = 2) %>%
       janitor::adorn_ns(position = "front") %>%
       dplyr::mutate(dplyr::across(-1, ~sub(" ", "\n", .))) %>%
-      finalize_tbl(digits = digits, caption = caption)
+      finalize_tbl(digits = digits, caption = caption) %>%
+      flextable::add_header_row(values = c("", var1_str, ""),
+                                colwidths = c(1, var1_lvls, 1)) %>%
+      flextable::vline(j = c(1, var1_lvls + 1),
+                       border = officer::fp_border(width = 1.2)) %>%
+      flextable::hline(i = 1, part = "header") %>%
+      flextable::hline(i = 1, j = c(1, var1_lvls + 2), part = "header",
+                       border = officer::fp_border(color = NA)) %>%
+      flextable::bold(j = 1)
+
+
     # kableExtra::kbl(digits = digits, caption = paste("Two-Way Counts (with Row Percentages) of", ind_var, "vs.", dep_var)) %>%
     # kableExtra::kable_styling(c('striped', 'bordered', 'condensed'), full_width = F) %>%
     # kableExtra::add_header_above(c("", setNames(7, dep_str), "")) %>%
