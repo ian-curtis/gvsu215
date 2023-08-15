@@ -196,6 +196,16 @@ corr <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
 
   na <- find_na(data, formula, n = 2)
 
+  if (na_rm == TRUE) {
+
+    obs_used <- base::nrow(data %>% dplyr::select({{ ind_var }}, {{ dep_var }}) %>% stats::na.omit())
+
+  } else if (na_rm == FALSE) {
+
+    obs_used <- base::nrow(data %>% dplyr::select({{ ind_var }}, {{ dep_var }}))
+
+  }
+
   if (base::is.null(caption)) {
     caption <- paste("Correlation of", ind_str, "vs.", dep_str)
   }
@@ -204,6 +214,7 @@ corr <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
          na_ind = na[[1]],
          n_dep = n_dep,
          na_dep = na[[2]],
+         obs_used = obs_used,
          corr = mosaic::cor(formula, data = data, use = base::ifelse(na_rm == FALSE, "everything", "complete"))) %>%
     finalize_tbl(digits = 3,
                  caption = caption,
@@ -212,6 +223,7 @@ corr <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
                                  na_ind = "n₁ missing",
                                  n_dep = "n₂",
                                  na_dep = "n₂ missing",
+                                 obs_used = "Observations Used",
                                  corr = "Correlation")
   # kbl(digits = 3, caption = "Correlation of MaxWeight vs. MaxHeight", col.names = c("n", "Correlation")) %>%
   # kable_styling(c('condensed', 'bordered'), full_width = F) %>%
