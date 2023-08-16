@@ -1,6 +1,6 @@
 #' Create a one way data table
 #'
-#' `one_way()` creates a table giving counts and percentages on one variable.
+#' `tbl_one()` creates a table giving counts and percentages on one variable.
 #'
 #' @param data A data frame.
 #' @param formula The variable to tabulate. Should be given in formula notation, `~var`.
@@ -13,12 +13,12 @@
 #' @export
 #'
 #' @examples
-#' one_way(mtcars, ~gear)
-#' one_way(mtcars, ~gear, digits = 2)
+#' tbl_one(mtcars, ~gear)
+#' tbl_one(mtcars, ~gear, digits = 2)
 #'
 #' # Will give an error
-#' try(one_way(mtcars, ~Gear))
-one_way <- function(data, formula, digits = 3, caption = NULL) {
+#' try(tbl_one(mtcars, ~Gear))
+tbl_one <- function(data, formula, digits = 3, caption = NULL) {
 
   # error catching
   check_test(mosaic::tally(formula, data = data, format = "count"))
@@ -45,7 +45,7 @@ one_way <- function(data, formula, digits = 3, caption = NULL) {
 
 #' Create a two way data table
 #'
-#' @inheritParams one_way
+#' @inheritParams tbl_one
 #' @param formula The variables to tabulate. Should be given in formula notation `var1~var2`. Changing
 #'    the order of the variables will swap the table axes.
 #' @param row_pct Should row percents be included in each cell? Defaults to FALSE with the only
@@ -56,13 +56,13 @@ one_way <- function(data, formula, digits = 3, caption = NULL) {
 #' @export
 #'
 #' @examples
-#' two_way(mtcars, cyl~gear)
-#' two_way(mtcars, cyl~gear, row_pct = TRUE)
-#' two_way(mtcars, cyl~gear, caption = "This is the new caption")
+#' tbl_two(mtcars, cyl~gear)
+#' tbl_two(mtcars, cyl~gear, row_pct = TRUE)
+#' tbl_two(mtcars, cyl~gear, caption = "This is the new caption")
 #'
 #' # Will give an error
-#' try(two_way(mtcars, Cyl~Gear))
-two_way <- function(data, formula, row_pct = FALSE, digits = 3, caption = NULL) {
+#' try(tbl_two(mtcars, Cyl~Gear))
+tbl_two <- function(data, formula, row_pct = FALSE, digits = 3, caption = NULL) {
 
   # error catching
   check_test(mosaic::tally(formula, data = data))
