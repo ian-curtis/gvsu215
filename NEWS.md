@@ -1,6 +1,13 @@
 # gvsu215 (development version)
 
-* `two_way()` output cleaned up
+## Major Changes
+
+* Two functions have been renamed. `one_way()` is now `tbl_one()` and `two_way()` is now `tbl_two()`. The old functions are not available.
+* `plot_scatter()`: The default value for `legend_title` is now NULL (which is then supplied with the variable name). You can still supply a new string for the legend title.
+
+## Other Changes
+
+* `two_way()` (`tbl_two()`) output cleaned up
 * `plot_box()` and `plot_hist()` will now not do scientific notation between certain ranges of numbers
 * `corr()` now shows the observations used (since this is not always just a sum of n1 and n2 missing)
 * added confidence interval to `infer_paired()`

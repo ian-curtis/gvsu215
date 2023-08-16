@@ -3,6 +3,6 @@
 
 ## usethis namespace: start
 #' @importFrom lifecycle deprecated
-#' @importFrom magrittr %>%x
+#' @importFrom magrittr %>%
 ## usethis namespace: end
 NULL
