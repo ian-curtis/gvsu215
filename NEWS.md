@@ -1,4 +1,4 @@
-# gvsu215 (development version)
+# gvsu215 0.2.0
 
 ## Major Changes
 
@@ -11,6 +11,7 @@
 * `plot_box()` and `plot_hist()` will now not do scientific notation between certain ranges of numbers
 * `corr()` now shows the observations used (since this is not always just a sum of n1 and n2 missing)
 * added confidence interval to `infer_paired()`
+* The two-sample family of functions now show the correct levels of the grouping variable and the respective calculations about them.
 
 # gvsu215 0.1.1
 
