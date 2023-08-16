@@ -95,20 +95,20 @@ infer_prop2_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
 
   }
 
+  var1 <- formula[[2]]
+  str_of_var1 <- base::deparse(base::substitute(var1))
+
+  grp_var <- formula[[3]]
+  str_of_grp <- base::deparse(base::substitute(grp_var))
+
   check_test(mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success, correct = FALSE))
 
   # code
   two_prop <- mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success, correct = FALSE)
 
-  var1 <- formula[[2]]
-  str_of_var1 <- base::deparse(base::substitute(var1))
-
-  var2 <- formula[[3]]
-  str_of_var2 <- base::deparse(base::substitute(var2))
-
   if (base::is.null(caption)) {
 
-    caption <- base::paste("Two Sample Proportion Interval Between", str_of_var1, "and", str_of_var2,
+    caption <- base::paste("Two Sample Proportion Interval Between", str_of_var1, "and", str_of_grp,
                            "\n Success:", success)
 
   } else {
@@ -119,25 +119,36 @@ infer_prop2_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
 
   cl <- base::paste0(conf_lvl*100, "%")
 
-  n_na <- find_na(data, formula, n = 2)
+  grp_lvls <- sort(unique(dplyr::pull(data, grp_var)))
 
-  n1 <- base::nrow(data) - n_na[[1]]
-  n2 <- base::nrow(data) - n_na[[2]]
+  na1 <- data %>%
+    dplyr::filter({{ grp_var }} == grp_lvls[1] & base::is.na({{ grp_var }})) %>%
+    base::nrow()
+  na2 <- data %>%
+    dplyr::filter({{ grp_var }} == grp_lvls[2] & base::is.na({{ grp_var }})) %>%
+    base::nrow()
+
+  n1 <- data %>%
+    dplyr::filter({{ grp_var }} == grp_lvls[1]) %>%
+    base::nrow()
+  n2 <- data %>%
+    dplyr::filter({{ grp_var }} == grp_lvls[2]) %>%
+    base::nrow()
 
   yay1 <- data %>%
-    dplyr::select({{ var1 }}) %>%
-    dplyr::filter({{ var1 }} == success) %>%
+    dplyr::select({{ var1 }}, {{ grp_var }}) %>%
+    dplyr::filter({{ var1 }} == success & {{ grp_var }} == grp_lvls[1]) %>%
     mosaic::tally()
   yay2 <- data %>%
-    dplyr::select({{ var2 }}) %>%
-    dplyr::filter({{ var2 }} == success) %>%
+    dplyr::select({{ var1 }}, {{ grp_var }}) %>%
+    dplyr::filter({{ var1 }} == success & {{ grp_var }} == grp_lvls[2]) %>%
     mosaic::tally()
 
   tibble::tibble(
-    var = c(str_of_var1, str_of_var2),
+    var = base::as.character(grp_lvls),
     yay = c(yay1$n, yay2$n),
     n = c(n1, n2),
-    na = c(n_na[[1]], n_na[[2]]),
+    na = c(na1, na2),
     phat = c(two_prop$estimate[[1]], two_prop$estimate[[2]]),
     se = c(sqrt((two_prop$estimate[[1]]*(1-two_prop$estimate[[1]])/n1) + (two_prop$estimate[[2]]*(1-two_prop$estimate[[2]])/n2)), NA),
     cil = c(two_prop$conf.int[[1]], NA),
@@ -146,7 +157,7 @@ infer_prop2_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
     finalize_tbl(digits = digits,
                  caption = caption,
                  na_str = "") %>%
-    flextable::set_header_labels(var = "Variable", yay = "n Success", na = "n Missing", phat = "p-hat",
+    flextable::set_header_labels(var = str_of_grp, yay = "n Success", na = "n Missing", phat = "p-hat",
                                  se = "Standard Error", cil = base::paste(cl, "Interval Lower"),
                                  ciu = base::paste(cl, "Interval Upper")) %>%
     flextable::vline(j = 5)
@@ -177,14 +188,14 @@ infer_prop2_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
   var1 <- formula[[2]]
   str_of_var1 <- base::deparse(base::substitute(var1))
 
-  var2 <- formula[[3]]
-  str_of_var2 <- base::deparse(base::substitute(var2))
+  grp_var <- formula[[3]]
+  str_of_grp <- base::deparse(base::substitute(grp_var))
 
   cl <- base::paste0(conf_lvl*100, "%")
 
   if (base::is.null(caption)) {
 
-    caption <- base::paste("Two Sample Proportion Test Between", str_of_var1, "and", str_of_var2,
+    caption <- base::paste("Two Sample Proportion Test Between", str_of_var1, "and", str_of_grp,
                            "\n Success:", success, "| Confidence:", cl)
 
   } else {
@@ -193,25 +204,36 @@ infer_prop2_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
 
   }
 
-  n_na <- find_na(data, formula, n = 2)
+  grp_lvls <- sort(unique(dplyr::pull(data, grp_var)))
 
-  n1 <- base::nrow(data) - n_na[[1]]
-  n2 <- base::nrow(data) - n_na[[2]]
+  na1 <- data %>%
+    dplyr::filter({{ grp_var }} == grp_lvls[1] & base::is.na({{ grp_var }})) %>%
+    base::nrow()
+  na2 <- data %>%
+    dplyr::filter({{ grp_var }} == grp_lvls[2] & base::is.na({{ grp_var }})) %>%
+    base::nrow()
+
+  n1 <- data %>%
+    dplyr::filter({{ grp_var }} == grp_lvls[1]) %>%
+    base::nrow()
+  n2 <- data %>%
+    dplyr::filter({{ grp_var }} == grp_lvls[2]) %>%
+    base::nrow()
 
   yay1 <- data %>%
-    dplyr::select({{ var1 }}) %>%
-    dplyr::filter({{ var1 }} == success) %>%
+    dplyr::select({{ var1 }}, {{ grp_var }}) %>%
+    dplyr::filter({{ var1 }} == success & {{ grp_var }} == grp_lvls[1]) %>%
     mosaic::tally()
   yay2 <- data %>%
-    dplyr::select({{ var2 }}) %>%
-    dplyr::filter({{ var2 }} == success) %>%
+    dplyr::select({{ var1 }}, {{ grp_var }}) %>%
+    dplyr::filter({{ var1 }} == success & {{ grp_var }} == grp_lvls[2]) %>%
     mosaic::tally()
 
   tibble::tibble(
-    var = c(str_of_var1, str_of_var2),
+    var = base::as.character(grp_lvls),
     yay = c(yay1$n, yay2$n),
     n = c(n1, n2),
-    na = c(n_na[[1]], n_na[[2]]),
+    na = c(na1, na2),
     phat = c(two_prop$estimate[[1]], two_prop$estimate[[2]]),
     se = c(sqrt((two_prop$estimate[[1]]*(1-two_prop$estimate[[1]])/n1) + (two_prop$estimate[[2]]*(1-two_prop$estimate[[2]])/n2)), NA),
     z = c(two_prop$statistic, NA),
@@ -369,22 +391,22 @@ infer_mean2_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
   var1 <- formula[[2]]
   str_of_var1 <- base::deparse(base::substitute(var1))
 
-  var2 <- formula[[3]]
-  str_of_var2 <- base::deparse(base::substitute(var2))
+  grp_var <- formula[[3]]
+  str_of_grp <- base::deparse(base::substitute(grp_var))
 
   # error catching
   check_conf_lvl(conf_lvl)
 
-  base::tryCatch(data %>% dplyr::mutate("{var2}" := base::factor({{ var2 }})),
+  base::tryCatch(data %>% dplyr::mutate("{grp_var}" := base::factor({{ grp_var }})),
                  error = function (e) stop("Could not convert grouping variable into a factor. Perhaps you entered the grouping variable first (instead of second)?")
   )
 
   data <- data %>%
-    dplyr::mutate("{var2}" := base::as.factor({{ var2 }}))
+    dplyr::mutate("{grp_var}" := base::as.factor({{ grp_var }}))
 
-  fctr_lvls <- base::levels(data[[str_of_var2]])
+  grp_lvls <- base::sort(base::levels(data[[str_of_grp]]))
 
-  if (base::length(fctr_lvls) != 2) {
+  if (base::length(grp_lvls) != 2) {
 
     stop("The grouping variable must have two (and only two) levels. \n Perhaps you entered the grouping variable first (instead of second)?")
 
@@ -397,12 +419,9 @@ infer_mean2_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
 
   cl <- base::paste0(conf_lvl*100, "%")
 
-  data <- data %>%
-    dplyr::mutate("{var2}" := base::factor({{ var2 }}))
-
   if (base::is.null(caption)) {
 
-    caption <- base::paste("Two Sample Independent Means Interval Between", str_of_var1, "and", str_of_var2)
+    caption <- base::paste("Two Sample Independent Means Interval Between", str_of_var1, "and", str_of_grp)
 
   } else {
 
@@ -410,15 +429,24 @@ infer_mean2_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
 
   }
 
-  n_na <- find_na(data, formula, n = 2)
+  na1 <- data %>%
+    dplyr::filter({{ grp_var }} == grp_lvls[1] & base::is.na({{ grp_var }})) %>%
+    base::nrow()
+  na2 <- data %>%
+    dplyr::filter({{ grp_var }} == grp_lvls[2] & base::is.na({{ grp_var }})) %>%
+    base::nrow()
 
-  n1 <- base::nrow(data) - n_na[[1]]
-  n2 <- base::nrow(data) - n_na[[2]]
+  n1 <- data %>%
+    dplyr::filter({{ grp_var }} == grp_lvls[1]) %>%
+    base::nrow()
+  n2 <- data %>%
+    dplyr::filter({{ grp_var }} == grp_lvls[2]) %>%
+    base::nrow()
 
   tibble::tibble(
-    var = c(str_of_var1, str_of_var2),
+    var = base::as.character(grp_lvls),
     n = c(n1, n2),
-    na = c(n_na[[1]], n_na[[2]]),
+    na = c(na1, na2),
     xbar = c(ind_test$estimate[[1]], ind_test$estimate[[2]]),
     se = c(ind_test$stderr, NA),
     df = c(ind_test$parameter, NA),
@@ -426,7 +454,7 @@ infer_mean2_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
     ciu = c(ind_test$conf.int[[2]], NA)
   ) %>%
     finalize_tbl(digits = digits, caption = caption, na_str = "") %>%
-    flextable::set_header_labels(var = "Variable", na = "n Missing", xbar = "Group Means", se = "Standard Error",
+    flextable::set_header_labels(var = str_of_grp, na = "n Missing", xbar = "Group Means", se = "Standard Error",
                                  cil = base::paste(cl, "Interval Lower"),
                                  ciu = base::paste(cl, "Interval Upper")) %>%
     flextable::vline(j = c(3, 4))
@@ -451,22 +479,22 @@ infer_mean2_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
   var1 <- formula[[2]]
   str_of_var1 <- base::deparse(base::substitute(var1))
 
-  var2 <- formula[[3]]
-  str_of_var2 <- base::deparse(base::substitute(var2))
+  grp_var <- formula[[3]]
+  str_of_grp <- base::deparse(base::substitute(grp_var))
 
   # error catching
   check_conf_lvl(conf_lvl)
 
-  base::tryCatch(data %>% dplyr::mutate("{var2}" := base::factor({{ var2 }})),
+  base::tryCatch(data %>% dplyr::mutate("{grp_var}" := base::factor({{ grp_var }})),
                  error = function (e) stop("Could not convert grouping variable into a factor. Perhaps you entered the grouping variable first (instead of second)?")
   )
 
   data <- data %>%
-    dplyr::mutate("{var2}" := base::as.factor({{ var2 }}))
+    dplyr::mutate("{grp_var}" := base::as.factor({{ grp_var }}))
 
-  fctr_lvls <- base::levels(data[[str_of_var2]])
+  grp_lvls <- base::levels(data[[str_of_grp]])
 
-  if (base::length(fctr_lvls) != 2) {
+  if (base::length(grp_lvls) != 2) {
 
     stop("The grouping variable must have two (and only two) levels. \n Perhaps you entered the grouping variable first (instead of second)?")
 
@@ -481,7 +509,7 @@ infer_mean2_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
 
   if (base::is.null(caption)) {
 
-    caption <- base::paste("Two Sample Independent Means Test Between", str_of_var1, "and", str_of_var2,
+    caption <- base::paste("Two Sample Independent Means Test Between", str_of_var1, "and", str_of_grp,
                            "\n Confidence Level:", cl)
 
   } else {
@@ -490,16 +518,24 @@ infer_mean2_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
 
   }
 
-  n_na <- find_na(data, formula, n = 2)
+  na1 <- data %>%
+    dplyr::filter({{ grp_var }} == grp_lvls[1] & base::is.na({{ grp_var }})) %>%
+    base::nrow()
+  na2 <- data %>%
+    dplyr::filter({{ grp_var }} == grp_lvls[2] & base::is.na({{ grp_var }})) %>%
+    base::nrow()
 
-  n1 <- base::nrow(data) - n_na[[1]]
-  n2 <- base::nrow(data) - n_na[[2]]
+  n1 <- data %>%
+    dplyr::filter({{ grp_var }} == grp_lvls[1]) %>%
+    base::nrow()
+  n2 <- data %>%
+    dplyr::filter({{ grp_var }} == grp_lvls[2]) %>%
+    base::nrow()
 
   tibble::tibble(
-    var = c(str_of_var1, str_of_var2),
+    var = base::as.character(grp_lvls),
     n = c(n1, n2),
-    na = c(n_na[[1]], n_na[[2]]),
-    # s = c("TBD", "TBD"),
+    na = c(na1, na2),
     xbar = c(ind_test$estimate[[1]], ind_test$estimate[[2]]),
     se = c(ind_test$stderr, NA),
     t = c(ind_test$statistic, NA),

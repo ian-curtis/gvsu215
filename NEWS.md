@@ -1,8 +1,11 @@
 # gvsu215 (development version)
 
-## Breaking Changes
+## Major Changes
 
 * Two functions have been renamed. `one_way()` is now `tbl_one()` and `two_way()` is now `tbl_two()`. The old functions are not available.
+* `plot_scatter()`: The default value for `legend_title` is now NULL (which is then supplied with the variable name). You can still supply a new string for the legend title.
+
+## Other Changes
 
 * `two_way()` (`tbl_two()`) output cleaned up
 * `plot_box()` and `plot_hist()` will now not do scientific notation between certain ranges of numbers

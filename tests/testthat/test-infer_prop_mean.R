@@ -177,34 +177,34 @@ test_that("infer mean 2 fails with too many levels", {
 
 # infer_mean2_test() ####
 
-test_that("infer mean 2 works", {
+test_that("infer mean 2 test works", {
   expect_no_condition(infer_mean2_test(mtcars, wt~vs))
 })
 
-test_that("infer mean 2 works with digits", {
+test_that("infer mean 2 test works with digits", {
   expect_no_condition(infer_mean2_test(mtcars, wt~vs, digits = 4))
 })
 
-test_that("infer mean 2 works with new CL", {
+test_that("infer mean 2 test works with new CL", {
   expect_no_condition(infer_mean2_test(mtcars, wt~vs, conf_lvl = .9))
 })
 
-test_that("infer mean 2 works with new caption", {
+test_that("infer mean 2 test works with new caption", {
   expect_no_condition(infer_mean2_test(mtcars, wt~vs, caption = "hehe"))
 })
 
-test_that("infer mean 2 fails with wrong CL", {
+test_that("infer mean 2 test fails with wrong CL", {
   expect_error(infer_mean2_test(mtcars, wt~vs, conf_lvl = "90%"))
 })
 
-test_that("infer mean 2 fails with mispelling", {
+test_that("infer mean 2 test fails with mispelling", {
   expect_error(infer_mean2_test(mtcars, Wt~vs))
 })
 
-test_that("infer mean 2 fails with wrong order", {
+test_that("infer mean 2 test fails with wrong order", {
   expect_error(infer_mean2_test(mtcars, vs~wt))
 })
 
-test_that("infer mean 2 fails with too many levels", {
+test_that("infer mean 2 test fails with too many levels", {
   expect_error(infer_mean2_test(mtcars, wt~cyl))
 })
