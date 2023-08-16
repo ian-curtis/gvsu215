@@ -76,9 +76,6 @@
     <loc>https://ian-curtis.github.io/gvsu215/reference/num_sum.html</loc>
   </url>
   <url>
-    <loc>https://ian-curtis.github.io/gvsu215/reference/one_way.html</loc>
-  </url>
-  <url>
     <loc>https://ian-curtis.github.io/gvsu215/reference/pctile.html</loc>
   </url>
   <url>
@@ -94,6 +91,9 @@
     <loc>https://ian-curtis.github.io/gvsu215/reference/plot_scatter.html</loc>
   </url>
   <url>
-    <loc>https://ian-curtis.github.io/gvsu215/reference/two_way.html</loc>
+    <loc>https://ian-curtis.github.io/gvsu215/reference/tbl_one.html</loc>
+  </url>
+  <url>
+    <loc>https://ian-curtis.github.io/gvsu215/reference/tbl_two.html</loc>
   </url>
 </urlset>
