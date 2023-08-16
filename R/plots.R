@@ -373,7 +373,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = 
 #' @param formula Variables to build the plot on. Should be entered in formula notation, `var1~var2`.
 #' @param fill The fill of the plot. Valid options are a character color (for standard scatterplots) or
 #'    a variable given in formula notation (`~var`), used to create a grouped scatterplot.
-#' @param legend_title The title of the lengend. Ignored in non-grouped plots. Default is "Legend".
+#' @param legend_title The title of the lengend. Ignored in non-grouped plots. Default is the variable name.
 #' @param axis_lines Should major axis lines appear on the plot? Valid options are "none" or "both.
 #'    Defaults to "none".
 #' @param ls_line Should a least squares line (or lines) appear on the plot? Defaults to FALSE.
