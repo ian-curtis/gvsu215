@@ -130,7 +130,8 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
     }
 
     data %>%
-      dplyr::mutate("{var}" := gsub(" ", "\n", {{ var }})) %>%
+      dplyr::mutate("{var}" := gsub(" ", "\n", {{ var }}),
+                    "{fill_var}" := base::factor({{ fill_var }})) %>%
       ggformula::gf_bar(formula, fill = fill) %>%
       ggformula::gf_refine(ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))) %>%
       ggformula::gf_labs(title = base::ifelse(base::is.null(title),
@@ -495,14 +496,14 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
                          ...) %>%
       finalize_plot() %>%
       ggformula::gf_theme(axis_theme) %>%
-      gf_refine(ggplot2::scale_fill_viridis_d())
+      ggformula::gf_refine(ggplot2::scale_fill_viridis_d())
 
     } else if (ls_line == TRUE) {
 
       # ggformula::gf_point(formula, data = data, fill = fill, color = "grey80", shape = 21, size = 2) %>%
       #   ggformula::gf_lm(color = fill) %>%
       ggformula::gf_lm(formula, data = data, color = fill) %>%
-        gf_point(size = 2) %>%
+        ggformula::gf_point(size = 2) %>%
         ggformula::gf_labs(title = ifelse(base::is.null(title),
                                           base::paste0("Grouped Scatterplot of ", ind_str, " and ",
                                                        dep_str, "\n by ", group_str),
@@ -515,8 +516,8 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
                            ...) %>%
         finalize_plot() %>%
         ggformula::gf_theme(axis_theme) %>%
-        gf_refine(ggplot2::scale_color_viridis_d()) %>%
-        gf_point(color = "grey30", shape = 21, size = 2)
+        ggformula::gf_refine(ggplot2::scale_color_viridis_d()) %>%
+        ggformula::gf_point(color = "grey30", shape = 21, size = 2)
 
     }
 
