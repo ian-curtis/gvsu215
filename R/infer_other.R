@@ -117,7 +117,7 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
 
     broom::tidy(chisq_test) %>%
       dplyr::select(-method) %>%
-      dplyr::mutate(p.value = base::format.pval(p.value, digits = digits)) %>%
+      dplyr::mutate(p.value = base::format.pval(.data$p.value, digits = digits)) %>%
       finalize_tbl(digits = digits, caption = caption, striped = FALSE) %>%
       flextable::set_header_labels(statistic = "X-squared", p.value = "p-value", parameter = "df")
 
@@ -145,9 +145,9 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
 
     chisq_test$observed %>%
       tibble::as_tibble() %>%
-      tidyr::pivot_wider(names_from = {{ var2 }}, values_from = n) %>%
+      tidyr::pivot_wider(names_from = {{ var2 }}, values_from = .data$n) %>%
       janitor::adorn_totals(c("row", "col")) %>%
-      dplyr::mutate(Total = as.integer(Total)) %>%
+      dplyr::mutate(Total = as.integer(.data$Total)) %>%
       finalize_tbl(digits = digits, caption = caption)
 
   }

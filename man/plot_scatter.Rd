@@ -9,7 +9,7 @@ plot_scatter(
   formula,
   fill = "#0032a0",
   title = NULL,
-  legend_title = "Legend",
+  legend_title = NULL,
   axis_lines = c("none", "both"),
   ls_line = FALSE,
   ...
@@ -25,7 +25,7 @@ a variable given in formula notation (\code{~var}), used to create a grouped sca
 
 \item{title}{An override for the title of the plot. A sensible default is provided.}
 
-\item{legend_title}{The title of the lengend. Ignored in non-grouped plots. Default is "Legend".}
+\item{legend_title}{The title of the lengend. Ignored in non-grouped plots. Default is the variable name.}
 
 \item{axis_lines}{Should major axis lines appear on the plot? Valid options are "none" or "both.
 Defaults to "none".}

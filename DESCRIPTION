@@ -1,6 +1,6 @@
 Package: gvsu215
 Title: Pretty Plots and Charts For Basic Statistical Concepts
-Version: 0.2.0
+Version: 0.2.0.1313
 Authors@R: 
     person("Ian", "Curtis", , "curtisi@mail.gvsu.edu", role = c("cre", "aut", "cph"))
 Description: A light wrapper to 'mosaic' and 'ggformula' enabling nice
@@ -10,6 +10,8 @@ License: MIT + file LICENSE
 URL: https://github.com/ian-curtis/gvsu215, https://gvsu215.ianacurtis.com
 BugReports: https://github.com/ian-curtis/gvsu215/issues
 Imports: 
+    broom (>= 1.0.5),
+    data.table (>= 1.14.8),
     dplyr (>= 1.1.2),
     flextable (>= 0.9.2),
     ggformula (>= 0.10.4),
