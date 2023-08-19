@@ -1,7 +1,6 @@
 ---
 output: github_document
-always_allow_html: true
-title: "gvsu215"
+always_include_html: true
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -11,7 +10,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "80%"
 )
 ```
 
@@ -30,7 +29,7 @@ This package was designed and tailored for Grand Valley State University (course
 
 You can install the development version of gvsu215 from [GitHub](https://github.com/ian-curtis/gvsu215) with:
 
-``` r
+``` {r}
 # install.packages("devtools")
 devtools::install_github("ian-curtis/gvsu215")
 ```
@@ -41,11 +40,17 @@ In order to use this package, you will need a basic understanding of R syntax an
 
 ## Examples
 
-This package is best used for creating simple plots and charts where extensive customization is not necessary. For instance, you may just want to see summary statistics.
+This package is best used for creating simple plots and charts where extensive customization is not necessary. For instance, you may just want to see summary statistics, including one- or two-way tables.
+
+```{r}
+library(gvsu215)
+```
+
+```{r}
+tbl_two(mtcars, gear~cyl)
+```
 
 ```{r num-sum, message = FALSE}
-library(gvsu215)
-
 num_sum(mtcars, ~wt, na_rm = TRUE)
 ```
 
@@ -60,7 +65,12 @@ There is also support for a variety of plots...
 ```{r plots}
 plot_bar(mtcars, ~cyl, type = "percent")
 
-plot_box(mtcars, wt~gear, fill = 'orangered4', x = "Gear", y = "Weight", title = "Boxplot of Weight by Gear")
+plot_box(mtcars, 
+         wt~gear, 
+         fill = 'orangered4', 
+         x = "Gear", 
+         y = "Weight", 
+         title = "Boxplot of Weight by Gear")
 
 plot_scatter(mtcars, wt~drat)
 ```
@@ -68,15 +78,26 @@ plot_scatter(mtcars, wt~drat)
 ... and statistical inference.
 
 ```{r inference}
-infer_prop1(mtcars, ~vs, success = 1)
+infer_1prop(mtcars, ~vs, success = 1)
+```
 
+```{r}
 infer_paired(mtcars, var1 = ~drat, var2 = ~wt)
+```
 
-infer_mean2_int(mtcars, wt~vs)
+```{r}
+infer_2mean_int(mtcars, wt~vs)
+```
 
+```{r}
 suppressWarnings(infer_chisq(mtcars, cyl~gear))
-suppressWarnings(infer_chisq(mtcars, cyl~gear, type = "expected"))
+```
 
+```{r}
+suppressWarnings(infer_chisq(mtcars, cyl~gear, type = "expected"))
+```
+
+```{r}
 infer_anova(mtcars, cyl~gear, digits = 2)
 ```
 

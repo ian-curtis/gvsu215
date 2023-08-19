@@ -12,9 +12,9 @@
 #' @export
 #'
 #' @examples
-#' infer_prop1(mtcars, ~vs, success = 1)
-#' infer_prop1(mtcars, ~vs, success = 1, conf_lvl = .9)
-infer_prop1 <- function(data, formula, success = NULL, digits = 3, conf_lvl = 0.95, caption = NULL) {
+#' infer_1prop(mtcars, ~vs, success = 1)
+#' infer_1prop(mtcars, ~vs, success = 1, conf_lvl = .9)
+infer_1prop <- function(data, formula, success = NULL, digits = 3, conf_lvl = 0.95, caption = NULL) {
 
   # error catching
   check_conf_lvl(conf_lvl)
@@ -75,16 +75,16 @@ infer_prop1 <- function(data, formula, success = NULL, digits = 3, conf_lvl = 0.
 
 #' Create a summary table for a two-sample proportion interval
 #'
-#' @inheritParams infer_prop1
+#' @inheritParams infer_1prop
 #' @param formula The variables to run the test on, in formula syntax, `var1 ~ var2`.
 #'
 #' @return An object of class flextable. In an interactive environment, results are viewable immediately.
 #' @export
 #'
 #' @examples
-#' infer_prop2_int(mtcars, vs~am, success = 1)
-#' infer_prop2_int(mtcars, vs~am, success = 1, conf_lvl = .9)
-infer_prop2_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95, caption = NULL) {
+#' infer_2prop_int(mtcars, vs~am, success = 1)
+#' infer_2prop_int(mtcars, vs~am, success = 1, conf_lvl = .9)
+infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95, caption = NULL) {
 
   # error catching
   check_conf_lvl(conf_lvl)
@@ -166,15 +166,15 @@ infer_prop2_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
 
 #' Create a summary table for a two-sample proportion test
 #'
-#' @inheritParams infer_prop2_int
+#' @inheritParams infer_2prop_int
 #'
 #' @return An object of class flextable. In an interactive environment, results are viewable immediately.
 #' @export
 #'
 #' @examples
-#' infer_prop2_test(mtcars, vs~am, success = 1)
-#' infer_prop2_test(mtcars, vs~am, success = 1, conf_lvl = .9, digits = 4)
-infer_prop2_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95, caption = NULL) {
+#' infer_2prop_test(mtcars, vs~am, success = 1)
+#' infer_2prop_test(mtcars, vs~am, success = 1, conf_lvl = .9, digits = 4)
+infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95, caption = NULL) {
 
   # error catching
   check_conf_lvl(conf_lvl)
@@ -251,15 +251,15 @@ infer_prop2_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
 
 #' Create a summary table for a one-sample mean interval
 #'
-#' @inheritParams infer_prop1
+#' @inheritParams infer_1prop
 #'
 #' @return An object of class flextable. In an interactive environment, results are viewable immediately.
 #' @export
 #'
 #' @examples
-#' infer_mean1(mtcars, ~wt)
-#' infer_mean1(mtcars, ~wt, conf_lvl = .9)
-infer_mean1 <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NULL) {
+#' infer_1mean(mtcars, ~wt)
+#' infer_1mean(mtcars, ~wt, conf_lvl = .9)
+infer_1mean <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NULL) {
 
   # error catching
   check_conf_lvl(conf_lvl)
@@ -303,7 +303,7 @@ infer_mean1 <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NU
 
 #' Create a summary table for a paired means test
 #'
-#' @inheritParams infer_mean1
+#' @inheritParams infer_1mean
 #' @param var1 The first variable of the pair, entered in formula syntax `var1`.
 #' @param var2 The second variable of the pair, entered in formula syntax `var2`.
 #'
@@ -375,15 +375,15 @@ infer_paired <- function(data, var1, var2, digits = 3, conf_lvl = 0.95, caption 
 
 #' Create a summary table of a two-sample mean interval
 #'
-#' @inheritParams infer_prop2_int
+#' @inheritParams infer_2prop_int
 #'
 #' @return An object of class flextable. In an interactive environment, results are viewable immediately.
 #' @export
 #'
 #' @examples
-#' infer_mean2_int(mtcars, wt~vs)
-#' infer_mean2_int(mtcars, wt~vs, conf_lvl = .9)
-infer_mean2_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NULL) {
+#' infer_2mean_int(mtcars, wt~vs)
+#' infer_2mean_int(mtcars, wt~vs, conf_lvl = .9)
+infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NULL) {
 
   # error catching
   check_conf_lvl(conf_lvl)
@@ -463,15 +463,15 @@ infer_mean2_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
 
 #' Create a summary table for a two-sample mean test
 #'
-#' @inheritParams infer_prop2_int
+#' @inheritParams infer_2prop_int
 #'
 #' @return An object of class flextable. In an interactive environment, results are viewable immediately.
 #' @export
 #'
 #' @examples
-#' infer_mean2_test(mtcars, wt~vs)
-#' infer_mean2_test(mtcars, wt~vs, conf_lvl = .9)
-infer_mean2_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NULL) {
+#' infer_2mean_test(mtcars, wt~vs)
+#' infer_2mean_test(mtcars, wt~vs, conf_lvl = .9)
+infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NULL) {
 
   # error catching
   check_conf_lvl(conf_lvl)

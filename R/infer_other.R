@@ -3,7 +3,7 @@
 #' `infer_reg()` creates a small table summarizing a linear regression test. The traditional columns
 #'    of `t` and `p-value` are removed by default but a full table can be accessed with simple = FALSE.
 #'
-#' @inheritParams infer_prop1
+#' @inheritParams infer_1prop
 #' @param formula The variables to run the test on, in formula syntax. Passed on to [stats::lm()].
 #' @param reduced Should a simple table be created (i.e., removal of the `t` and `p-value` columns)?
 #'    Defaults to TRUE.
@@ -80,7 +80,7 @@ infer_reg <- function(data, formula, digits = 3, caption = NULL, reduced = TRUE)
 #' `infer_chisq()` creates a tidy summary table for results of a chi-squared test. Alternatively, you can
 #'    select to see expected counts (`type = "expected"`) or observed counts (`type = "observed"`).
 #'
-#' @inheritParams infer_prop1
+#' @inheritParams infer_1prop
 #' @param type The kind of output to receive. Valid options are either "test" (the default), "expected",
 #'    or "observed".
 #'
@@ -156,7 +156,7 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
 
 #' Create a summary table
 #'
-#' @inheritParams infer_prop2_int
+#' @inheritParams infer_2prop_int
 #'
 #' @return An object of class flextable. If in an interactive session, results are viewable immediately.
 #' @export
