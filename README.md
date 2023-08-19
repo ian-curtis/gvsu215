@@ -31,23 +31,6 @@ You can install the development version of gvsu215 from
 ``` r
 # install.packages("devtools")
 devtools::install_github("ian-curtis/gvsu215")
-#> Downloading GitHub repo ian-curtis/gvsu215@HEAD
-#> uuid (1.1-0 -> 1.1-1) [CRAN]
-#> Installing 1 packages: uuid
-#> Installing package into '/private/var/folders/v9/w6xbcfv15tb191g6fft32j1h0000gn/T/RtmpCFvtWO/temp_libpath1c6a6d258a4a'
-#> (as 'lib' is unspecified)
-#> 
-#> The downloaded binary packages are in
-#>  /var/folders/v9/w6xbcfv15tb191g6fft32j1h0000gn/T//Rtmp3uHasi/downloaded_packages
-#> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/private/var/folders/v9/w6xbcfv15tb191g6fft32j1h0000gn/T/Rtmp3uHasi/remotes1fefbc282a7/ian-curtis-gvsu215-0ce1db0/DESCRIPTION’ ... OK
-#> * preparing ‘gvsu215’:
-#> * checking DESCRIPTION meta-information ... OK
-#> * checking for LF line-endings in source and make files and shell scripts
-#> * checking for empty or unneeded directories
-#> * building ‘gvsu215_0.2.0.1313.tar.gz’
-#> Installing package into '/private/var/folders/v9/w6xbcfv15tb191g6fft32j1h0000gn/T/RtmpCFvtWO/temp_libpath1c6a6d258a4a'
-#> (as 'lib' is unspecified)
 ```
 
 ## Prerequisites
@@ -61,21 +44,34 @@ formulas is needed as well.
 
 This package is best used for creating simple plots and charts where
 extensive customization is not necessary. For instance, you may just
-want to see summary statistics.
+want to see summary statistics, including one- or two-way tables.
 
 ``` r
 library(gvsu215)
 ```
 
 ``` r
+tbl_two(mtcars, gear~cyl)
+#> Registered S3 method overwritten by 'mosaic':
+#>   method                           from   
+#>   fortify.SpatialPolygonsDataFrame ggplot2
+```
+
+<img src="man/figures/README-tbl_two.png" width="50%" />
+
+``` r
 num_sum(mtcars, ~wt, na_rm = TRUE)
 ```
+
+<img src="man/figures/README-num_sum.png" width="80%" />
 
 Or maybe you just need percentiles:
 
 ``` r
 pctile(mtcars, ~wt, probs = c(0, .25, .4, .5, .6, .75, 1))
 ```
+
+<img src="man/figures/README-pctile.png" width="80%" />
 
 There is also support for a variety of plots…
 
@@ -108,17 +104,40 @@ plot_scatter(mtcars, wt~drat)
 … and statistical inference.
 
 ``` r
-infer_prop1(mtcars, ~vs, success = 1)
+infer_1prop(mtcars, ~vs, success = 1)
+```
 
+<img src="man/figures/README-infer_1prop.png" width="80%" />
+
+``` r
 infer_paired(mtcars, var1 = ~drat, var2 = ~wt)
+```
 
-infer_mean2_int(mtcars, wt~vs)
+<img src="man/figures/README-infer_paired.png" width="80%" />
 
+``` r
+infer_2mean_int(mtcars, wt~vs)
+```
+
+<img src="man/figures/README-infer_2mean_int.png" width="80%" />
+
+``` r
 suppressWarnings(infer_chisq(mtcars, cyl~gear))
-suppressWarnings(infer_chisq(mtcars, cyl~gear, type = "expected"))
+```
 
+<img src="man/figures/README-infer_chisq.png" width="50%" />
+
+``` r
+suppressWarnings(infer_chisq(mtcars, cyl~gear, type = "expected"))
+```
+
+<img src="man/figures/README-infer_chisq_expected.png" width="50%" />
+
+``` r
 infer_anova(mtcars, cyl~gear, digits = 2)
 ```
+
+<img src="man/figures/README-infer_anova.png" width="70%" />
 
 # Help, Bug Reports, and Feature Requests
 
