@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-Note: Due to the fact that some functions return tables (which are essentially HTML code), the README on GitHub will not display properly. For best results, visit the [online version of the README](https://gvsu215.ianacurtis.com).
+Note: Due to the fact that some functions return tables (which are essentially HTML code), the README on GitHub does not display properly. As a result, the output is an image of the resulting table rather than the actual HTML table.
 
 `gvsu215` contains a series of wrapper functions around select `{mosaic}` and `{ggformula}` functions, with help from `{flextable}`. The goal is to provide introductory statistics students/learners with an easy way to generate nice-looking plots and tables without focusing on the code used to create them. All tables and plots generated from this package have been doctored and have had themes pre-applied. As such, output will not print in "messy" format to the R console and can be used interactively, including in R Markdown documents.
 

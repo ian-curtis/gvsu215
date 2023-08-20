@@ -8,6 +8,17 @@
   * `num_sum()` --> `tbl_num_sum()`
   * `pctile()` --> `tbl_pctile()`
   * `corr()` --> `tbl_corr()`
+  * `infer_mean1()` --> `infer_1mean()`
+  * `infer_mean2()` --> `infer_2mean()`
+  * `infer_prop1()` --> `infer_1prop()`
+  * `infer_mean2_int()` --> `infer_2mean_int()`
+  * `infer_mean2_test()` --> `infer_2mean_test()`
+  * `infer_prop2_int()` --> `infer_2prop_int()`
+  * `infer_prop2_test()` --> `infer_2prop_test()`
+
+## Other Changes
+
+* The package vignette (README) has been changed to import images of all tables. The HTML output of the code does not work well with GitHub and the tables don't appear there.
 
 # gvsu215 0.2.0
 
