@@ -7,9 +7,8 @@
 <!-- badges: end -->
 
 Note: Due to the fact that some functions return tables (which are
-essentially HTML code), the README on GitHub will not display properly.
-For best results, visit the [online version of the
-README](https://gvsu215.ianacurtis.com).
+essentially HTML code), the README on GitHub does not display properly.
+As a result, the output is an image of the resulting table rather than the actual HTML table.
 
 `gvsu215` contains a series of wrapper functions around select
 `{mosaic}` and `{ggformula}` functions, with help from `{flextable}`.
