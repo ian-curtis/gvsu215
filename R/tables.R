@@ -1,6 +1,6 @@
 #' Create a one way data table
 #'
-#' `tbl_one()` creates a table giving counts and percentages on one variable.
+#' `tbl_1var()` creates a table giving counts and percentages on one variable.
 #'
 #' @param data A data frame.
 #' @param formula The variable to tabulate. Should be given in formula notation, `~var`.
@@ -13,12 +13,12 @@
 #' @export
 #'
 #' @examples
-#' tbl_one(mtcars, ~gear)
-#' tbl_one(mtcars, ~gear, digits = 2)
+#' tbl_1var(mtcars, ~gear)
+#' tbl_1var(mtcars, ~gear, digits = 2)
 #'
 #' # Will give an error
-#' try(tbl_one(mtcars, ~Gear))
-tbl_one <- function(data, formula, digits = 3, caption = NULL) {
+#' try(tbl_1var(mtcars, ~Gear))
+tbl_1var <- function(data, formula, digits = 3, caption = NULL) {
 
   # error catching
   check_test(mosaic::tally(formula, data = data, format = "count"))
@@ -37,15 +37,15 @@ tbl_one <- function(data, formula, digits = 3, caption = NULL) {
     dplyr::mutate(pct = (n / base::nrow(data))*100) %>%
     janitor::adorn_totals("row") %>%
     finalize_tbl(digits = digits, caption = base::paste("One Way Counts on Variable", str_of_var)) %>%
-    flextable::set_header_labels(n = "Count", pct = "Percent") %>%
-    flextable::set_caption(caption = flextable::as_paragraph(flextable::as_chunk(caption)))
+    flextable::set_header_labels(n = "Count", pct = "Percent")
+    # flextable::set_caption(caption = flextable::as_paragraph(flextable::as_chunk(caption)))
 
 }
 
 
 #' Create a two way data table
 #'
-#' @inheritParams tbl_one
+#' @inheritParams tbl_1var
 #' @param formula The variables to tabulate. Should be given in formula notation `var1~var2`. Changing
 #'    the order of the variables will swap the table axes.
 #' @param row_pct Should row percents be included in each cell? Defaults to FALSE with the only
@@ -56,13 +56,13 @@ tbl_one <- function(data, formula, digits = 3, caption = NULL) {
 #' @export
 #'
 #' @examples
-#' tbl_two(mtcars, cyl~gear)
-#' tbl_two(mtcars, cyl~gear, row_pct = TRUE)
-#' tbl_two(mtcars, cyl~gear, caption = "This is the new caption")
+#' tbl_2var(mtcars, cyl~gear)
+#' tbl_2var(mtcars, cyl~gear, row_pct = TRUE)
+#' tbl_2var(mtcars, cyl~gear, caption = "This is the new caption")
 #'
 #' # Will give an error
-#' try(tbl_two(mtcars, Cyl~Gear))
-tbl_two <- function(data, formula, row_pct = FALSE, digits = 3, caption = NULL) {
+#' try(tbl_2var(mtcars, Cyl~Gear))
+tbl_2var <- function(data, formula, row_pct = FALSE, digits = 3, caption = NULL) {
 
   # error catching
   check_test(mosaic::tally(formula, data = data))

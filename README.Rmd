@@ -46,18 +46,18 @@ This package is best used for creating simple plots and charts where extensive c
 library(gvsu215)
 ```
 
-```{r}
-tbl_two(mtcars, gear~cyl)
+```{r message=FALSE}
+tbl_2var(mtcars, gear~cyl)
 ```
 
 ```{r num-sum}
-num_sum(mtcars, ~wt, na_rm = TRUE)
+tbl_num_sum(mtcars, ~wt, na_rm = TRUE)
 ```
 
 Or maybe you just need percentiles:
 
 ```{r pctile}
-pctile(mtcars, ~wt, probs = c(0, .25, .4, .5, .6, .75, 1))
+tbl_pctile(mtcars, ~wt, probs = c(0, .25, .4, .5, .6, .75, 1))
 ```
 
 There is also support for a variety of plots...
