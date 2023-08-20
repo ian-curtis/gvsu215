@@ -46,23 +46,43 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.0.1313" id="gvsu215-0201313-development-version">gvsu215 0.2.0.1313 (development version)<a class="anchor" aria-label="anchor" href="#gvsu215-0201313-development-version"></a></h2>
+<div class="section level3">
+<h3 id="major-changes-0-2-0-1313">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-0-2-0-1313"></a></h3>
+<ul><li>Many functions have changed names (the old names are not available) to maintain consistency and ease of typing the function names. These functions are:
+<ul><li>
+<code>tbl_one()</code> –&gt; <code><a href="../reference/tbl_1var.html">tbl_1var()</a></code>
+</li>
+<li>
+<code>tbl_two()</code> –&gt; <code><a href="../reference/tbl_2var.html">tbl_2var()</a></code>
+</li>
+<li>
+<code>num_sum()</code> –&gt; <code><a href="../reference/tbl_num_sum.html">tbl_num_sum()</a></code>
+</li>
+<li>
+<code>pctile()</code> –&gt; <code><a href="../reference/tbl_pctile.html">tbl_pctile()</a></code>
+</li>
+<li>
+<code>corr()</code> –&gt; <code><a href="../reference/tbl_corr.html">tbl_corr()</a></code>
+</li>
+</ul></li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.0" id="gvsu215-020">gvsu215 0.2.0<a class="anchor" aria-label="anchor" href="#gvsu215-020"></a></h2>
 <div class="section level3">
 <h3 id="major-changes-0-2-0">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-0-2-0"></a></h3>
-<ul><li>Two functions have been renamed. <code>one_way()</code> is now <code><a href="../reference/tbl_one.html">tbl_one()</a></code> and <code>two_way()</code> is now <code><a href="../reference/tbl_two.html">tbl_two()</a></code>. The old functions are not available.</li>
+<ul><li>Two functions have been renamed. <code>one_way()</code> is now <code>tbl_one()</code> and <code>two_way()</code> is now <code>tbl_two()</code>. The old functions are not available.</li>
 <li>
 <code><a href="../reference/plot_scatter.html">plot_scatter()</a></code>: The default value for <code>legend_title</code> is now NULL (which is then supplied with the variable name). You can still supply a new string for the legend title.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="other-changes-0-2-0">Other Changes<a class="anchor" aria-label="anchor" href="#other-changes-0-2-0"></a></h3>
 <ul><li>
-<code>two_way()</code> (<code><a href="../reference/tbl_two.html">tbl_two()</a></code>) output cleaned up</li>
+<code>two_way()</code> (<code>tbl_two()</code>) output cleaned up</li>
 <li>
 <code><a href="../reference/plot_box.html">plot_box()</a></code> and <code><a href="../reference/plot_hist.html">plot_hist()</a></code> will now not do scientific notation between certain ranges of numbers</li>
 <li>
-<code><a href="../reference/corr.html">corr()</a></code> now shows the observations used (since this is not always just a sum of n1 and n2 missing)</li>
+<code>corr()</code> now shows the observations used (since this is not always just a sum of n1 and n2 missing)</li>
 <li>added confidence interval to <code><a href="../reference/infer_paired.html">infer_paired()</a></code>
 </li>
 <li>The two-sample family of functions now show the correct levels of the grouping variable and the respective calculations about them.</li>
@@ -75,7 +95,7 @@
 <li>rounding corrections</li>
 <li>
 <code><a href="../reference/plot_scatter.html">plot_scatter()</a></code> now allows for a least squares line to be drawn in</li>
-<li>bug fix in <code><a href="../reference/num_sum.html">num_sum()</a></code>
+<li>bug fix in <code>num_sum()</code>
 </li>
 </ul></div>
     <div class="section level2">

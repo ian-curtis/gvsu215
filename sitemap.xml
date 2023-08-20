@@ -25,9 +25,6 @@
     <loc>https://gvsu215.ianacurtis.com/reference/check_test.html</loc>
   </url>
   <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/corr.html</loc>
-  </url>
-  <url>
     <loc>https://gvsu215.ianacurtis.com/reference/finalize_plot.html</loc>
   </url>
   <url>
@@ -73,12 +70,6 @@
     <loc>https://gvsu215.ianacurtis.com/reference/infer_reg.html</loc>
   </url>
   <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/num_sum.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/pctile.html</loc>
-  </url>
-  <url>
     <loc>https://gvsu215.ianacurtis.com/reference/plot_bar.html</loc>
   </url>
   <url>
@@ -91,9 +82,18 @@
     <loc>https://gvsu215.ianacurtis.com/reference/plot_scatter.html</loc>
   </url>
   <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/tbl_one.html</loc>
+    <loc>https://gvsu215.ianacurtis.com/reference/tbl_1var.html</loc>
   </url>
   <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/tbl_two.html</loc>
+    <loc>https://gvsu215.ianacurtis.com/reference/tbl_2var.html</loc>
+  </url>
+  <url>
+    <loc>https://gvsu215.ianacurtis.com/reference/tbl_corr.html</loc>
+  </url>
+  <url>
+    <loc>https://gvsu215.ianacurtis.com/reference/tbl_num_sum.html</loc>
+  </url>
+  <url>
+    <loc>https://gvsu215.ianacurtis.com/reference/tbl_pctile.html</loc>
   </url>
 </urlset>
