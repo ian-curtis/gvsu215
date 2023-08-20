@@ -1,49 +1,49 @@
-# tbl_one() ####
+# tbl_1var() ####
 test_that("one way generates", {
   skip("superseded")
-  expect_no_condition(tbl_one(mtcars, ~gear))
+  expect_no_condition(tbl_1var(mtcars, ~gear))
 })
 
 test_that("one way generates with digits", {
   skip("superseded")
-  expect_no_condition(tbl_one(mtcars, ~gear, digits = 2))
+  expect_no_condition(tbl_1var(mtcars, ~gear, digits = 2))
 })
 
 test_that("one way generates with caption", {
   skip("superseded")
-  expect_no_condition(tbl_one(mtcars, ~gear, caption = "hehe"))
+  expect_no_condition(tbl_1var(mtcars, ~gear, caption = "hehe"))
 })
 
 test_that("one way fails with mispelling", {
-  expect_error(tbl_one(mtcars, ~Gear))
+  expect_error(tbl_1var(mtcars, ~Gear))
 })
 
 
-# tbl_two() ####
+# tbl_2var() ####
 test_that("two way generates", {
   skip("superseded")
-  expect_no_condition(tbl_two(mtcars, cyl~gear))
+  expect_no_condition(tbl_2var(mtcars, cyl~gear))
 })
 
 test_that("two way generates with caption", {
   skip("superseded")
-  expect_no_condition(tbl_two(mtcars, cyl~gear, caption = "hehe"))
+  expect_no_condition(tbl_2var(mtcars, cyl~gear, caption = "hehe"))
 })
 
 test_that("two way generates with digits", {
   skip("superseded")
-  expect_no_condition(tbl_two(mtcars, cyl~gear, digits = 2))
+  expect_no_condition(tbl_2var(mtcars, cyl~gear, digits = 2))
 })
 
 test_that("two way generates with row percents", {
   skip("superseded")
-  expect_no_condition(tbl_two(mtcars, cyl~gear, row_pct = TRUE))
+  expect_no_condition(tbl_2var(mtcars, cyl~gear, row_pct = TRUE))
 })
 
 test_that("two way fails with wrong row percent argument", {
-  expect_error(tbl_two(mtcars, cyl~gear, row_pct = "yes"))
+  expect_error(tbl_2var(mtcars, cyl~gear, row_pct = "yes"))
 })
 
 test_that("two way fails with mispelling", {
-  expect_error(tbl_two(mtcars, Cyl~Gear))
+  expect_error(tbl_2var(mtcars, Cyl~Gear))
 })

@@ -1,5 +1,14 @@
 # gvsu215 0.2.0.1313 (development version)
 
+## Major Changes
+
+* Many functions have changed names (the old names are not available) to maintain consistency and ease of typing the function names. These functions are:
+  * `tbl_one()` --> `tbl_1var()`
+  * `tbl_two()` --> `tbl_2var()`
+  * `num_sum()` --> `tbl_num_sum()`
+  * `pctile()` --> `tbl_pctile()`
+  * `corr()` --> `tbl_corr()`
+
 # gvsu215 0.2.0
 
 ## Major Changes

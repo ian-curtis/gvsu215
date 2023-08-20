@@ -51,16 +51,13 @@ library(gvsu215)
 ```
 
 ``` r
-tbl_two(mtcars, gear~cyl)
-#> Registered S3 method overwritten by 'mosaic':
-#>   method                           from   
-#>   fortify.SpatialPolygonsDataFrame ggplot2
+tbl_2var(mtcars, gear~cyl)
 ```
 
 <img src="man/figures/README-tbl_two.png" width="50%" />
 
 ``` r
-num_sum(mtcars, ~wt, na_rm = TRUE)
+tbl_num_sum(mtcars, ~wt, na_rm = TRUE)
 ```
 
 <img src="man/figures/README-num_sum.png" width="80%" />
@@ -68,7 +65,7 @@ num_sum(mtcars, ~wt, na_rm = TRUE)
 Or maybe you just need percentiles:
 
 ``` r
-pctile(mtcars, ~wt, probs = c(0, .25, .4, .5, .6, .75, 1))
+tbl_pctile(mtcars, ~wt, probs = c(0, .25, .4, .5, .6, .75, 1))
 ```
 
 <img src="man/figures/README-pctile.png" width="80%" />
