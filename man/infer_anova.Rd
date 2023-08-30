@@ -22,6 +22,6 @@ An object of class flextable. If in an interactive session, results are viewable
 Create a summary table
 }
 \examples{
-infer_anova(mtcars, cyl~gear)
-infer_anova(mtcars, cyl~gear, digits = 4)
+infer_anova(mtcars, drat~gear)
+infer_anova(mtcars, drat~gear, digits = 4)
 }

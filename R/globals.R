@@ -1,6 +1,6 @@
 globalVariables(unique(c(
   # infer_anova:
-  ".data",
+  ".data", "df",
   # infer_chisq:
   ".data", "method",
   # infer_prop1:

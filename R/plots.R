@@ -15,7 +15,7 @@
 #' @examples
 #' plot_bar(mtcars, ~cyl)
 #' plot_bar(mtcars, ~cyl, type = "count")
-#' plot_bar(mtcars, ~cyl, type = "percent", fill = "yellowgreen")
+#' #plot_bar(mtcars, ~cyl, type = "percent", fill = "yellowgreen")
 #'
 #' plot_bar(mtcars, ~cyl, fill = ~gear)
 #' plot_bar(mtcars, ~cyl, type = "count", fill = ~gear)
@@ -119,29 +119,67 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
   } # count plot
   else if (type == 'count') {
 
-    na <- find_na(data, formula)
+    if (base::is.character(fill)) {
+      # one-var count
 
-    if (na_rm == TRUE) {
+      na <- find_na(data, formula)
 
-      data <- data %>%
-        dplyr::select({{ var }}) %>%
-        stats::na.omit()
+      if (na_rm == TRUE) {
 
+        data <- data %>%
+          dplyr::select({{ var }}) %>%
+          stats::na.omit()
+
+      }
+
+      data %>%
+        dplyr::mutate("{var}" := base::factor({{ var }})) %>%
+        ggformula::gf_counts(formula, fill = fill) %>%
+        ggformula::gf_refine(ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)),
+                                                         )) %>%
+        ggformula::gf_labs(title = ifelse(base::is.null(title),
+                                          paste0("Simple Bar Count of ",
+                                                 str_of_var), title),
+                           subtitle = base::paste("Missing:", na, "|", "NAs Removed:",
+                                                  base::ifelse(na_rm == FALSE, "No", "Yes")),
+                           y = "Count", ...) %>%
+        finalize_plot()
+    } else {
+      # grouped count
+
+      var_na <- find_na(data, formula)
+      fill_na <- find_na(data, fill)
+
+      fill_var <- fill[[2]]
+      str_of_fill <- base::deparse(base::substitute(fill_var))
+
+      if (na_rm == TRUE) {
+
+        data <- data %>%
+          dplyr::select({{ var }}, {{ fill_var }}) %>%
+          stats::na.omit()
+
+      }
+
+      data %>%
+        dplyr::mutate("{var}" := base::gsub(" ", "\n", {{ var }}),
+                      "{fill_var}" := base::factor({{ fill_var }})) %>%
+        ggformula::gf_counts(formula,
+                               fill = fill,
+                               position = ggplot2::position_dodge2(preserve = "single")) %>%
+        ggformula::gf_labs(title = base::ifelse(
+          base::is.null(title),
+          base::paste("Clustered Bar Graph of", str_of_var, "by", str_of_fill),
+          title),
+          y = "Count",
+          subtitle = base::paste(str_of_var, "Missing:", var_na, "|",
+                                 str_of_fill, "Missing:", fill_na, "|",
+                                 "NAs Removed:", base::ifelse(na_rm == FALSE, "No", "Yes")),
+          ...) %>%
+        ggformula::gf_refine(ggplot2::scale_fill_brewer(palette = "Dark2", na.value = "grey"),
+                             ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))) %>%
+        finalize_plot()
     }
-
-    data %>%
-      dplyr::mutate("{var}" := gsub(" ", "\n", {{ var }}),
-                    "{fill_var}" := base::factor({{ fill_var }})) %>%
-      ggformula::gf_bar(formula, fill = fill) %>%
-      ggformula::gf_refine(ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))) %>%
-      ggformula::gf_labs(title = base::ifelse(base::is.null(title),
-                                        paste0("Simple Bar Count of ", str_of_var),
-                                        title),
-                         subtitle = base::paste("Missing:", na, "|", "NAs Removed:",
-                                                base::ifelse(na_rm == FALSE, "No", "Yes")),
-                         y = "Count", ...) %>%
-      finalize_plot()
-
   }
 }
 

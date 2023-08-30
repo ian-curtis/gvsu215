@@ -27,10 +27,16 @@ viewable immediately.
 including the min, q1, median, q3, max, mean, standard deviation, n, and missing values.
 }
 \examples{
-# not removing NAs is not recommended
 tbl_num_sum(mtcars, ~wt)
 
 tbl_num_sum(mtcars, ~wt, na_rm = TRUE)
 tbl_num_sum(mtcars, ~wt, na_rm = TRUE, digits = 2, caption = "This is a table")
 tbl_num_sum(mtcars, wt~cyl, na_rm = TRUE)
+
+# not removing NAs is not recommended
+tbl_num_sum(airquality, ~Ozone)
+tbl_num_sum(airquality, Ozone~Month)
+
+# easy fix
+tbl_num_sum(airquality, Ozone~Month, na_rm = TRUE)
 }

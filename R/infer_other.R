@@ -162,8 +162,8 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
 #' @export
 #'
 #' @examples
-#' infer_anova(mtcars, cyl~gear)
-#' infer_anova(mtcars, cyl~gear, digits = 4)
+#' infer_anova(mtcars, drat~gear)
+#' infer_anova(mtcars, drat~gear, digits = 4)
 infer_anova <- function(data, formula, digits = 3, caption = NULL) {
 
   # code
@@ -181,13 +181,15 @@ infer_anova <- function(data, formula, digits = 3, caption = NULL) {
 
   }
 
-  model <-  stats::lm(formula, data = data)
+  data <- data %>%
+    dplyr::mutate("{var2}" := base::factor({{ var2 }}))
 
-  broom::tidy(stats::anova(model)) %>%
+  broom::tidy(stats::aov(formula, data)) %>%
     dplyr::mutate(term = c("Between", "Within"),
                   p.value = base::ifelse(!is.na(p.value),
                                          base::format.pval(p.value, digits = 3),
-                                         p.value)) %>%
+                                         p.value),
+                  df = base::as.integer(df)) %>%
     janitor::adorn_totals("row", fill = NA, cols = dplyr::starts_with(c("term", "df", "sumsq"))) %>%
     finalize_tbl(digits = digits, caption = caption, na_str = "") %>%
     flextable::set_header_labels(term = "Source", sumsq = "SS", meansq = "MS", statistic = "F", p.value = "p-value")

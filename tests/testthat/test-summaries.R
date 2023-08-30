@@ -1,6 +1,6 @@
 # tbl_num_sum() ####
-test_that("num sum warns when not removing NAs", {
-  expect_warning(tbl_num_sum(mtcars, ~wt))
+test_that("num sum works when not removing NAs and no NAs are present", {
+  expect_no_condition(tbl_num_sum(mtcars, ~wt))
 })
 
 test_that("num sum works with NAs removed", {
@@ -29,6 +29,14 @@ test_that("num sum fails with mispelling", {
 
 test_that("num sum fails with groups and mispellling", {
   expect_error(tbl_num_sum(mtcars, Wt~Cyl, na_rm = TRUE, digits = 2))
+})
+
+test_that("num sum warns with NAs and na_rm = FALSE", {
+  expect_warning(tbl_num_sum(airquality, ~Ozone, na_rm = FALSE))
+})
+
+test_that("num sum warns with NAs and na_rm = FALSE with groups", {
+  expect_warning(tbl_num_sum(airquality, Ozone~Month, na_rm = FALSE))
 })
 
 
