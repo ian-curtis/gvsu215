@@ -15,23 +15,37 @@
 #' @export
 #'
 #' @examples
-#' # not removing NAs is not recommended
 #' tbl_num_sum(mtcars, ~wt)
 #'
 #' tbl_num_sum(mtcars, ~wt, na_rm = TRUE)
 #' tbl_num_sum(mtcars, ~wt, na_rm = TRUE, digits = 2, caption = "This is a table")
 #' tbl_num_sum(mtcars, wt~cyl, na_rm = TRUE)
+#'
+#' # not removing NAs is not recommended
+#' tbl_num_sum(airquality, ~Ozone)
+#' tbl_num_sum(airquality, Ozone~Month)
+#'
+#' # easy fix
+#' tbl_num_sum(airquality, Ozone~Month, na_rm = TRUE)
 tbl_num_sum <- function(data, formula, digits = 3, na_rm = FALSE, caption = NULL) {
-
-  # error catching
-  if (na_rm == FALSE) {
-    base::warning("Missing values *not* automatically removed from calculation. \n You may get NA values in your output.")
-  }
 
   check_test(mosaic::favstats(x = formula, data = data, na.rm = na_rm))
 
   # code
   if (base::length(formula) == 2) {
+
+    n_na <- find_na(data, formula)
+
+    if (n_na == 0 & na_rm == FALSE) {
+
+      na_rm <- TRUE
+
+    } else if (n_na != 0 & na_rm == FALSE) {
+
+      warning("NAs were detected but not removed. You may get missing values in your output.")
+
+    }
+
     ind_var <- formula[[2]]
     ind_str <- base::deparse(base::substitute(ind_var))
 
@@ -56,6 +70,16 @@ tbl_num_sum <- function(data, formula, digits = 3, na_rm = FALSE, caption = NULL
     }
 
     n_na <- find_na(data, formula, n = 2)
+
+    if (n_na[[1]] == 0 & n_na[[2]] == 0 & na_rm == FALSE) {
+
+      na_rm <- TRUE
+
+    } else if ((n_na[[1]] != 0 | n_na[[2]] != 0) & na_rm == FALSE) {
+
+      warning("NAs were detected but not removed. You may get missing values in your output.")
+
+    }
 
     dep_lvls <- data %>%
       dplyr::select({{ dep_var }}) %>%
