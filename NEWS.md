@@ -1,5 +1,10 @@
 # gvsu215 (development version)
 
+* update documentation (including how to add a least squares line to `plot_scatter()`)
+* Tried to change a legend title on a grouped scatterplot and it didn't work? Now it does!
+
+# gvsu215 0.3.1
+
 ## Updates
 
 * `plot_bar()` will now show colors correctly when `type = "count"` is specified.

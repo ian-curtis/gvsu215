@@ -1,0 +1,160 @@
+---
+title: "Cheat Sheet"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Cheat Sheet}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+There are many functions contained in this package and it can get annoying to have to keep checking documentation. The purpose of this article is to provide code shells for the basic features of each function. That way, you can simply copy the template and edit where need be.
+
+# Installation and Preparations
+
+When using this package, you will first want to install it. This can only be done from GitHub at this time and you will need `devtools`.
+
+```{r}
+# install.packages("devtools") # if you don't have it already installed
+devtools::install_github("ian-curtis/gvsu215")
+```
+
+Then, be sure you have loaded the package in order to access its functions.
+
+```{r setup}
+library(gvsu215)
+```
+
+Special note: If you are using R Markdown to export to a PDF, you will want to specify the following in your YAML header.
+
+```
+output:
+  pdf_document:
+    latex_engine: xelatex
+```
+
+This will enable the `xelatex` engine and will prevent the package from automatically giving warnings each time a table is generated.
+
+# Code Shells
+
+The package's functions can be broken down into a few general categories: tables, plots, and inference. The templates below will include a simple example template and doesn't necessarily contain all possible arguments for that function. To evaluate, simply copy the code chunk, double click on the filler words (in all caps) and replace them with your respective items.
+
+## Tables
+
+```{r}
+tbl_1var(DATA, ~VAR)
+```
+
+```{r}
+tbl_2var(DATA, VAR1~VAR2)
+```
+
+```{r}
+tbl_corr(DATA, VAR1~VAR2, na_rm = TRUE)
+```
+
+```{r}
+tbl_num_sum(DATA, ~VAR, na_rm = TRUE)
+tbl_num_sum(DATA, VAR1~VAR2, na_rm = TRUE)
+```
+
+```{r}
+tbl_pctile(DATA, ~VAR)
+tbl_pctile(DATA, VAR1~VAR2, na_rm = TRUE)
+```
+
+## Plots
+
+```{r}
+plot_bar(DATA, ~VAR)
+plot_bar(DATA, ~VAR, fill = ~FILLVAR)
+```
+
+```{r}
+plot_box(DATA, ~VAR)
+plot_box(DATA, VAR1~VAR2)
+```
+
+```{r}
+plot_hist(DATA, ~VAR, binwidth = NUMBER)
+plot_hist(DATA, ~VAR, binwidth = NUMBER, group = ~GROUPVAR)
+```
+
+```{r}
+plot_scatter(DATA, VAR1~VAR2)
+plot_scatter(DATA, VAR1~VAR2, fill = ~FILLVAR, legend_title = "TEXT")
+```
+
+## Inferential Statistics
+
+Confidence levels default to 95% but can be overridden with `conf_lvl = DECIMAL` (e.g., `conf_lvl = .9`). 
+
+```{r}
+infer_1mean(DATA, ~VAR)
+```
+
+```{r}
+infer_1prop(DATA, ~VAR, success = SUCCESS_VALUE)
+```
+
+```{r}
+infer_2mean_int(DATA, VAR1~VAR2)
+# or infer_2mean(DATA, VAR1~VAR2, conf_int = TRUE)
+```
+
+```{r}
+infer_2mean_test(DATA, VAR1~VAR2)
+# or infer_2mean(DATA, VAR1~VAR2)
+```
+
+```{r}
+infer_2prop_int(DATA, VAR1~VAR2, success = SUCCESS_VALUE)
+# or infer_2prop(DATA, VAR1~VAR2, success = SUCCESS_VALUE, conf_int = TRUE)
+```
+
+```{r}
+infer_2prop_test(DATA, VAR1~VAR2, success = SUCCESS_VALUE)
+# or infer_2prop(DATA, VAR1~VAR2, success = SUCCESS_VALUE)
+```
+
+```{r}
+infer_paired(DATA, var1 = ~VAR1, var2 = ~VAR2)
+```
+
+```{r}
+infer_reg(DATA, VAR1~VAR2) # for full table use `reduced = FALSE`
+```
+
+```{r}
+infer_chisq(DATA, VAR1~VAR2)
+infer_chisq(DATA, VAR1~VAR2, type = "expected")
+infer_chisq(DATA, VAR1~VAR2, type = "observed")
+```
+
+```{r}
+infer_anova(DATA, VAR1~VAR2)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
