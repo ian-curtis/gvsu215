@@ -45,7 +45,9 @@ third categorical variable.
 plot_scatter(mtcars, wt~drat)
 plot_scatter(mtcars, wt~drat, fill = "red")
 plot_scatter(mtcars, wt~drat, axis_lines = "both")
+plot_scatter(mtcars, wt~drat, ls_line = TRUE)
 
 plot_scatter(mtcars, wt~drat, fill = ~cyl)
-plot_scatter(mtcars, wt~drat, fill = ~cyl, legend_title = "Cyl")
+plot_scatter(mtcars, wt~drat, fill = ~cyl, ls_line = TRUE)
+plot_scatter(mtcars, wt~drat, fill = ~cyl, legend_title = "Cylinders")
 }

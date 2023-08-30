@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{finalize_plot}
 \alias{finalize_plot}
-\title{Add default theme options to plots}
+\title{INTERNAL: Add default theme options to plots}
 \usage{
 finalize_plot(plot)
 }

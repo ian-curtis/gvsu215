@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{check_test}
 \alias{check_test}
-\title{Check if an error will occur later}
+\title{INTERNAL: Check if an error will occur later}
 \usage{
 check_test(code)
 }
@@ -14,7 +14,7 @@ Nothing, or an error message.
 }
 \description{
 Used internally to check if an error might occur later. We catch the error here to provide
-a more helpful message to users based on the most common cause of errors.
+a more helpful message to users based on the most common causes of errors.
 }
 \examples{
 library(stats)

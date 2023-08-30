@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{finalize_tbl}
 \alias{finalize_tbl}
-\title{Add default theme options to tables}
+\title{INTERNAL: Add default theme options to tables}
 \usage{
 finalize_tbl(table, digits, striped = TRUE, caption = NULL, na_str = "NA")
 }

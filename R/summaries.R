@@ -184,9 +184,9 @@ tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1),
 #'
 #' @examples
 #' # Not removing NAs is not recommended
-#' tbl_corr(mtcars, wt~qsec)
+#' tbl_corr(airquality, Ozone~Solar.R)
 #'
-#' tbl_corr(mtcars, wt~qsec, na_rm = TRUE)
+#' tbl_corr(airquality, Ozone~Solar.R, na_rm = TRUE)
 tbl_corr <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
 
   # error catching
