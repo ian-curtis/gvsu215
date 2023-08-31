@@ -24,7 +24,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
   # error catching
 
   if (base::length(type) == 2) {
-    message("No value for type provided, creating a 'Percent' plot.")
+    rlang::inform("When no value for `type` is provided, a 'percent' plot is created.", .frequency = "regularly", .frequency_id = "bar-type")
   }
 
   if (base::length(formula) > 2) {
@@ -40,7 +40,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
   str_of_var <- base::deparse(base::substitute(var))
 
   lvls <- dplyr::pull(data, var)
-  big_lvl <- base::max(base::nchar(unique(lvls)), na.rm = TRUE)
+  big_lvl <- base::max(base::nchar(as.character(unique(lvls))), na.rm = TRUE)
 
   if (big_lvl > 20) {
 
@@ -68,8 +68,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
       data %>%
         dplyr::mutate("{var}" := base::factor({{ var }})) %>%
         ggformula::gf_percents(formula, fill = fill) %>%
-        ggformula::gf_refine(ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)),
-                                                limits = c(0, 100))) %>%
+        ggformula::gf_refine(ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))) %>%
         ggformula::gf_labs(title = ifelse(base::is.null(title),
                                           paste0("Simple Bar Percent of ",
                                                  str_of_var), title),
@@ -199,16 +198,18 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
 #' plot_box(mtcars, ~wt)
 #' plot_box(mtcars, wt~gear, fill = 'orangered4')
 #' plot_box(mtcars, wt~gear)
-plot_box <- function(data, formula, fill = "grey80", title = NULL, na_rm = FALSE, ...) {
+plot_box <- function(data, formula, fill = "grey80", title = NULL, ...) {
 
   # error catching
   check_test(ggformula::gf_boxplot(formula, data = data, geom = "errorbar", linewidth = 2, width = 0))
+
+  rlang::inform("Note: NAs always removed for boxplots", .frequency = "once", .frequency_id = "box-nas")
 
   # code
   var <- formula[[2]]
   str_of_var <- base::deparse(base::substitute(var))
 
-  if (base::max(data[, str_of_var]) <= 1000000 & base::max(data[, str_of_var]) >= 0.000001) {
+  if (base::max(data[, str_of_var], na.rm = TRUE) <= 1000000 & base::max(data[, str_of_var], na.rm = TRUE) >= 0.000001) {
 
     plot_labels <- function (x) format(x, scientific = FALSE)
 
@@ -222,13 +223,10 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, na_rm = FALSE
 
     na <- find_na(data, formula)
 
-    if (na_rm == TRUE) {
+    data <- data %>%
+      dplyr::select({{ var }}) %>%
+      stats::na.omit()
 
-      data <- data %>%
-        dplyr::select({{ var }}) %>%
-        stats::na.omit()
-
-    }
 
     ggformula::gf_boxplot(formula, data = data, geom = "errorbar", linewidth = 2, width = 0) %>%
       ggformula::gf_boxplot(formula, data = data, fill = fill, width = 0.5, lwd = 1, color = "black",
@@ -239,14 +237,14 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, na_rm = FALSE
                                    base::paste("Boxplot of", str_of_var),
                                    title),
               subtitle = base::paste("Missing:", na, "|",
-                                     "NAs Removed:", base::ifelse(na_rm == FALSE, "No", "Yes")),
+                                     "NAs Removed: Yes"),
               ...) %>%
       finalize_plot() %>%
       ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels)) %>%
       ggformula::gf_theme(panel.grid.major.y = ggplot2::element_blank(),
                panel.grid.major.x = ggplot2::element_line(color = "grey70", linewidth = .5),
                axis.text.y = ggplot2::element_blank(),
-               axis.text.x = ggplot2::element_text(size = 15)) +
+               axis.text.x = ggplot2::element_text(size = 13)) +
       ggplot2::ylim(-0.4, 0.4)
 
 
@@ -257,15 +255,9 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, na_rm = FALSE
 
     na <- find_na(data, formula, n = 2)
 
-    if (na_rm == TRUE) {
-
-      data <- data %>%
-        dplyr::select({{ var }}, {{ by_var }}) %>%
-        stats::na.omit()
-
-    }
-
     data <- data %>%
+      dplyr::select({{ var }}, {{ by_var }}) %>%
+      stats::na.omit() %>%
       dplyr::mutate("{by_var}" := base::factor({{ by_var }}))
 
     ggformula::gf_boxplot(formula, data = data, geom = "errorbar", linewidth = 2, width = 0) %>%
@@ -277,12 +269,12 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, na_rm = FALSE
                              title),
                          subtitle = paste(str_of_var, "Missing:", na[[1]], "|",
                                           str_of_by, "Missing:", na[[2]], "|",
-                                          "NAs Removed:", base::ifelse(na_rm == FALSE, "No", "Yes")),
+                                          "NAs Removed: Yes"),
                          ...) %>%
       finalize_plot() %>%
       ggformula::gf_refine(ggplot2::scale_y_continuous(labels = plot_labels)) %>%
       ggformula::gf_theme(axis.text.x = ggplot2::element_text(size = 15),
-               axis.text.y = ggplot2::element_text(size = 15))
+               axis.text.y = ggplot2::element_text(size = 13))
 
   }
 
@@ -312,20 +304,22 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, na_rm = FALSE
 #'
 #' plot_hist(mtcars, ~drat, binwidth = 0.05, group = ~cyl)
 #' plot_hist(mtcars, ~drat, binwidth = 0.05, group = ~cyl, group_cols = 2)
-plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = NULL, group_cols = 1, title = NULL, na_rm = FALSE, ...) {
+plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = NULL, group_cols = 1, title = NULL, ...) {
 
   # error catching
   if (is.null(binwidth)) {
 
-    warning("No value for breaks supplied. Your histogram may not show your data accurately.")
+    warning("No value for binwidth supplied. Your histogram may not show your data accurately.")
 
   }
 
   if (base::length(formula) > 2) {
 
-    stop("Too many variables in formula. Trying for a grouped histogram? Try the `facet` argument.")
+    stop("Too many variables in formula. Trying for a grouped histogram? Try the `group` argument.")
 
   }
+
+  rlang::inform("Note: NAs always removed for histograms", .frequency = "once", .frequency_id = "hist-nas")
 
   check_test(ggformula::gf_histogram(formula, data = data, type="count", binwidth = binwidth, fill = fill, color = 'grey40', alpha = 100))
 
@@ -334,7 +328,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = 
   var <- formula[[2]]
   str_of_var <- base::deparse(base::substitute(var))
 
-  if (base::max(data[, str_of_var]) <= 1000000 & base::max(data[, str_of_var]) >= 0.000001) {
+  if (base::max(data[, str_of_var], na.rm = TRUE) <= 1000000 & base::max(data[, str_of_var], na.rm = TRUE) >= 0.000001) {
 
     plot_labels <- function (x) format(x, scientific = FALSE)
 
@@ -349,12 +343,9 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = 
 
     n_na <- find_na(data, formula)
 
-    if (na_rm == TRUE) {
-
-      data <- data %>%
-        dplyr::select({{ var }}) %>%
-        stats::na.omit()
-    }
+    data <- data %>%
+      dplyr::select({{ var }}) %>%
+      stats::na.omit()
 
 
 
@@ -364,8 +355,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = 
                          title = base::ifelse(base::is.null(title),
                                         base::paste("Histogram of", str_of_var),
                                         title),
-                         subtitle = base::paste("Missing:", n_na, "|", "NAs Removed:",
-                                                base::ifelse(na_rm == FALSE, "No", "Yes")),
+                         subtitle = base::paste("Missing:", n_na, "|", "NAs Removed: Yes"),
                          ...) %>%
       finalize_plot() %>%
       ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels))
@@ -377,11 +367,9 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = 
     var_na <- find_na(data, formula)
     facet_na <- find_na(data, group)
 
-    if (na_rm == TRUE) {
-      data <- data %>%
-        dplyr::select({{ var }}, {{ facet_var }}) %>%
-        stats::na.omit()
-    }
+    data <- data %>%
+      dplyr::select({{ var }}, {{ facet_var }}) %>%
+      stats::na.omit()
 
     ggformula::gf_histogram(formula, data = data, binwidth = binwidth, fill = fill, color = "grey40", alpha = 100) %>%
       ggformula::gf_facet_wrap(group, ncol = group_cols) %>%
@@ -392,7 +380,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = 
                                               title),
                          subtitle = base::paste(str_of_var, "Missing:", var_na, "|",
                                                 str_of_facet, "Missing:", facet_na, "|",
-                                                "NAs Removed:", base::ifelse(na_rm == FALSE, "No", "Yes")),
+                                                "NAs Removed: Yes"),
                          ...) %>%
       finalize_plot() %>%
       ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels)) %>%
