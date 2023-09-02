@@ -4,6 +4,8 @@
 # gvsu215
 
 <!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/gvsu215)](https://CRAN.R-project.org/package=gvsu215)
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 <!-- badges: end -->
 
 Note: Due to the fact that some functions return tables (which are
