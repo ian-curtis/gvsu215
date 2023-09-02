@@ -39,7 +39,7 @@ Create a simple bar plot
 \examples{
 plot_bar(mtcars, ~cyl)
 plot_bar(mtcars, ~cyl, type = "count")
-#plot_bar(mtcars, ~cyl, type = "percent", fill = "yellowgreen")
+plot_bar(mtcars, ~cyl, type = "percent", fill = "yellowgreen")
 
 plot_bar(mtcars, ~cyl, fill = ~gear)
 plot_bar(mtcars, ~cyl, type = "count", fill = ~gear)

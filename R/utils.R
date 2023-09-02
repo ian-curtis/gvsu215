@@ -1,4 +1,4 @@
-#' Add default theme options to tables
+#' INTERNAL: Add default theme options to tables
 #'
 #' `finalize_tbl()` is used internally to complete the table creation process. This function creates
 #'    a flextable object and adds theme choices and size specifications.
@@ -26,7 +26,7 @@ finalize_tbl <- function(table, digits, striped = TRUE, caption = NULL, na_str =
       flextable::colformat_char(na_str = na_str) %>%
       flextable::colformat_lgl(na_str = na_str) %>%
       flextable::border_outer(part="all", border = big_border ) %>%
-      flextable::hline(i = 1, border = officer::fp_border(color = "#000000", style = "solid", width = 2), part = "header") %>%
+      flextable::hline(i = 1, border = officer::fp_border(color = "#0032a0", style = "solid", width = 2), part = "header") %>%
       flextable::vline(border = officer::fp_border(color = '#e1e4e5', width = 1)) %>%
       flextable::bold(bold = TRUE, part = "header") %>%
       flextable::align(align = "center", part = "header") %>%
@@ -45,7 +45,7 @@ finalize_tbl <- function(table, digits, striped = TRUE, caption = NULL, na_str =
       flextable::colformat_lgl(na_str = na_str) %>%
       flextable::theme_zebra(odd_header = "#ffffff", even_body = "#ffffff") %>%
       flextable::border_outer(part="all", border = big_border ) %>%
-      flextable::hline(border = officer::fp_border(color = "#000000", style = "solid", width = 2), part = "header") %>%
+      flextable::hline(border = officer::fp_border(color = "#0032a0", style = "solid", width = 2), part = "header") %>%
       flextable::vline(border = officer::fp_border(color = '#e1e4e5', width = 1)) %>%
       flextable::bold(bold = TRUE, part = "header") %>%
       flextable::align(align = "center", part = "header") %>%
@@ -57,7 +57,7 @@ finalize_tbl <- function(table, digits, striped = TRUE, caption = NULL, na_str =
 
 }
 
-#' Add default theme options to plots
+#' INTERNAL: Add default theme options to plots
 #'
 #' `finalize_plot()` is used internally to complete the plot creation process. This function uses `ggformula`
 #'    to create a `ggplot` object and adds theme choices and size specifications.
@@ -90,7 +90,7 @@ finalize_plot <- function(plot) {
 
 }
 
-#' Find missing values
+#' INTERNAL: Find missing values
 #'
 #' Used internally to calculate the number of missing values in one or two variables.
 #'
@@ -135,7 +135,7 @@ find_na <- function(data, formula, n = 1) {
 
 }
 
-#' Check if a confidence level is entered in decimal form
+#' INTERNAL: Check if a confidence level is entered in decimal form
 #'
 #' Used internally to detect if a user inputted a confidence level correctly (i.e., not in quotes
 #' and as a decimal).
@@ -159,10 +159,10 @@ check_conf_lvl <- function(level) {
 
 }
 
-#' Check if an error will occur later
+#' INTERNAL: Check if an error will occur later
 #'
 #' Used internally to check if an error might occur later. We catch the error here to provide
-#' a more helpful message to users based on the most common cause of errors.
+#' a more helpful message to users based on the most common causes of errors.
 #'
 #' @param code The code to try to run
 #'

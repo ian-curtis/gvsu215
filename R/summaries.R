@@ -92,7 +92,9 @@ tbl_num_sum <- function(data, formula, digits = 3, na_rm = FALSE, caption = NULL
       # dplyr::mutate(missing = c(n_na, base::rep("", times = n_lvls - 1))) %>%
       # dplyr::select(-missing) %>%
       finalize_tbl(digits,
-                   caption = base::paste(caption, "\n", ind_str, "Missing:", n_na[[1]], "|", dep_str, "Missing:", n_na[[2]]))
+                   caption = base::paste(caption, "\n", ind_str, "Missing:", n_na[[1]], "|",
+                                         dep_str, "Missing:", n_na[[2]], "|",
+                                         "NAs Removed:", base::ifelse(na_rm == TRUE, "Yes", "No")))
   }
 
 }
@@ -116,7 +118,7 @@ tbl_num_sum <- function(data, formula, digits = 3, na_rm = FALSE, caption = NULL
 #' tbl_pctile(mtcars, wt~cyl, na_rm = TRUE)
 #'
 #' try(tbl_pctile(mtcars, ~wt, probs = c(25, 50, 75, 100)))
-tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1), caption = NULL, na_rm = FALSE) {
+tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1), caption = NULL) {
 
   # error catching
 
@@ -126,7 +128,10 @@ tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1),
     base::stop("You seem to have entered an invalid entry to the probs argument. These values should be between 0 and 1 (inclusive).")
   }
 
-  check_test(mosaic::quantile(x = formula, data = data, na.rm = na_rm, prob = probs))
+  rlang::inform("Note: NAs always removed for percentile tables", .frequency = "once", .frequency_id = "pctile-nas")
+
+
+  check_test(mosaic::quantile(x = formula, data = data, na.rm = TRUE, prob = probs))
 
   # code
   if (base::length(formula) == 2) {
@@ -140,7 +145,8 @@ tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1),
 
     na <- find_na(data, formula)
 
-    mosaic::quantile(x = formula, data = data, na.rm = na_rm, prob = probs) %>%
+
+    mosaic::quantile(x = formula, data = data, na.rm = TRUE, prob = probs) %>%
       tibble::enframe() %>%
       tidyr::pivot_wider(names_from = name, values_from = value) %>%
       finalize_tbl(digits,
@@ -163,7 +169,7 @@ tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1),
 
     na <- find_na(data, formula, n = 2)
 
-    mosaic::quantile(x = formula, data = data, na.rm = na_rm, prob = probs) %>%
+    mosaic::quantile(x = formula, data = data, na.rm = TRUE, prob = probs) %>%
       finalize_tbl(digits,
                    caption = base::paste(caption, "\n", ind_str, "Missing:", na[[1]], "|", dep_str, "Missing:", na[[2]])) %>%
       flextable::set_header_labels(name = "Percentile", value = "Value")
@@ -184,9 +190,9 @@ tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1),
 #'
 #' @examples
 #' # Not removing NAs is not recommended
-#' tbl_corr(mtcars, wt~qsec)
+#' tbl_corr(airquality, Ozone~Solar.R)
 #'
-#' tbl_corr(mtcars, wt~qsec, na_rm = TRUE)
+#' tbl_corr(airquality, Ozone~Solar.R, na_rm = TRUE)
 tbl_corr <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
 
   # error catching

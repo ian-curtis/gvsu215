@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{find_na}
 \alias{find_na}
-\title{Find missing values}
+\title{INTERNAL: Find missing values}
 \usage{
 find_na(data, formula, n = 1)
 }

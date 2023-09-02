@@ -26,7 +26,7 @@ Create a simple correlation table
 }
 \examples{
 # Not removing NAs is not recommended
-tbl_corr(mtcars, wt~qsec)
+tbl_corr(airquality, Ozone~Solar.R)
 
-tbl_corr(mtcars, wt~qsec, na_rm = TRUE)
+tbl_corr(airquality, Ozone~Solar.R, na_rm = TRUE)
 }

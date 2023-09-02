@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{check_conf_lvl}
 \alias{check_conf_lvl}
-\title{Check if a confidence level is entered in decimal form}
+\title{INTERNAL: Check if a confidence level is entered in decimal form}
 \usage{
 check_conf_lvl(level)
 }
