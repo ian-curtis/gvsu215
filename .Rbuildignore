@@ -9,3 +9,4 @@
 ^LICENSE\.md$
 README.html
 temp/
+generate.R
