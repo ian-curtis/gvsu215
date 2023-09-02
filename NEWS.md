@@ -1,7 +1,9 @@
 # gvsu215 (development version)
 
-* update documentation (including how to add a least squares line to `plot_scatter()`)
+* Updated documentation (including how to add a least squares line to `plot_scatter()`).
 * Tried to change a legend title on a grouped scatterplot and it didn't work? Now it does!
+* A new vignette has appeared! It contains a code shell/template for each of the functions in the package. For out-of-the-box use, simply copy the code and fill in the blanks.
+* Some error messages will show up less frequently.
 
 # gvsu215 0.3.1
 
