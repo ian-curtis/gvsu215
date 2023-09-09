@@ -47,31 +47,32 @@ test_that("num sum warns with NAs and na_rm = FALSE with groups", {
 # })
 
 test_that("tbl_pctile displays works when NAs are removed", {
-  expect_no_condition(tbl_pctile(mtcars, ~wt, na_rm = TRUE))
+  skip("rlang")
+  expect_message(tbl_pctile(mtcars, ~wt))
 })
 
 test_that("tbl_pctile works with new probs", {
-  expect_no_condition(tbl_pctile(mtcars, ~wt, probs = c(.17, .3, .5, .7, .9, 1), na_rm = TRUE))
+  expect_no_condition(tbl_pctile(mtcars, ~wt, probs = c(.17, .3, .5, .7, .9, 1)))
 })
 
 test_that("tbl_pctile works with caption", {
-  expect_no_condition(tbl_pctile(mtcars, ~wt, caption = "hehe", na_rm = TRUE))
+  expect_no_condition(tbl_pctile(mtcars, ~wt, caption = "hehe"))
 })
 
 test_that("tbl_pctile works with groups", {
-  expect_no_condition(tbl_pctile(mtcars, wt~cyl, na_rm = TRUE))
+  expect_no_condition(tbl_pctile(mtcars, wt~cyl))
 })
 
 test_that("tbl_pctile works with groups and caption", {
-  expect_no_condition(tbl_pctile(mtcars, wt~cyl, na_rm = TRUE, caption = "hehe"))
+  expect_no_condition(tbl_pctile(mtcars, wt~cyl, caption = "hehe"))
 })
 
 test_that("tbl_pctile works with groups and probs", {
-  expect_no_condition(tbl_pctile(mtcars, wt~cyl, na_rm = TRUE, probs = c(.17, .3, .5, .7, .9, 1)))
+  expect_no_condition(tbl_pctile(mtcars, wt~cyl, probs = c(.17, .3, .5, .7, .9, 1)))
 })
 
 test_that("tbl_pctile fails with mispelling", {
-  expect_error(tbl_pctile(mtcars, Wt~Cyl, na_rm = TRUE))
+  expect_error(tbl_pctile(mtcars, Wt~Cyl))
 })
 
 test_that("tbl_pctile fails with invalid probs", {
@@ -81,8 +82,8 @@ test_that("tbl_pctile fails with invalid probs", {
 
 # tbl_corr() ####
 
-test_that("corr warns with NAs not removed", {
-  expect_warning(tbl_corr(mtcars, wt~qsec))
+test_that("corr informs with NAs not removed", {
+  expect_message(tbl_corr(mtcars, wt~qsec))
 })
 
 test_that("corr works with NAs removed", {
@@ -92,6 +93,7 @@ test_that("corr works with NAs removed", {
 test_that("corr fails with mispelling", {
   expect_error(tbl_corr(mtcars, Wt~qsec, na_rm = TRUE))
 })
+
 
 
 

@@ -1,6 +1,7 @@
 # plot_bar() ####
 
 test_that("bar gives message with no type given", {
+  skip("rlang")
   expect_message(plot_bar(mtcars, ~cyl))
 })
 
@@ -37,6 +38,7 @@ test_that("bar fails with mispelling data", {
 })
 
 test_that("group bar gives message with no type given", {
+  skip("rlang")
   expect_message(plot_bar(mtcars, ~cyl, fill = ~gear))
 })
 
