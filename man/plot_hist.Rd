@@ -12,7 +12,6 @@ plot_hist(
   group = NULL,
   group_cols = 1,
   title = NULL,
-  na_rm = FALSE,
   ...
 )
 }
@@ -31,8 +30,6 @@ plot_hist(
 1 (stacked vertical plots).}
 
 \item{title}{An override for the title of the plot. A sensible default is provided.}
-
-\item{na_rm}{Should missing values be removed? Defaults to FALSE.}
 
 \item{...}{Extra title arguments passed on to \code{\link[ggformula:gf_aux]{ggformula::gf_labs()}} (which feeds to \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}).}
 }

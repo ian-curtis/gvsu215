@@ -37,7 +37,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
   # code
   type <- base::match.arg(type)
   var <- formula[[2]]
-  str_of_var <- base::deparse(base::substitute(var))
+  var_str <- base::deparse(base::substitute(var))
 
   lvls <- dplyr::pull(data, var)
   big_lvl <- base::max(base::nchar(as.character(unique(lvls))), na.rm = TRUE)
@@ -71,7 +71,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
         ggformula::gf_refine(ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))) %>%
         ggformula::gf_labs(title = ifelse(base::is.null(title),
                                           paste0("Simple Bar Percent of ",
-                                                 str_of_var), title),
+                                                 var_str), title),
                            subtitle = base::paste("Missing:", na, "|", "NAs Removed:",
                                                   base::ifelse(na_rm == FALSE, "No", "Yes")),
                            y = "Percent", ...) %>%
@@ -83,7 +83,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
       fill_na <- find_na(data, fill)
 
       fill_var <- fill[[2]]
-      str_of_fill <- base::deparse(base::substitute(fill_var))
+      fill_str <- base::deparse(base::substitute(fill_var))
 
       if (na_rm == TRUE) {
 
@@ -102,11 +102,11 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
                                denom = ~fill) %>%
         ggformula::gf_labs(title = base::ifelse(
                              base::is.null(title),
-                             base::paste("Clustered Bar Graph of", str_of_var, "by", str_of_fill),
+                             base::paste("Clustered Bar Graph of", var_str, "by", fill_str),
                              title),
                            y = "Percent",
-                           subtitle = base::paste(str_of_var, "Missing:", var_na, "|",
-                                                  str_of_fill, "Missing:", fill_na, "|",
+                           subtitle = base::paste(var_str, "Missing:", var_na, "|",
+                                                  fill_str, "Missing:", fill_na, "|",
                                                   "NAs Removed:", base::ifelse(na_rm == FALSE, "No", "Yes")),
                            ...) %>%
         ggformula::gf_refine(ggplot2::scale_fill_brewer(palette = "Dark2", na.value = "grey"),
@@ -138,7 +138,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
                                                          )) %>%
         ggformula::gf_labs(title = ifelse(base::is.null(title),
                                           paste0("Simple Bar Count of ",
-                                                 str_of_var), title),
+                                                 var_str), title),
                            subtitle = base::paste("Missing:", na, "|", "NAs Removed:",
                                                   base::ifelse(na_rm == FALSE, "No", "Yes")),
                            y = "Count", ...) %>%
@@ -150,7 +150,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
       fill_na <- find_na(data, fill)
 
       fill_var <- fill[[2]]
-      str_of_fill <- base::deparse(base::substitute(fill_var))
+      fill_str <- base::deparse(base::substitute(fill_var))
 
       if (na_rm == TRUE) {
 
@@ -168,11 +168,11 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
                                position = ggplot2::position_dodge2(preserve = "single")) %>%
         ggformula::gf_labs(title = base::ifelse(
           base::is.null(title),
-          base::paste("Clustered Bar Graph of", str_of_var, "by", str_of_fill),
+          base::paste("Clustered Bar Graph of", var_str, "by", fill_str),
           title),
           y = "Count",
-          subtitle = base::paste(str_of_var, "Missing:", var_na, "|",
-                                 str_of_fill, "Missing:", fill_na, "|",
+          subtitle = base::paste(var_str, "Missing:", var_na, "|",
+                                 fill_str, "Missing:", fill_na, "|",
                                  "NAs Removed:", base::ifelse(na_rm == FALSE, "No", "Yes")),
           ...) %>%
         ggformula::gf_refine(ggplot2::scale_fill_brewer(palette = "Dark2", na.value = "grey"),
@@ -207,9 +207,9 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, ...) {
 
   # code
   var <- formula[[2]]
-  str_of_var <- base::deparse(base::substitute(var))
+  var_str <- base::deparse(base::substitute(var))
 
-  if (base::max(data[, str_of_var], na.rm = TRUE) <= 1000000 & base::max(data[, str_of_var], na.rm = TRUE) >= 0.000001) {
+  if (base::max(data[, var_str], na.rm = TRUE) <= 1000000 & base::max(data[, var_str], na.rm = TRUE) >= 0.000001) {
 
     plot_labels <- function (x) format(x, scientific = FALSE)
 
@@ -232,9 +232,9 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, ...) {
       ggformula::gf_boxplot(formula, data = data, fill = fill, width = 0.5, lwd = 1, color = "black",
                             outlier.shape = 21, outlier.size = 2.5, outlier.color = "grey70",
                             outlier.fill = "black", notchwidth = 2) %>%
-      ggformula::gf_labs(x = str_of_var,
+      ggformula::gf_labs(x = var_str,
               title = base::ifelse(base::is.null(title),
-                                   base::paste("Boxplot of", str_of_var),
+                                   base::paste("Boxplot of", var_str),
                                    title),
               subtitle = base::paste("Missing:", na, "|",
                                      "NAs Removed: Yes"),
@@ -251,7 +251,7 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, ...) {
   } else {
 
     by_var <- formula[[3]]
-    str_of_by <- base::deparse(base::substitute(by_var))
+    by_str <- base::deparse(base::substitute(by_var))
 
     na <- find_na(data, formula, n = 2)
 
@@ -265,10 +265,10 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, ...) {
                             outlier.shape = 21, outlier.size = 2.5, outlier.color = "grey70",
                             outlier.fill = "black", notchwidth = 2) %>%
       ggformula::gf_labs(title = ifelse(base::is.null(title),
-                             paste("Boxplot of", str_of_var, "by", str_of_by),
+                             paste("Boxplot of", var_str, "by", by_str),
                              title),
-                         subtitle = paste(str_of_var, "Missing:", na[[1]], "|",
-                                          str_of_by, "Missing:", na[[2]], "|",
+                         subtitle = paste(var_str, "Missing:", na[[1]], "|",
+                                          by_str, "Missing:", na[[2]], "|",
                                           "NAs Removed: Yes"),
                          ...) %>%
       finalize_plot() %>%
@@ -315,7 +315,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = 
 
   if (base::length(formula) > 2) {
 
-    stop("Too many variables in formula. Trying for a grouped histogram? Try the `group` argument.")
+    stop("Too many variables in formula. Trying for a grouped histogram? Use the `group` argument.")
 
   }
 
@@ -326,9 +326,9 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = 
 
   # code
   var <- formula[[2]]
-  str_of_var <- base::deparse(base::substitute(var))
+  var_str <- base::deparse(base::substitute(var))
 
-  if (base::max(data[, str_of_var], na.rm = TRUE) <= 1000000 & base::max(data[, str_of_var], na.rm = TRUE) >= 0.000001) {
+  if (base::max(data[, var_str], na.rm = TRUE) <= 1000000 & base::max(data[, var_str], na.rm = TRUE) >= 0.000001) {
 
     plot_labels <- function (x) format(x, scientific = FALSE)
 
@@ -353,16 +353,17 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = 
       ggformula::gf_refine(ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))) %>%
       ggformula::gf_labs(y = "Count",
                          title = base::ifelse(base::is.null(title),
-                                        base::paste("Histogram of", str_of_var),
+                                        base::paste("Histogram of", var_str),
                                         title),
                          subtitle = base::paste("Missing:", n_na, "|", "NAs Removed: Yes"),
                          ...) %>%
       finalize_plot() %>%
       ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels))
+
   } else {
 
     facet_var <- group[[2]]
-    str_of_facet <- base::deparse(base::substitute(facet_var))
+    facet_str <- base::deparse(base::substitute(facet_var))
 
     var_na <- find_na(data, formula)
     facet_na <- find_na(data, group)
@@ -376,10 +377,10 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = 
       ggformula::gf_refine(ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))) %>%
       ggformula::gf_labs(y = "Count",
                          title = base::ifelse(base::is.null(title),
-                                              base::paste("Histogram of", str_of_var, "by", str_of_facet),
+                                              base::paste("Histogram of", var_str, "by", facet_str),
                                               title),
-                         subtitle = base::paste(str_of_var, "Missing:", var_na, "|",
-                                                str_of_facet, "Missing:", facet_na, "|",
+                         subtitle = base::paste(var_str, "Missing:", var_na, "|",
+                                                facet_str, "Missing:", facet_na, "|",
                                                 "NAs Removed: Yes"),
                          ...) %>%
       finalize_plot() %>%
@@ -420,7 +421,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = 
 plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_title = NULL, axis_lines = c("none", "both"), ls_line = FALSE, ...) {
 
   # error catching
-  rlang::inform("Note: NAs always removed (in pairs) for scatterplots.", .frequency = "once", .frequency_id = "scatter-nas")
+  message("Note: NAs always removed (in pairs) for scatterplots.")
 
   if (base::is.character(fill) & !base::is.null(legend_title)) {
     warning("Legend title argument ignored. Legends are only needed for grouped scatterplots.")
@@ -429,17 +430,17 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
   check_test(ggformula::gf_point(formula, data = data, fill = fill, color = "grey80", shape = 21, size = 2))
 
   # code
-  ind_var <- formula[[2]]
-  ind_str <- base::deparse(base::substitute(ind_var))
+  var1 <- formula[[2]]
+  var1_str <- base::deparse(base::substitute(var1))
 
-  dep_var <- formula[[3]]
-  dep_str <- base::deparse(base::substitute(dep_var))
+  var2 <- formula[[3]]
+  var2_str <- base::deparse(base::substitute(var2))
 
   n_na <- find_na(data, formula, n = 2)
 
   axis_lines <- base::match.arg(axis_lines)
 
-  obs_used <- base::nrow(data %>% dplyr::select({{ ind_var }}, {{ dep_var }}) %>% stats::na.omit())
+  obs_used <- base::nrow(data %>% dplyr::select({{ var1 }}, {{ var2 }}) %>% stats::na.omit())
 
   if (axis_lines == "none") {
 
@@ -460,10 +461,10 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
 
       ggformula::gf_point(formula, data = data, fill = fill, color = "grey60", shape = 21, size = 2) %>%
         ggformula::gf_labs(title = base::ifelse(base::is.null(title),
-                                                base::paste("Scatterplot of", ind_str, "by", dep_str),
+                                                base::paste("Scatterplot of", var1_str, "by", var2_str),
                                                 title),
-                           subtitle = base::paste(ind_str, "Missing:", n_na[[1]], "|",
-                                                  dep_str, "Missing:", n_na[[2]],
+                           subtitle = base::paste(var1_str, "Missing:", n_na[[1]], "|",
+                                                  var2_str, "Missing:", n_na[[2]],
                                                   "\nObservations Used:", obs_used, "| NAs Removed: Yes"),
                            ...) %>%
         finalize_plot() %>%
@@ -474,10 +475,10 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
       ggformula::gf_point(formula, data = data, fill = fill, color = "grey60", shape = 21, size = 2) %>%
         ggformula::gf_lm(color = "darkred") %>%
         ggformula::gf_labs(title = base::ifelse(base::is.null(title),
-                                                base::paste("Scatterplot of", ind_str, "by", dep_str),
+                                                base::paste("Scatterplot of", var1_str, "by", var2_str),
                                                 title),
-                           subtitle = base::paste(ind_str, "Missing:", n_na[[1]], "|",
-                                                  dep_str, "Missing:", n_na[[2]],
+                           subtitle = base::paste(var1_str, "Missing:", n_na[[1]], "|",
+                                                  var2_str, "Missing:", n_na[[2]],
                                                   "\nObservations Used:", obs_used, "| NAs Removed: Yes"),
                            ...) %>%
         finalize_plot() %>%
@@ -506,19 +507,19 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
     }
 
     data <- data %>%
-      dplyr::select({{ ind_var }}, {{ dep_var }}, {{ group_var }}) %>%
+      dplyr::select({{ var1 }}, {{ var2 }}, {{ group_var }}) %>%
       stats::na.omit()
 
     if (ls_line == FALSE) {
 
       ggformula::gf_point(formula, data = data, fill = fill, color = "grey30", shape = 21, size = 2) %>%
         ggformula::gf_labs(title = ifelse(base::is.null(title),
-                                          base::paste0("Grouped Scatterplot of ", ind_str, " and ",
-                                                       dep_str, "\n by ", group_str),
+                                          base::paste0("Grouped Scatterplot of ", var1_str, " and ",
+                                                       var2_str, "\n by ", group_str),
                                           title),
                            fill = base::ifelse(is.null(legend_title), group_str, legend_title),
-                           subtitle = base::paste0(ind_str, " Missing: ", n_na[[1]], " | ",
-                                                  dep_str, " Missing: ", n_na[[2]], " | ",
+                           subtitle = base::paste0(var1_str, " Missing: ", n_na[[1]], " | ",
+                                                  var2_str, " Missing: ", n_na[[2]], " | ",
                                                   group_str, " Missing: ", group_na, "\n",
                                                   "Observations Used: ", obs_used, " | NAs Removed: Yes"),
                            ...) %>%
@@ -533,12 +534,12 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
         ggformula::gf_lm(formula, data = data, color = fill) %>%
           ggformula::gf_point(size = 2) %>%
           ggformula::gf_labs(title = ifelse(base::is.null(title),
-                                            base::paste0("Grouped Scatterplot of ", ind_str, " and ",
-                                                         dep_str, "\n by ", group_str),
+                                            base::paste0("Grouped Scatterplot of ", var1_str, " and ",
+                                                         var2_str, "\n by ", group_str),
                                             title),
                              fill = base::ifelse(is.null(legend_title), group_str, legend_title),
-                             subtitle = base::paste0(ind_str, " Missing: ", n_na[[1]], " | ",
-                                                     dep_str, " Missing: ", n_na[[2]], " | ",
+                             subtitle = base::paste0(var1_str, " Missing: ", n_na[[1]], " | ",
+                                                     var2_str, " Missing: ", n_na[[2]], " | ",
                                                      group_str, " Missing: ", group_na, "\n",
                                                      "Observations Used: ", obs_used, " | NAs Removed: Yes"),
                              ...) %>%

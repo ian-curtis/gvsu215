@@ -4,7 +4,7 @@
 \alias{tbl_num_sum}
 \title{Create numerical summaries}
 \usage{
-tbl_num_sum(data, formula, digits = 3, na_rm = FALSE, caption = NULL)
+tbl_num_sum(data, formula, digits = 3, caption = NULL, na_rm = FALSE)
 }
 \arguments{
 \item{data}{A data frame (or tibble).}
@@ -14,9 +14,9 @@ tbl_num_sum(data, formula, digits = 3, na_rm = FALSE, caption = NULL)
 
 \item{digits}{The number if digits to round to. Defaults to 3.}
 
-\item{na_rm}{Should missing values be removed? Defaults to FALSE.}
-
 \item{caption}{An override for the table caption. A sensible default is given.}
+
+\item{na_rm}{Should missing values be removed? Defaults to FALSE.}
 }
 \value{
 An object of class flextable. If in an interactive session, the table will be

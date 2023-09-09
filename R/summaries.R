@@ -27,7 +27,7 @@
 #'
 #' # easy fix
 #' tbl_num_sum(airquality, Ozone~Month, na_rm = TRUE)
-tbl_num_sum <- function(data, formula, digits = 3, na_rm = FALSE, caption = NULL) {
+tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
 
   check_test(mosaic::favstats(x = formula, data = data, na.rm = na_rm))
 
@@ -46,11 +46,11 @@ tbl_num_sum <- function(data, formula, digits = 3, na_rm = FALSE, caption = NULL
 
     }
 
-    ind_var <- formula[[2]]
-    ind_str <- base::deparse(base::substitute(ind_var))
+    var1 <- formula[[2]]
+    var1_str <- base::deparse(base::substitute(var1))
 
     if (is.null(caption)) {
-      caption <- base::paste("Summary Statistics for", ind_str)
+      caption <- base::paste("Summary Statistics for", var1_str)
     }
 
     mosaic::favstats(x = formula, data = data, na.rm = na_rm) %>%
@@ -59,14 +59,14 @@ tbl_num_sum <- function(data, formula, digits = 3, na_rm = FALSE, caption = NULL
 
   }
   else if (base::length(formula) == 3) {
-    ind_var <- formula[[2]]
-    ind_str <- base::deparse(base::substitute(ind_var))
+    var1 <- formula[[2]]
+    var1_str <- base::deparse(base::substitute(var1))
 
-    dep_var <- formula[[3]]
-    dep_str <- base::deparse(base::substitute(dep_var))
+    var2 <- formula[[3]]
+    var2_str <- base::deparse(base::substitute(var2))
 
     if (base::is.null(caption)) {
-      caption <- base::paste("Summary Statistics By Group:", ind_str, "by", dep_str)
+      caption <- base::paste("Summary Statistics By Group:", var1_str, "by", var2_str)
     }
 
     n_na <- find_na(data, formula, n = 2)
@@ -82,7 +82,7 @@ tbl_num_sum <- function(data, formula, digits = 3, na_rm = FALSE, caption = NULL
     }
 
     dep_lvls <- data %>%
-      dplyr::select({{ dep_var }}) %>%
+      dplyr::select({{ var2 }}) %>%
       stats::na.omit() %>%
       base::unique() %>%
       base::nrow()
@@ -92,8 +92,8 @@ tbl_num_sum <- function(data, formula, digits = 3, na_rm = FALSE, caption = NULL
       # dplyr::mutate(missing = c(n_na, base::rep("", times = n_lvls - 1))) %>%
       # dplyr::select(-missing) %>%
       finalize_tbl(digits,
-                   caption = base::paste(caption, "\n", ind_str, "Missing:", n_na[[1]], "|",
-                                         dep_str, "Missing:", n_na[[2]], "|",
+                   caption = base::paste(caption, "\n", var1_str, "Missing:", n_na[[1]], "|",
+                                         var2_str, "Missing:", n_na[[2]], "|",
                                          "NAs Removed:", base::ifelse(na_rm == TRUE, "Yes", "No")))
   }
 
@@ -157,21 +157,21 @@ tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1),
   } else if (base::length(formula) > 2) {
 
 
-    ind_var <- formula[[2]]
-    ind_str <- base::deparse(base::substitute(ind_var))
+    var1 <- formula[[2]]
+    var1_str <- base::deparse(base::substitute(var1))
 
-    dep_var <- formula[[3]]
-    dep_str <- base::deparse(base::substitute(dep_var))
+    var2 <- formula[[3]]
+    var2_str <- base::deparse(base::substitute(var2))
 
     if (base::is.null(caption)) {
-      caption <- base::paste("Percentiles on Variable", ind_str, "by", dep_str)
+      caption <- base::paste("Percentiles on Variable", var1_str, "by", var2_str)
     }
 
     na <- find_na(data, formula, n = 2)
 
     mosaic::quantile(x = formula, data = data, na.rm = TRUE, prob = probs) %>%
       finalize_tbl(digits,
-                   caption = base::paste(caption, "\n", ind_str, "Missing:", na[[1]], "|", dep_str, "Missing:", na[[2]])) %>%
+                   caption = base::paste(caption, "\n", var1_str, "Missing:", na[[1]], "|", var2_str, "Missing:", na[[2]])) %>%
       flextable::set_header_labels(name = "Percentile", value = "Value")
 
   }
@@ -197,41 +197,41 @@ tbl_corr <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
 
   # error catching
   if (na_rm == FALSE) {
-    warning("Missing values *not* automatically removed from calculation. \n You may get NA values in your output.")
+    message("Missing values *not* automatically removed from calculation. \n You may get NA values in your output.")
   }
 
   check_test(mosaic::cor(formula, data = data))
 
 
   # code
-  ind_var <- formula[[2]]
-  ind_str <- base::deparse(base::substitute(ind_var))
+  var1 <- formula[[2]]
+  var1_str <- base::deparse(base::substitute(var1))
 
-  dep_var <- formula[[3]]
-  dep_str <- base::deparse(base::substitute(dep_var))
+  var2 <- formula[[3]]
+  var2_str <- base::deparse(base::substitute(var2))
 
   n_ind <- data %>%
-    dplyr::select({{ ind_var }}) %>%
+    dplyr::select({{ var1 }}) %>%
     base::nrow()
 
   n_dep <- data %>%
-    dplyr::select({{ dep_var }}) %>%
+    dplyr::select({{ var2 }}) %>%
     base::nrow()
 
   na <- find_na(data, formula, n = 2)
 
   if (na_rm == TRUE) {
 
-    obs_used <- base::nrow(data %>% dplyr::select({{ ind_var }}, {{ dep_var }}) %>% stats::na.omit())
+    obs_used <- base::nrow(data %>% dplyr::select({{ var1 }}, {{ var2 }}) %>% stats::na.omit())
 
   } else if (na_rm == FALSE) {
 
-    obs_used <- base::nrow(data %>% dplyr::select({{ ind_var }}, {{ dep_var }}))
+    obs_used <- base::nrow(data %>% dplyr::select({{ var1 }}, {{ var2 }}))
 
   }
 
   if (base::is.null(caption)) {
-    caption <- paste("Correlation of", ind_str, "vs.", dep_str)
+    caption <- paste("Correlation of", var1_str, "vs.", var2_str)
   }
 
   tibble::tibble(n_ind = n_ind,

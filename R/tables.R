@@ -26,17 +26,17 @@ tbl_1var <- function(data, formula, digits = 3, caption = NULL) {
 
   # code
   var <- formula[[2]]
-  str_of_var <- base::deparse(base::substitute(var))
+  var_str <- base::deparse(base::substitute(var))
 
   if (base::is.null(caption)) {
-    caption <- base::paste("One Way Counts on Variable", str_of_var)
+    caption <- base::paste("One Way Counts on Variable", var_str)
   }
 
   mosaic::tally(formula, data = data, format = "count") %>%
     tibble::as_tibble() %>%
     dplyr::mutate(pct = (n / base::nrow(data))*100) %>%
     janitor::adorn_totals("row") %>%
-    finalize_tbl(digits = digits, caption = base::paste("One Way Counts on Variable", str_of_var)) %>%
+    finalize_tbl(digits = digits, caption = base::paste("One Way Counts on Variable", var_str)) %>%
     flextable::set_header_labels(n = "Count", pct = "Percent")
     # flextable::set_caption(caption = flextable::as_paragraph(flextable::as_chunk(caption)))
 
