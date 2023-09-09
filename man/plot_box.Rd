@@ -4,7 +4,7 @@
 \alias{plot_box}
 \title{Create a simple boxplot}
 \usage{
-plot_box(data, formula, fill = "grey80", title = NULL, na_rm = FALSE, ...)
+plot_box(data, formula, fill = "grey80", title = NULL, ...)
 }
 \arguments{
 \item{data}{A data frame.}
@@ -15,8 +15,6 @@ or \code{var1~var2} for a grouped boxplot where \code{var2} is a grouping variab
 \item{fill}{The fill color for the boxplot. Entered as a character.}
 
 \item{title}{An override for the title of the plot. A sensible default is provided.}
-
-\item{na_rm}{Should missing values be removed? Defaults to FALSE.}
 
 \item{...}{Extra title arguments passed on to \code{\link[ggformula:gf_aux]{ggformula::gf_labs()}} (which feeds to \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}).}
 }

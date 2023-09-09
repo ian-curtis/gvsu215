@@ -27,16 +27,16 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
   two_prop <- mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success, correct = FALSE)
 
   var1 <- formula[[2]]
-  str_of_var1 <- base::deparse(base::substitute(var1))
+  var1_str <- base::deparse(base::substitute(var1))
 
   grp_var <- formula[[3]]
-  str_of_grp <- base::deparse(base::substitute(grp_var))
+  grp_str <- base::deparse(base::substitute(grp_var))
 
   cl <- base::paste0(conf_lvl*100, "%")
 
   if (base::is.null(caption)) {
 
-    caption <- base::paste("Two Sample Proportion Test Between", str_of_var1, "and", str_of_grp,
+    caption <- base::paste("Two Sample Proportion Test Between", var1_str, "and", grp_str,
                            "\n Success:", success, "| Confidence:", cl)
 
   } else {
@@ -83,7 +83,7 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
     finalize_tbl(digits = digits,
                  caption = caption,
                  na_str = "") %>%
-    flextable::set_header_labels(var = str_of_grp, yay = "n Success", na = "n Missing", phat = "p-hat",
+    flextable::set_header_labels(var = grp_str, yay = "n Success", na = "n Missing", phat = "p-hat",
                                  se = "Standard Error", p = "p-value") %>%
     flextable::vline(j = 5)
 
@@ -102,7 +102,7 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
     finalize_tbl(digits = digits,
                  caption = caption,
                  na_str = "") %>%
-    flextable::set_header_labels(var = str_of_grp, yay = "n Success", na = "n Missing", phat = "p-hat",
+    flextable::set_header_labels(var = grp_str, yay = "n Success", na = "n Missing", phat = "p-hat",
                                  se = "Standard Error", p = "p-value",
                                  cil = base::paste(cl, "Interval Lower"),
                                  ciu = base::paste(cl, "Interval Upper")) %>%
@@ -136,10 +136,10 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = F
   check_conf_lvl(conf_lvl)
 
   var1 <- formula[[2]]
-  str_of_var1 <- base::deparse(base::substitute(var1))
+  var1_str <- base::deparse(base::substitute(var1))
 
   grp_var <- formula[[3]]
-  str_of_grp <- base::deparse(base::substitute(grp_var))
+  grp_str <- base::deparse(base::substitute(grp_var))
 
   # error catching
   check_conf_lvl(conf_lvl)
@@ -151,7 +151,7 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = F
   data <- data %>%
     dplyr::mutate("{grp_var}" := base::as.factor({{ grp_var }}))
 
-  grp_lvls <- base::levels(data[[str_of_grp]])
+  grp_lvls <- base::levels(data[[grp_str]])
 
   if (base::length(grp_lvls) != 2) {
 
@@ -168,7 +168,7 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = F
 
   if (base::is.null(caption)) {
 
-    caption <- base::paste("Two Sample Independent Means Test Between", str_of_var1, "and", str_of_grp,
+    caption <- base::paste("Two Sample Independent Means Test Between", var1_str, "and", grp_str,
                            "\n Confidence Level:", cl)
 
   } else {
@@ -202,7 +202,7 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = F
     p = c(base::format.pval(ind_test$p.value, digits = digits), NA)
   ) %>%
     finalize_tbl(digits = digits, caption = caption, na_str = "") %>%
-    flextable::set_header_labels(var = str_of_grp, na = "n Missing", s = "Group s",
+    flextable::set_header_labels(var = grp_str, na = "n Missing", s = "Group s",
                                  xbar = "Group Means",
                                  se = "Standard Error",
                                  p = "p-value") %>%
@@ -221,7 +221,7 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = F
     ciu = c(ind_test$conf.int[[2]], NA)
   ) %>%
     finalize_tbl(digits = digits, caption = caption, na_str = "") %>%
-    flextable::set_header_labels(var = str_of_grp, na = "n Missing", s = "Group s",
+    flextable::set_header_labels(var = grp_str, na = "n Missing", s = "Group s",
                                  xbar = "Group Means",
                                  se = "Standard Error",
                                  p = "p-value",

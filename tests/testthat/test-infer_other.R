@@ -46,22 +46,22 @@ test_that("chisq works with specifying expected", {
 })
 
 test_that("chisq works with specifying observed", {
-  skip("superseded?")
-  expect_no_condition(
+  # skip("superseded?")
+  expect_no_warning(
     suppressWarnings(infer_chisq(mtcars, cyl~gear, type = "observed"))
   )
 })
 
 test_that("chisq works with specifying observed and digits", {
-  skip("superseded?")
-  expect_no_condition(
+  # skip("superseded?")
+  expect_no_warning(
     suppressWarnings(infer_chisq(mtcars, cyl~gear, type = "observed", digits = 4))
   )
 })
 
 test_that("chisq works with specifying observed and caption", {
-  skip("superseded?")
-  expect_no_condition(
+  # skip("superseded?")
+  expect_no_warning(
     suppressWarnings(infer_chisq(mtcars, cyl~gear, type = "observed", caption = "hehe"))
   )
 })
@@ -105,33 +105,32 @@ test_that("chisq fails with mispelling", {
 # infer_anova() ####
 
 test_that("anova works", {
-  skip("superceded?")
-  expect_no_condition(infer_anova(mtcars, cyl~gear))
+  # skip("superceded?")
+  expect_no_warning(infer_anova(mtcars, cyl~gear))
 })
 
 test_that("anova works with digits", {
-  skip("superceded?")
-  expect_no_condition(infer_anova(mtcars, cyl~gear, digits = 4))
+  # skip("superceded?")
+  expect_no_warning(infer_anova(mtcars, cyl~gear, digits = 4))
 })
 
 test_that("anova works with caption", {
-  skip("superceded?")
-  expect_no_condition(infer_anova(mtcars, cyl~gear, caption = "hehe"))
+  # skip("superceded?")
+  expect_no_warning(infer_anova(mtcars, cyl~gear, caption = "hehe"))
 })
 
 test_that("anova works with reorder", {
-  skip("superceded?")
-  expect_no_condition(infer_anova(mtcars, gear~cyl))
+  # skip("superceded?")
+  expect_no_warning(infer_anova(mtcars, gear~cyl))
 })
 
 test_that("anova warns with same var", {
-  skip("superceded?")
+  # skip("superceded?")
   expect_error(suppressWarnings(infer_anova(mtcars, cyl~cyl)))
 })
 
 test_that("anova fails with mispelling", {
-  skip("superceded?")
-  expect_no_condition(infer_anova(mtcars, Cyl~gear))
+  expect_error(infer_anova(mtcars, Cyl~gear))
 })
 
 

@@ -24,10 +24,10 @@ infer_reg <- function(data, formula, digits = 3, caption = NULL, reduced = TRUE)
 
   # code
   var1 <- formula[[2]]
-  str_of_var1 <- base::deparse(base::substitute(var1))
+  var1_str <- base::deparse(base::substitute(var1))
 
   var2 <- formula[[3]]
-  str_of_var2 <- base::deparse(base::substitute(var2))
+  var2_str <- base::deparse(base::substitute(var2))
 
 
   # n_na <- find_na(data, formula, n = 2)
@@ -100,10 +100,10 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
 
   # code
   var1 <- formula[[2]]
-  str_of_var1 <- base::deparse(base::substitute(var1))
+  var1_str <- base::deparse(base::substitute(var1))
 
   var2 <- formula[[3]]
-  str_of_var2 <- base::deparse(base::substitute(var2))
+  var2_str <- base::deparse(base::substitute(var2))
 
   chisq_test <- stats::chisq.test(mosaic::tally(formula, data = data))
 
@@ -111,7 +111,7 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
 
     if (base::is.null(caption)) {
 
-      caption <- base::paste("Chi-Squared Analysis of", str_of_var1, "and", str_of_var2)
+      caption <- base::paste("Chi-Squared Analysis of", var1_str, "and", var2_str)
 
     }
 
@@ -126,12 +126,12 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
 
     if (base::is.null(caption)) {
 
-      caption <- base::paste("Expected Counts for", str_of_var1, "and", str_of_var2)
+      caption <- base::paste("Expected Counts for", var1_str, "and", var2_str)
 
     }
 
     chisq_test$expected %>%
-      tibble::as_tibble(rownames = str_of_var1) %>%
+      tibble::as_tibble(rownames = var1_str) %>%
       finalize_tbl(digits = 1, caption = caption) %>%
       flextable::vline(j = 1)
 
@@ -139,7 +139,7 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
 
     if (base::is.null(caption)) {
 
-      caption <- base::paste("Observed Counts for", str_of_var1, "and", str_of_var2)
+      caption <- base::paste("Observed Counts for", var1_str, "and", var2_str)
 
     }
 
@@ -168,16 +168,16 @@ infer_anova <- function(data, formula, digits = 3, caption = NULL) {
 
   # code
   var1 <- formula[[2]]
-  str_of_var1 <- base::deparse(base::substitute(var1))
+  var1_str <- base::deparse(base::substitute(var1))
 
   var2 <- formula[[3]]
-  str_of_var2 <- base::deparse(base::substitute(var2))
+  var2_str <- base::deparse(base::substitute(var2))
 
   check_test(stats::lm(formula, data = data))
 
   if (base::is.null(caption)) {
 
-    caption <- base::paste("ANOVA Table for", str_of_var1, "vs.", str_of_var2)
+    caption <- base::paste("ANOVA Table for", var1_str, "vs.", var2_str)
 
   }
 

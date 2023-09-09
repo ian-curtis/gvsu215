@@ -9,8 +9,7 @@ tbl_pctile(
   formula,
   digits = 3,
   probs = c(0, 0.25, 0.5, 0.75, 1),
-  caption = NULL,
-  na_rm = FALSE
+  caption = NULL
 )
 }
 \arguments{
@@ -25,8 +24,6 @@ tbl_pctile(
 Defaults to 0, 25\%, 50\%, 75\%, and 100\%.}
 
 \item{caption}{An override for the table caption. A sensible default is given.}
-
-\item{na_rm}{Should missing values be removed? Defaults to FALSE.}
 }
 \value{
 An object of class flextable. If in an interactive session, the table will be

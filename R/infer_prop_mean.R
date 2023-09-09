@@ -30,11 +30,11 @@ infer_1prop <- function(data, formula, success = NULL, digits = 3, conf_lvl = 0.
   #code
 
   var <- formula[[2]]
-  str_of_var <- base::deparse(base::substitute(var))
+  var_str <- base::deparse(base::substitute(var))
 
   if (base::is.null(caption)) {
 
-    caption <- base::paste("One-Sample Proportion Confidence Interval on Variable", str_of_var,
+    caption <- base::paste("One-Sample Proportion Confidence Interval on Variable", var_str,
                            "\n Success:", success)
 
   } else {
@@ -96,10 +96,10 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
   }
 
   var1 <- formula[[2]]
-  str_of_var1 <- base::deparse(base::substitute(var1))
+  var1_str <- base::deparse(base::substitute(var1))
 
   grp_var <- formula[[3]]
-  str_of_grp <- base::deparse(base::substitute(grp_var))
+  grp_str <- base::deparse(base::substitute(grp_var))
 
   check_test(mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success, correct = FALSE))
 
@@ -108,7 +108,7 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
 
   if (base::is.null(caption)) {
 
-    caption <- base::paste("Two Sample Proportion Interval Between", str_of_var1, "and", str_of_grp,
+    caption <- base::paste("Two Sample Proportion Interval Between", var1_str, "and", grp_str,
                            "\n Success:", success)
 
   } else {
@@ -157,7 +157,7 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
     finalize_tbl(digits = digits,
                  caption = caption,
                  na_str = "") %>%
-    flextable::set_header_labels(var = str_of_grp, yay = "n Success", na = "n Missing", phat = "p-hat",
+    flextable::set_header_labels(var = grp_str, yay = "n Success", na = "n Missing", phat = "p-hat",
                                  se = "Standard Error", cil = base::paste(cl, "Interval Lower"),
                                  ciu = base::paste(cl, "Interval Upper")) %>%
     flextable::vline(j = 5)
@@ -186,16 +186,16 @@ infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
   two_prop <- mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success, correct = FALSE)
 
   var1 <- formula[[2]]
-  str_of_var1 <- base::deparse(base::substitute(var1))
+  var1_str <- base::deparse(base::substitute(var1))
 
   grp_var <- formula[[3]]
-  str_of_grp <- base::deparse(base::substitute(grp_var))
+  grp_str <- base::deparse(base::substitute(grp_var))
 
   cl <- base::paste0(conf_lvl*100, "%")
 
   if (base::is.null(caption)) {
 
-    caption <- base::paste("Two Sample Proportion Test Between", str_of_var1, "and", str_of_grp,
+    caption <- base::paste("Two Sample Proportion Test Between", var1_str, "and", grp_str,
                            "\n Success:", success, "| Confidence:", cl)
 
   } else {
@@ -268,11 +268,11 @@ infer_1mean <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NU
 
   # code
   var <- formula[[2]]
-  str_of_var <- base::deparse(base::substitute(var))
+  var_str <- base::deparse(base::substitute(var))
 
   if (base::is.null(caption)) {
 
-    caption <- base::paste("One-Sample Mean Confidence Interval on Variable", str_of_var)
+    caption <- base::paste("One-Sample Mean Confidence Interval on Variable", var_str)
 
   }
 
@@ -317,16 +317,16 @@ infer_paired <- function(data, var1, var2, digits = 3, conf_lvl = 0.95, caption 
 
   # error catching
 
-  left_var <- var1[[2]]
-  str_of_var1 <- base::deparse(base::substitute(left_var))
+  var1 <- var1[[2]]
+  var1_str <- base::deparse(base::substitute(var1))
 
-  right_var <- var2[[2]]
-  str_of_var2 <- base::deparse(base::substitute(right_var))
+  var2 <- var2[[2]]
+  var_str2 <- base::deparse(base::substitute(var2))
 
   check_conf_lvl(conf_lvl)
 
   data <- data %>%
-    dplyr::mutate(difference = {{ left_var }} - {{ right_var }})
+    dplyr::mutate(difference = {{ var1 }} - {{ var2 }})
 
   check_test(mosaic::t_test(formula = difference ~ 1, data = data, conf.level = conf_lvl))
 
@@ -338,7 +338,7 @@ infer_paired <- function(data, var1, var2, digits = 3, conf_lvl = 0.95, caption 
 
   if (base::is.null(caption)) {
 
-    caption <- base::paste("Difference in Means Test:", str_of_var1, "-", str_of_var2,
+    caption <- base::paste("Difference in Means Test:", var1_str, "-", var_str2,
                            "\n", cl, "Confidence")
 
   } else {
@@ -389,10 +389,10 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
   check_conf_lvl(conf_lvl)
 
   var1 <- formula[[2]]
-  str_of_var1 <- base::deparse(base::substitute(var1))
+  var1_str <- base::deparse(base::substitute(var1))
 
   grp_var <- formula[[3]]
-  str_of_grp <- base::deparse(base::substitute(grp_var))
+  grp_str <- base::deparse(base::substitute(grp_var))
 
   # error catching
   check_conf_lvl(conf_lvl)
@@ -404,7 +404,7 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
   data <- data %>%
     dplyr::mutate("{grp_var}" := base::as.factor({{ grp_var }}))
 
-  grp_lvls <- base::sort(base::levels(data[[str_of_grp]]))
+  grp_lvls <- base::sort(base::levels(data[[grp_str]]))
 
   if (base::length(grp_lvls) != 2) {
 
@@ -421,7 +421,7 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
 
   if (base::is.null(caption)) {
 
-    caption <- base::paste("Two Sample Independent Means Interval Between", str_of_var1, "and", str_of_grp)
+    caption <- base::paste("Two Sample Independent Means Interval Between", var1_str, "and", grp_str)
 
   } else {
 
@@ -454,7 +454,7 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
     ciu = c(ind_test$conf.int[[2]], NA)
   ) %>%
     finalize_tbl(digits = digits, caption = caption, na_str = "") %>%
-    flextable::set_header_labels(var = str_of_grp, na = "n Missing", xbar = "Group Means", se = "Standard Error",
+    flextable::set_header_labels(var = grp_str, na = "n Missing", xbar = "Group Means", se = "Standard Error",
                                  cil = base::paste(cl, "Interval Lower"),
                                  ciu = base::paste(cl, "Interval Upper")) %>%
     flextable::vline(j = c(3, 4))
@@ -477,10 +477,10 @@ infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
   check_conf_lvl(conf_lvl)
 
   var1 <- formula[[2]]
-  str_of_var1 <- base::deparse(base::substitute(var1))
+  var1_str <- base::deparse(base::substitute(var1))
 
   grp_var <- formula[[3]]
-  str_of_grp <- base::deparse(base::substitute(grp_var))
+  grp_str <- base::deparse(base::substitute(grp_var))
 
   # error catching
   check_conf_lvl(conf_lvl)
@@ -492,7 +492,7 @@ infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
   data <- data %>%
     dplyr::mutate("{grp_var}" := base::as.factor({{ grp_var }}))
 
-  grp_lvls <- base::levels(data[[str_of_grp]])
+  grp_lvls <- base::levels(data[[grp_str]])
 
   if (base::length(grp_lvls) != 2) {
 
@@ -509,7 +509,7 @@ infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
 
   if (base::is.null(caption)) {
 
-    caption <- base::paste("Two Sample Independent Means Test Between", str_of_var1, "and", str_of_grp,
+    caption <- base::paste("Two Sample Independent Means Test Between", var1_str, "and", grp_str,
                            "\n Confidence Level:", cl)
 
   } else {
