@@ -1,3 +1,11 @@
+# gvsu215 0.3.3
+
+* Mostly internal changes
+  * Small documentation updates
+  * Reworked in-function variable names
+  * Updated internal tests
+  * Redesigned student cheatsheet, built instructor's guide
+
 # gvsu215 0.3.2
 
 * Updated documentation (including how to add a least squares line to `plot_scatter()`).

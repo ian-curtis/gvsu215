@@ -3,3 +3,4 @@ docs
 temp/
 inst/doc
 generate.R
+.Rhistory
