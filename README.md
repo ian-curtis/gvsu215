@@ -6,6 +6,7 @@
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/gvsu215)](https://CRAN.R-project.org/package=gvsu215)
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/2866996e-ff21-439d-9d53-f79319b52d97/deploy-status)](https://app.netlify.com/sites/transcendent-starlight-07ae23/deploys)
 <!-- badges: end -->
 
 Note: Due to the fact that some functions return tables (which are
