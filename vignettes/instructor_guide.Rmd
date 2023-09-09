@@ -1,0 +1,81 @@
+---
+title: "Instructor's Guide"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Instructor's Guide}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Greetings and welcome to `{gvsu215}`!
+
+I've tried to keep function names simple and required arguments to a minimum to help students focus on the statistical content rather than the R code. That being said, there are some more advanced features and capabilities built into the package that you as the instructor may take advantage of if you so choose.
+
+# Different R Markdown Export Formats
+
+This package should* be able to be used in any output format using R Markdown, including HTML, PDF, and Word. That being said...
+
+* Best results will come from HTML output. 
+* If using PDF output, you will want to make sure student R Markdown files have the following in the YAML header which will allow the compiler to use the `xelatex` engine. As such, you will avoid messages printing out from every function call.
+
+```
+output:
+  pdf_document:
+    latex_engine: xelatex
+```
+
+*If this is not the case, [submit an issue on GitHub](https://github.com/ian-curtis/gvsu215/issues) or [send me an email](mailto:curtisi@mail.gvsu.edu).
+
+# Extra Function Arguments
+
+Many functions in this package have extra arguments that aren't necessary for basic function features but can allow for a little customization depending on your pedagogical approach and preferences, such as if you are focusing on data literacy or proper axis labeling. Each of the functions listed below have extra arguments, which are detailed after the function name.
+
+* `tbl_1var()`, `tbl_corr()`, `tbl_num_sum()`
+  * The `digits` argument can be specified with an integer value for the number of digits to round to. Defaults to 3.
+  * The `caption` argument can be used to override the default caption.
+* `tbl_2var()`
+  * The `row_pct` argument can be used to add in row percentages in each cell.
+  * The `digits` argument can be specified with an integer value for the number of digits to round to. Defaults to 3.
+  * The `caption` argument can be used to override the default caption.
+* `tbl_pctile()`
+  * The `probs` argument can be used to specify which percentiles are to be given. Simply pass in a vector of values between 0 and 1.
+  * The `digits` argument can be specified with an integer value for the number of digits to round to. Defaults to 3.
+  * The `caption` argument can be used to override the default caption.
+
+* `plot_bar()`
+  * The `type` argument can be used to specify if a plot with `percent`s or `count`s is desired.
+  * The `fill` argument can be used to choose a fill color (for a single variable plot).
+  * The `title` argument can be used to override the default title.
+  * The `...` is used for other labels on the plot, namely, the x- and y-axis labels.
+* `plot_box()`
+  * The `fill` argument can be used to choose a fill color.
+  * The `title` argument can be used to override the default title.
+  * The `...` is used for other labels on the plot, namely, the x- and y-axis labels.
+* `plot_hist()`
+  * The `group_cols` argument can be used with a grouped histogram to specify how many columns the faceted output should take up.
+  * The `fill` argument can be used to choose a fill color.
+  * The `title` argument can be used to override the default title.
+  * The `...` is used for other labels on the plot, namely, the x- and y-axis labels.
+* `plot_scatter()`
+  * The `fill` argument can be used to choose a fill color (for a non-grouped plot).
+  * The `title` argument can be used to override the default title.
+  * The `legend_title` argument can be used to override the default legend title.
+  * The `axis_lines` argument can be used to draw axis gridlines on the plot (`both`).
+  * The `ls_line` argument can be set to `TRUE` to draw in a least squares line.
+  * The `...` is used for other labels on the plot, namely, the x- and y-axis labels.
+
+* `infer_*()`
+  * The `digits` argument can be specified with an integer value for the number of digits to round to. Defaults to 3.
+  * The `caption` argument can be used to override the default caption.
+  * The `conf_lvl` argument can be used to choose a different confidence level other than 0.95. (Not applicable to `infer_anova()`.)
+  
+
+
+

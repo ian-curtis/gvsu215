@@ -1,5 +1,6 @@
 ---
 title: "Cheat Sheet"
+subtitle: "Designed For GVSU 215 Students"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Cheat Sheet}
@@ -19,142 +20,240 @@ There are many functions contained in this package and it can get annoying to ha
 
 # Installation and Preparations
 
-When using this package, you will first want to install it. This can only be done from GitHub at this time and you will need `devtools`.
-
-```{r}
-# install.packages("devtools") # if you don't have it already installed
-devtools::install_github("ian-curtis/gvsu215")
-```
-
-Then, be sure you have loaded the package in order to access its functions.
+This package comes pre-installed on the GVSU Posit Workbench. All you need to do is load the package to access its functions.
 
 ```{r setup}
 library(gvsu215)
 ```
 
-Special note: If you are using R Markdown to export to a PDF, you will want to specify the following in your YAML header.
-
-```
-output:
-  pdf_document:
-    latex_engine: xelatex
-```
-
-This will enable the `xelatex` engine and will prevent the package from automatically giving warnings each time a table is generated.
-
 # Code Shells
 
-The package's functions can be broken down into a few general categories: tables, plots, and inference. The templates below will include a simple example template and doesn't necessarily contain all possible arguments for that function. To evaluate, simply copy the code chunk, double click on the filler words (in all caps) and replace them with your respective items.
+The package's functions can be broken down into a few general categories: utilities, tables, plots, and inference. The templates below are broken up by course learning module and will include a simple example template. To evaluate, simply copy the code chunk, double click on the filler words (in all caps and surrounded by underscore, `_EXAMPLE_`) and replace them with your respective item.
 
-## Tables
+## Utilities
+
+### Reading in Data
+
+To read in data files, you will need to know the file path to the file. Then use
 
 ```{r}
-tbl_1var(DATA, ~VAR)
+_DATANAME_ <- read.csv("_FILEPATH_", header = TRUE)
 ```
 
+Note: The Software Investigation starter program will always include a code chunk that loads the `gvsu215` package that includes the functions we need for STA215.
+
+### Subset Observations
+
 ```{r}
-tbl_2var(DATA, VAR1~VAR2)
+_NEWDATANAME_ <- _OLDDATANAME_ %>% 
+  filter(_CONDITION_)
 ```
 
+Note: The Software Investigation starter program will always include a code chunk that reads in the data file.
+
+### Subset Variables
+
 ```{r}
-tbl_corr(DATA, VAR1~VAR2, na_rm = TRUE)
+_NEWDATANAME_ <- _OLDDATANAME_ %>% 
+  select(_VARSTOKEEP_)
 ```
 
+## Chapter 2: Categorical Data
+
+### Frequency Table
+
 ```{r}
-tbl_num_sum(DATA, ~VAR, na_rm = TRUE)
-tbl_num_sum(DATA, VAR1~VAR2, na_rm = TRUE)
+tbl_1var(_DATA_, ~_VAR_)
 ```
 
+### Bar Graph Using Percent
+
 ```{r}
-tbl_pctile(DATA, ~VAR)
-tbl_pctile(DATA, VAR1~VAR2, na_rm = TRUE)
+plot_bar(_DATA_, ~_VAR_, type = "percent", na_rm = FALSE)
 ```
 
-## Plots
+Note: Change to `na_rm = TRUE` to eliminate missing values from plot.
+
+### Bar Graph Using Counts
 
 ```{r}
-plot_bar(DATA, ~VAR)
-plot_bar(DATA, ~VAR, fill = ~FILLVAR)
+plot_bar(_DATA_, ~_VAR_, type = "count", na_rm = FALSE)
 ```
 
+Note: Change to `na_rm = TRUE` to eliminate missing values from plot
+
+### Two-Way Table
+
 ```{r}
-plot_box(DATA, ~VAR)
-plot_box(DATA, VAR1~VAR2)
+tbl_2var(_DATA_, _RESPONSE_~_EXPLANATORY_)
 ```
 
-```{r}
-plot_hist(DATA, ~VAR, binwidth = NUMBER)
-plot_hist(DATA, ~VAR, binwidth = NUMBER, group = ~GROUPVAR)
-```
+### Clustered Bar Graph
 
 ```{r}
-plot_scatter(DATA, VAR1~VAR2)
-plot_scatter(DATA, VAR1~VAR2, fill = ~FILLVAR, legend_title = "TEXT")
-```
-
-## Inferential Statistics
-
-Confidence levels default to 95% but can be overridden with `conf_lvl = DECIMAL` (e.g., `conf_lvl = .9`). 
-
-```{r}
-infer_1mean(DATA, ~VAR)
-```
-
-```{r}
-infer_1prop(DATA, ~VAR, success = SUCCESS_VALUE)
-```
-
-```{r}
-infer_2mean_int(DATA, VAR1~VAR2)
-# or infer_2mean(DATA, VAR1~VAR2, conf_int = TRUE)
-```
-
-```{r}
-infer_2mean_test(DATA, VAR1~VAR2)
-# or infer_2mean(DATA, VAR1~VAR2)
-```
-
-```{r}
-infer_2prop_int(DATA, VAR1~VAR2, success = SUCCESS_VALUE)
-# or infer_2prop(DATA, VAR1~VAR2, success = SUCCESS_VALUE, conf_int = TRUE)
-```
-
-```{r}
-infer_2prop_test(DATA, VAR1~VAR2, success = SUCCESS_VALUE)
-# or infer_2prop(DATA, VAR1~VAR2, success = SUCCESS_VALUE)
-```
-
-```{r}
-infer_paired(DATA, var1 = ~VAR1, var2 = ~VAR2)
-```
-
-```{r}
-infer_reg(DATA, VAR1~VAR2) # for full table use `reduced = FALSE`
-```
-
-```{r}
-infer_chisq(DATA, VAR1~VAR2)
-infer_chisq(DATA, VAR1~VAR2, type = "expected")
-infer_chisq(DATA, VAR1~VAR2, type = "observed")
-```
-
-```{r}
-infer_anova(DATA, VAR1~VAR2)
+plot_bar(_DATA_, ~_RESPONSE_, fill = ~_EXPLANATORY_, na_rm = FALSE)
 ```
 
 
+## Chapter 3: One Quantitative
+
+### Basic Numerical Summaries
+
+```{r}
+tbl_num_sum(_DATA_, ~_VAR_, na_rm = FALSE)
+```
+
+### Percentile
+
+```{r}
+tbl_pctile(_DATA_, ~_VAR_, probs = c(_PERCENTILES_), na_rm = FALSE)
+```
+
+Note: Replace percentiles with the values you want separated by commas.  For example, `c(0.80, 0.90, 0.95)`
+
+### Boxplot
+
+```{r}
+plot_box(_DATA_, ~_VAR_, na_rm = FALSE)
+```
+
+### Histogram
+
+```{r}
+plot_hist(_DATA_, ~_VAR_, binwidth = NULL, na_rm = FALSE)
+```
+
+Note: You can use `binwidth` to control how many bars there are.
+
+### Percentiles By Group
+
+```{r}
+tbl_pctile(_DATA_, _VAR1_~_GROUPVAR_, na_rm = FALSE)
+```
+
+## Chapter 5: Estimation
+
+Note: Confidence levels default to 95% but can be overridden with `conf_lvl = _DECIMAL_` (e.g., `conf_lvl = 0.9`). 
+
+### Confidence Interval on $p$
+
+```{r}
+infer_1prop(_DATA_, ~_VAR_, success = _SUCCESS_CATEGORY_, conf_lvl = _CONFIDENCELEVEL_)
+```
+
+### Confidence Interval on $\mu$
+
+```{r}
+infer_1mean(_DATA_, ~_VAR_, conf_lvl = _CONFIDENCELEVEL_)
+```
+
+## Chapter 6: Two Quantitative
+
+### Scatterplot
+
+```{r}
+plot_scatter(_DATA_, _RESPONSE_~_EXPLANATORY_, axis_lines = "none", ls_line = FALSE)
+```
+
+Note: Change to `axis_lines = "both"` to grid the scatterplot.
+Note: Change to `ls_line = TRUE` to plot the regression line.
+
+### Linear Correlation
+
+```{r}
+tbl_corr(DATA, _RESPONSE_~_EXPLANATORY_, na_rm = TRUE)
+```
+
+### Linear Regression
+
+```{r}
+infer_reg(_DATA_, _RESPONSE_~_EXPLANATORY_, reduced = TRUE)
+```
+
+Note: Change to `reduced = FALSE` to get test statistic and p-value.
+
+### Scatterplot By Group
+
+```{r}
+plot_scatter(_DATA_, _RESPONSE_~_EXPLANATORY_, fill = ~_GROUPINGVAR_, legend_title = "_LEGEND_")
+```
+
+## Chapter 7: Hypothesis Testing Introduction
+
+### $\chi ^2$-Test
+
+```{r}
+# standard test
+infer_chisq(_DATA_, _EXPLANATORY_~_RESPONSE_, type = "test")
+```
+
+```{r}
+# expected counts
+infer_chisq(_DATA_, _EXPLANATORY_~_RESPONSE_, type = "expected")
+```
+
+```{r}
+# observed counts
+infer_chisq(_DATA_, _EXPLANATORY_~_RESPONSE_, type = "observed")
+```
+
+### Confidence Interval for the Difference in Two Proportions
+
+Note: Confidence levels default to 95% but can be overridden with `conf_lvl = _DECIMAL_` (e.g., `conf_lvl = 0.9`). 
+
+```{r}
+infer_2prop_int(_DATA_, _RESPONSE_~_EXPLANATORY_, success = _SUCCESS_CATEGORY_, conf_lvl = _CONFIDENCELEVEL_)
+```
+
+Note: For this code to work the explanatory variable must only have two categories.
 
 
+## Chapter 8: Hypothesis Testing Means
 
+### Paired $t$-Test and Confidence Interval
 
+Note: Confidence levels default to 95% but can be overridden with `conf_lvl = _DECIMAL_` (e.g., `conf_lvl = 0.9`). 
 
+```{r}
+infer_paired(_DATA_, var1 = ~_VAR1_, var2 = ~_VAR2_, conf_lvl = _CONFIDENCELEVEL_)
+```
 
+### Basic Numerical Summaries By Group
 
+```{r}
+tbl_num_sum(_DATA_, _VAR1_~_GROUPVAR_, na_rm = FALSE)
+```
 
+### Boxplot By Group
 
+```{r}
+plot_box(_DATA_, _VAR1_~_GROUPVAR_, na_rm = FALSE)
+```
 
+### Histogram By Group
 
+```{r}
+plot_hist(_DATA_, ~_VAR_, group = ~_GROUPVAR_, binwidth = NULL, na_rm = FALSE)
+```
 
+Note: You can use `binwidth` to control how many bars there are.
 
+### Independent $t$-Test
+
+```{r}
+infer_2mean_test(_DATA_, _VAR_~_GROUPVAR_, conf_lvl = _CONFIDENCELEVEL_)
+```
+
+### Independent $t$-Test Confidence Interval
+
+```{r}
+infer_2mean_int(_DATA_, _VAR_~_GROUPVAR_, conf_lvl = _CONFIDENCELEVEL_)
+```
+
+### ANOVA
+
+```{r}
+infer_anova(_DATA_, _VAR_~_GROUPVAR_)
+```
 
 
