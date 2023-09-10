@@ -101,6 +101,12 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
   # code
   var1 <- formula[[2]]
   var1_str <- base::deparse(base::substitute(var1))
+  var1_lvls <- data %>%
+    tibble::as_tibble() %>%
+    dplyr::mutate("{var1}" := base::factor({{ var1 }})) %>%
+    dplyr::select({{ var1 }}) %>%
+    base::unique() %>%
+    base::nrow()
 
   var2 <- formula[[3]]
   var2_str <- base::deparse(base::substitute(var2))
@@ -158,7 +164,14 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
       tidyr::pivot_wider(names_from = {{ var2 }}, values_from = .data$n) %>%
       janitor::adorn_totals(c("row", "col")) %>%
       dplyr::mutate(Total = as.integer(.data$Total)) %>%
-      finalize_tbl(digits = digits, caption = caption)
+      finalize_tbl(digits = digits, caption = caption) %>%
+      flextable::add_header_row(values = c("", var2_str, ""),
+                                colwidths = c(1, var2_lvls, 1)) %>%
+      flextable::vline(j = c(1, var2_lvls + 1), border = officer::fp_border(width = 1.2)) %>%
+      flextable::hline(i = 1, part = "header") %>%
+      flextable::hline(i = 1, j = c(1, var2_lvls + 2), part = "header",
+                       border = officer::fp_border(color = NA)) %>%
+      flextable::hline(i = var1_lvls, border = officer::fp_border(width = 1.2))
 
   }
 
