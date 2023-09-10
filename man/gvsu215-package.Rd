@@ -4,7 +4,7 @@
 \name{gvsu215-package}
 \alias{gvsu215}
 \alias{gvsu215-package}
-\title{gvsu215: Pretty Plots and Charts for Basic Statistical Concepts}
+\title{gvsu215: Pretty Plots and Charts for Introductory Statistical Concepts}
 \description{
 A light wrapper to 'mosaic' and 'ggformula' enabling nice graphics in one line of code. Designed for the Grand Valley State University's Introductory Statistics course (STA 215).
 }

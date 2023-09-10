@@ -104,6 +104,12 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
 
   var2 <- formula[[3]]
   var2_str <- base::deparse(base::substitute(var2))
+  var2_lvls <- data %>%
+    tibble::as_tibble() %>%
+    dplyr::mutate("{var2}" := base::factor({{ var2 }})) %>%
+    dplyr::select({{ var2 }}) %>%
+    base::unique() %>%
+    base::nrow()
 
   chisq_test <- stats::chisq.test(mosaic::tally(formula, data = data))
 
@@ -133,7 +139,11 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
     chisq_test$expected %>%
       tibble::as_tibble(rownames = var1_str) %>%
       finalize_tbl(digits = 1, caption = caption) %>%
-      flextable::vline(j = 1)
+      flextable::add_header_row(values = c("", var2_str),
+                                colwidths = c(1, var2_lvls)) %>%
+      flextable::hline(i = 1, part = "header") %>%
+      flextable::hline(i = 1, j = 1, part = "header", border = officer::fp_border(color = NA)) %>%
+      flextable::vline(j = 1, border = officer::fp_border(width = 2))
 
   } else if (type == "observed") {
 
