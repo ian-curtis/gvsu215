@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gvsu215</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.3.9999</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,6 +77,11 @@
 <code><a href="../reference/tbl_num_sum.html">tbl_num_sum()</a></code> will no longer show NAs when no NAs are present and <code>na_rm = FALSE</code> is given.</li>
 <li>The second variable entered in <code><a href="../reference/infer_anova.html">infer_anova()</a></code> is now coerced into a factor so that degrees of freedom are correctly calculated.</li>
 </ul></div>
+<div class="section level3">
+<h3 id="new-functions-0-3-1">New Functions<a class="anchor" aria-label="anchor" href="#new-functions-0-3-1"></a></h3>
+<p>You now may use <code><a href="../reference/infer_2mean.html">infer_2mean()</a></code> and <code><a href="../reference/infer_2prop.html">infer_2prop()</a></code> to perform a two-sample proportion or mean test, respectively. The main perk to this is the <code>conf_int</code> argument. When specified to TRUE, a confidence interval will be given in addition to the hypothesis test output.</p>
+<p>These functions are provided as an alternative to <code><a href="../reference/infer_2prop_int.html">infer_2prop_int()</a></code>, <code><a href="../reference/infer_2prop_test.html">infer_2prop_test()</a></code>, <code><a href="../reference/infer_2mean_int.html">infer_2mean_int()</a></code>, and <code><a href="../reference/infer_2mean_test.html">infer_2mean_test()</a></code>. Rather than having two functions for intervals and tests, you can now do it in one function if you so choose.</p>
+</div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.0" id="gvsu215-030">gvsu215 0.3.0<a class="anchor" aria-label="anchor" href="#gvsu215-030"></a></h2>
