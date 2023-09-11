@@ -27,7 +27,7 @@ This package was designed and tailored for Grand Valley State University
 
 ## Installation
 
-You can install the development version of gvsu215 from
+This package is not yet on CRAN. You can install the development version of gvsu215 from
 [GitHub](https://github.com/ian-curtis/gvsu215) with:
 
 ``` r

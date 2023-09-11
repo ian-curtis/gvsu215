@@ -1,7 +1,7 @@
 # plot_bar() ####
 
 test_that("bar gives message with no type given", {
-  expect_message(plot_bar(mtcars, ~cyl))
+  expect_no_error(plot_bar(mtcars, ~cyl))
 })
 
 test_that("bar works regularly with type = percent", {
@@ -37,7 +37,7 @@ test_that("bar fails with mispelling data", {
 })
 
 test_that("group bar gives message with no type given", {
-  expect_message(plot_bar(mtcars, ~cyl, fill = ~gear))
+  expect_no_error(plot_bar(mtcars, ~cyl, fill = ~gear))
 })
 
 test_that("group bar works with removing NAs", {

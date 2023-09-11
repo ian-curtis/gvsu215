@@ -86,7 +86,8 @@ finalize_plot <- function(plot) {
                               plot.title = ggplot2::element_text(face = "bold"),
                               axis.title.y = ggplot2::element_text(face = "bold"),
                               axis.title.x = ggplot2::element_text(face = "bold"),
-                              legend.key = ggplot2::element_rect(fill = 'white')))
+                              legend.key = ggplot2::element_rect(fill = 'white'),
+                              axis.text = ggplot2::element_text(size = 12)))
 
 }
 

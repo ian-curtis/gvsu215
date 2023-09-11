@@ -29,7 +29,7 @@ This package was designed and tailored for Grand Valley State University (course
 
 ## Installation
 
-You can install the development version of gvsu215 from [GitHub](https://github.com/ian-curtis/gvsu215) with:
+This package is not yet on CRAN. You can install the development version of gvsu215 from [GitHub](https://github.com/ian-curtis/gvsu215) with:
 
 ``` {r message = FALSE}
 # install.packages("devtools")
