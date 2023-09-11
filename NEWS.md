@@ -21,11 +21,11 @@
 * `tbl_num_sum()` will no longer show NAs when no NAs are present and `na_rm = FALSE` is given.
 * The second variable entered in `infer_anova()` is now coerced into a factor so that degrees of freedom are correctly calculated.
 
-# New Functions
+## New Functions
 
 You now may use `infer_2mean()` and `infer_2prop()` to perform a two-sample proportion or mean test, respectively. The main perk to this is the `conf_int` argument. When specified to TRUE, a confidence interval will be given in addition to the hypothesis test output.
 
-# These functions are provided as an alternative to `infer_2prop_int()`, `infer_2prop_test()`, `infer_2mean_int()`, and `infer_2mean_test()`. Rather than having two functions for intervals and tests, you can now do it in one function if you so choose.
+These functions are provided as an alternative to `infer_2prop_int()`, `infer_2prop_test()`, `infer_2mean_int()`, and `infer_2mean_test()`. Rather than having two functions for intervals and tests, you can now do it in one function if you so choose.
 
 # gvsu215 0.3.0
 

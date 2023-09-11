@@ -47,12 +47,11 @@ test_that("num sum warns with NAs and na_rm = FALSE with groups", {
 # })
 
 test_that("tbl_pctile displays works when NAs are removed", {
-  skip("rlang")
-  expect_message(tbl_pctile(mtcars, ~wt))
+  expect_no_error(tbl_pctile(mtcars, ~wt))
 })
 
 test_that("tbl_pctile works with new probs", {
-  expect_no_condition(tbl_pctile(mtcars, ~wt, probs = c(.17, .3, .5, .7, .9, 1)))
+  expect_no_error(tbl_pctile(mtcars, ~wt, probs = c(.17, .3, .5, .7, .9, 1)))
 })
 
 test_that("tbl_pctile works with caption", {

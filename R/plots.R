@@ -24,7 +24,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
   # error catching
 
   if (base::length(type) == 2) {
-    rlang::inform("When no value for `type` is provided, a 'percent' plot is created.", .frequency = "regularly", .frequency_id = "bar-type")
+    message("When no value for `type` is provided, a 'percent' plot is created.")
   }
 
   if (base::length(formula) > 2) {
@@ -421,10 +421,10 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = 
 plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_title = NULL, axis_lines = c("none", "both"), ls_line = FALSE, ...) {
 
   # error catching
-  message("Note: NAs always removed (in pairs) for scatterplots.")
+  rlang::inform("Note: NAs always removed (in pairs) for scatterplots.", .frequency = "regularly", .frequency_id = "scatter_nas")
 
   if (base::is.character(fill) & !base::is.null(legend_title)) {
-    warning("Legend title argument ignored. Legends are only needed for grouped scatterplots.")
+    message("Legend title argument ignored. Legends are only needed for grouped scatterplots.")
   }
 
   check_test(ggformula::gf_point(formula, data = data, fill = fill, color = "grey80", shape = 21, size = 2))
