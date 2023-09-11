@@ -1,7 +1,6 @@
 # plot_bar() ####
 
 test_that("bar gives message with no type given", {
-  skip("rlang")
   expect_message(plot_bar(mtcars, ~cyl))
 })
 
@@ -38,7 +37,6 @@ test_that("bar fails with mispelling data", {
 })
 
 test_that("group bar gives message with no type given", {
-  skip("rlang")
   expect_message(plot_bar(mtcars, ~cyl, fill = ~gear))
 })
 
@@ -55,7 +53,7 @@ test_that("bar works with change title", {
 })
 
 test_that("bar works with label change", {
-  expect_no_condition(plot_box(mtcars, wt~gear, x = "yay", y = "yay"))
+  expect_no_warning(plot_box(mtcars, wt~gear, x = "yay", y = "yay"))
 })
 
 
@@ -108,7 +106,7 @@ test_that("boxplot works with swapping order", {
 # plot_hist() ####
 
 test_that("histogram works", {
-  expect_no_condition(plot_hist(mtcars, ~drat, binwidth = 0.05))
+  expect_no_warning(plot_hist(mtcars, ~drat, binwidth = 0.05))
 })
 
 test_that("histogram warns with no binwidth", {
@@ -155,39 +153,39 @@ test_that("grouped histogram fails with mispelling", {
 # plot_scatter() ####
 
 test_that("scatter works", {
-  expect_message(plot_scatter(mtcars, wt~drat))
+  expect_no_error(plot_scatter(mtcars, wt~drat))
 })
 
 test_that("scatter works with new fill color", {
-  expect_message(plot_scatter(mtcars, wt~drat, fill = "#49208a"))
+  expect_no_error(plot_scatter(mtcars, wt~drat, fill = "#49208a"))
 })
 
 test_that("scatter works with new title", {
-  expect_message(plot_scatter(mtcars, wt~drat, title = "a scatterplot!"))
+  expect_no_error(plot_scatter(mtcars, wt~drat, title = "a scatterplot!"))
 })
 
 test_that("scatter works with new labels", {
-  expect_message(plot_scatter(mtcars, wt~drat, x = "yaya", y = "ayay"))
+  expect_no_error(plot_scatter(mtcars, wt~drat, x = "yaya", y = "ayay"))
 })
 
 test_that("scatter works with both lines", {
-  expect_message(plot_scatter(mtcars, wt~drat, axis_lines = "both"))
+  expect_no_error(plot_scatter(mtcars, wt~drat, axis_lines = "both"))
 })
 
 test_that("group scatter works", {
-  expect_message(plot_scatter(mtcars, wt~drat, fill = ~cyl))
+  expect_no_error(plot_scatter(mtcars, wt~drat, fill = ~cyl))
 })
 
 test_that("scatter works with new legend title", {
-  expect_message(plot_scatter(mtcars, wt~drat, fill = ~cyl, legend_title = "Cyl"))
+  expect_no_error(plot_scatter(mtcars, wt~drat, fill = ~cyl, legend_title = "Cyl"))
 })
 
 test_that("scatter warns with fill string and legend title", {
-  expect_warning(plot_scatter(mtcars, wt~drat, legend_title = "Hey!"))
+  expect_message(plot_scatter(mtcars, wt~drat, legend_title = "Hey!"))
 })
 
 test_that("group scatter works with axis lines", {
-  expect_message(plot_scatter(mtcars, wt~drat, fill = ~cyl, axis_lines = "both"))
+  expect_no_error(plot_scatter(mtcars, wt~drat, fill = ~cyl, axis_lines = "both"))
 })
 
 test_that("group scatter fails with mispelling", {
@@ -195,11 +193,11 @@ test_that("group scatter fails with mispelling", {
 })
 
 test_that("scatter works with least squares line", {
-  expect_message(plot_scatter(mtcars, wt~drat, fill = ~cyl, ls_line = TRUE))
+  expect_no_error(plot_scatter(mtcars, wt~drat, fill = ~cyl, ls_line = TRUE))
 })
 
 test_that("group scatter works with least squares line", {
-  expect_message(plot_scatter(mtcars, wt~drat, fill = ~cyl, ls_line = TRUE))
+  expect_no_error(plot_scatter(mtcars, wt~drat, fill = ~cyl, ls_line = TRUE))
 })
 
 

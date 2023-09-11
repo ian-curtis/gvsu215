@@ -31,7 +31,7 @@ output:
     latex_engine: xelatex
 ```
 
-*If this is not the case, [submit an issue on GitHub](https://github.com/ian-curtis/gvsu215/issues) or [send me an email](mailto:curtisi@mail.gvsu.edu).
+*If this is not the case, [reach out to Dr. John Gabrosek](mailto:gabrosej@gvsu.edu) or [submit an issue on GitHub](https://github.com/ian-curtis/gvsu215/issues).
 
 # Extra Function Arguments
 

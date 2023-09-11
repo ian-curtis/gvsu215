@@ -243,10 +243,10 @@ tbl_corr <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
     finalize_tbl(digits = 3,
                  caption = caption,
                  striped = FALSE) %>%
-    flextable::set_header_labels(n_ind = "n\u2081",
-                                 na_ind = "n\u2081 missing",
-                                 n_dep = "n\u2082",
-                                 na_dep = "n\u2082 missing",
+    flextable::set_header_labels(n_ind = base::paste(var1_str, "n"),
+                                 na_ind = base::paste(var1_str, "missing"),
+                                 n_dep = base::paste(var2_str, "n"),
+                                 na_dep = base::paste(var2_str, "missing"),
                                  obs_used = "Observations Used",
                                  corr = "Correlation")
 
