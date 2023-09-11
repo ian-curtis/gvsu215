@@ -24,7 +24,9 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
   # error catching
 
   if (base::length(type) == 2) {
-    message("When no value for `type` is provided, a 'percent' plot is created.")
+    rlang::inform("When no value for `type` is provided, a 'percent' plot is created.",
+                  .frequency = "regularly",
+                  .frequency_id = "bar-type")
   }
 
   if (base::length(formula) > 2) {
@@ -243,8 +245,7 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, ...) {
       ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels)) %>%
       ggformula::gf_theme(panel.grid.major.y = ggplot2::element_blank(),
                panel.grid.major.x = ggplot2::element_line(color = "grey70", linewidth = .5),
-               axis.text.y = ggplot2::element_blank(),
-               axis.text.x = ggplot2::element_text(size = 13)) +
+               axis.text.y = ggplot2::element_blank()) +
       ggplot2::ylim(-0.4, 0.4)
 
 
@@ -272,9 +273,7 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, ...) {
                                           "NAs Removed: Yes"),
                          ...) %>%
       finalize_plot() %>%
-      ggformula::gf_refine(ggplot2::scale_y_continuous(labels = plot_labels)) %>%
-      ggformula::gf_theme(axis.text.x = ggplot2::element_text(size = 15),
-               axis.text.y = ggplot2::element_text(size = 13))
+      ggformula::gf_refine(ggplot2::scale_y_continuous(labels = plot_labels))
 
   }
 
