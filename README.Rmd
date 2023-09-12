@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
 
 # gvsu215
 
+Pretty Plots and Charts for Introductory Statistical Concepts
+
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/gvsu215)](https://CRAN.R-project.org/package=gvsu215)
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
