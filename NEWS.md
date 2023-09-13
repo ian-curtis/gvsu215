@@ -1,3 +1,9 @@
+# gvsu215 0.3.4
+
+* Package now depends on `ggformula` (rather than imports) to help avoid a potential namespace issue when users have not loaded `ggformula`.
+* Small adjustments to plot themes
+* The output from `infer_chisq(., type = "expected")` now shows both variable names on the table.
+
 # gvsu215 0.3.3
 
 * Mostly internal changes
