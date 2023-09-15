@@ -1,3 +1,8 @@
+# gvsu215 0.3.5
+
+* `tbl_num_sum()` now shows number of NAs in caption when `na_rm` is TRUE and does not show the "missing" column (which was all 0s in this case). This funciont will also now correctly display "NAs Removed" in the caption.
+* Default table output width is now 6 inches to avoid bleeding into margins of PDF and Word documents.
+
 # gvsu215 0.3.4
 
 * Package now depends on `ggformula` (rather than imports) to help avoid a potential namespace issue when users have not loaded `ggformula`.
