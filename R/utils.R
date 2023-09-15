@@ -31,7 +31,7 @@ finalize_tbl <- function(table, digits, striped = TRUE, caption = NULL, na_str =
       flextable::bold(bold = TRUE, part = "header") %>%
       flextable::align(align = "center", part = "header") %>%
       flextable::autofit() %>%
-      flextable::fit_to_width(7.5) %>%
+      flextable::fit_to_width(6) %>%
       flextable::set_caption(caption = flextable::as_paragraph(flextable::as_chunk(caption,
                                                              props = officer::fp_text(font.family = "Helvetica",
                                                                                       bold = FALSE))))
@@ -50,7 +50,7 @@ finalize_tbl <- function(table, digits, striped = TRUE, caption = NULL, na_str =
       flextable::bold(bold = TRUE, part = "header") %>%
       flextable::align(align = "center", part = "header") %>%
       flextable::autofit() %>%
-      flextable::fit_to_width(7.5) %>%
+      flextable::fit_to_width(6) %>%
       flextable::set_caption(caption = flextable::as_paragraph(flextable::as_chunk(caption,
                                                              props = officer::fp_text(font.family = "Helvetica", bold = FALSE))))
   }

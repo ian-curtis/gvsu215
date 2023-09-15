@@ -31,6 +31,8 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE
 
   check_test(mosaic::favstats(x = formula, data = data, na.rm = na_rm))
 
+  og_na <- na_rm
+
   # code
   if (base::length(formula) == 2) {
 
@@ -53,9 +55,27 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE
       caption <- base::paste("Summary Statistics for", var1_str)
     }
 
-    mosaic::favstats(x = formula, data = data, na.rm = na_rm) %>%
-      tibble::as_tibble() %>%
-      finalize_tbl(digits, striped = FALSE, caption = caption)
+    df <- mosaic::favstats(x = formula, data = data, na.rm = na_rm) %>%
+      tibble::as_tibble()
+
+    if (og_na == TRUE) {
+
+      df %>%
+        dplyr::select(-missing) %>%
+        finalize_tbl(digits, striped = FALSE,
+                     caption = base::paste(caption, "\n Missing:", n_na,
+                                           "| NAs Removed:",
+                                           ifelse(og_na == TRUE, "Yes", "No")))
+
+    } else if (og_na == FALSE) {
+
+      df %>%
+        finalize_tbl(digits, striped = FALSE,
+                     caption = base::paste(caption, "\n NAs Removed:",
+                                                    ifelse(og_na == TRUE, "Yes", "No")))
+
+    }
+
 
   }
   else if (base::length(formula) == 3) {
@@ -87,14 +107,30 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE
       base::unique() %>%
       base::nrow()
 
-    mosaic::favstats(x = formula, data = data, na.rm = na_rm) %>%
-      tibble::as_tibble() %>%
-      # dplyr::mutate(missing = c(n_na, base::rep("", times = n_lvls - 1))) %>%
-      # dplyr::select(-missing) %>%
-      finalize_tbl(digits,
-                   caption = base::paste(caption, "\n", var1_str, "Missing:", n_na[[1]], "|",
-                                         var2_str, "Missing:", n_na[[2]], "|",
-                                         "NAs Removed:", base::ifelse(na_rm == TRUE, "Yes", "No")))
+    df <- mosaic::favstats(x = formula, data = data, na.rm = na_rm) %>%
+      tibble::as_tibble()
+
+
+
+    if (og_na == TRUE) {
+
+      df %>%
+        dplyr::select(-missing) %>%
+        finalize_tbl(digits,
+                     caption = base::paste(caption, "\n", var1_str, "Missing:", n_na[[1]], "|",
+                                           var2_str, "Missing:", n_na[[2]], "|",
+                                           "NAs Removed:", base::ifelse(og_na == TRUE, "Yes", "No")))
+
+    } else if (og_na == FALSE) {
+
+      df %>%
+        finalize_tbl(digits,
+                     caption = base::paste(caption, "\n", var1_str, "Missing:", n_na[[1]], "|",
+                                           var2_str, "Missing:", n_na[[2]], "|",
+                                           "NAs Removed:", base::ifelse(og_na == TRUE, "Yes", "No")))
+
+    }
+
   }
 
 }
@@ -114,8 +150,8 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE
 #'
 #' @examples
 #' tbl_pctile(mtcars, ~wt)
-#' tbl_pctile(mtcars, ~wt, probs = c(.17, .3, .5, .7, .9, 1), na_rm = TRUE)
-#' tbl_pctile(mtcars, wt~cyl, na_rm = TRUE)
+#' tbl_pctile(mtcars, ~wt, probs = c(.17, .3, .5, .7, .9, 1))
+#' tbl_pctile(mtcars, wt~cyl)
 #'
 #' try(tbl_pctile(mtcars, ~wt, probs = c(25, 50, 75, 100)))
 tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1), caption = NULL) {
@@ -150,7 +186,7 @@ tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1),
       tibble::enframe() %>%
       tidyr::pivot_wider(names_from = name, values_from = value) %>%
       finalize_tbl(digits,
-                   caption = base::paste(caption, "\n", "Missing:", na),
+                   caption = base::paste(caption, "\n", "Missing:", na, "| NAs Removed: Yes"),
                    striped = FALSE) %>%
       flextable::set_header_labels(name = "Percentile", value = "Value")
 
@@ -171,7 +207,9 @@ tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1),
 
     mosaic::quantile(x = formula, data = data, na.rm = TRUE, prob = probs) %>%
       finalize_tbl(digits,
-                   caption = base::paste(caption, "\n", var1_str, "Missing:", na[[1]], "|", var2_str, "Missing:", na[[2]])) %>%
+                   caption = base::paste(caption, "\n", var1_str, "Missing:", na[[1]], "|",
+                                         var2_str, "Missing:", na[[2]],
+                                         "| NAs Removed: Yes")) %>%
       flextable::set_header_labels(name = "Percentile", value = "Value")
 
   }

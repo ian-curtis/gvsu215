@@ -10,7 +10,7 @@ License: MIT + file LICENSE
 URL: https://github.com/ian-curtis/gvsu215, https://gvsu215.ianacurtis.com
 BugReports: https://github.com/ian-curtis/gvsu215/issues
 Depends:
-    ggformula (>= 0.10.4),
+    ggformula (>= 0.10.4)
 Imports: 
     broom (>= 1.0.5),
     data.table (>= 1.14.8),
