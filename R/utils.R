@@ -26,7 +26,9 @@ finalize_tbl <- function(table, digits, striped = TRUE, caption = NULL, na_str =
       flextable::colformat_char(na_str = na_str) %>%
       flextable::colformat_lgl(na_str = na_str) %>%
       flextable::border_outer(part="all", border = big_border ) %>%
-      flextable::hline(i = 1, border = officer::fp_border(color = "#0032a0", style = "solid", width = 2), part = "header") %>%
+      flextable::hline(i = 1, border = officer::fp_border(color = "#0032a0",
+                                                          style = "solid",
+                                                          width = 2), part = "header") %>%
       flextable::vline(border = officer::fp_border(color = '#e1e4e5', width = 1)) %>%
       flextable::bold(bold = TRUE, part = "header") %>%
       flextable::align(align = "center", part = "header") %>%
