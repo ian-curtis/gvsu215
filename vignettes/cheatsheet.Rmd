@@ -161,7 +161,7 @@ Note: Confidence levels default to 95% but can be overridden with `conf_lvl = _D
 infer_1prop(_DATANAME_, ~_VARIABLE_, success = _SUCCESSCATEGORY_, conf_lvl = _CONFIDENCELEVEL_)
 ```
 
-### Confidence Interval on $\mu$
+### Confidence Interval on &mu;
 
 ```{r}
 infer_1mean(_DATANAME_, ~_VARIABLE_, conf_lvl = _CONFIDENCELEVEL_)
