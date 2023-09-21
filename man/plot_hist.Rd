@@ -22,8 +22,7 @@ plot_hist(
 
 \item{fill}{The fill color of the bins, entered as a character.}
 
-\item{breaks}{A vector of length 3 (start, stop, step) specifying how the x-scale should be broken up.
-Make sure that (stop - start)/step is a whole number. See notes for more details.}
+\item{breaks}{A vector of length 3 (start, stop, step) specifying how the x-scale should be broken up.}
 
 \item{group}{A grouping (faceting) variable entered in formula syntax, \code{~group_var}.}
 
@@ -45,16 +44,13 @@ grouping variable.
 Default histograms will likely not show your data in the best way (the function will warn you of this
 once per session). To remedy this, use the \code{breaks} argument. The values given in the vector should
 all be numbers. The first number is the minimum value you want displayed, the second is the maximum
-value to display, and the third is the "step" distance. (For those who are familiar with \code{ggplot2},
-the first and second value are supplied to \code{limits} and a sequence of the three numbers are
-supplied to \code{breaks} of \code{\link[ggplot2:scale_continuous]{ggplot2::scale_x_continuous()}}.) For best results, (stop - start) / step
-should be a whole number.
+value to display, and the third is the "step" distance.
 }
 \examples{
 plot_hist(mtcars, ~drat)
-plot_hist(mtcars, ~drat, breaks = c(1, 6, 0.5))
-plot_hist(mtcars, ~drat, breaks = c(1, 6, 0.5), fill = "red")
+plot_hist(mtcars, ~drat, breaks = seq(3, 6, 0.5))
+plot_hist(mtcars, ~drat, breaks = seq(1, 6, 0.5), fill = "red")
 
-plot_hist(mtcars, ~drat, group = ~cyl, breaks = c(2, 5, 0.25))
-plot_hist(mtcars, ~drat, group = ~cyl, breaks = c(2, 5, 0.25), group_cols = 2)
+plot_hist(mtcars, ~drat, group = ~cyl, breaks = seq(2, 5, 0.25))
+plot_hist(mtcars, ~drat, group = ~cyl, breaks = seq(2, 5, 0.25), group_cols = 2)
 }
