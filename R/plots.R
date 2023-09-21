@@ -290,16 +290,12 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, ...) {
 #'  Default histograms will likely not show your data in the best way (the function will warn you of this
 #'    once per session). To remedy this, use the `breaks` argument. The values given in the vector should
 #'    all be numbers. The first number is the minimum value you want displayed, the second is the maximum
-#'    value to display, and the third is the "step" distance. (For those who are familiar with `ggplot2`,
-#'    the first and second value are supplied to `limits` and a sequence of the three numbers are
-#'    supplied to `breaks` of [ggplot2::scale_x_continuous()].) For best results, (stop - start) / step
-#'    should be a whole number.
+#'    value to display, and the third is the "step" distance.
 #'
 #'
 #' @inheritParams plot_bar
 #' @param fill The fill color of the bins, entered as a character.
 #' @param breaks A vector of length 3 (start, stop, step) specifying how the x-scale should be broken up.
-#'    Make sure that (stop - start)/step is a whole number. See notes for more details.
 #' @param group A grouping (faceting) variable entered in formula syntax, `~group_var`.
 #' @param group_cols The number of columns to make in a grouped (faceted) plot. Defaults to
 #'    1 (stacked vertical plots).
