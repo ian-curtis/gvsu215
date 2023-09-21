@@ -1,3 +1,8 @@
+# gvsu215 0.3.6
+
+* `plot_hist()`: the binwidth argument has been deprecated and is no longer available. Instead, use `breaks` which, when used, helps to line up the bins and x-axis ticks for better readability and interpretation.
+* The student cheatsheet was slighlty reworked to line up with textbook chapters.
+
 # gvsu215 0.3.5
 
 * `tbl_num_sum()` now shows number of NAs in caption when `na_rm` is TRUE and does not show the "missing" column (which was all 0s in this case). This funciont will also now correctly display "NAs Removed" in the caption.

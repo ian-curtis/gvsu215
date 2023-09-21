@@ -282,13 +282,20 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, ...) {
 
 #' Create a simple histogram
 #'
+#' @description
 #' `plot_hist()` builds a histogram on one variable alone or grouped by a single, categorical grouping
 #'    variable. The number of grouped plot columns can be adjusted based on the levels of the
 #'    grouping variable.
 #'
+#'  Default histograms will likely not show your data in the best way (the function will warn you of this
+#'    once per session). To remedy this, use the `breaks` argument. The values given in the vector should
+#'    all be numbers. The first number is the minimum value you want displayed, the second is the maximum
+#'    value to display, and the third is the "step" distance.
+#'
+#'
 #' @inheritParams plot_bar
 #' @param fill The fill color of the bins, entered as a character.
-#' @param binwidth The width of the bins, entered as a number.
+#' @param breaks A vector of length 3 (start, stop, step) specifying how the x-scale should be broken up.
 #' @param group A grouping (faceting) variable entered in formula syntax, `~group_var`.
 #' @param group_cols The number of columns to make in a grouped (faceted) plot. Defaults to
 #'    1 (stacked vertical plots).
@@ -298,19 +305,21 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, ...) {
 #'
 #' @examples
 #' plot_hist(mtcars, ~drat)
-#' plot_hist(mtcars, ~drat, binwidth = 0.05)
-#' plot_hist(mtcars, ~drat, binwidth = 0.05, fill = "red")
+#' plot_hist(mtcars, ~drat, breaks = seq(3, 6, 0.5))
+#' plot_hist(mtcars, ~drat, breaks = seq(1, 6, 0.5), fill = "red")
 #'
-#' plot_hist(mtcars, ~drat, binwidth = 0.05, group = ~cyl)
-#' plot_hist(mtcars, ~drat, binwidth = 0.05, group = ~cyl, group_cols = 2)
-plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = NULL, group_cols = 1, title = NULL, ...) {
+#' plot_hist(mtcars, ~drat, group = ~cyl, breaks = seq(2, 5, 0.25))
+#' plot_hist(mtcars, ~drat, group = ~cyl, breaks = seq(2, 5, 0.25), group_cols = 2)
+plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NULL, group_cols = 1, title = NULL, ...) {
 
   # error catching
-  if (is.null(binwidth)) {
+  if (is.null(breaks)) {
 
-    warning("No value for binwidth supplied. Your histogram may not show your data accurately.")
+    warning("No value for breaks supplied. Your histogram may not show your data accurately.")
 
   }
+
+
 
   if (base::length(formula) > 2) {
 
@@ -320,7 +329,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = 
 
   rlang::inform("Note: NAs always removed for histograms", .frequency = "once", .frequency_id = "hist-nas")
 
-  check_test(ggformula::gf_histogram(formula, data = data, type="count", binwidth = binwidth, fill = fill, color = 'grey40', alpha = 100))
+  check_test(ggformula::gf_histogram(formula, data = data, type="count", breaks = breaks, fill = fill, color = 'grey40', alpha = 100))
 
 
   # code
@@ -346,20 +355,43 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = 
       dplyr::select({{ var }}) %>%
       stats::na.omit()
 
+    if (is.null(breaks)) {
+
+      plot <- ggformula::gf_histogram(formula, data = data, type="count", breaks = breaks, fill = fill, color = 'grey40', alpha = 100) %>%
+        ggformula::gf_refine(ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))) %>%
+        ggformula::gf_labs(y = "Count",
+                           title = base::ifelse(base::is.null(title),
+                                                base::paste("Histogram of", var_str),
+                                                title),
+                           subtitle = base::paste("Missing:", n_na, "|", "NAs Removed: Yes"),
+                           ...) %>%
+        finalize_plot() %>%
+        ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels))
+
+      return(plot)
+
+    } else {
+
+      plot <- ggformula::gf_histogram(formula, data = data, type="count", breaks = breaks, fill = fill, color = 'grey40', alpha = 100) %>%
+        ggformula::gf_refine(ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))) %>%
+        ggformula::gf_labs(y = "Count",
+                           title = base::ifelse(base::is.null(title),
+                                                base::paste("Histogram of", var_str),
+                                                title),
+                           subtitle = base::paste("Missing:", n_na, "|", "NAs Removed: Yes"),
+                           ...) %>%
+        finalize_plot() %>%
+        ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels, breaks = breaks))
+
+      return(plot)
+
+    }
 
 
-    ggformula::gf_histogram(formula, data = data, type="count", binwidth = binwidth, fill = fill, color = 'grey40', alpha = 100) %>%
-      ggformula::gf_refine(ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))) %>%
-      ggformula::gf_labs(y = "Count",
-                         title = base::ifelse(base::is.null(title),
-                                        base::paste("Histogram of", var_str),
-                                        title),
-                         subtitle = base::paste("Missing:", n_na, "|", "NAs Removed: Yes"),
-                         ...) %>%
-      finalize_plot() %>%
-      ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels))
+
 
   } else {
+    # grouped histogram
 
     facet_var <- group[[2]]
     facet_str <- base::deparse(base::substitute(facet_var))
@@ -371,20 +403,48 @@ plot_hist <- function(data, formula, fill = "#0032A0", binwidth = NULL, group = 
       dplyr::select({{ var }}, {{ facet_var }}) %>%
       stats::na.omit()
 
-    ggformula::gf_histogram(formula, data = data, binwidth = binwidth, fill = fill, color = "grey40", alpha = 100) %>%
-      ggformula::gf_facet_wrap(group, ncol = group_cols) %>%
-      ggformula::gf_refine(ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))) %>%
-      ggformula::gf_labs(y = "Count",
-                         title = base::ifelse(base::is.null(title),
-                                              base::paste("Histogram of", var_str, "by", facet_str),
-                                              title),
-                         subtitle = base::paste(var_str, "Missing:", var_na, "|",
-                                                facet_str, "Missing:", facet_na, "|",
-                                                "NAs Removed: Yes"),
-                         ...) %>%
-      finalize_plot() %>%
-      ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels)) %>%
-      ggformula::gf_theme(panel.border = ggplot2::element_rect(color = "black", fill = NA))
+    if (base::is.null(breaks)) {
+
+      plot <- ggformula::gf_histogram(formula, data = data, breaks = breaks, fill = fill, color = "grey40", alpha = 100) %>%
+        ggformula::gf_facet_wrap(group, ncol = group_cols) %>%
+        ggformula::gf_refine(ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))) %>%
+        ggformula::gf_labs(y = "Count",
+                           title = base::ifelse(base::is.null(title),
+                                                base::paste("Histogram of", var_str, "by", facet_str),
+                                                title),
+                           subtitle = base::paste(var_str, "Missing:", var_na, "|",
+                                                  facet_str, "Missing:", facet_na, "|",
+                                                  "NAs Removed: Yes"),
+                           ...) %>%
+        finalize_plot() %>%
+        ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels)) %>%
+        ggformula::gf_theme(panel.border = ggplot2::element_rect(color = "black", fill = NA))
+
+      return(plot)
+
+    } else {
+
+      plot <- ggformula::gf_histogram(formula, data = data, breaks = breaks, fill = fill, color = "grey40", alpha = 100) %>%
+        ggformula::gf_facet_wrap(group, ncol = group_cols) %>%
+        ggformula::gf_refine(ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))) %>%
+        ggformula::gf_labs(y = "Count",
+                           title = base::ifelse(base::is.null(title),
+                                                base::paste("Histogram of", var_str, "by", facet_str),
+                                                title),
+                           subtitle = base::paste(var_str, "Missing:", var_na, "|",
+                                                  facet_str, "Missing:", facet_na, "|",
+                                                  "NAs Removed: Yes"),
+                           ...) %>%
+        finalize_plot() %>%
+        ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels,
+                                                         breaks = breaks)) %>%
+        ggformula::gf_theme(panel.border = ggplot2::element_rect(color = "black", fill = NA))
+
+      return(plot)
+
+    }
+
+
 
   }
 
