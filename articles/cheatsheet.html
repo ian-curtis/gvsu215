@@ -188,9 +188,9 @@ commas. For example, <code>c(0.80, 0.90, 0.95)</code></p>
 <div class="section level4">
 <h4 id="histogram">Histogram<a class="anchor" aria-label="anchor" href="#histogram"></a>
 </h4>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_hist</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">binwidth =</span> <span class="cn">NULL</span>, <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<p>Note: You can use <code>binwidth</code> to control how many bars
-there are.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_hist</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">breaks =</span> <span class="fu">seq</span>(_START_, _STOP_, _JUMP_), <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Note: You can use <code>breaks</code> to control how many bars there
+are.</p>
 </div>
 <div class="section level4">
 <h4 id="basic-numerical-summaries-by-group">Basic Numerical Summaries By Group<a class="anchor" aria-label="anchor" href="#basic-numerical-summaries-by-group"></a>
@@ -205,7 +205,7 @@ there are.</p>
 <div class="section level4">
 <h4 id="histogram-by-group">Histogram By Group<a class="anchor" aria-label="anchor" href="#histogram-by-group"></a>
 </h4>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_hist</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">group =</span> <span class="sc">~</span>_GROUPVARIABLE_, <span class="at">binwidth =</span> <span class="cn">NULL</span>, <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_hist</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">group =</span> <span class="sc">~</span>_GROUPVARIABLE_, <span class="at">breaks =</span> <span class="fu">seq</span>(_START_, _STOP_, _JUMP_), <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p>Note: You can use <code>binwidth</code> to control how many bars
 there are.</p>
 </div>
