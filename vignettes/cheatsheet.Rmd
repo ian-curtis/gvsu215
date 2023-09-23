@@ -120,10 +120,10 @@ plot_box(_DATANAME_, ~_VARIABLE_, na_rm = FALSE)
 ### Histogram
 
 ```{r}
-plot_hist(_DATANAME_, ~_VARIABLE_, binwidth = NULL, na_rm = FALSE)
+plot_hist(_DATANAME_, ~_VARIABLE_, breaks = seq(_START_, _STOP_, _JUMP_), na_rm = FALSE)
 ```
 
-Note: You can use `binwidth` to control how many bars there are.
+Note: You can use `breaks` to control how many bars there are.
 
 ### Basic Numerical Summaries By Group
 
@@ -140,7 +140,7 @@ plot_box(_DATANAME_, _RESPONSE_~_GROUPVARIABLE_, na_rm = FALSE)
 ### Histogram By Group
 
 ```{r}
-plot_hist(_DATANAME_, ~_VARIABLE_, group = ~_GROUPVARIABLE_, binwidth = NULL, na_rm = FALSE)
+plot_hist(_DATANAME_, ~_VARIABLE_, group = ~_GROUPVARIABLE_, breaks = seq(_START_, _STOP_, _JUMP_), na_rm = FALSE)
 ```
 
 Note: You can use `binwidth` to control how many bars there are.
