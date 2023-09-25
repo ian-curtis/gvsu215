@@ -26,11 +26,12 @@ This package comes pre-installed on the GVSU Posit Workbench. All you need to do
 library(gvsu215)
 ```
 
+
 Note: The Software Investigation starter program will always include a code chunk that loads the `gvsu215` package that includes the functions we need for STA215.
 
 # Templates
 
-The package's functions can be broken down into a few general categories: utilities, tables, plots, and inference. The templates below are broken up by textbook chapter and will include a simple example template. To evaluate, simply copy the code chunk, double click on the filler words (in all caps and surrounded by underscore, `_EXAMPLE_`) and replace them with your respective item.
+The package's functions can be broken down into a few general categories: utilities, tables, plots, and inference. The templates below are broken up by GVSU's STA 215 textbook chapter and will include a generic example template. To evaluate, simply copy the code chunk (click on the copy icon that appears when you hover your mouse over the code chunk), double click on the "filler code" (the text in all capital letters and surrounded by underscores, `_EXAMPLE_`) and replace them with your respective code.
 
 ## Utilities
 
