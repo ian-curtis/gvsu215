@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gvsu215</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.6.9999</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,6 +51,11 @@
       <small>Source: <a href="https://github.com/ian-curtis/gvsu215/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.7" id="gvsu215-037">gvsu215 0.3.7<a class="anchor" aria-label="anchor" href="#gvsu215-037"></a></h2>
+<ul><li>Values in tables are now rounded with the standard “nearest digit” format for all numbers not between -1 and 1. Numbers between -1 and 1 are rounded using significant digits (e.g., non-zero digits after decimal) but use the same <code>digits</code> argument as the standard rounding.</li>
+<li>All p-value rounding has been adjusted. Any p-value less than 0.0001 will now display “&lt; 0.0001”. Other values will display the true value and follow the rounding rules mentioned above.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.6" id="gvsu215-036">gvsu215 0.3.6<a class="anchor" aria-label="anchor" href="#gvsu215-036"></a></h2>
 <ul><li>
