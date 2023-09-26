@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gvsu215</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.6.9999</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -118,7 +118,7 @@ replace them with your respective code.</p>
 <p>To read in data files, you will need to know the file path to the
 file. Then use</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>_DATANAME_ <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"_FILEPATH_"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p>Note: The Software Investigation starter program will includes the
+<p>Note: The Software Investigation starter program will include the
 code to read in the data.</p>
 </div>
 <div class="section level4">
@@ -154,7 +154,7 @@ from plot.</p>
 </h4>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_bar</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">type =</span> <span class="st">"count"</span>, <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p>Note: Change to <code>na_rm = TRUE</code> to eliminate missing values
-from plot</p>
+from plot.</p>
 </div>
 <div class="section level4">
 <h4 id="two-way-table">Two-Way Table<a class="anchor" aria-label="anchor" href="#two-way-table"></a>
@@ -200,21 +200,21 @@ are.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_num_sum</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_GROUPVARIABLE_, <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 </div>
 <div class="section level4">
+<h4 id="percentiles-by-group">Percentiles By Group<a class="anchor" aria-label="anchor" href="#percentiles-by-group"></a>
+</h4>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_pctile</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_GROUPVARIABLE_, <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+<div class="section level4">
 <h4 id="boxplot-by-group">Boxplot By Group<a class="anchor" aria-label="anchor" href="#boxplot-by-group"></a>
 </h4>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_box</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_GROUPVARIABLE_, <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_box</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_GROUPVARIABLE_, <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="histogram-by-group">Histogram By Group<a class="anchor" aria-label="anchor" href="#histogram-by-group"></a>
 </h4>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_hist</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">group =</span> <span class="sc">~</span>_GROUPVARIABLE_, <span class="at">breaks =</span> <span class="fu">seq</span>(_START_, _STOP_, _JUMP_), <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<p>Note: You can use <code>binwidth</code> to control how many bars
-there are.</p>
-</div>
-<div class="section level4">
-<h4 id="percentiles-by-group">Percentiles By Group<a class="anchor" aria-label="anchor" href="#percentiles-by-group"></a>
-</h4>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_pctile</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_GROUPVARIABLE_, <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_hist</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">group =</span> <span class="sc">~</span>_GROUPVARIABLE_, <span class="at">breaks =</span> <span class="fu">seq</span>(_START_, _STOP_, _JUMP_), <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Note: You can use <code>breaks</code> to control how many bars there
+are.</p>
 </div>
 </div>
 <div class="section level3">
@@ -260,7 +260,7 @@ and p-value.</p>
 <div class="section level4">
 <h4 id="scatterplot-by-group">Scatterplot By Group<a class="anchor" aria-label="anchor" href="#scatterplot-by-group"></a>
 </h4>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_scatter</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_EXPLANATORY_, <span class="at">fill =</span> <span class="sc">~</span>_GROUPINGVAR_, <span class="at">legend_title =</span> <span class="st">"_LEGEND_"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_scatter</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_EXPLANATORY_, <span class="at">fill =</span> <span class="sc">~</span>_GROUPVARIABLE_, <span class="at">legend_title =</span> <span class="st">"_LEGEND_"</span>)</span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -283,7 +283,7 @@ and p-value.</p>
 <p>Note: Confidence levels default to 95% but can be overridden with
 <code>conf_lvl = _DECIMAL_</code> (e.g.,
 <code>conf_lvl = 0.90</code>).</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">infer_2prop_int</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_EXPLANATORY_, <span class="at">success =</span> _SUCCESS_CATEGORY_, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">infer_2prop_int</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_EXPLANATORY_, <span class="at">success =</span> _SUCCESSCATEGORY_, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
 <p>Note: For this code to work the explanatory variable must only have
 two categories.</p>
 </div>
@@ -297,8 +297,8 @@ Confidence Interval<a class="anchor" aria-label="anchor" href="#paired-mathrmt-t
 </h4>
 <p>Note: Confidence levels default to 95% but can be overridden with
 <code>conf_lvl = _DECIMAL_</code> (e.g.,
-<code>conf_lvl = 0.9</code>).</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">infer_paired</span>(_DATANAME_, <span class="at">var1 =</span> <span class="sc">~</span>_RESPONSE_, <span class="at">var2 =</span> <span class="sc">~</span>_VAR2_, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
+<code>conf_lvl = 0.90</code>).</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">infer_paired</span>(_DATANAME_, <span class="at">var1 =</span> <span class="sc">~</span>_VARIABLE1_, <span class="at">var2 =</span> <span class="sc">~</span>_VARIABLE2_, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="independent-mathrmt-test">Independent <span class="math inline">\(\mathrm{T}\)</span>-Test<a class="anchor" aria-label="anchor" href="#independent-mathrmt-test"></a>
