@@ -1,3 +1,8 @@
+# gvsu215 0.3.7
+
+* Values in tables are now rounded with the standard "nearest digit" format for all numbers not between -1 and 1. Numbers between -1 and 1 are rounded using significant digits (e.g., non-zero digits after decimal) but use the same `digits` argument as the standard rounding.
+* All p-value rounding has been adjusted. Any p-value less than 0.0001 will now display "< 0.0001". Other values will display the true value and follow the rounding rules mentioned above.
+
 # gvsu215 0.3.6
 
 * `plot_hist()`: the binwidth argument has been deprecated and is no longer available. Instead, use `breaks` which, when used, helps to line up the bins and x-axis ticks for better readability and interpretation.
