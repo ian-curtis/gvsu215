@@ -78,7 +78,9 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
     phat = c(two_prop$estimate[[1]], two_prop$estimate[[2]]),
     se = c(sqrt((two_prop$estimate[[1]]*(1-two_prop$estimate[[1]])/n1) + (two_prop$estimate[[2]]*(1-two_prop$estimate[[2]])/n2)), NA),
     z = c(two_prop$statistic, NA),
-    p = c(base::format.pval(two_prop$p.value, digits = digits), NA)
+    p = c(base::ifelse(two_prop$p.value < 0.0001,
+                 "< 0.0001",
+                 base::format.pval(two_prop$p.value, digits = digits)), NA)
   ) %>%
     finalize_tbl(digits = digits,
                  caption = caption,
@@ -95,7 +97,9 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
     phat = c(two_prop$estimate[[1]], two_prop$estimate[[2]]),
     se = c(sqrt((two_prop$estimate[[1]]*(1-two_prop$estimate[[1]])/n1) + (two_prop$estimate[[2]]*(1-two_prop$estimate[[2]])/n2)), NA),
     z = c(two_prop$statistic, NA),
-    p = c(base::format.pval(two_prop$p.value, digits = digits), NA),
+    p = c(base::ifelse(two_prop$p.value < 0.0001,
+                       "< 0.0001",
+                       base::format.pval(two_prop$p.value, digits = digits)), NA),
     cil = c(two_prop$conf.int[[1]], NA),
     ciu = c(two_prop$conf.int[[2]], NA)
   ) %>%
@@ -199,7 +203,9 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = F
     se = c(ind_test$stderr, NA),
     t = c(ind_test$statistic, NA),
     df = c(ind_test$parameter, NA),
-    p = c(base::format.pval(ind_test$p.value, digits = digits), NA)
+    p = c(base::ifelse(ind_test$p.value < 0.0001,
+                       "< 0.0001",
+                       base::format.pval(ind_test$p.value, digits = digits)), NA)
   ) %>%
     finalize_tbl(digits = digits, caption = caption, na_str = "") %>%
     flextable::set_header_labels(var = grp_str, na = "n Missing", s = "Group s",
@@ -216,7 +222,9 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = F
     se = c(ind_test$stderr, NA),
     t = c(ind_test$statistic, NA),
     df = c(ind_test$parameter, NA),
-    p = c(base::format.pval(ind_test$p.value, digits = digits), NA),
+    p = c(base::ifelse(ind_test$p.value < 0.0001,
+                       "< 0.0001",
+                       base::format.pval(ind_test$p.value, digits = digits)), NA),
     cil = c(ind_test$conf.int[[1]], NA),
     ciu = c(ind_test$conf.int[[2]], NA)
   ) %>%
