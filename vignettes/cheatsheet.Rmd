@@ -43,7 +43,7 @@ To read in data files, you will need to know the file path to the file. Then use
 _DATANAME_ <- read.csv("_FILEPATH_", header = TRUE)
 ```
 
-Note: The Software Investigation starter program will includes the code to read in the data.
+Note: The Software Investigation starter program will include the code to read in the data.
 
 ### Subset Observations
 
@@ -81,7 +81,7 @@ Note: Change to `na_rm = TRUE` to eliminate missing values from plot.
 plot_bar(_DATANAME_, ~_VARIABLE_, type = "count", na_rm = FALSE)
 ```
 
-Note: Change to `na_rm = TRUE` to eliminate missing values from plot
+Note: Change to `na_rm = TRUE` to eliminate missing values from plot.
 
 ### Two-Way Table
 
@@ -132,6 +132,12 @@ Note: You can use `breaks` to control how many bars there are.
 tbl_num_sum(_DATANAME_, _RESPONSE_~_GROUPVARIABLE_, na_rm = FALSE)
 ```
 
+### Percentiles By Group
+
+```{r}
+tbl_pctile(_DATANAME_, _RESPONSE_~_GROUPVARIABLE_, na_rm = FALSE)
+```
+
 ### Boxplot By Group
 
 ```{r}
@@ -144,13 +150,7 @@ plot_box(_DATANAME_, _RESPONSE_~_GROUPVARIABLE_, na_rm = FALSE)
 plot_hist(_DATANAME_, ~_VARIABLE_, group = ~_GROUPVARIABLE_, breaks = seq(_START_, _STOP_, _JUMP_), na_rm = FALSE)
 ```
 
-Note: You can use `binwidth` to control how many bars there are.
-
-### Percentiles By Group
-
-```{r}
-tbl_pctile(_DATANAME_, _RESPONSE_~_GROUPVARIABLE_, na_rm = FALSE)
-```
+Note: You can use `breaks` to control how many bars there are.
 
 ## Chapter 5: Estimation
 
@@ -196,7 +196,7 @@ Note: Change to `reduced = FALSE` to get test statistic and p-value.
 ### Scatterplot By Group
 
 ```{r}
-plot_scatter(_DATANAME_, _RESPONSE_~_EXPLANATORY_, fill = ~_GROUPINGVAR_, legend_title = "_LEGEND_")
+plot_scatter(_DATANAME_, _RESPONSE_~_EXPLANATORY_, fill = ~_GROUPVARIABLE_, legend_title = "_LEGEND_")
 ```
 
 ## Chapter 7: Hypothesis Testing Introduction
@@ -223,7 +223,7 @@ infer_chisq(_DATANAME_, _EXPLANATORY_~_RESPONSE_, type = "observed")
 Note: Confidence levels default to 95% but can be overridden with `conf_lvl = _DECIMAL_` (e.g., `conf_lvl = 0.90`). 
 
 ```{r}
-infer_2prop_int(_DATANAME_, _RESPONSE_~_EXPLANATORY_, success = _SUCCESS_CATEGORY_, conf_lvl = _CONFIDENCELEVEL_)
+infer_2prop_int(_DATANAME_, _RESPONSE_~_EXPLANATORY_, success = _SUCCESSCATEGORY_, conf_lvl = _CONFIDENCELEVEL_)
 ```
 
 Note: For this code to work the explanatory variable must only have two categories.
@@ -233,10 +233,10 @@ Note: For this code to work the explanatory variable must only have two categori
 
 ### Paired $\mathrm{T}$-Test and Confidence Interval
 
-Note: Confidence levels default to 95% but can be overridden with `conf_lvl = _DECIMAL_` (e.g., `conf_lvl = 0.9`). 
+Note: Confidence levels default to 95% but can be overridden with `conf_lvl = _DECIMAL_` (e.g., `conf_lvl = 0.90`). 
 
 ```{r}
-infer_paired(_DATANAME_, var1 = ~_RESPONSE_, var2 = ~_VAR2_, conf_lvl = _CONFIDENCELEVEL_)
+infer_paired(_DATANAME_, var1 = ~_VARIABLE1_, var2 = ~_VARIABLE2_, conf_lvl = _CONFIDENCELEVEL_)
 ```
 
 ### Independent $\mathrm{T}$-Test

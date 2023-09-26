@@ -35,5 +35,5 @@ Create a summary table for a one-sample proportion interval
 }
 \examples{
 infer_1prop(mtcars, ~vs, success = 1)
-infer_1prop(mtcars, ~vs, success = 1, conf_lvl = .9)
+infer_1prop(mtcars, ~vs, success = 1, conf_lvl = 0.90)
 }

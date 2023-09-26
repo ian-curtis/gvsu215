@@ -106,31 +106,31 @@ test_that("boxplot works with swapping order", {
 # plot_hist() ####
 
 test_that("histogram works", {
-  expect_no_warning(plot_hist(mtcars, ~drat, binwidth = 0.05))
+  expect_no_warning(plot_hist(mtcars, ~drat, breaks = seq(3, 6, 0.5)))
 })
 
-test_that("histogram warns with no binwidth", {
+test_that("histogram warns with no breaks", {
   expect_warning(plot_hist(mtcars, ~drat))
 })
 
 test_that("histogram works with new fill", {
-  expect_no_condition(plot_hist(mtcars, ~drat, binwidth = 0.05, fill = "#183590"))
+  expect_no_condition(plot_hist(mtcars, ~drat, breaks = seq(3, 6, 0.5), fill = "#183590"))
 })
 
 test_that("histogram works with NAs removed", {
-  expect_no_condition(plot_hist(mtcars, ~drat, binwidth = 0.05, na_rm = TRUE))
+  expect_no_condition(plot_hist(mtcars, ~drat, breaks = seq(3, 6, 0.5), na_rm = TRUE))
 })
 
 test_that("histogram works with new title", {
-  expect_no_condition(plot_hist(mtcars, ~drat, binwidth = 0.05, title = "hehe"))
+  expect_no_condition(plot_hist(mtcars, ~drat, breaks = seq(3, 6, 0.5), title = "hehe"))
 })
 
 test_that("histogram works with new axis labels", {
-  expect_no_condition(plot_hist(mtcars, ~drat, binwidth = 0.05, x = "test"))
+  expect_no_condition(plot_hist(mtcars, ~drat, breaks = seq(3, 6, 0.5), x = "test"))
 })
 
 test_that("histogram fails with mispelling", {
-  expect_error(plot_hist(mtcars, ~Drat, binwidth = 0.05))
+  expect_error(plot_hist(mtcars, ~Drat, breaks = seq(3, 6, 0.5)))
 })
 
 test_that("group histogram works", {
@@ -138,15 +138,15 @@ test_that("group histogram works", {
 })
 
 test_that("histogram works with different columns", {
-  expect_no_condition(plot_hist(mtcars, ~drat, binwidth = 0.05, group = ~cyl, group_cols = 2))
+  expect_no_condition(plot_hist(mtcars, ~drat, breaks = seq(2, 5, 0.25), group = ~cyl, group_cols = 2))
 })
 
 test_that("histogram fails with many vars in formula", {
-  expect_error(plot_hist(mtcars, drat~cyl, binwidth = 0.05))
+  expect_error(plot_hist(mtcars, drat~cyl, breaks = seq(2, 5, 0.25)))
 })
 
 test_that("grouped histogram fails with mispelling", {
-  expect_error(plot_hist(Mtcars, ~drat, binwidth = 0.05))
+  expect_error(plot_hist(Mtcars, ~drat, breaks = seq(2, 5, 0.25)))
 })
 
 

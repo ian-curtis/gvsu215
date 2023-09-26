@@ -1,3 +1,23 @@
+#' INTERNAL: Round a number using standard rounding or sigfigs
+#'
+#' @param number The number to be rounded.
+#' @param digits The number of digits to round to. If the number is between -1 and 1, the value is given to
+#'    `signif()` and rounds to number of non-zero digits. Otherwise, value is given to `round()`.
+#'
+#' @return A character of the rounded number.
+#' @export
+#'
+#' @examples
+#' sig_round(0.00023556, 3)
+#' sig_round(23.1233644, 3)
+sig_round <- function(number, digits) {
+
+  base::ifelse(number < 1 & number > -1,
+         base::as.character(base::signif(number, digits = digits)),
+         base::as.character(base::round(number, digits = digits)))
+
+}
+
 #' INTERNAL: Add default theme options to tables
 #'
 #' `finalize_tbl()` is used internally to complete the table creation process. This function creates
@@ -20,9 +40,10 @@ finalize_tbl <- function(table, digits, striped = TRUE, caption = NULL, na_str =
 
   if (striped == FALSE) {
     table %>%
+      dplyr::mutate(dplyr::across(dplyr::where(base::is.double), ~sig_round(.x, digits = digits))) %>%
       flextable::flextable() %>%
       flextable::bg(bg = "#ffffff", part = "all") %>%
-      flextable::colformat_double(digits = digits, na_str = na_str) %>%
+      flextable::colformat_double(na_str = na_str) %>%
       flextable::colformat_char(na_str = na_str) %>%
       flextable::colformat_lgl(na_str = na_str) %>%
       flextable::border_outer(part="all", border = big_border ) %>%
@@ -32,6 +53,7 @@ finalize_tbl <- function(table, digits, striped = TRUE, caption = NULL, na_str =
       flextable::vline(border = officer::fp_border(color = '#e1e4e5', width = 1)) %>%
       flextable::bold(bold = TRUE, part = "header") %>%
       flextable::align(align = "center", part = "header") %>%
+      flextable::align(align = "right", part = "body") %>%
       flextable::autofit() %>%
       flextable::fit_to_width(6) %>%
       flextable::set_caption(caption = flextable::as_paragraph(flextable::as_chunk(caption,
@@ -41,6 +63,7 @@ finalize_tbl <- function(table, digits, striped = TRUE, caption = NULL, na_str =
 
   else if (striped == TRUE) {
     table %>%
+      dplyr::mutate(dplyr::across(dplyr::where(base::is.double), ~sig_round(.x, digits = digits))) %>%
       flextable::flextable() %>%
       flextable::colformat_double(digits = digits, na_str = na_str) %>%
       flextable::colformat_char(na_str = na_str) %>%
@@ -187,4 +210,6 @@ check_test <- function(code) {
   )
 
 }
+
+
 

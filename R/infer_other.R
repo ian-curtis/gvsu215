@@ -63,7 +63,9 @@ infer_reg <- function(data, formula, digits = 3, caption = NULL, reduced = TRUE)
   } else if (reduced == FALSE) {
 
     broom::tidy(model) %>%
-      dplyr::mutate(p.value = base::format.pval(p.value, digits = digits)) %>%
+      dplyr::mutate(p.value = base::ifelse(p.value < 0.0001,
+                                     "< 0.0001",
+                                     base::format.pval(p.value, digits = digits))) %>%
       finalize_tbl(digits = digits,
                    caption = base::paste(caption,
                                          "\n Overall F: ",
@@ -129,7 +131,9 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
 
     broom::tidy(chisq_test) %>%
       dplyr::select(-method) %>%
-      dplyr::mutate(p.value = base::format.pval(.data$p.value, digits = digits)) %>%
+      dplyr::mutate(p.value = base::ifelse(p.value < 0.0001,
+                                     "< 0.0001",
+                                     base::format.pval(.data$p.value, digits = digits))) %>%
       finalize_tbl(digits = digits, caption = caption, striped = FALSE) %>%
       flextable::set_header_labels(statistic = "X-squared", p.value = "p-value", parameter = "df")
 
@@ -210,7 +214,9 @@ infer_anova <- function(data, formula, digits = 3, caption = NULL) {
   broom::tidy(stats::aov(formula, data)) %>%
     dplyr::mutate(term = c("Between", "Within"),
                   p.value = base::ifelse(!is.na(p.value),
-                                         base::format.pval(p.value, digits = 3),
+                                         base::ifelse(p.value < 0.0001,
+                                                "< 0.0001",
+                                                base::format.pval(p.value, digits = 3)),
                                          p.value),
                   df = base::as.integer(df)) %>%
     janitor::adorn_totals("row", fill = NA, cols = dplyr::starts_with(c("term", "df", "sumsq"))) %>%

@@ -151,7 +151,7 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE
 #' @examples
 #' tbl_pctile(mtcars, ~wt)
 #' tbl_pctile(mtcars, ~wt, probs = c(.17, .3, .5, .7, .9, 1))
-#' tbl_pctile(mtcars, wt~cyl)
+#' tbl_pctile(mtcars, wt~cyl, digits = 4)
 #'
 #' try(tbl_pctile(mtcars, ~wt, probs = c(25, 50, 75, 100)))
 tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1), caption = NULL) {

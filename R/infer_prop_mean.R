@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' infer_1prop(mtcars, ~vs, success = 1)
-#' infer_1prop(mtcars, ~vs, success = 1, conf_lvl = .9)
+#' infer_1prop(mtcars, ~vs, success = 1, conf_lvl = 0.90)
 infer_1prop <- function(data, formula, success = NULL, digits = 3, conf_lvl = 0.95, caption = NULL) {
 
   # error catching
@@ -237,7 +237,9 @@ infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
     phat = c(two_prop$estimate[[1]], two_prop$estimate[[2]]),
     se = c(sqrt((two_prop$estimate[[1]]*(1-two_prop$estimate[[1]])/n1) + (two_prop$estimate[[2]]*(1-two_prop$estimate[[2]])/n2)), NA),
     z = c(two_prop$statistic, NA),
-    p = c(base::format.pval(two_prop$p.value, digits = digits), NA)
+    p = c(base::ifelse(two_prop$p.value < 0.0001,
+                 "< 0.0001",
+                 base::format.pval(two_prop$p.value, digits = digits)), NA)
   ) %>%
     finalize_tbl(digits = digits,
                  caption = caption,
@@ -360,7 +362,9 @@ infer_paired <- function(data, var1, var2, digits = 3, conf_lvl = 0.95, caption 
     se = diff_t$stderr,
     t = diff_t$statistic,
     df = as.integer(diff_t$parameter),
-    p = format.pval(diff_t$p.value, digits = digits),
+    p = ifelse(base::diff_t$p.value < 0.0001,
+               "< 0.0001",
+               format.pval(diff_t$p.value, digits = digits)),
     cil = diff_t$conf.int[[1]],
     ciu = diff_t$conf.int[[2]]
   ) %>%
@@ -540,7 +544,9 @@ infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
     se = c(ind_test$stderr, NA),
     t = c(ind_test$statistic, NA),
     df = c(ind_test$parameter, NA),
-    p = c(base::format.pval(ind_test$p.value, digits = digits), NA)
+    p = c(base::ifelse(ind_test$p.value < 0.0001,
+                 "< 0.0001",
+                 base::format.pval(ind_test$p.value, digits = digits)), NA)
   ) %>%
     finalize_tbl(digits = digits, caption = caption, na_str = "") %>%
     flextable::set_header_labels(var = "Variable", na = "n Missing", s = "Group s",

@@ -36,7 +36,7 @@ at the given percentiles.
 \examples{
 tbl_pctile(mtcars, ~wt)
 tbl_pctile(mtcars, ~wt, probs = c(.17, .3, .5, .7, .9, 1))
-tbl_pctile(mtcars, wt~cyl)
+tbl_pctile(mtcars, wt~cyl, digits = 4)
 
 try(tbl_pctile(mtcars, ~wt, probs = c(25, 50, 75, 100)))
 }
