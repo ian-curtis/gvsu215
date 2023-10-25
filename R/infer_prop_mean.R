@@ -362,7 +362,7 @@ infer_paired <- function(data, var1, var2, digits = 3, conf_lvl = 0.95, caption 
     se = diff_t$stderr,
     t = diff_t$statistic,
     df = as.integer(diff_t$parameter),
-    p = ifelse(base::diff_t$p.value < 0.0001,
+    p = ifelse(diff_t$p.value < 0.0001,
                "< 0.0001",
                format.pval(diff_t$p.value, digits = digits)),
     cil = diff_t$conf.int[[1]],

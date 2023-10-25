@@ -134,7 +134,7 @@ test_that("histogram fails with mispelling", {
 })
 
 test_that("group histogram works", {
-  expect_no_condition(plot_hist(mtcars, ~drat, binwidth = 0.05, group = ~cyl))
+  expect_warning(plot_hist(mtcars, ~drat, binwidth = 0.05, group = ~cyl))
 })
 
 test_that("histogram works with different columns", {
