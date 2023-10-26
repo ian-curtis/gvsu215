@@ -2,6 +2,7 @@
 
 * Corrected error in `infer_paired()` which had an incorrect use of the `::` syntax
 * Updated figures displayed in README (to now accuarately show the right alignment of table body cells)
+
 # gvsu215 0.3.7
 
 * Values in tables are now rounded with the standard "nearest digit" format for all numbers not between -1 and 1. Numbers between -1 and 1 are rounded using significant digits (e.g., non-zero digits after decimal) but use the same `digits` argument as the standard rounding.
