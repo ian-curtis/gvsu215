@@ -110,7 +110,7 @@ test_that("histogram works", {
 })
 
 test_that("histogram warns with no breaks", {
-  expect_warning(plot_hist(mtcars, ~drat))
+  expect_condition(plot_hist(mtcars, ~drat))
 })
 
 test_that("histogram works with new fill", {
@@ -134,7 +134,7 @@ test_that("histogram fails with mispelling", {
 })
 
 test_that("group histogram works", {
-  expect_warning(plot_hist(mtcars, ~drat, binwidth = 0.05, group = ~cyl))
+  expect_condition(plot_hist(mtcars, ~drat, binwidth = 0.05, group = ~cyl))
 })
 
 test_that("histogram works with different columns", {
@@ -193,11 +193,11 @@ test_that("group scatter fails with mispelling", {
 })
 
 test_that("scatter works with least squares line", {
-  expect_no_error(plot_scatter(mtcars, wt~drat, fill = ~cyl, ls_line = TRUE))
+  expect_no_error(plot_scatter(mtcars, wt~drat, fill = ~cyl, ls_line = "show"))
 })
 
 test_that("group scatter works with least squares line", {
-  expect_no_error(plot_scatter(mtcars, wt~drat, fill = ~cyl, ls_line = TRUE))
+  expect_no_error(plot_scatter(mtcars, wt~drat, fill = ~cyl, ls_line = "show"))
 })
 
 

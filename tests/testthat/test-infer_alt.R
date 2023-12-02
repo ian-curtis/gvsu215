@@ -26,7 +26,11 @@ test_that("infer prop 2 fails with mispelling", {
   expect_error(infer_2prop(mtcars, vs~AM, success = 1))
 })
 
+test_that("infer prop 2 works with conf int", {
+  expect_no_condition(infer_2prop(mtcars, vs~am, success = 1, conf_int = "show"))
+})
 
+# mean 2
 test_that("infer mean 2 works", {
   expect_no_condition(infer_2mean(mtcars, wt~vs))
 })
@@ -57,4 +61,8 @@ test_that("infer mean 2 fails with wrong order", {
 
 test_that("infer mean 2 fails with too many levels", {
   expect_error(infer_2mean(mtcars, wt~cyl))
+})
+
+test_that("infer prop 2 works with conf_int", {
+  expect_no_condition(infer_2mean(mtcars, wt~vs, conf_int = "show"))
 })

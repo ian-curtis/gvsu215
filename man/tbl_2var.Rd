@@ -4,7 +4,13 @@
 \alias{tbl_2var}
 \title{Create a two way data table}
 \usage{
-tbl_2var(data, formula, row_pct = FALSE, digits = 3, caption = NULL)
+tbl_2var(
+  data,
+  formula,
+  row_pct = c("hide", "show"),
+  digits = 3,
+  caption = NULL
+)
 }
 \arguments{
 \item{data}{A data frame.}
@@ -12,8 +18,8 @@ tbl_2var(data, formula, row_pct = FALSE, digits = 3, caption = NULL)
 \item{formula}{The variables to tabulate. Should be given in formula notation \code{var1~var2}. Changing
 the order of the variables will swap the table axes.}
 
-\item{row_pct}{Should row percents be included in each cell? Defaults to FALSE with the only
-other possible value being TRUE.}
+\item{row_pct}{Should row percents be included in each cell? Defaults to "hide" with the only
+other possible value being "show".}
 
 \item{digits}{The number of digits to round to. Defaults to 3.}
 
@@ -29,7 +35,7 @@ Create a two way data table
 }
 \examples{
 tbl_2var(mtcars, cyl~gear)
-tbl_2var(mtcars, cyl~gear, row_pct = TRUE)
+tbl_2var(mtcars, cyl~gear, row_pct = "show")
 tbl_2var(mtcars, cyl~gear, caption = "This is the new caption")
 
 # Will give an error

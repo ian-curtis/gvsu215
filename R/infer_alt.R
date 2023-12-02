@@ -7,7 +7,7 @@
 #'
 #' @inheritParams infer_2prop_test
 #' @param conf_int Should a confidence interval be provided in addition to the hypothesis test output?
-#'   Defaults to FALSE.
+#'   Defaults to "hide" with the other option being "show".
 #'
 #' @return An object of class flextable. In interactive sessions, output is viewable immediately.
 #' @export
@@ -15,13 +15,15 @@
 #' @examples
 #' infer_2prop(mtcars, vs~am, success = 1)
 #' infer_2prop(mtcars, vs~am, success = 1, conf_lvl = .9, digits = 4)
-infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, conf_int = FALSE, caption = NULL) {
+#' infer_2prop(mtcars, vs~am, success = 1, conf_lvl = .9, digits = 4, conf_int = "show")
+infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, conf_int = c("hide", "show"), caption = NULL) {
 
   # error catching
   check_conf_lvl(conf_lvl)
 
   check_test(mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success, correct = FALSE))
 
+  conf_int = base::match.arg(conf_int)
 
   # code
   two_prop <- mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success, correct = FALSE)
@@ -112,7 +114,7 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
                                  ciu = base::paste(cl, "Interval Upper")) %>%
     flextable::vline(j = c(5, 8))
 
-  if (conf_int == FALSE) return(no_interval)
+  if (conf_int == "hide") return(no_interval)
     else return(interval)
 
 }
@@ -126,18 +128,21 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
 #'
 #' @inheritParams infer_2mean_test
 #' @param conf_int Should a confidence interval be provided in addition to the hypothesis test output?
-#'   Defaults to FALSE.
+#'   Defaults to "hide" with the other option being "show".
 #'
 #' @return An object of class flextable. In interactive sessions, output is viewable immediately.
 #' @export
 #'
 #' @examples
-#' infer_2mean_test(mtcars, wt~vs)
-#' infer_2mean_test(mtcars, wt~vs, conf_lvl = .9)
-infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = FALSE, caption = NULL) {
+#' infer_2mean(mtcars, wt~vs)
+#' infer_2mean(mtcars, wt~vs, conf_lvl = .9)
+#' infer_2mean(mtcars, wt~vs, conf_lvl = .9, conf_int = "hide")
+infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = c("hide", "show"), caption = NULL) {
 
   # error catching
   check_conf_lvl(conf_lvl)
+
+  conf_int <- base::match.arg(conf_int)
 
   var1 <- formula[[2]]
   var1_str <- base::deparse(base::substitute(var1))
@@ -149,7 +154,7 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = F
   check_conf_lvl(conf_lvl)
 
   base::tryCatch(data %>% dplyr::mutate("{grp_var}" := base::factor({{ grp_var }})),
-                 error = function (e) stop("Could not convert grouping variable into a factor. Perhaps you entered the grouping variable first (instead of second)?")
+                 error = function (e) cli::cli_abort("Could not convert grouping variable into a factor. Perhaps you entered the grouping variable first (instead of second)?")
   )
 
   data <- data %>%
@@ -159,7 +164,7 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = F
 
   if (base::length(grp_lvls) != 2) {
 
-    stop("The grouping variable must have two (and only two) levels. \n Perhaps you entered the grouping variable first (instead of second)?")
+    cli::cli_abort("The grouping variable must have two (and only two) levels. \n Perhaps you entered the grouping variable first (instead of second)?")
 
   }
 
@@ -237,7 +242,7 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = F
                                  ciu = base::paste(cl, "Interval Upper")) %>%
     flextable::vline(j = c(4, 8))
 
-  if (conf_int == FALSE) return(no_interval)
+  if (conf_int == "hide") return(no_interval)
     else return(interval)
 
 }

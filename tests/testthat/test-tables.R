@@ -37,7 +37,7 @@ test_that("two way generates with digits", {
 
 test_that("two way generates with row percents", {
   # skip("superseded")
-  expect_no_warning(tbl_2var(mtcars, cyl~gear, row_pct = TRUE))
+  expect_no_warning(tbl_2var(mtcars, cyl~gear, row_pct = "show"))
 })
 
 test_that("two way fails with wrong row percent argument", {

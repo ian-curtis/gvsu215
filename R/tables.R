@@ -48,8 +48,8 @@ tbl_1var <- function(data, formula, digits = 3, caption = NULL) {
 #' @inheritParams tbl_1var
 #' @param formula The variables to tabulate. Should be given in formula notation `var1~var2`. Changing
 #'    the order of the variables will swap the table axes.
-#' @param row_pct Should row percents be included in each cell? Defaults to FALSE with the only
-#'    other possible value being TRUE.
+#' @param row_pct Should row percents be included in each cell? Defaults to "hide" with the only
+#'    other possible value being "show".
 #'
 #' @return An object of class flextable. If in an interactive session, the table will be
 #'    viewable immediately.
@@ -57,15 +57,17 @@ tbl_1var <- function(data, formula, digits = 3, caption = NULL) {
 #'
 #' @examples
 #' tbl_2var(mtcars, cyl~gear)
-#' tbl_2var(mtcars, cyl~gear, row_pct = TRUE)
+#' tbl_2var(mtcars, cyl~gear, row_pct = "show")
 #' tbl_2var(mtcars, cyl~gear, caption = "This is the new caption")
 #'
 #' # Will give an error
 #' try(tbl_2var(mtcars, Cyl~Gear))
-tbl_2var <- function(data, formula, row_pct = FALSE, digits = 3, caption = NULL) {
+tbl_2var <- function(data, formula, row_pct = c("hide", "show"), digits = 3, caption = NULL) {
 
   # error catching
   check_test(mosaic::tally(formula, data = data))
+
+  row_pct <- base::match.arg(row_pct)
 
   # code
   var1 <- formula[[2]]
@@ -83,7 +85,7 @@ tbl_2var <- function(data, formula, row_pct = FALSE, digits = 3, caption = NULL)
     var1_lvls <- base::nrow(base::unique(data[, var1_str]))
   }
 
-  if (row_pct == FALSE) {
+  if (row_pct == "hide") {
 
     if (base::is.null(caption)) {
       caption <- base::paste("Two-Way Counts of", var1, "vs.", var2)
@@ -106,7 +108,7 @@ tbl_2var <- function(data, formula, row_pct = FALSE, digits = 3, caption = NULL)
 
   }
 
-  else if (row_pct == TRUE) {
+  else if (row_pct == "show") {
 
     if (base::is.null(caption)) {
       caption <- base::paste("Two-Way Counts (with Row Percentages) of", var1, "vs.", var2)
@@ -131,9 +133,5 @@ tbl_2var <- function(data, formula, row_pct = FALSE, digits = 3, caption = NULL)
       flextable::bold(j = 1)
 
 
-  }
-
-  else {
-    base::stop("The row percentage argument (`row_pct`) must be either TRUE or FALSE.")
   }
 }

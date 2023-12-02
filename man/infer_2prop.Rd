@@ -10,7 +10,7 @@ infer_2prop(
   success,
   digits = 3,
   conf_lvl = 0.95,
-  conf_int = FALSE,
+  conf_int = c("hide", "show"),
   caption = NULL
 )
 }
@@ -27,7 +27,7 @@ infer_2prop(
 Defaults to 0.95.}
 
 \item{conf_int}{Should a confidence interval be provided in addition to the hypothesis test output?
-Defaults to FALSE.}
+Defaults to "hide" with the other option being "show".}
 
 \item{caption}{An override to the table caption. A sensible default is provided.}
 }
@@ -43,4 +43,5 @@ the function name). For a confidence interval provided with that, use \code{conf
 \examples{
 infer_2prop(mtcars, vs~am, success = 1)
 infer_2prop(mtcars, vs~am, success = 1, conf_lvl = .9, digits = 4)
+infer_2prop(mtcars, vs~am, success = 1, conf_lvl = .9, digits = 4, conf_int = "show")
 }

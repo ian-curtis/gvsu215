@@ -44,7 +44,7 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE
 
     } else if (n_na != 0 & na_rm == FALSE) {
 
-      warning("NAs were detected but not removed. You may get missing values in your output.")
+      cli::cli_alert_warning("NAs were detected but not removed. You may get missing values in your output.")
 
     }
 
@@ -97,7 +97,7 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE
 
     } else if ((n_na[[1]] != 0 | n_na[[2]] != 0) & na_rm == FALSE) {
 
-      warning("NAs were detected but not removed. You may get missing values in your output.")
+      cli::cli_alert_warning("NAs were detected but not removed. You may get missing values in your output.")
 
     }
 
@@ -161,7 +161,7 @@ tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1),
   valid_probs <- dplyr::between(probs, 0, 1)
 
   if (FALSE %in% valid_probs) {
-    base::stop("You seem to have entered an invalid entry to the probs argument. These values should be between 0 and 1 (inclusive).")
+    cli::cli_abort("You seem to have entered an invalid entry to the {.var probs} argument. These values should be between 0 and 1 (inclusive).")
   }
 
   rlang::inform("Note: NAs always removed for percentile tables", .frequency = "once", .frequency_id = "pctile-nas")
@@ -235,7 +235,7 @@ tbl_corr <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
 
   # error catching
   if (na_rm == FALSE) {
-    message("Missing values *not* automatically removed from calculation. \n You may get NA values in your output.")
+    rlang::inform("Missing values *not* automatically removed from calculation. \n You may get NA values in your output.", .frequency = "once", .frequency_id = "corr-nas")
   }
 
   check_test(mosaic::cor(formula, data = data))

@@ -32,11 +32,11 @@ test_that("num sum fails with groups and mispellling", {
 })
 
 test_that("num sum warns with NAs and na_rm = FALSE", {
-  expect_warning(tbl_num_sum(airquality, ~Ozone, na_rm = FALSE))
+  expect_condition(tbl_num_sum(airquality, ~Ozone, na_rm = FALSE))
 })
 
 test_that("num sum warns with NAs and na_rm = FALSE with groups", {
-  expect_warning(tbl_num_sum(airquality, Ozone~Month, na_rm = FALSE))
+  expect_condition(tbl_num_sum(airquality, Ozone~Month, na_rm = FALSE))
 })
 
 
@@ -82,7 +82,7 @@ test_that("tbl_pctile fails with invalid probs", {
 # tbl_corr() ####
 
 test_that("corr informs with NAs not removed", {
-  expect_message(tbl_corr(mtcars, wt~qsec))
+  expect_condition(tbl_corr(mtcars, wt~qsec))
 })
 
 test_that("corr works with NAs removed", {

@@ -5,7 +5,7 @@ test_that("regression works", {
 })
 
 test_that("regression works with not reduced", {
-  expect_no_condition(infer_reg(mtcars, drat~wt, reduced = FALSE))
+  expect_no_condition(infer_reg(mtcars, drat~wt, reduced = "no"))
 })
 
 test_that("regression works with new caption", {

@@ -4,7 +4,7 @@
 \alias{infer_reg}
 \title{Create a summary table for a linear regression test}
 \usage{
-infer_reg(data, formula, digits = 3, caption = NULL, reduced = TRUE)
+infer_reg(data, formula, digits = 3, caption = NULL, reduced = c("yes", "no"))
 }
 \arguments{
 \item{data}{A data frame (or tibble).}
@@ -16,7 +16,7 @@ infer_reg(data, formula, digits = 3, caption = NULL, reduced = TRUE)
 \item{caption}{An override to the table caption. A sensible default is provided.}
 
 \item{reduced}{Should a simple table be created (i.e., removal of the \code{t} and \code{p-value} columns)?
-Defaults to TRUE.}
+Defaults to "yes".}
 }
 \value{
 An object of class flextable. In an interactive session, results are viewable immediately.
@@ -27,7 +27,7 @@ of \code{t} and \code{p-value} are removed by default but a full table can be ac
 }
 \examples{
 infer_reg(mtcars, drat~wt)
-infer_reg(mtcars, drat~wt, reduced = FALSE)
+infer_reg(mtcars, drat~wt, reduced = "no")
 infer_reg(mtcars, drat~wt, digits = 4)
 infer_reg(mtcars, drat~wt + qsec)
 }

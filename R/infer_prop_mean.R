@@ -21,7 +21,7 @@ infer_1prop <- function(data, formula, success = NULL, digits = 3, conf_lvl = 0.
 
   if (base::is.null(success)) {
 
-    stop("A value for what a success is in this situation must be provided.")
+    cli::cli_abort("A value for what a success is in this situation must be provided.")
 
   }
 
@@ -91,7 +91,7 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
 
   if (base::is.null(success)) {
 
-    stop("A value for what a success is in this situation must be provided.")
+    cli::cli_abort("A value for what a success is in this situation must be provided.")
 
   }
 
@@ -402,7 +402,7 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
   check_conf_lvl(conf_lvl)
 
   base::tryCatch(data %>% dplyr::mutate("{grp_var}" := base::factor({{ grp_var }})),
-                 error = function (e) stop("Could not convert grouping variable into a factor. Perhaps you entered the grouping variable first (instead of second)?")
+                 error = function (e) cli::cli_abort("Could not convert grouping variable into a factor. Perhaps you entered the grouping variable first (instead of second)?")
   )
 
   data <- data %>%
@@ -412,7 +412,7 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
 
   if (base::length(grp_lvls) != 2) {
 
-    stop("The grouping variable must have two (and only two) levels. \n Perhaps you entered the grouping variable first (instead of second)?")
+    cli::cli_abort("The grouping variable must have two (and only two) levels. \n Perhaps you entered the grouping variable first (instead of second)?")
 
   }
 
@@ -490,7 +490,7 @@ infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
   check_conf_lvl(conf_lvl)
 
   base::tryCatch(data %>% dplyr::mutate("{grp_var}" := base::factor({{ grp_var }})),
-                 error = function (e) stop("Could not convert grouping variable into a factor. Perhaps you entered the grouping variable first (instead of second)?")
+                 error = function (e) cli::cli_abort("Could not convert grouping variable into a factor. Perhaps you entered the grouping variable first (instead of second)?")
   )
 
   data <- data %>%
@@ -500,7 +500,7 @@ infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
 
   if (base::length(grp_lvls) != 2) {
 
-    stop("The grouping variable must have two (and only two) levels. \n Perhaps you entered the grouping variable first (instead of second)?")
+    cli::cli_abort("The grouping variable must have two (and only two) levels. \n Perhaps you entered the grouping variable first (instead of second)?")
 
   }
 

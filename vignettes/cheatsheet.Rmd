@@ -173,11 +173,11 @@ infer_1mean(_DATANAME_, ~_VARIABLE_, conf_lvl = _CONFIDENCELEVEL_)
 ### Scatterplot
 
 ```{r}
-plot_scatter(_DATANAME_, _RESPONSE_~_EXPLANATORY_, axis_lines = "none", ls_line = FALSE)
+plot_scatter(_DATANAME_, _RESPONSE_~_EXPLANATORY_, axis_lines = "none", ls_line = "hide")
 ```
 
 Note: Change to `axis_lines = "both"` to grid the scatterplot.
-Note: Change to `ls_line = TRUE` to plot the regression line.
+Note: Change to `ls_line = "show"` to plot the regression line.
 
 ### Linear Correlation
 
@@ -188,10 +188,10 @@ tbl_corr(DATA, _RESPONSE_~_EXPLANATORY_, na_rm = TRUE)
 ### Linear Regression
 
 ```{r}
-infer_reg(_DATANAME_, _RESPONSE_~_EXPLANATORY_, reduced = TRUE)
+infer_reg(_DATANAME_, _RESPONSE_~_EXPLANATORY_, reduced = "yes")
 ```
 
-Note: Change to `reduced = FALSE` to get test statistic and p-value.
+Note: Change to `reduced = "no"` to get test statistic and p-value.
 
 ### Scatterplot By Group
 

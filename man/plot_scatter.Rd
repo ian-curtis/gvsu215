@@ -11,7 +11,7 @@ plot_scatter(
   title = NULL,
   legend_title = NULL,
   axis_lines = c("none", "both"),
-  ls_line = FALSE,
+  ls_line = c("hide", "show"),
   ...
 )
 }
@@ -30,7 +30,7 @@ a variable given in formula notation (\code{~var}), used to create a grouped sca
 \item{axis_lines}{Should major axis lines appear on the plot? Valid options are "none" or "both.
 Defaults to "none".}
 
-\item{ls_line}{Should a least squares line (or lines) appear on the plot? Defaults to FALSE.}
+\item{ls_line}{Should a least squares line (or lines) appear on the plot? Defaults to "hide".}
 
 \item{...}{Extra title arguments passed on to \code{\link[ggformula:gf_aux]{ggformula::gf_labs()}} (which feeds to \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}).}
 }
@@ -45,9 +45,9 @@ third categorical variable.
 plot_scatter(mtcars, wt~drat)
 plot_scatter(mtcars, wt~drat, fill = "red")
 plot_scatter(mtcars, wt~drat, axis_lines = "both")
-plot_scatter(mtcars, wt~drat, ls_line = TRUE)
+plot_scatter(mtcars, wt~drat, ls_line = "show")
 
 plot_scatter(mtcars, wt~drat, fill = ~cyl)
-plot_scatter(mtcars, wt~drat, fill = ~cyl, ls_line = TRUE)
+plot_scatter(mtcars, wt~drat, fill = ~cyl, ls_line = "show")
 plot_scatter(mtcars, wt~drat, fill = ~cyl, legend_title = "Cylinders")
 }

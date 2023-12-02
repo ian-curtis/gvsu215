@@ -9,7 +9,7 @@ infer_2mean(
   formula,
   digits = 3,
   conf_lvl = 0.95,
-  conf_int = FALSE,
+  conf_int = c("hide", "show"),
   caption = NULL
 )
 }
@@ -24,7 +24,7 @@ infer_2mean(
 Defaults to 0.95.}
 
 \item{conf_int}{Should a confidence interval be provided in addition to the hypothesis test output?
-Defaults to FALSE.}
+Defaults to "hide" with the other option being "show".}
 
 \item{caption}{An override to the table caption. A sensible default is provided.}
 }
@@ -38,6 +38,7 @@ in one. For just a hypothesis test, do nothing different from \code{\link[=infer
 the function name). For a confidence interval provided with that, use \code{conf_int = TRUE}.
 }
 \examples{
-infer_2mean_test(mtcars, wt~vs)
-infer_2mean_test(mtcars, wt~vs, conf_lvl = .9)
+infer_2mean(mtcars, wt~vs)
+infer_2mean(mtcars, wt~vs, conf_lvl = .9)
+infer_2mean(mtcars, wt~vs, conf_lvl = .9, conf_int = "hide")
 }

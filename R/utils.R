@@ -94,6 +94,7 @@ finalize_tbl <- function(table, digits, striped = TRUE, caption = NULL, na_str =
 #'
 #' @examples
 #' library(ggformula)
+#' library(magrittr)
 #'
 #' gf_point(mpg~hp, data = mtcars) %>%
 #'   finalize_plot()
@@ -179,7 +180,7 @@ check_conf_lvl <- function(level) {
 
   if (level > 1 | level < 0 | base::is.character(level)) {
 
-    stop("Confidence level should be given as a decimal between 0 and 1, inclusive (not in quotes).")
+    cli::cli_abort("Confidence level should be given as a decimal between 0 and 1, inclusive (not in quotes).")
 
   }
 
@@ -206,7 +207,7 @@ check_conf_lvl <- function(level) {
 check_test <- function(code) {
 
   base::tryCatch(code,
-                 error = function (e) stop("Could not complete the process. Perhaps you spelled the dataset name or a variable name wrong? Hint: R is case-sensitive.")
+                 error = function (e) cli::cli_abort("Could not complete the process. Perhaps you spelled the dataset name or a variable name wrong? Hint: R is case-sensitive.")
   )
 
 }

@@ -6,21 +6,22 @@
 #' @inheritParams infer_1prop
 #' @param formula The variables to run the test on, in formula syntax. Passed on to [stats::lm()].
 #' @param reduced Should a simple table be created (i.e., removal of the `t` and `p-value` columns)?
-#'    Defaults to TRUE.
+#'    Defaults to "yes".
 #'
 #' @return An object of class flextable. In an interactive session, results are viewable immediately.
 #' @export
 #'
 #' @examples
 #' infer_reg(mtcars, drat~wt)
-#' infer_reg(mtcars, drat~wt, reduced = FALSE)
+#' infer_reg(mtcars, drat~wt, reduced = "no")
 #' infer_reg(mtcars, drat~wt, digits = 4)
 #' infer_reg(mtcars, drat~wt + qsec)
-infer_reg <- function(data, formula, digits = 3, caption = NULL, reduced = TRUE) {
+infer_reg <- function(data, formula, digits = 3, caption = NULL, reduced = c("yes", "no")) {
 
   # error catching
   check_test(stats::lm(formula, data = data))
 
+  reduced <- base::match.arg(reduced)
 
   # code
   var1 <- formula[[2]]
@@ -53,14 +54,14 @@ infer_reg <- function(data, formula, digits = 3, caption = NULL, reduced = TRUE)
 
   }
 
-  if (reduced == TRUE) {
+  if (reduced == "yes") {
 
     broom::tidy(model) %>%
       dplyr::select(-statistic, -p.value) %>%
       finalize_tbl(digits = digits, caption = caption) %>%
       flextable::set_header_labels(term = "Term", estimate = "Estimate", std.error = "Standard Error")
 
-  } else if (reduced == FALSE) {
+  } else if (reduced == "no") {
 
     broom::tidy(model) %>%
       dplyr::mutate(p.value = base::ifelse(p.value < 0.0001,

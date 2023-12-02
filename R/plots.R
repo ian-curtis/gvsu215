@@ -30,7 +30,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
   }
 
   if (base::length(formula) > 2) {
-    stop("Too many variables provided. Try entering only one variable in your formula. \n If you are looking for a grouped bar plot, use the `fill` argument.")
+    cli::cli_abort("Too many variables provided. Try entering only one variable in your formula. \n If you are looking for a grouped bar plot, use the {.var fill} argument.")
   }
 
   check_test(ggformula::gf_percents(formula, fill = fill))
@@ -315,7 +315,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
   # error catching
   if (is.null(breaks)) {
 
-    warning("No value for breaks supplied. Your histogram may not show your data accurately.")
+    cli::cli_alert_warning("No value for breaks supplied. Your histogram may not show your data accurately.")
 
   }
 
@@ -323,7 +323,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
 
   if (base::length(formula) > 2) {
 
-    stop("Too many variables in formula. Trying for a grouped histogram? Use the `group` argument.")
+    cli::cli_abort("Too many variables in formula. Trying for a grouped histogram? Use the {.var group} argument.")
 
   }
 
@@ -463,7 +463,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
 #' @param legend_title The title of the lengend. Ignored in non-grouped plots. Default is the variable name.
 #' @param axis_lines Should major axis lines appear on the plot? Valid options are "none" or "both.
 #'    Defaults to "none".
-#' @param ls_line Should a least squares line (or lines) appear on the plot? Defaults to FALSE.
+#' @param ls_line Should a least squares line (or lines) appear on the plot? Defaults to "hide".
 #'
 #' @return A ggplot object. In an interactive environment, results are viewable immediately.
 #' @export
@@ -472,18 +472,18 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
 #' plot_scatter(mtcars, wt~drat)
 #' plot_scatter(mtcars, wt~drat, fill = "red")
 #' plot_scatter(mtcars, wt~drat, axis_lines = "both")
-#' plot_scatter(mtcars, wt~drat, ls_line = TRUE)
+#' plot_scatter(mtcars, wt~drat, ls_line = "show")
 #'
 #' plot_scatter(mtcars, wt~drat, fill = ~cyl)
-#' plot_scatter(mtcars, wt~drat, fill = ~cyl, ls_line = TRUE)
+#' plot_scatter(mtcars, wt~drat, fill = ~cyl, ls_line = "show")
 #' plot_scatter(mtcars, wt~drat, fill = ~cyl, legend_title = "Cylinders")
-plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_title = NULL, axis_lines = c("none", "both"), ls_line = FALSE, ...) {
+plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_title = NULL, axis_lines = c("none", "both"), ls_line = c("hide", "show"), ...) {
 
   # error catching
   rlang::inform("Note: NAs always removed (in pairs) for scatterplots.", .frequency = "regularly", .frequency_id = "scatter_nas")
 
   if (base::is.character(fill) & !base::is.null(legend_title)) {
-    message("Legend title argument ignored. Legends are only needed for grouped scatterplots.")
+    cli::cli_alert_info("Legend title argument ignored. Legends are only needed for grouped scatterplots.")
   }
 
   check_test(ggformula::gf_point(formula, data = data, fill = fill, color = "grey80", shape = 21, size = 2))
@@ -498,6 +498,7 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
   n_na <- find_na(data, formula, n = 2)
 
   axis_lines <- base::match.arg(axis_lines)
+  ls_line <- base::match.arg(ls_line)
 
   obs_used <- base::nrow(data %>% dplyr::select({{ var1 }}, {{ var2 }}) %>% stats::na.omit())
 
@@ -516,7 +517,7 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
   # non-grouping
   if (base::is.character(fill)) {
 
-    if (ls_line == FALSE) {
+    if (ls_line == "hide") {
 
       ggformula::gf_point(formula, data = data, fill = fill, color = "grey60", shape = 21, size = 2) %>%
         ggformula::gf_labs(title = base::ifelse(base::is.null(title),
@@ -529,7 +530,7 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
         finalize_plot() %>%
         ggformula::gf_theme(axis_theme)
 
-    } else if (ls_line == TRUE) {
+    } else if (ls_line == "show") {
 
       ggformula::gf_point(formula, data = data, fill = fill, color = "grey60", shape = 21, size = 2) %>%
         ggformula::gf_lm(color = "darkred") %>%
@@ -569,7 +570,7 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
       dplyr::select({{ var1 }}, {{ var2 }}, {{ group_var }}) %>%
       stats::na.omit()
 
-    if (ls_line == FALSE) {
+    if (ls_line == "hide") {
 
       ggformula::gf_point(formula, data = data, fill = fill, color = "grey30", shape = 21, size = 2) %>%
         ggformula::gf_labs(title = ifelse(base::is.null(title),
@@ -586,7 +587,7 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
         ggformula::gf_theme(axis_theme) %>%
         ggformula::gf_refine(ggplot2::scale_fill_viridis_d())
 
-    } else if (ls_line == TRUE) {
+    } else if (ls_line == "show") {
 
         # ggformula::gf_point(formula, data = data, fill = fill, color = "grey80", shape = 21, size = 2) %>%
         #   ggformula::gf_lm(color = fill) %>%
