@@ -1,3 +1,9 @@
+# gvsu215 0.4.0
+
+* All arguments the previously took either TRUE or FALSE as a value have been converted into vector-style arguments. For example in `plot_scatter()`, the `ls_line` argument now accepts either "show" or "hide". The only exception to this is `na_rm`, wherever it appears.
+* Error and warning messages were updated. They are now slightly more user-friendly thanks to the `cli` and `rlang` packages.
+* More comments were added to the source code to help me remember what I was doing six months from now.
+
 # gvsu215 0.3.8
 
 * Corrected error in `infer_paired()` which had an incorrect use of the `::` syntax
@@ -5,13 +11,13 @@
 
 # gvsu215 0.3.7
 
-* Values in tables are now rounded with the standard "nearest digit" format for all numbers not between -1 and 1. Numbers between -1 and 1 are rounded using significant digits (e.g., non-zero digits after decimal) but use the same `digits` argument as the standard rounding.
+* Values in tables are now rounded with the standard "nearest digit" format for all numbers not between -1 and 1. Numbers between -1 and 1 are rounded using significant digits (i.e., non-zero digits after decimal) but use the same `digits` argument as the standard rounding.
 * All p-value rounding has been adjusted. Any p-value less than 0.0001 will now display "< 0.0001". Other values will display the true value and follow the rounding rules mentioned above.
 
 # gvsu215 0.3.6
 
 * `plot_hist()`: the binwidth argument has been deprecated and is no longer available. Instead, use `breaks` which, when used, helps to line up the bins and x-axis ticks for better readability and interpretation.
-* The student cheatsheet was slighlty reworked to line up with textbook chapters.
+* The student cheatsheet was slightly reworked to line up with textbook chapters.
 
 # gvsu215 0.3.5
 
