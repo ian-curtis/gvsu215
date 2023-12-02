@@ -10,7 +10,7 @@ check_test(code)
 \item{code}{The code to try to run}
 }
 \value{
-Nothing, or an error message.
+Nothing, but may print an error message.
 }
 \description{
 Used internally to check if an error might occur later. We catch the error here to provide

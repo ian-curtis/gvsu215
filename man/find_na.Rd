@@ -9,7 +9,7 @@ find_na(data, formula, n = 1)
 \arguments{
 \item{data}{A data frame}
 
-\item{formula}{One or two variables in formula notation: \code{~var1} or \code{var1 ~ var2}}
+\item{formula}{One or two variables in formula notation: \code{~var1} or \code{var1 ~ var2}.}
 
 \item{n}{How many variables to analyze. Acceptable values are 1 or 2.}
 }

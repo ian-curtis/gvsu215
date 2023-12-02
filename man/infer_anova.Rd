@@ -2,7 +2,7 @@
 % Please edit documentation in R/infer_other.R
 \name{infer_anova}
 \alias{infer_anova}
-\title{Create a summary table}
+\title{Create a ANOVA table}
 \usage{
 infer_anova(data, formula, digits = 3, caption = NULL)
 }
@@ -19,7 +19,7 @@ infer_anova(data, formula, digits = 3, caption = NULL)
 An object of class flextable. If in an interactive session, results are viewable immediately.
 }
 \description{
-Create a summary table
+Create a ANOVA table
 }
 \examples{
 infer_anova(mtcars, drat~gear)
