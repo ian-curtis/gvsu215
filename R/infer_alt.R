@@ -36,6 +36,7 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
 
   cl <- base::paste0(conf_lvl*100, "%")
 
+  # build caption
   if (base::is.null(caption)) {
 
     caption <- base::paste("Two Sample Proportion Test Between", var1_str, "and", grp_str,
@@ -49,6 +50,7 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
 
   grp_lvls <- sort(unique(dplyr::pull(data, grp_var)))
 
+  # find NAs
   na1 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[1] & base::is.na({{ grp_var }})) %>%
     base::nrow()
@@ -63,6 +65,7 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
     dplyr::filter({{ grp_var }} == grp_lvls[2]) %>%
     base::nrow()
 
+  # find n successes
   yay1 <- data %>%
     dplyr::select({{ var1 }}, {{ grp_var }}) %>%
     dplyr::filter({{ var1 }} == success & {{ grp_var }} == grp_lvls[1]) %>%
@@ -72,6 +75,7 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
     dplyr::filter({{ var1 }} == success & {{ grp_var }} == grp_lvls[2]) %>%
     mosaic::tally()
 
+  # table without CI
   no_interval <- tibble::tibble(
     var = base::as.character(grp_lvls),
     yay = c(yay1$n, yay2$n),
@@ -91,6 +95,7 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
                                  se = "Standard Error", p = "p-value") %>%
     flextable::vline(j = 5)
 
+  # table with CI
   interval <- tibble::tibble(
     var = base::as.character(grp_lvls),
     yay = c(yay1$n, yay2$n),
@@ -175,6 +180,7 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = c
 
   cl <- base::paste0(conf_lvl*100, "%")
 
+  # build caption
   if (base::is.null(caption)) {
 
     caption <- base::paste("Two Sample Independent Means Test Between", var1_str, "and", grp_str,
@@ -186,6 +192,7 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = c
 
   }
 
+  # find NAs
   na1 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[1] & base::is.na({{ grp_var }})) %>%
     base::nrow()
@@ -193,6 +200,7 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = c
     dplyr::filter({{ grp_var }} == grp_lvls[2] & base::is.na({{ grp_var }})) %>%
     base::nrow()
 
+  # find sample sizes
   n1 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[1]) %>%
     base::nrow()
@@ -200,6 +208,7 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = c
     dplyr::filter({{ grp_var }} == grp_lvls[2]) %>%
     base::nrow()
 
+  # table without CI
   no_interval <- tibble::tibble(
     var = base::as.character(grp_lvls),
     n = c(n1, n2),
@@ -219,6 +228,7 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = c
                                  p = "p-value") %>%
     flextable::vline(j = 4)
 
+  # table with CI
   interval <- tibble::tibble(
     var = base::as.character(grp_lvls),
     n = c(n1, n2),

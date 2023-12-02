@@ -40,6 +40,7 @@ infer_reg <- function(data, formula, digits = 3, caption = NULL, reduced = c("ye
 
   a_glance <- broom::glance(model)
 
+  # build caption
   if (base::is.null(caption)) {
 
     caption <- base::paste("Linear Model Coefficients Table \n",
@@ -54,6 +55,7 @@ infer_reg <- function(data, formula, digits = 3, caption = NULL, reduced = c("ye
 
   }
 
+  # build table without p-value and test statistic
   if (reduced == "yes") {
 
     broom::tidy(model) %>%
@@ -61,7 +63,7 @@ infer_reg <- function(data, formula, digits = 3, caption = NULL, reduced = c("ye
       finalize_tbl(digits = digits, caption = caption) %>%
       flextable::set_header_labels(term = "Term", estimate = "Estimate", std.error = "Standard Error")
 
-  } else if (reduced == "no") {
+  } else if (reduced == "no") { # build table with p-value and test statistic
 
     broom::tidy(model) %>%
       dplyr::mutate(p.value = base::ifelse(p.value < 0.0001,
@@ -122,7 +124,7 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
 
   chisq_test <- stats::chisq.test(mosaic::tally(formula, data = data))
 
-  if (type == "test") {
+  if (type == "test") { # chi sq test results
 
     if (base::is.null(caption)) {
 
@@ -139,7 +141,7 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
       flextable::set_header_labels(statistic = "X-squared", p.value = "p-value", parameter = "df")
 
 
-  } else if (type == "expected") {
+  } else if (type == "expected") { # expected counts
 
     if (base::is.null(caption)) {
 
@@ -156,7 +158,7 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
       flextable::hline(i = 1, j = 1, part = "header", border = officer::fp_border(color = NA)) %>%
       flextable::vline(j = 1, border = officer::fp_border(width = 2))
 
-  } else if (type == "observed") {
+  } else if (type == "observed") { # observed counts
 
     if (base::is.null(caption)) {
 
@@ -182,7 +184,7 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
 
 }
 
-#' Create a summary table
+#' Create a ANOVA table
 #'
 #' @inheritParams infer_2prop_int
 #'
@@ -203,6 +205,7 @@ infer_anova <- function(data, formula, digits = 3, caption = NULL) {
 
   check_test(stats::lm(formula, data = data))
 
+  # build caption
   if (base::is.null(caption)) {
 
     caption <- base::paste("ANOVA Table for", var1_str, "vs.", var2_str)

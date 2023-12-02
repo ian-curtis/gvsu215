@@ -32,6 +32,7 @@ infer_1prop <- function(data, formula, success = NULL, digits = 3, conf_lvl = 0.
   var <- formula[[2]]
   var_str <- base::deparse(base::substitute(var))
 
+  # build caption
   if (base::is.null(caption)) {
 
     caption <- base::paste("One-Sample Proportion Confidence Interval on Variable", var_str,
@@ -106,6 +107,7 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
   # code
   two_prop <- mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success, correct = FALSE)
 
+  # build caption
   if (base::is.null(caption)) {
 
     caption <- base::paste("Two Sample Proportion Interval Between", var1_str, "and", grp_str,
@@ -121,6 +123,7 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
 
   grp_lvls <- sort(unique(dplyr::pull(data, grp_var)))
 
+  # find NAs
   na1 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[1] & base::is.na({{ grp_var }})) %>%
     base::nrow()
@@ -128,6 +131,7 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
     dplyr::filter({{ grp_var }} == grp_lvls[2] & base::is.na({{ grp_var }})) %>%
     base::nrow()
 
+  # find sample sizes
   n1 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[1]) %>%
     base::nrow()
@@ -135,6 +139,7 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
     dplyr::filter({{ grp_var }} == grp_lvls[2]) %>%
     base::nrow()
 
+  # find success
   yay1 <- data %>%
     dplyr::select({{ var1 }}, {{ grp_var }}) %>%
     dplyr::filter({{ var1 }} == success & {{ grp_var }} == grp_lvls[1]) %>%
@@ -144,6 +149,7 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
     dplyr::filter({{ var1 }} == success & {{ grp_var }} == grp_lvls[2]) %>%
     mosaic::tally()
 
+  # build actual table
   tibble::tibble(
     var = base::as.character(grp_lvls),
     yay = c(yay1$n, yay2$n),
@@ -193,6 +199,7 @@ infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
 
   cl <- base::paste0(conf_lvl*100, "%")
 
+  # build caption
   if (base::is.null(caption)) {
 
     caption <- base::paste("Two Sample Proportion Test Between", var1_str, "and", grp_str,
@@ -206,6 +213,7 @@ infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
 
   grp_lvls <- sort(unique(dplyr::pull(data, grp_var)))
 
+  # find NAs
   na1 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[1] & base::is.na({{ grp_var }})) %>%
     base::nrow()
@@ -213,6 +221,7 @@ infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
     dplyr::filter({{ grp_var }} == grp_lvls[2] & base::is.na({{ grp_var }})) %>%
     base::nrow()
 
+  # find sample sizes
   n1 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[1]) %>%
     base::nrow()
@@ -220,6 +229,7 @@ infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
     dplyr::filter({{ grp_var }} == grp_lvls[2]) %>%
     base::nrow()
 
+  # find successes
   yay1 <- data %>%
     dplyr::select({{ var1 }}, {{ grp_var }}) %>%
     dplyr::filter({{ var1 }} == success & {{ grp_var }} == grp_lvls[1]) %>%
@@ -229,6 +239,7 @@ infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
     dplyr::filter({{ var1 }} == success & {{ grp_var }} == grp_lvls[2]) %>%
     mosaic::tally()
 
+  # build table
   tibble::tibble(
     var = base::as.character(grp_lvls),
     yay = c(yay1$n, yay2$n),
@@ -272,6 +283,7 @@ infer_1mean <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NU
   var <- formula[[2]]
   var_str <- base::deparse(base::substitute(var))
 
+  # build caption
   if (base::is.null(caption)) {
 
     caption <- base::paste("One-Sample Mean Confidence Interval on Variable", var_str)
@@ -338,6 +350,7 @@ infer_paired <- function(data, var1, var2, digits = 3, conf_lvl = 0.95, caption 
 
   cl <- base::paste0(conf_lvl*100, "%")
 
+  # build caption
   if (base::is.null(caption)) {
 
     caption <- base::paste("Difference in Means Test:", var1_str, "-", var_str2,
@@ -355,6 +368,7 @@ infer_paired <- function(data, var1, var2, digits = 3, conf_lvl = 0.95, caption 
 
   diff_t <- mosaic::t_test(formula = difference ~ 1, data = data, conf.level = conf_lvl)
 
+  # build table
   tibble::tibble(
     n = n,
     na = n_na,
@@ -423,6 +437,7 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
 
   cl <- base::paste0(conf_lvl*100, "%")
 
+  # build caption
   if (base::is.null(caption)) {
 
     caption <- base::paste("Two Sample Independent Means Interval Between", var1_str, "and", grp_str)
@@ -433,6 +448,7 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
 
   }
 
+  # find NAs
   na1 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[1] & base::is.na({{ grp_var }})) %>%
     base::nrow()
@@ -440,6 +456,7 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
     dplyr::filter({{ grp_var }} == grp_lvls[2] & base::is.na({{ grp_var }})) %>%
     base::nrow()
 
+  # find sample sizes
   n1 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[1]) %>%
     base::nrow()
@@ -447,6 +464,7 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
     dplyr::filter({{ grp_var }} == grp_lvls[2]) %>%
     base::nrow()
 
+  # build table
   tibble::tibble(
     var = base::as.character(grp_lvls),
     n = c(n1, n2),
@@ -511,6 +529,7 @@ infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
 
   cl <- base::paste0(conf_lvl*100, "%")
 
+  # build caption
   if (base::is.null(caption)) {
 
     caption <- base::paste("Two Sample Independent Means Test Between", var1_str, "and", grp_str,
@@ -522,6 +541,7 @@ infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
 
   }
 
+  # find NAs
   na1 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[1] & base::is.na({{ grp_var }})) %>%
     base::nrow()
@@ -529,6 +549,7 @@ infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
     dplyr::filter({{ grp_var }} == grp_lvls[2] & base::is.na({{ grp_var }})) %>%
     base::nrow()
 
+  # find sample sizes
   n1 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[1]) %>%
     base::nrow()
@@ -536,6 +557,7 @@ infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
     dplyr::filter({{ grp_var }} == grp_lvls[2]) %>%
     base::nrow()
 
+  # build table
   tibble::tibble(
     var = base::as.character(grp_lvls),
     n = c(n1, n2),

@@ -80,11 +80,16 @@ tbl_2var <- function(data, formula, row_pct = c("hide", "show"), digits = 3, cap
   #                 "{var2}" := base::as.factor({{ var2 }}))
 
   if (base::is.numeric(data[, var1_str])) {
+
     var1_lvls <- base::length(base::unique(data[, var1_str]))
+
   } else {
+
     var1_lvls <- base::nrow(base::unique(data[, var1_str]))
+
   }
 
+  # table with no row percents
   if (row_pct == "hide") {
 
     if (base::is.null(caption)) {
@@ -108,6 +113,7 @@ tbl_2var <- function(data, formula, row_pct = c("hide", "show"), digits = 3, cap
 
   }
 
+  # table with row percentages
   else if (row_pct == "show") {
 
     if (base::is.null(caption)) {

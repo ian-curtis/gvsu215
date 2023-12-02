@@ -34,9 +34,11 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE
   og_na <- na_rm
 
   # code
-  if (base::length(formula) == 2) {
+  if (base::length(formula) == 2) { # non-grouped table
 
     n_na <- find_na(data, formula)
+
+    # need this to alert if NAs were present but not removed
 
     if (n_na == 0 & na_rm == FALSE) {
 
@@ -78,7 +80,8 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE
 
 
   }
-  else if (base::length(formula) == 3) {
+  else if (base::length(formula) == 3) { # grouped table
+
     var1 <- formula[[2]]
     var1_str <- base::deparse(base::substitute(var1))
 
@@ -91,6 +94,7 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE
 
     n_na <- find_na(data, formula, n = 2)
 
+    # need this to alert if NAs were present but not removed
     if (n_na[[1]] == 0 & n_na[[2]] == 0 & na_rm == FALSE) {
 
       na_rm <- TRUE
@@ -101,6 +105,7 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE
 
     }
 
+    # find number of levels of dependent variable
     dep_lvls <- data %>%
       dplyr::select({{ var2 }}) %>%
       stats::na.omit() %>%
@@ -190,7 +195,7 @@ tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1),
                    striped = FALSE) %>%
       flextable::set_header_labels(name = "Percentile", value = "Value")
 
-  } else if (base::length(formula) > 2) {
+  } else if (base::length(formula) > 2) { # grouped table
 
 
     var1 <- formula[[2]]
@@ -258,6 +263,7 @@ tbl_corr <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
 
   na <- find_na(data, formula, n = 2)
 
+  # find the number of observations used (total number of rows after removing all NAs)
   if (na_rm == TRUE) {
 
     obs_used <- base::nrow(data %>% dplyr::select({{ var1 }}, {{ var2 }}) %>% stats::na.omit())

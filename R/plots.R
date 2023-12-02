@@ -41,9 +41,12 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
   var <- formula[[2]]
   var_str <- base::deparse(base::substitute(var))
 
+  # find the levels of the variable
   lvls <- dplyr::pull(data, var)
+  # find length of the biggest level
   big_lvl <- base::max(base::nchar(as.character(unique(lvls))), na.rm = TRUE)
 
+  # if the biggest level has more than 20 characters, add new lines at each space
   if (big_lvl > 20) {
 
     data <- data %>%
@@ -121,7 +124,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
   else if (type == 'count') {
 
     if (base::is.character(fill)) {
-      # one-var count
+      # one-var count (color fill)
 
       na <- find_na(data, formula)
 
@@ -146,7 +149,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
                            y = "Count", ...) %>%
         finalize_plot()
     } else {
-      # grouped count
+      # grouped count (variable fill)
 
       var_na <- find_na(data, formula)
       fill_na <- find_na(data, fill)
@@ -211,6 +214,8 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, ...) {
   var <- formula[[2]]
   var_str <- base::deparse(base::substitute(var))
 
+  # if the data values are between 0.000001 and 1,000,000: use the raw values
+  # otherwise use scientific notation
   if (base::max(data[, var_str], na.rm = TRUE) <= 1000000 & base::max(data[, var_str], na.rm = TRUE) >= 0.000001) {
 
     plot_labels <- function (x) format(x, scientific = FALSE)
@@ -221,7 +226,7 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, ...) {
 
   }
 
-  if (length(formula) == 2) {
+  if (length(formula) == 2) { # single boxplot
 
     na <- find_na(data, formula)
 
@@ -249,7 +254,7 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, ...) {
       ggplot2::ylim(-0.4, 0.4)
 
 
-  } else {
+  } else { # grouped boxplot
 
     by_var <- formula[[3]]
     by_str <- base::deparse(base::substitute(by_var))
@@ -336,6 +341,8 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
   var <- formula[[2]]
   var_str <- base::deparse(base::substitute(var))
 
+  # if the data values are between 0.000001 and 1,000,000: use the raw values
+  # otherwise use scientific notation
   if (base::max(data[, var_str], na.rm = TRUE) <= 1000000 & base::max(data[, var_str], na.rm = TRUE) >= 0.000001) {
 
     plot_labels <- function (x) format(x, scientific = FALSE)
@@ -347,7 +354,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
   }
 
 
-  if (base::is.null(group)) {
+  if (base::is.null(group)) { # one-var histogram
 
     n_na <- find_na(data, formula)
 
@@ -403,7 +410,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
       dplyr::select({{ var }}, {{ facet_var }}) %>%
       stats::na.omit()
 
-    if (base::is.null(breaks)) {
+    if (base::is.null(breaks)) { # build with no breaks
 
       plot <- ggformula::gf_histogram(formula, data = data, breaks = breaks, fill = fill, color = "grey40", alpha = 100) %>%
         ggformula::gf_facet_wrap(group, ncol = group_cols) %>%
@@ -422,7 +429,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
 
       return(plot)
 
-    } else {
+    } else { # build with user-supplied breaks
 
       plot <- ggformula::gf_histogram(formula, data = data, breaks = breaks, fill = fill, color = "grey40", alpha = 100) %>%
         ggformula::gf_facet_wrap(group, ncol = group_cols) %>%
@@ -502,6 +509,7 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
 
   obs_used <- base::nrow(data %>% dplyr::select({{ var1 }}, {{ var2 }}) %>% stats::na.omit())
 
+  # set theme for both axis lines or no axis lines
   if (axis_lines == "none") {
 
     axis_theme <- ggplot2::theme(panel.grid.major.y = ggplot2::element_blank(),

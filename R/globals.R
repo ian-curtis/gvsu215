@@ -1,3 +1,5 @@
+# declare the global variables for the package
+
 globalVariables(unique(c(
   # infer_anova:
   ".data", "df",

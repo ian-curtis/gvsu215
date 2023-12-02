@@ -39,6 +39,7 @@ finalize_tbl <- function(table, digits, striped = TRUE, caption = NULL, na_str =
   big_border <- officer::fp_border(color = "#e1e4e5", width = 1)
 
   if (striped == FALSE) {
+
     table %>%
       dplyr::mutate(dplyr::across(dplyr::where(base::is.double), ~sig_round(.x, digits = digits))) %>%
       flextable::flextable() %>%
@@ -61,7 +62,8 @@ finalize_tbl <- function(table, digits, striped = TRUE, caption = NULL, na_str =
                                                                                       bold = FALSE))))
   }
 
-  else if (striped == TRUE) {
+  else if (striped == TRUE) { # I stripe for tables with more than one row
+
     table %>%
       dplyr::mutate(dplyr::across(dplyr::where(base::is.double), ~sig_round(.x, digits = digits))) %>%
       flextable::flextable() %>%
@@ -122,7 +124,7 @@ finalize_plot <- function(plot) {
 #' Used internally to calculate the number of missing values in one or two variables.
 #'
 #' @param data A data frame
-#' @param formula One or two variables in formula notation: `~var1` or `var1 ~ var2`
+#' @param formula One or two variables in formula notation: `~var1` or `var1 ~ var2`.
 #' @param n How many variables to analyze. Acceptable values are 1 or 2.
 #'
 #' @return An number (n = 1) or a list of two numbers (n = 2)
@@ -133,7 +135,7 @@ finalize_plot <- function(plot) {
 #' find_na(mtcars, wt~cyl, n = 2)
 find_na <- function(data, formula, n = 1) {
 
-  if (n == 1) {
+  if (n == 1) { # if only one variable
 
     var <- formula[[2]]
 
@@ -143,7 +145,7 @@ find_na <- function(data, formula, n = 1) {
 
     return(n_na)
 
-  } else if (n == 2) {
+  } else if (n == 2) { # if two variables
 
     var1 <- formula[[2]]
     var2 <- formula[[3]]
@@ -193,7 +195,7 @@ check_conf_lvl <- function(level) {
 #'
 #' @param code The code to try to run
 #'
-#' @return Nothing, or an error message.
+#' @return Nothing, but may print an error message.
 #' @export
 #'
 #' @examples
