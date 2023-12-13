@@ -128,7 +128,7 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
 
     if (base::is.null(caption)) {
 
-      caption <- base::paste("Chi-Squared Analysis of", var1_str, "and", var2_str)
+      caption <- base::paste("\uAB53\u00b2 Analysis of", var1_str, "and", var2_str)
 
     }
 
@@ -138,7 +138,7 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
                                      "< 0.0001",
                                      base::format.pval(.data$p.value, digits = digits))) %>%
       finalize_tbl(digits = digits, caption = caption, striped = FALSE) %>%
-      flextable::set_header_labels(statistic = "X-squared", p.value = "p-value", parameter = "df")
+      flextable::set_header_labels(statistic = "\uAB53\u00b2", p.value = "p-value", parameter = "df")
 
 
   } else if (type == "expected") { # expected counts

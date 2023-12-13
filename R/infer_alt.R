@@ -91,7 +91,7 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
     finalize_tbl(digits = digits,
                  caption = caption,
                  na_str = "") %>%
-    flextable::set_header_labels(var = grp_str, yay = "n Success", na = "n Missing", phat = "p-hat",
+    flextable::set_header_labels(var = grp_str, yay = "n Success", na = "n Missing", phat = "p\u0302",
                                  se = "Standard Error", p = "p-value") %>%
     flextable::vline(j = 5)
 
@@ -113,7 +113,7 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
     finalize_tbl(digits = digits,
                  caption = caption,
                  na_str = "") %>%
-    flextable::set_header_labels(var = grp_str, yay = "n Success", na = "n Missing", phat = "p-hat",
+    flextable::set_header_labels(var = grp_str, yay = "n Success", na = "n Missing", phat = "p\u0302",
                                  se = "Standard Error", p = "p-value",
                                  cil = base::paste(cl, "Interval Lower"),
                                  ciu = base::paste(cl, "Interval Upper")) %>%
