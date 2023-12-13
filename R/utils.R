@@ -76,6 +76,7 @@ finalize_tbl <- function(table, digits, striped = TRUE, caption = NULL, na_str =
       flextable::vline(border = officer::fp_border(color = '#e1e4e5', width = 1)) %>%
       flextable::bold(bold = TRUE, part = "header") %>%
       flextable::align(align = "center", part = "header") %>%
+      flextable::align(align = "right", part = "body") %>%
       flextable::autofit() %>%
       flextable::fit_to_width(6) %>%
       flextable::set_caption(caption = flextable::as_paragraph(flextable::as_chunk(caption,
