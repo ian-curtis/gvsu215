@@ -10,7 +10,8 @@ sig_round(number, digits)
 \item{number}{The number to be rounded.}
 
 \item{digits}{The number of digits to round to. If the number is between -1 and 1, the value is given to
-\code{signif()} and rounds to number of non-zero digits. Otherwise, value is given to \code{round()}.}
+\code{signif()} and rounds to number of non-zero digits. Otherwise, value is given to \code{round()}. If the
+rounded value is shorter in length than the number of digits provided, zeroes are padded to the end.}
 }
 \value{
 A character of the rounded number.
@@ -21,4 +22,6 @@ INTERNAL: Round a number using standard rounding or sigfigs
 \examples{
 sig_round(0.00023556, 3)
 sig_round(23.1233644, 3)
+sig_round(0.331, 4)
+sig_round(4, 5)
 }
