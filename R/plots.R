@@ -235,10 +235,10 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, ...) {
       stats::na.omit()
 
 
-    ggformula::gf_boxplot(formula, data = data, geom = "errorbar", linewidth = 2, width = 0) %>%
-      ggformula::gf_boxplot(formula, data = data, fill = fill, width = 0.5, lwd = 1, color = "black",
+    ggformula::gf_boxplot(formula, data = data, geom = "errorbar", linewidth = 1.5, width = 0) %>%
+      ggformula::gf_boxplot(formula, data = data, fill = fill, width = 0.5, linewidth = 1, color = "black",
                             outlier.shape = 21, outlier.size = 2.5, outlier.color = "grey70",
-                            outlier.fill = "black", notchwidth = 2) %>%
+                            outlier.fill = "black") %>%
       ggformula::gf_labs(x = var_str,
               title = base::ifelse(base::is.null(title),
                                    base::paste("Boxplot of", var_str),
