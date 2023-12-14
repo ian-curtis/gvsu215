@@ -36,11 +36,11 @@ infer_1prop <- function(data, formula, success = NULL, digits = 3, conf_lvl = 0.
   if (base::is.null(caption)) {
 
     caption <- base::paste("One-Sample Proportion Confidence Interval on Variable", var_str,
-                           "\n Success:", success)
+                           "\n Successes:", success)
 
   } else {
 
-    caption <- base::paste(caption, "\n Success:", success)
+    caption <- base::paste(caption, "\n Successes:", success)
 
   }
 
@@ -66,8 +66,8 @@ infer_1prop <- function(data, formula, success = NULL, digits = 3, conf_lvl = 0.
     finalize_tbl(digits = digits,
                  caption = caption,
                  striped = FALSE) %>%
-    flextable::set_header_labels(n_success = "n Success", na = "n Missing",
-                                 estimate = "p-hat", se = "Standard Error",
+    flextable::set_header_labels(n_success = "n Successes", na = "n Missing",
+                                 estimate = "p\u0302", se = "Standard Error",
                                  conf.low = base::paste(cl, "Interval Lower"),
                                  conf.high = base::paste(cl, "Interval Upper"))
 
@@ -111,11 +111,11 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
   if (base::is.null(caption)) {
 
     caption <- base::paste("Two Sample Proportion Interval Between", var1_str, "and", grp_str,
-                           "\n Success:", success)
+                           "\n Successes:", success)
 
   } else {
 
-    caption <- base::paste(caption, "\n Success:", success)
+    caption <- base::paste(caption, "\n Successes:", success)
 
   }
 
@@ -163,7 +163,7 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
     finalize_tbl(digits = digits,
                  caption = caption,
                  na_str = "") %>%
-    flextable::set_header_labels(var = grp_str, yay = "n Success", na = "n Missing", phat = "p-hat",
+    flextable::set_header_labels(var = grp_str, yay = "n Successes", na = "n Missing", phat = "p\u0302",
                                  se = "Standard Error", cil = base::paste(cl, "Interval Lower"),
                                  ciu = base::paste(cl, "Interval Upper")) %>%
     flextable::vline(j = 5)
@@ -203,11 +203,11 @@ infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
   if (base::is.null(caption)) {
 
     caption <- base::paste("Two Sample Proportion Test Between", var1_str, "and", grp_str,
-                           "\n Success:", success, "| Confidence:", cl)
+                           "\n Successes:", success, "| Confidence:", cl)
 
   } else {
 
-    caption <- base::paste(caption, "\n Success:", success, "| Confidence:", cl)
+    caption <- base::paste(caption, "\n Successes:", success, "| Confidence:", cl)
 
   }
 
@@ -255,7 +255,7 @@ infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
     finalize_tbl(digits = digits,
                  caption = caption,
                  na_str = "") %>%
-    flextable::set_header_labels(var = "Variable", yay = "n Success", na = "n Missing", phat = "p-hat",
+    flextable::set_header_labels(var = "Variable", yay = "n Successes", na = "n Missing", phat = "p\u0302",
                                  se = "Standard Error", p = "p-value") %>%
     flextable::vline(j = 5)
 
@@ -308,7 +308,7 @@ infer_1mean <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NU
     ciu = mu_test$conf.int[[2]]
   ) %>%
     finalize_tbl(digits = digits, caption = caption, striped = FALSE) %>%
-    flextable::set_header_labels(na = "n Misssing", estimate = "x-bar", se = "Standard Error",
+    flextable::set_header_labels(na = "n Misssing", estimate = "x\u0304", se = "Standard Error",
                                  cil = base::paste(cl, "Interval Lower"),
                                  ciu = base::paste(cl, "Interval Upper"))
 
@@ -383,7 +383,7 @@ infer_paired <- function(data, var1, var2, digits = 3, conf_lvl = 0.95, caption 
     ciu = diff_t$conf.int[[2]]
   ) %>%
     finalize_tbl(digits = digits, caption = caption, striped = FALSE) %>%
-    flextable::set_header_labels(na = "n Missing", estimate = "x-bar",
+    flextable::set_header_labels(na = "n Missing", estimate = "x\u0304",
                                  se = "Standard Error", p = "p-value",
                                  cil = base::paste(cl, "Interval Lower"),
                                  ciu = base::paste(cl, "Interval Upper"))

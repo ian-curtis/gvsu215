@@ -2,7 +2,8 @@
 #'
 #' @param number The number to be rounded.
 #' @param digits The number of digits to round to. If the number is between -1 and 1, the value is given to
-#'    `signif()` and rounds to number of non-zero digits. Otherwise, value is given to `round()`.
+#'    `signif()` and rounds to number of non-zero digits. Otherwise, value is given to `round()`. If the
+#'    rounded value is shorter in length than the number of digits provided, zeroes are padded to the end.
 #'
 #' @return A character of the rounded number.
 #' @export
@@ -10,11 +11,15 @@
 #' @examples
 #' sig_round(0.00023556, 3)
 #' sig_round(23.1233644, 3)
+#' sig_round(0.331, 4)
+#' sig_round(4, 5)
 sig_round <- function(number, digits) {
 
+  #format(round(number), nsmall = digits)
+
   base::ifelse(number < 1 & number > -1,
-         base::as.character(base::signif(number, digits = digits)),
-         base::as.character(base::round(number, digits = digits)))
+    base::format(base::signif(number, digits = digits), nsmall = digits),
+    base::format(base::round(number, digits = digits), nsmall = digits))
 
 }
 
@@ -76,6 +81,7 @@ finalize_tbl <- function(table, digits, striped = TRUE, caption = NULL, na_str =
       flextable::vline(border = officer::fp_border(color = '#e1e4e5', width = 1)) %>%
       flextable::bold(bold = TRUE, part = "header") %>%
       flextable::align(align = "center", part = "header") %>%
+      flextable::align(align = "right", part = "body") %>%
       flextable::autofit() %>%
       flextable::fit_to_width(6) %>%
       flextable::set_caption(caption = flextable::as_paragraph(flextable::as_chunk(caption,

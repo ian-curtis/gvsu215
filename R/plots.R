@@ -75,7 +75,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
         ggformula::gf_percents(formula, fill = fill) %>%
         ggformula::gf_refine(ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))) %>%
         ggformula::gf_labs(title = ifelse(base::is.null(title),
-                                          paste0("Simple Bar Percent of ",
+                                          paste0("Bar Chart (Percents) of ",
                                                  var_str), title),
                            subtitle = base::paste("Missing:", na, "|", "NAs Removed:",
                                                   base::ifelse(na_rm == FALSE, "No", "Yes")),
@@ -107,7 +107,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
                                denom = ~fill) %>%
         ggformula::gf_labs(title = base::ifelse(
                              base::is.null(title),
-                             base::paste("Clustered Bar Graph of", var_str, "by", fill_str),
+                             base::paste("Clustered Bar Chart (Percents) of", var_str, "by", fill_str),
                              title),
                            y = "Percent",
                            subtitle = base::paste(var_str, "Missing:", var_na, "|",
@@ -142,7 +142,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
         ggformula::gf_refine(ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)),
                                                          )) %>%
         ggformula::gf_labs(title = ifelse(base::is.null(title),
-                                          paste0("Simple Bar Count of ",
+                                          paste0("Bar Chart (Counts) of ",
                                                  var_str), title),
                            subtitle = base::paste("Missing:", na, "|", "NAs Removed:",
                                                   base::ifelse(na_rm == FALSE, "No", "Yes")),
@@ -173,7 +173,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
                                position = ggplot2::position_dodge2(preserve = "single")) %>%
         ggformula::gf_labs(title = base::ifelse(
           base::is.null(title),
-          base::paste("Clustered Bar Graph of", var_str, "by", fill_str),
+          base::paste("Clustered Bar Chart (Counts) of", var_str, "by", fill_str),
           title),
           y = "Count",
           subtitle = base::paste(var_str, "Missing:", var_na, "|",
@@ -235,10 +235,10 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, ...) {
       stats::na.omit()
 
 
-    ggformula::gf_boxplot(formula, data = data, geom = "errorbar", linewidth = 2, width = 0) %>%
-      ggformula::gf_boxplot(formula, data = data, fill = fill, width = 0.5, lwd = 1, color = "black",
+    ggformula::gf_boxplot(formula, data = data, geom = "errorbar", linewidth = 1.5, width = 0) %>%
+      ggformula::gf_boxplot(formula, data = data, fill = fill, width = 0.5, linewidth = 1, color = "black",
                             outlier.shape = 21, outlier.size = 2.5, outlier.color = "grey70",
-                            outlier.fill = "black", notchwidth = 2) %>%
+                            outlier.fill = "black") %>%
       ggformula::gf_labs(x = var_str,
               title = base::ifelse(base::is.null(title),
                                    base::paste("Boxplot of", var_str),

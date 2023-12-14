@@ -157,6 +157,8 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE
 #' tbl_pctile(mtcars, ~wt)
 #' tbl_pctile(mtcars, ~wt, probs = c(.17, .3, .5, .7, .9, 1))
 #' tbl_pctile(mtcars, wt~cyl, digits = 4)
+#' tbl_pctile(airquality, ~Solar.R)
+#' tbl_pctile(airquality, Month~Solar.R)
 #'
 #' try(tbl_pctile(mtcars, ~wt, probs = c(25, 50, 75, 100)))
 tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1), caption = NULL) {
@@ -169,8 +171,6 @@ tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1),
     cli::cli_abort("You seem to have entered an invalid entry to the {.var probs} argument. These values should be between 0 and 1 (inclusive).")
   }
 
-  rlang::inform("Note: NAs always removed for percentile tables", .frequency = "once", .frequency_id = "pctile-nas")
-
 
   check_test(mosaic::quantile(x = formula, data = data, na.rm = TRUE, prob = probs))
 
@@ -180,18 +180,30 @@ tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1),
     var <- formula[[2]]
     var_str <- base::deparse(base::substitute(var))
 
-    if (base::is.null(caption)) {
-      caption <- base::paste("Percentiles on Variable", var_str)
+    na <- find_na(data, formula)
+
+    if (na > 1) {
+
+      rlang::inform("Note: NAs always removed for percentile tables", .frequency = "once", .frequency_id = "pctile-nas")
+
     }
 
-    na <- find_na(data, formula)
+    if (base::is.null(caption) & na > 1) {
+
+      caption <- base::paste("Percentiles For", var_str, "\n", "Missing:", na, "| NAs Removed: Yes")
+
+    } else if (base::is.null(caption)) {
+
+      caption <- base::paste("Percentiles For", var_str, "\n", "Missing:", na)
+
+    }
 
 
     mosaic::quantile(x = formula, data = data, na.rm = TRUE, prob = probs) %>%
       tibble::enframe() %>%
       tidyr::pivot_wider(names_from = name, values_from = value) %>%
       finalize_tbl(digits,
-                   caption = base::paste(caption, "\n", "Missing:", na, "| NAs Removed: Yes"),
+                   caption = caption,
                    striped = FALSE) %>%
       flextable::set_header_labels(name = "Percentile", value = "Value")
 
@@ -204,17 +216,30 @@ tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1),
     var2 <- formula[[3]]
     var2_str <- base::deparse(base::substitute(var2))
 
-    if (base::is.null(caption)) {
-      caption <- base::paste("Percentiles on Variable", var1_str, "by", var2_str)
+    na <- find_na(data, formula, n = 2)
+
+    if (na[[1]] > 0 | na[[2]] > 0) {
+
+      rlang::inform("Note: NAs always removed for percentile tables", .frequency = "once", .frequency_id = "pctile-nas")
+
     }
 
-    na <- find_na(data, formula, n = 2)
+
+    if (na[[1]] == 0 & na[[2]] == 0 & base::is.null(caption)) {
+
+      caption <- base::paste("Percentiles For", var1_str, "by", var2_str,  "\n", var1_str, "Missing:", na[[1]], "|",
+                             var2_str, "Missing:", na[[2]])
+
+    } else if (base::is.null(caption)) {
+
+      caption <- base::paste("Percentiles For", var1_str, "by", var2_str,  "\n", var1_str, "Missing:", na[[1]], "|",
+                             var2_str, "Missing:", na[[2]], "| NAs Removed: Yes")
+
+    }
 
     mosaic::quantile(x = formula, data = data, na.rm = TRUE, prob = probs) %>%
       finalize_tbl(digits,
-                   caption = base::paste(caption, "\n", var1_str, "Missing:", na[[1]], "|",
-                                         var2_str, "Missing:", na[[2]],
-                                         "| NAs Removed: Yes")) %>%
+                   caption = caption) %>%
       flextable::set_header_labels(name = "Percentile", value = "Value")
 
   }
