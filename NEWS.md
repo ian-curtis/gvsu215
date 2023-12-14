@@ -1,3 +1,10 @@
+# gvsu215 0.4.1
+
+* All tables should be properly right-aligned
+* Cosmetic changes in multiple plots and tables
+* Add padding zeroes in the case where the rounded number is shorter than the number of digits supplied
+* Clarification updates to captions/titles in `plot_bar` and `tbl_pctile`
+
 # gvsu215 0.4.0
 
 * All arguments the previously took either TRUE or FALSE as a value have been converted into vector-style arguments. For example in `plot_scatter()`, the `ls_line` argument now accepts either "show" or "hide". The only exception to this is `na_rm`, wherever it appears.
