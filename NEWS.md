@@ -1,3 +1,7 @@
+# gvsu215 0.4.2
+
+* You now can use `base::read.csv()` with the functions! A unique case presented itself where a missing value was recorded as "" (the empty string) and was not detected by default from ``read.csv()`. All functions now search character variables for empty strings and replace them with true NAs. This could be expanded in the future.
+
 # gvsu215 0.4.1
 
 * All tables should be properly right-aligned
@@ -14,7 +18,7 @@
 # gvsu215 0.3.8
 
 * Corrected error in `infer_paired()` which had an incorrect use of the `::` syntax
-* Updated figures displayed in README (to now accuarately show the right alignment of table body cells)
+* Updated figures displayed in README (to now accurately show the right alignment of table body cells)
 
 # gvsu215 0.3.7
 

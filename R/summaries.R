@@ -29,6 +29,10 @@
 #' tbl_num_sum(airquality, Ozone~Month, na_rm = TRUE)
 tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
 
+  # check for empty strings and make them actual NAs
+  data <- tibble::as_tibble(data) %>%
+    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+
   check_test(mosaic::favstats(x = formula, data = data, na.rm = na_rm))
 
   og_na <- na_rm
@@ -163,6 +167,10 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE
 #' try(tbl_pctile(mtcars, ~wt, probs = c(25, 50, 75, 100)))
 tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1), caption = NULL) {
 
+  # check for empty strings and make them actual NAs
+  data <- tibble::as_tibble(data) %>%
+    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+
   # error catching
 
   valid_probs <- dplyr::between(probs, 0, 1)
@@ -262,6 +270,10 @@ tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1),
 #'
 #' tbl_corr(airquality, Ozone~Solar.R, na_rm = TRUE)
 tbl_corr <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
+
+  # check for empty strings and make them actual NAs
+  data <- tibble::as_tibble(data) %>%
+    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
 
   # error catching
   if (na_rm == FALSE) {

@@ -18,6 +18,10 @@
 #' infer_2prop(mtcars, vs~am, success = 1, conf_lvl = .9, digits = 4, conf_int = "show")
 infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, conf_int = c("hide", "show"), caption = NULL) {
 
+  # check for empty strings and make them actual NAs
+  data <- tibble::as_tibble(data) %>%
+    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+
   # error catching
   check_conf_lvl(conf_lvl)
 
@@ -143,6 +147,10 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
 #' infer_2mean(mtcars, wt~vs, conf_lvl = .9)
 #' infer_2mean(mtcars, wt~vs, conf_lvl = .9, conf_int = "hide")
 infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = c("hide", "show"), caption = NULL) {
+
+  # check for empty strings and make them actual NAs
+  data <- tibble::as_tibble(data) %>%
+    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
 
   # error catching
   check_conf_lvl(conf_lvl)

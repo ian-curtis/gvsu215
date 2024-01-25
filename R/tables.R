@@ -20,6 +20,10 @@
 #' try(tbl_1var(mtcars, ~Gear))
 tbl_1var <- function(data, formula, digits = 3, caption = NULL) {
 
+  # check for empty strings and make them actual NAs
+  data <- tibble::as_tibble(data) %>%
+    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+
   # error catching
   check_test(mosaic::tally(formula, data = data, format = "count"))
 
@@ -64,10 +68,16 @@ tbl_1var <- function(data, formula, digits = 3, caption = NULL) {
 #' try(tbl_2var(mtcars, Cyl~Gear))
 tbl_2var <- function(data, formula, row_pct = c("hide", "show"), digits = 3, caption = NULL) {
 
+  # check for empty strings and make them actual NAs
+  data <- tibble::as_tibble(data) %>%
+    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+
   # error catching
   check_test(mosaic::tally(formula, data = data))
 
   row_pct <- base::match.arg(row_pct)
+
+
 
   # code
   var1 <- formula[[2]]
