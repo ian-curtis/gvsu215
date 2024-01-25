@@ -21,6 +21,10 @@
 #' plot_bar(mtcars, ~cyl, type = "count", fill = ~gear)
 plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A0', title = NULL, na_rm = FALSE, ...) {
 
+  # check for empty strings and make them actual NAs
+  data <- tibble::as_tibble(data) %>%
+    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+
   # error catching
 
   if (base::length(type) == 2) {
@@ -205,6 +209,10 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
 #' plot_box(mtcars, wt~gear)
 plot_box <- function(data, formula, fill = "grey80", title = NULL, ...) {
 
+  # check for empty strings and make them actual NAs
+  data <- tibble::as_tibble(data) %>%
+    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+
   # error catching
   check_test(ggformula::gf_boxplot(formula, data = data, geom = "errorbar", linewidth = 2, width = 0))
 
@@ -316,6 +324,10 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, ...) {
 #' plot_hist(mtcars, ~drat, group = ~cyl, breaks = seq(2, 5, 0.25))
 #' plot_hist(mtcars, ~drat, group = ~cyl, breaks = seq(2, 5, 0.25), group_cols = 2)
 plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NULL, group_cols = 1, title = NULL, ...) {
+
+  # check for empty strings and make them actual NAs
+  data <- tibble::as_tibble(data) %>%
+    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
 
   # error catching
   if (is.null(breaks)) {
@@ -485,6 +497,10 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
 #' plot_scatter(mtcars, wt~drat, fill = ~cyl, ls_line = "show")
 #' plot_scatter(mtcars, wt~drat, fill = ~cyl, legend_title = "Cylinders")
 plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_title = NULL, axis_lines = c("none", "both"), ls_line = c("hide", "show"), ...) {
+
+  # check for empty strings and make them actual NAs
+  data <- tibble::as_tibble(data) %>%
+    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
 
   # error catching
   rlang::inform("Note: NAs always removed (in pairs) for scatterplots.", .frequency = "regularly", .frequency_id = "scatter_nas")

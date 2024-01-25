@@ -16,6 +16,10 @@
 #' infer_1prop(mtcars, ~vs, success = 1, conf_lvl = 0.90)
 infer_1prop <- function(data, formula, success = NULL, digits = 3, conf_lvl = 0.95, caption = NULL) {
 
+  # check for empty strings and make them actual NAs
+  data <- tibble::as_tibble(data) %>%
+    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+
   # error catching
   check_conf_lvl(conf_lvl)
 
@@ -86,6 +90,10 @@ infer_1prop <- function(data, formula, success = NULL, digits = 3, conf_lvl = 0.
 #' infer_2prop_int(mtcars, vs~am, success = 1)
 #' infer_2prop_int(mtcars, vs~am, success = 1, conf_lvl = .9)
 infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95, caption = NULL) {
+
+  # check for empty strings and make them actual NAs
+  data <- tibble::as_tibble(data) %>%
+    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
 
   # error catching
   check_conf_lvl(conf_lvl)
@@ -182,6 +190,10 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
 #' infer_2prop_test(mtcars, vs~am, success = 1, conf_lvl = .9, digits = 4)
 infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95, caption = NULL) {
 
+  # check for empty strings and make them actual NAs
+  data <- tibble::as_tibble(data) %>%
+    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+
   # error catching
   check_conf_lvl(conf_lvl)
 
@@ -274,6 +286,10 @@ infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
 #' infer_1mean(mtcars, ~wt, conf_lvl = .9)
 infer_1mean <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NULL) {
 
+  # check for empty strings and make them actual NAs
+  data <- tibble::as_tibble(data) %>%
+    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+
   # error catching
   check_conf_lvl(conf_lvl)
 
@@ -328,6 +344,10 @@ infer_1mean <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NU
 #' infer_paired(mtcars, var1 = ~drat, var2 = ~wt)
 #' infer_paired(mtcars, var1 = ~drat, var2 = ~wt, conf_lvl = 0.9)
 infer_paired <- function(data, var1, var2, digits = 3, conf_lvl = 0.95, caption = NULL) {
+
+  # check for empty strings and make them actual NAs
+  data <- tibble::as_tibble(data) %>%
+    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
 
   # error catching
 
@@ -402,6 +422,10 @@ infer_paired <- function(data, var1, var2, digits = 3, conf_lvl = 0.95, caption 
 #' infer_2mean_int(mtcars, wt~vs)
 #' infer_2mean_int(mtcars, wt~vs, conf_lvl = .9)
 infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NULL) {
+
+  # check for empty strings and make them actual NAs
+  data <- tibble::as_tibble(data) %>%
+    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
 
   # error catching
   check_conf_lvl(conf_lvl)
@@ -495,6 +519,10 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
 #' infer_2mean_test(mtcars, wt~vs, conf_lvl = .9)
 infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NULL) {
 
+  # check for empty strings and make them actual NAs
+  data <- tibble::as_tibble(data) %>%
+    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+
   # error catching
   check_conf_lvl(conf_lvl)
 
@@ -504,7 +532,6 @@ infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
   grp_var <- formula[[3]]
   grp_str <- base::deparse(base::substitute(grp_var))
 
-  # error catching
   check_conf_lvl(conf_lvl)
 
   base::tryCatch(data %>% dplyr::mutate("{grp_var}" := base::factor({{ grp_var }})),

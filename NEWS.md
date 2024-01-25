@@ -1,3 +1,7 @@
+# gvsu215 0.4.2
+
+* You now can use `base::read.csv()` with the functions! A unique case presented itself where a missing value was recorded as "" (the empty string) and was not detected by default from ``read.csv()`. All functions now search character variables for empty strings and replace them with true NAs. This could be expanded in the future.
+
 # gvsu215 0.4.1
 
 * All tables should be properly right-aligned

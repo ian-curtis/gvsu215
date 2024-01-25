@@ -18,6 +18,10 @@
 #' infer_reg(mtcars, drat~wt + qsec)
 infer_reg <- function(data, formula, digits = 3, caption = NULL, reduced = c("yes", "no")) {
 
+  # check for empty strings and make them actual NAs
+  data <- tibble::as_tibble(data) %>%
+    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+
   # error catching
   check_test(stats::lm(formula, data = data))
 
@@ -97,6 +101,10 @@ infer_reg <- function(data, formula, digits = 3, caption = NULL, reduced = c("ye
 #' suppressWarnings(infer_chisq(mtcars, cyl~gear, type = "expected"))
 #' suppressWarnings(infer_chisq(mtcars, cyl~gear, type = "observed"))
 infer_chisq <- function(data, formula, type = c("test", "expected", "observed"), digits = 3, caption = NULL) {
+
+  # check for empty strings and make them actual NAs
+  data <- tibble::as_tibble(data) %>%
+    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
 
   # error catching
   type <- match.arg(type)
@@ -195,6 +203,10 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
 #' infer_anova(mtcars, drat~gear)
 #' infer_anova(mtcars, drat~gear, digits = 4)
 infer_anova <- function(data, formula, digits = 3, caption = NULL) {
+
+  # check for empty strings and make them actual NAs
+  data <- tibble::as_tibble(data) %>%
+    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
 
   # code
   var1 <- formula[[2]]
