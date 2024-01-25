@@ -14,7 +14,7 @@
 # gvsu215 0.3.8
 
 * Corrected error in `infer_paired()` which had an incorrect use of the `::` syntax
-* Updated figures displayed in README (to now accuarately show the right alignment of table body cells)
+* Updated figures displayed in README (to now accurately show the right alignment of table body cells)
 
 # gvsu215 0.3.7
 
