@@ -22,7 +22,7 @@ tbl_1var <- function(data, formula, digits = 3, caption = NULL) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   check_test(mosaic::tally(formula, data = data, format = "count"))
@@ -41,7 +41,8 @@ tbl_1var <- function(data, formula, digits = 3, caption = NULL) {
     dplyr::mutate(pct = (n / base::nrow(data))*100) %>%
     janitor::adorn_totals("row") %>%
     finalize_tbl(digits = digits, caption = base::paste("One Way Counts on Variable", var_str)) %>%
-    flextable::set_header_labels(n = "Count", pct = "Percent")
+    flextable::set_header_labels(n = "Count", pct = "Percent") %>%
+    flextable::fontsize(size = 9, part = "all")
     # flextable::set_caption(caption = flextable::as_paragraph(flextable::as_chunk(caption)))
 
 }
@@ -70,7 +71,7 @@ tbl_2var <- function(data, formula, row_pct = c("hide", "show"), digits = 3, cap
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   check_test(mosaic::tally(formula, data = data))

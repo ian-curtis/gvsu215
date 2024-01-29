@@ -18,7 +18,7 @@ infer_1prop <- function(data, formula, success = NULL, digits = 3, conf_lvl = 0.
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   check_conf_lvl(conf_lvl)
@@ -93,7 +93,7 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   check_conf_lvl(conf_lvl)
@@ -192,7 +192,7 @@ infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   check_conf_lvl(conf_lvl)
@@ -288,7 +288,7 @@ infer_1mean <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NU
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   check_conf_lvl(conf_lvl)
@@ -347,7 +347,7 @@ infer_paired <- function(data, var1, var2, digits = 3, conf_lvl = 0.95, caption 
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
 
@@ -425,7 +425,7 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   check_conf_lvl(conf_lvl)
@@ -521,7 +521,7 @@ infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   check_conf_lvl(conf_lvl)

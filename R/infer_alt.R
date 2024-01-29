@@ -20,7 +20,7 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   check_conf_lvl(conf_lvl)
@@ -150,7 +150,7 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = c
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   check_conf_lvl(conf_lvl)
