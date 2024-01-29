@@ -31,7 +31,7 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
 
   check_test(mosaic::favstats(x = formula, data = data, na.rm = na_rm))
 
@@ -69,16 +69,17 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE
       df %>%
         dplyr::select(-missing) %>%
         finalize_tbl(digits, striped = FALSE,
-                     caption = base::paste(caption, "\n Missing:", n_na,
-                                           "| NAs Removed:",
-                                           ifelse(og_na == TRUE, "Yes", "No")))
+                     caption = base::paste(caption, "\n NAs Removed:",
+                                           ifelse(og_na == TRUE, "Yes", "No"))) %>%
+        flextable::fontsize(size = 9, part = "all")
 
     } else if (og_na == FALSE) {
 
       df %>%
         finalize_tbl(digits, striped = FALSE,
                      caption = base::paste(caption, "\n NAs Removed:",
-                                                    ifelse(og_na == TRUE, "Yes", "No")))
+                                                    ifelse(og_na == TRUE, "Yes", "No"))) %>%
+        flextable::fontsize(size = 9, part = "all")
 
     }
 
@@ -126,17 +127,15 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE
       df %>%
         dplyr::select(-missing) %>%
         finalize_tbl(digits,
-                     caption = base::paste(caption, "\n", var1_str, "Missing:", n_na[[1]], "|",
-                                           var2_str, "Missing:", n_na[[2]], "|",
-                                           "NAs Removed:", base::ifelse(og_na == TRUE, "Yes", "No")))
+                     caption = base::paste(caption, "\n NAs Removed:", base::ifelse(og_na == TRUE, "Yes", "No"))) %>%
+        flextable::fontsize(size = 9, part = "all")
 
     } else if (og_na == FALSE) {
 
       df %>%
         finalize_tbl(digits,
-                     caption = base::paste(caption, "\n", var1_str, "Missing:", n_na[[1]], "|",
-                                           var2_str, "Missing:", n_na[[2]], "|",
-                                           "NAs Removed:", base::ifelse(og_na == TRUE, "Yes", "No")))
+                     caption = base::paste(caption, "\n NAs Removed:", base::ifelse(og_na == TRUE, "Yes", "No"))) %>%
+        flextable::fontsize(size = 9, part = "all")
 
     }
 
@@ -169,7 +168,7 @@ tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1),
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
 
@@ -213,7 +212,8 @@ tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1),
       finalize_tbl(digits,
                    caption = caption,
                    striped = FALSE) %>%
-      flextable::set_header_labels(name = "Percentile", value = "Value")
+      flextable::set_header_labels(name = "Percentile", value = "Value") %>%
+      flextable::fontsize(size = 9, part = "all")
 
   } else if (base::length(formula) > 2) { # grouped table
 
@@ -248,7 +248,8 @@ tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1),
     mosaic::quantile(x = formula, data = data, na.rm = TRUE, prob = probs) %>%
       finalize_tbl(digits,
                    caption = caption) %>%
-      flextable::set_header_labels(name = "Percentile", value = "Value")
+      flextable::set_header_labels(name = "Percentile", value = "Value") %>%
+      flextable::fontsize(size = 9, part = "all")
 
   }
 
@@ -273,7 +274,7 @@ tbl_corr <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   if (na_rm == FALSE) {
@@ -329,6 +330,7 @@ tbl_corr <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
                                  n_dep = base::paste(var2_str, "n"),
                                  na_dep = base::paste(var2_str, "missing"),
                                  obs_used = "Observations Used",
-                                 corr = "Correlation")
+                                 corr = "Correlation") %>%
+    flextable::fontsize(size = 9, part = "all")
 
 }

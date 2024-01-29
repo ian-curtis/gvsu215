@@ -23,7 +23,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
 
@@ -211,7 +211,7 @@ plot_box <- function(data, formula, fill = "grey80", title = NULL, ...) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   check_test(ggformula::gf_boxplot(formula, data = data, geom = "errorbar", linewidth = 2, width = 0))
@@ -327,7 +327,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   if (is.null(breaks)) {
@@ -500,7 +500,7 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   rlang::inform("Note: NAs always removed (in pairs) for scatterplots.", .frequency = "regularly", .frequency_id = "scatter_nas")

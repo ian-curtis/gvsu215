@@ -22,7 +22,7 @@ tbl_1var <- function(data, formula, digits = 3, caption = NULL) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   check_test(mosaic::tally(formula, data = data, format = "count"))
@@ -41,7 +41,8 @@ tbl_1var <- function(data, formula, digits = 3, caption = NULL) {
     dplyr::mutate(pct = (n / base::nrow(data))*100) %>%
     janitor::adorn_totals("row") %>%
     finalize_tbl(digits = digits, caption = base::paste("One Way Counts on Variable", var_str)) %>%
-    flextable::set_header_labels(n = "Count", pct = "Percent")
+    flextable::set_header_labels(n = "Count", pct = "Percent") %>%
+    flextable::fontsize(size = 9, part = "all")
     # flextable::set_caption(caption = flextable::as_paragraph(flextable::as_chunk(caption)))
 
 }
@@ -70,7 +71,7 @@ tbl_2var <- function(data, formula, row_pct = c("hide", "show"), digits = 3, cap
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~na_if(., "")))
+    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   check_test(mosaic::tally(formula, data = data))
@@ -106,20 +107,25 @@ tbl_2var <- function(data, formula, row_pct = c("hide", "show"), digits = 3, cap
       caption <- base::paste("Two-Way Counts of", var1, "vs.", var2)
     }
 
-    mosaic::tally(formula, data = data) %>%
+    starter <- mosaic::tally(formula, data = data) %>%
       tibble::as_tibble() %>%
       tidyr::pivot_wider(names_from = {{ var1 }}, values_from = n) %>%
-      janitor::adorn_totals("col") %>%
-      dplyr::mutate(Total = base::as.integer(Total)) %>%
+      janitor::adorn_totals(c("col", "row")) %>%
+      dplyr::mutate(Total = base::as.integer(Total))
+
+    starter %>%
       finalize_tbl(digits = digits, caption = caption) %>%
       flextable::add_header_row(values = c("", var1_str, ""),
                                 colwidths = c(1, var1_lvls, 1)) %>%
       flextable::vline(j = c(1, var1_lvls + 1),
-                       border = officer::fp_border(width = 1.2)) %>%
+                       border = officer::fp_border(width = 1.5)) %>%
+      flextable::hline(i = nrow(starter) - 1,
+                       border = officer::fp_border(width = 1.5)) %>%
       flextable::hline(i = 1, part = "header") %>%
       flextable::hline(i = 1, j = c(1, var1_lvls + 2), part = "header",
                        border = officer::fp_border(color = NA)) %>%
-      flextable::bold(j = 1)
+      flextable::bold(j = 1) %>%
+      flextable::fontsize(size = 9, part = "all")
 
   }
 
@@ -130,23 +136,28 @@ tbl_2var <- function(data, formula, row_pct = c("hide", "show"), digits = 3, cap
       caption <- base::paste("Two-Way Counts (with Row Percentages) of", var1, "vs.", var2)
     }
 
-    mosaic::tally(formula, data = data) %>%
+    starter <- mosaic::tally(formula, data = data) %>%
       tibble::as_tibble() %>%
       tidyr::pivot_wider(names_from = {{ var1 }}, values_from = n) %>%
-      janitor::adorn_totals("col") %>%
+      janitor::adorn_totals(c("col", "row")) %>%
       janitor::adorn_percentages("row") %>%
       janitor::adorn_pct_formatting(digits = 2) %>%
       janitor::adorn_ns(position = "front") %>%
-      dplyr::mutate(dplyr::across(-1, ~sub(" ", "\n", .))) %>%
+      dplyr::mutate(dplyr::across(-1, ~sub(" ", "\n", .)))
+
+    starter %>%
       finalize_tbl(digits = digits, caption = caption) %>%
       flextable::add_header_row(values = c("", var1_str, ""),
                                 colwidths = c(1, var1_lvls, 1)) %>%
       flextable::vline(j = c(1, var1_lvls + 1),
-                       border = officer::fp_border(width = 1.2)) %>%
+                       border = officer::fp_border(width = 1.5)) %>%
+      flextable::hline(i = nrow(starter) - 1,
+                       border = officer::fp_border(width = 1.5)) %>%
       flextable::hline(i = 1, part = "header") %>%
       flextable::hline(i = 1, j = c(1, var1_lvls + 2), part = "header",
                        border = officer::fp_border(color = NA)) %>%
-      flextable::bold(j = 1)
+      flextable::bold(j = 1) %>%
+      flextable::fontsize(size = 9, part = "all")
 
 
   }
