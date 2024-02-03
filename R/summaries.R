@@ -67,7 +67,7 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE
     if (og_na == TRUE) {
 
       df %>%
-        dplyr::select(-missing) %>%
+        # dplyr::select(-missing) %>%
         finalize_tbl(digits, striped = FALSE,
                      caption = base::paste(caption, "\n NAs Removed:",
                                            ifelse(og_na == TRUE, "Yes", "No"))) %>%
@@ -125,7 +125,7 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE
     if (og_na == TRUE) {
 
       df %>%
-        dplyr::select(-missing) %>%
+        # dplyr::select(-missing) %>%
         finalize_tbl(digits,
                      caption = base::paste(caption, "\n NAs Removed:", base::ifelse(og_na == TRUE, "Yes", "No"))) %>%
         flextable::fontsize(size = 9, part = "all")
