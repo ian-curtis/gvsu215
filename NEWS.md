@@ -1,3 +1,7 @@
+# gvsu215 0.4.4
+
+* `tbl_num_sum()` output: If missing values are removed (i.e., `na_rm = TRUE`) the number missing values are still shown in the table. Previously this column was removed but it still is good information to show.
+
 # gvsu215 0.4.3
 
 * Appearance changes for some tables (such as font size and borders)
