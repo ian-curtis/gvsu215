@@ -39,7 +39,7 @@ The package's functions can be broken down into a few general categories: utilit
 
 To read in data files, you will need to know the file path to the file. Then use
 
-```{r}
+```{verbatim, lang = "r"}
 _DATANAME_ <- read.csv("_FILEPATH_", header = TRUE)
 ```
 
@@ -47,14 +47,14 @@ Note: The Software Investigation starter program will include the code to read i
 
 ### Subset Observations
 
-```{r}
+```{verbatim, lang = "r"}
 _NEWDATANAME_ <- _OLDDATANAME_ %>% 
   filter(_CONDITION_)
 ```
 
 ### Subset Variables
 
-```{r}
+```{verbatim, lang = "r"}
 _NEWDATANAME_ <- _OLDDATANAME_ %>% 
   select(_VARSTOKEEP_)
 ```
@@ -63,13 +63,13 @@ _NEWDATANAME_ <- _OLDDATANAME_ %>%
 
 ### Frequency Table
 
-```{r}
+```{verbatim, lang = "r"}
 tbl_1var(_DATANAME_, ~_VARIABLE_)
 ```
 
 ### Bar Graph Using Percent
 
-```{r}
+```{verbatim, lang = "r"}
 plot_bar(_DATANAME_, ~_VARIABLE_, type = "percent", na_rm = FALSE)
 ```
 
@@ -77,7 +77,7 @@ Note: Change to `na_rm = TRUE` to eliminate missing values from plot.
 
 ### Bar Graph Using Counts
 
-```{r}
+```{verbatim, lang = "r"}
 plot_bar(_DATANAME_, ~_VARIABLE_, type = "count", na_rm = FALSE)
 ```
 
@@ -85,13 +85,13 @@ Note: Change to `na_rm = TRUE` to eliminate missing values from plot.
 
 ### Two-Way Table
 
-```{r}
+```{verbatim, lang = "r"}
 tbl_2var(_DATANAME_, _RESPONSE_~_EXPLANATORY_)
 ```
 
 ### Clustered Bar Graph
 
-```{r}
+```{verbatim, lang = "r"}
 plot_bar(_DATANAME_, ~_RESPONSE_, fill = ~_EXPLANATORY_, na_rm = FALSE)
 ```
 
@@ -100,13 +100,13 @@ plot_bar(_DATANAME_, ~_RESPONSE_, fill = ~_EXPLANATORY_, na_rm = FALSE)
 
 ### Basic Numerical Summaries
 
-```{r}
-tbl_num_sum(_DATANAME_, ~_VARIABLE_, na_rm = FALSE)
+```{verbatim, lang = "r"}
+tbl_num_sum(_DATANAME_, ~_VARIABLE_, na_rm = TRUE)
 ```
 
 ### Percentile
 
-```{r}
+```{verbatim, lang = "r"}
 tbl_pctile(_DATANAME_, ~_VARIABLE_, probs = c(_PERCENTILES_), na_rm = FALSE)
 ```
 
@@ -114,13 +114,13 @@ Note: Replace percentiles with the values you want separated by commas.  For exa
 
 ### Boxplot
 
-```{r}
+```{verbatim, lang = "r"}
 plot_box(_DATANAME_, ~_VARIABLE_, na_rm = FALSE)
 ```
 
 ### Histogram
 
-```{r}
+```{verbatim, lang = "r"}
 plot_hist(_DATANAME_, ~_VARIABLE_, breaks = seq(_START_, _STOP_, _JUMP_), na_rm = FALSE)
 ```
 
@@ -128,25 +128,25 @@ Note: You can use `breaks` to control how many bars there are.
 
 ### Basic Numerical Summaries By Group
 
-```{r}
-tbl_num_sum(_DATANAME_, _RESPONSE_~_GROUPVARIABLE_, na_rm = FALSE)
+```{verbatim, lang = "r"}
+tbl_num_sum(_DATANAME_, _RESPONSE_~_GROUPVARIABLE_, na_rm = TRUE)
 ```
 
 ### Percentiles By Group
 
-```{r}
+```{verbatim, lang = "r"}
 tbl_pctile(_DATANAME_, _RESPONSE_~_GROUPVARIABLE_, na_rm = FALSE)
 ```
 
 ### Boxplot By Group
 
-```{r}
+```{verbatim, lang = "r"}
 plot_box(_DATANAME_, _RESPONSE_~_GROUPVARIABLE_, na_rm = FALSE)
 ```
 
 ### Histogram By Group
 
-```{r}
+```{verbatim, lang = "r"}
 plot_hist(_DATANAME_, ~_VARIABLE_, group = ~_GROUPVARIABLE_, breaks = seq(_START_, _STOP_, _JUMP_), na_rm = FALSE)
 ```
 
@@ -158,13 +158,13 @@ Note: Confidence levels default to 95% but can be overridden with `conf_lvl = _D
 
 ### Confidence Interval on $\mathrm{p}$
 
-```{r}
+```{verbatim, lang = "r"}
 infer_1prop(_DATANAME_, ~_VARIABLE_, success = _SUCCESSCATEGORY_, conf_lvl = _CONFIDENCELEVEL_)
 ```
 
 ### Confidence Interval on &mu;
 
-```{r}
+```{verbatim, lang = "r"}
 infer_1mean(_DATANAME_, ~_VARIABLE_, conf_lvl = _CONFIDENCELEVEL_)
 ```
 
@@ -172,7 +172,7 @@ infer_1mean(_DATANAME_, ~_VARIABLE_, conf_lvl = _CONFIDENCELEVEL_)
 
 ### Scatterplot
 
-```{r}
+```{verbatim, lang = "r"}
 plot_scatter(_DATANAME_, _RESPONSE_~_EXPLANATORY_, axis_lines = "none", ls_line = "hide")
 ```
 
@@ -181,13 +181,13 @@ Note: Change to `ls_line = "show"` to plot the regression line.
 
 ### Linear Correlation
 
-```{r}
+```{verbatim, lang = "r"}
 tbl_corr(DATA, _RESPONSE_~_EXPLANATORY_, na_rm = TRUE)
 ```
 
 ### Linear Regression
 
-```{r}
+```{verbatim, lang = "r"}
 infer_reg(_DATANAME_, _RESPONSE_~_EXPLANATORY_, reduced = "yes")
 ```
 
@@ -195,7 +195,7 @@ Note: Change to `reduced = "no"` to get test statistic and p-value.
 
 ### Scatterplot By Group
 
-```{r}
+```{verbatim, lang = "r"}
 plot_scatter(_DATANAME_, _RESPONSE_~_EXPLANATORY_, fill = ~_GROUPVARIABLE_, legend_title = "_LEGEND_")
 ```
 
@@ -203,17 +203,17 @@ plot_scatter(_DATANAME_, _RESPONSE_~_EXPLANATORY_, fill = ~_GROUPVARIABLE_, lege
 
 ### $\chi ^2$-Test
 
-```{r}
+```{verbatim, lang = "r"}
 # standard test
 infer_chisq(_DATANAME_, _EXPLANATORY_~_RESPONSE_, type = "test")
 ```
 
-```{r}
+```{verbatim, lang = "r"}
 # expected counts
 infer_chisq(_DATANAME_, _EXPLANATORY_~_RESPONSE_, type = "expected")
 ```
 
-```{r}
+```{verbatim, lang = "r"}
 # observed counts
 infer_chisq(_DATANAME_, _EXPLANATORY_~_RESPONSE_, type = "observed")
 ```
@@ -222,7 +222,7 @@ infer_chisq(_DATANAME_, _EXPLANATORY_~_RESPONSE_, type = "observed")
 
 Note: Confidence levels default to 95% but can be overridden with `conf_lvl = _DECIMAL_` (e.g., `conf_lvl = 0.90`). 
 
-```{r}
+```{verbatim, lang = "r"}
 infer_2prop_int(_DATANAME_, _RESPONSE_~_EXPLANATORY_, success = _SUCCESSCATEGORY_, conf_lvl = _CONFIDENCELEVEL_)
 ```
 
@@ -235,25 +235,25 @@ Note: For this code to work the explanatory variable must only have two categori
 
 Note: Confidence levels default to 95% but can be overridden with `conf_lvl = _DECIMAL_` (e.g., `conf_lvl = 0.90`). 
 
-```{r}
+```{verbatim, lang = "r"}
 infer_paired(_DATANAME_, var1 = ~_VARIABLE1_, var2 = ~_VARIABLE2_, conf_lvl = _CONFIDENCELEVEL_)
 ```
 
 ### Independent $\mathrm{T}$-Test
 
-```{r}
+```{verbatim, lang = "r"}
 infer_2mean_test(_DATANAME_, _VARIABLE_~_GROUPVARIABLE_)
 ```
 
 ### Independent 2 Groups Confidence Interval
 
-```{r}
+```{verbatim, lang = "r"}
 infer_2mean_int(_DATANAME_, _VARIABLE_~_GROUPVARIABLE_, conf_lvl = _CONFIDENCELEVEL_)
 ```
 
 ### ANOVA
 
-```{r}
+```{verbatim, lang = "r"}
 infer_anova(_DATANAME_, _VARIABLE_~_GROUPVARIABLE_)
 ```
 
