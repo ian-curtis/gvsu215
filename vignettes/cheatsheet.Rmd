@@ -107,7 +107,7 @@ tbl_num_sum(_DATANAME_, ~_VARIABLE_, na_rm = TRUE)
 ### Percentile
 
 ```{verbatim, lang = "r"}
-tbl_pctile(_DATANAME_, ~_VARIABLE_, probs = c(_PERCENTILES_), na_rm = FALSE)
+tbl_pctile(_DATANAME_, ~_VARIABLE_, probs = c(_PERCENTILES_))
 ```
 
 Note: Replace percentiles with the values you want separated by commas.  For example, `c(0.80, 0.90, 0.95)`
@@ -121,7 +121,7 @@ plot_box(_DATANAME_, ~_VARIABLE_, na_rm = FALSE)
 ### Histogram
 
 ```{verbatim, lang = "r"}
-plot_hist(_DATANAME_, ~_VARIABLE_, breaks = seq(_START_, _STOP_, _JUMP_), na_rm = FALSE)
+plot_hist(_DATANAME_, ~_VARIABLE_, breaks = seq(_START_, _STOP_, _JUMP_))
 ```
 
 Note: You can use `breaks` to control how many bars there are.
@@ -135,7 +135,7 @@ tbl_num_sum(_DATANAME_, _RESPONSE_~_GROUPVARIABLE_, na_rm = TRUE)
 ### Percentiles By Group
 
 ```{verbatim, lang = "r"}
-tbl_pctile(_DATANAME_, _RESPONSE_~_GROUPVARIABLE_, na_rm = FALSE)
+tbl_pctile(_DATANAME_, _RESPONSE_~_GROUPVARIABLE_)
 ```
 
 ### Boxplot By Group
@@ -147,7 +147,7 @@ plot_box(_DATANAME_, _RESPONSE_~_GROUPVARIABLE_, na_rm = FALSE)
 ### Histogram By Group
 
 ```{verbatim, lang = "r"}
-plot_hist(_DATANAME_, ~_VARIABLE_, group = ~_GROUPVARIABLE_, breaks = seq(_START_, _STOP_, _JUMP_), na_rm = FALSE)
+plot_hist(_DATANAME_, ~_VARIABLE_, group = ~_GROUPVARIABLE_, breaks = seq(_START_, _STOP_, _JUMP_))
 ```
 
 Note: You can use `breaks` to control how many bars there are.
