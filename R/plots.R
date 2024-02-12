@@ -385,7 +385,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
                            subtitle = base::paste("Missing:", n_na, "|", "NAs Removed: Yes"),
                            ...) %>%
         finalize_plot() %>%
-        ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels))
+        ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels, guide = guide_axis(check.overlap = TRUE)))
 
       return(plot)
 
@@ -400,7 +400,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
                            subtitle = base::paste("Missing:", n_na, "|", "NAs Removed: Yes"),
                            ...) %>%
         finalize_plot() %>%
-        ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels, breaks = breaks))
+        ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels, breaks = breaks, guide = guide_axis(check.overlap = TRUE)))
 
       return(plot)
 
@@ -436,7 +436,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
                                                   "NAs Removed: Yes"),
                            ...) %>%
         finalize_plot() %>%
-        ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels)) %>%
+        ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels, guide = guide_axis(angle = x_angle))) %>%
         ggformula::gf_theme(panel.border = ggplot2::element_rect(color = "black", fill = NA))
 
       return(plot)
@@ -456,7 +456,8 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
                            ...) %>%
         finalize_plot() %>%
         ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels,
-                                                         breaks = breaks)) %>%
+                                                         breaks = breaks,
+                                                         guide = guide_axis(angle = x_angle))) %>%
         ggformula::gf_theme(panel.border = ggplot2::element_rect(color = "black", fill = NA))
 
       return(plot)
