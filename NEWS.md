@@ -1,3 +1,10 @@
+# gvsu215 0.4.5
+
+* The student cheatsheet was updated. Functions that don't have an `na_rm` argument no longer show that as an option.
+* The Instructor's Guide was renamed to accurately describe it's content.
+* Histograms now default to showing non-overlapping x-axis values, if necessary.
+* `infer_chisq` now removes all NAs automatically. Output now shows how many observations there were originally as well as how many were used for the output. 
+
 # gvsu215 0.4.4
 
 * `tbl_num_sum()` output: If missing values are removed (i.e., `na_rm = TRUE`) the number missing values are still shown in the table. Previously this column was removed but it still is good information to show.
