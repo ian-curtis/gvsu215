@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gvsu215</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +42,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/cheatsheet.html">Cheat Sheet</a>
-    <a class="dropdown-item" href="../articles/instructor_guide.html">Instructor's Guide</a>
+    <a class="dropdown-item" href="../articles/instructor_guide.html">Extending the Default Behavior</a>
   </div>
 </li>
 <li class="nav-item">
@@ -178,7 +178,7 @@ from plot.</p>
 <div class="section level4">
 <h4 id="percentile">Percentile<a class="anchor" aria-label="anchor" href="#percentile"></a>
 </h4>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_pctile</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">probs =</span> <span class="fu">c</span>(_PERCENTILES_), <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_pctile</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">probs =</span> <span class="fu">c</span>(_PERCENTILES_))</span></code></pre></div>
 <p>Note: Replace percentiles with the values you want separated by
 commas. For example, <code>c(0.80, 0.90, 0.95)</code></p>
 </div>
@@ -190,7 +190,7 @@ commas. For example, <code>c(0.80, 0.90, 0.95)</code></p>
 <div class="section level4">
 <h4 id="histogram">Histogram<a class="anchor" aria-label="anchor" href="#histogram"></a>
 </h4>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_hist</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">breaks =</span> <span class="fu">seq</span>(_START_, _STOP_, _JUMP_), <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_hist</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">breaks =</span> <span class="fu">seq</span>(_START_, _STOP_, _JUMP_))</span></code></pre></div>
 <p>Note: You can use <code>breaks</code> to control how many bars there
 are.</p>
 </div>
@@ -202,7 +202,7 @@ are.</p>
 <div class="section level4">
 <h4 id="percentiles-by-group">Percentiles By Group<a class="anchor" aria-label="anchor" href="#percentiles-by-group"></a>
 </h4>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_pctile</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_GROUPVARIABLE_, <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_pctile</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_GROUPVARIABLE_)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="boxplot-by-group">Boxplot By Group<a class="anchor" aria-label="anchor" href="#boxplot-by-group"></a>
@@ -212,7 +212,7 @@ are.</p>
 <div class="section level4">
 <h4 id="histogram-by-group">Histogram By Group<a class="anchor" aria-label="anchor" href="#histogram-by-group"></a>
 </h4>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_hist</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">group =</span> <span class="sc">~</span>_GROUPVARIABLE_, <span class="at">breaks =</span> <span class="fu">seq</span>(_START_, _STOP_, _JUMP_), <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_hist</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">group =</span> <span class="sc">~</span>_GROUPVARIABLE_, <span class="at">breaks =</span> <span class="fu">seq</span>(_START_, _STOP_, _JUMP_))</span></code></pre></div>
 <p>Note: You can use <code>breaks</code> to control how many bars there
 are.</p>
 </div>
