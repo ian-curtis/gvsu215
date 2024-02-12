@@ -109,6 +109,13 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
   # error catching
   type <- match.arg(type)
 
+  rlang::inform("Note: NAs always removed for chi squared tests.", .frequency = "once", .frequency_id = "chisq-nas")
+  original_n <- nrow(data)
+
+  data <- data %>%
+    stats::na.omit()
+  new_n <- nrow(data)
+
   check_test(stats::chisq.test(mosaic::tally(formula, data = data)))
 
   # code
@@ -136,7 +143,12 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
 
     if (base::is.null(caption)) {
 
-      caption <- base::paste("\uAB53\u00b2 Analysis of", var1_str, "and", var2_str)
+      caption <- base::paste("\uAB53\u00b2 Analysis of", var1_str, "and", var2_str,
+                             "\n Total Observations:", original_n, "\n Observations Used: ", new_n)
+
+    } else {
+
+      caption <- base::paste(caption, "\n Total Observations:", original_n, "\n Observations Used: ", new_n)
 
     }
 
@@ -153,7 +165,12 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
 
     if (base::is.null(caption)) {
 
-      caption <- base::paste("Expected Counts for", var1_str, "and", var2_str)
+      caption <- base::paste("Expected Counts for", var1_str, "and", var2_str,
+                             "\n Total Observations:", original_n, "\n Observations Used: ", new_n)
+
+    } else {
+
+      caption <- base::paste(caption, "\n Total Observations:", original_n, "\n Observations Used: ", new_n)
 
     }
 
@@ -170,7 +187,12 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
 
     if (base::is.null(caption)) {
 
-      caption <- base::paste("Observed Counts for", var1_str, "and", var2_str)
+      caption <- base::paste("Observed Counts for", var1_str, "and", var2_str,
+                             "\n Total Observations:", original_n, "\n Observations Used: ", new_n)
+
+    } else {
+
+      caption <- base::paste(caption, "\n Total Observations:", original_n, "\n Observations Used: ", new_n)
 
     }
 

@@ -1,8 +1,8 @@
 ---
-title: "Instructor's Guide"
+title: "Extending the Default Behavior"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Instructor's Guide}
+  %\VignetteIndexEntry{extending behavior}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -20,18 +20,16 @@ I've tried to keep function names simple and required arguments to a minimum to 
 
 # Different R Markdown Export Formats
 
-This package should* be able to be used in any output format using R Markdown, including HTML, PDF, and Word. That being said...
+This package should be able to be used in any output format using R Markdown, including HTML^[1], PDF^[2], and Word. If this is not the case, [reach out to Dr. John Gabrosek](mailto:gabrosej@gvsu.edu) or [submit an issue on GitHub](https://github.com/ian-curtis/gvsu215/issues).
 
-* Best results will come from HTML output. 
-* If using PDF output, you will want to make sure student R Markdown files have the following in the YAML header which will allow the compiler to use the `xelatex` engine. As such, you will avoid messages printing out from every function call.
+^[1]: Best results will come from HTML output. 
+^[2]: If using PDF output, you will want to make sure student R Markdown files have the following in the YAML header which will allow the compiler to use the `xelatex` engine. As such, you will avoid messages printing out from every function call.
 
 ```
 output:
   pdf_document:
     latex_engine: xelatex
 ```
-
-*If this is not the case, [reach out to Dr. John Gabrosek](mailto:gabrosej@gvsu.edu) or [submit an issue on GitHub](https://github.com/ian-curtis/gvsu215/issues).
 
 # Extra Function Arguments
 
