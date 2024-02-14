@@ -5,6 +5,8 @@
 #' @param type The type of plot to create. Valid options are "percent" (the default) or "count".
 #' @param fill The fill of the plot. Valid options are a character color (for one variable plots) or
 #'    a variable given in formula notation (`~var`), used to create a grouped bar plot.
+#' @param orient The orientation for the plot (either "vertical", the default, or "horizontal"). As a
+#'   shortcut, "v" and "h" may be used.
 #' @param title An override for the title of the plot. A sensible default is provided.
 #' @param na_rm Should missing values be removed? Defaults to FALSE.
 #' @param ... Extra title arguments passed on to [ggformula::gf_labs()] (which feeds to [ggplot2::ggplot()]).
@@ -19,7 +21,7 @@
 #'
 #' plot_bar(mtcars, ~cyl, fill = ~gear)
 #' plot_bar(mtcars, ~cyl, type = "count", fill = ~gear)
-plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A0', title = NULL, na_rm = FALSE, ...) {
+plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A0', orient = c("vertical", "horizontal"), title = NULL, na_rm = FALSE, ...) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
@@ -42,6 +44,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
 
   # code
   type <- base::match.arg(type)
+  orient <- base::match.arg(orient)
   var <- formula[[2]]
   var_str <- base::deparse(base::substitute(var))
 
@@ -74,7 +77,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
 
       }
 
-      data %>%
+      plot <- data %>%
         dplyr::mutate("{var}" := base::factor({{ var }})) %>%
         ggformula::gf_percents(formula, fill = fill) %>%
         ggformula::gf_refine(ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))) %>%
@@ -85,6 +88,10 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
                                                   base::ifelse(na_rm == FALSE, "No", "Yes")),
                            y = "Percent", ...) %>%
         finalize_plot()
+
+      if (orient == "vertical") return(plot) else return(plot + coord_flip())
+
+
     } else {
       # grouped plot (variable fill)
 
@@ -102,7 +109,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
 
       }
 
-      data %>%
+      plot <- data %>%
         dplyr::mutate("{var}" := base::gsub(" ", "\n", {{ var }}),
                       "{fill_var}" := base::factor({{ fill_var }})) %>%
         ggformula::gf_percents(formula,
@@ -121,6 +128,8 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
         ggformula::gf_refine(ggplot2::scale_fill_brewer(palette = "Dark2", na.value = "grey"),
                              ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))) %>%
         finalize_plot()
+
+      if (orient == "vertical") return(plot) else return(plot + coord_flip())
     }
 
 
@@ -140,7 +149,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
 
       }
 
-      data %>%
+      plot <- data %>%
         dplyr::mutate("{var}" := base::factor({{ var }})) %>%
         ggformula::gf_counts(formula, fill = fill) %>%
         ggformula::gf_refine(ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)),
@@ -152,6 +161,9 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
                                                   base::ifelse(na_rm == FALSE, "No", "Yes")),
                            y = "Count", ...) %>%
         finalize_plot()
+
+      if (orient == "vertical") return(plot) else return(plot + coord_flip())
+
     } else {
       # grouped count (variable fill)
 
@@ -169,7 +181,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
 
       }
 
-      data %>%
+      plot <- data %>%
         dplyr::mutate("{var}" := base::gsub(" ", "\n", {{ var }}),
                       "{fill_var}" := base::factor({{ fill_var }})) %>%
         ggformula::gf_counts(formula,
@@ -187,6 +199,8 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
         ggformula::gf_refine(ggplot2::scale_fill_brewer(palette = "Dark2", na.value = "grey"),
                              ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))) %>%
         finalize_plot()
+
+      if (orient == "vertical") return(plot) else return(plot + coord_flip())
     }
   }
 }
@@ -436,7 +450,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
                                                   "NAs Removed: Yes"),
                            ...) %>%
         finalize_plot() %>%
-        ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels, guide = guide_axis(angle = x_angle))) %>%
+        ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels, guide = guide_axis(check.overlap = TRUE))) %>%
         ggformula::gf_theme(panel.border = ggplot2::element_rect(color = "black", fill = NA))
 
       return(plot)
@@ -457,7 +471,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
         finalize_plot() %>%
         ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels,
                                                          breaks = breaks,
-                                                         guide = guide_axis(angle = x_angle))) %>%
+                                                         guide = guide_axis(check.overlap = TRUE))) %>%
         ggformula::gf_theme(panel.border = ggplot2::element_rect(color = "black", fill = NA))
 
       return(plot)

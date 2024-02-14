@@ -50,6 +50,7 @@ Many functions in this package have extra arguments that aren't necessary for ba
 * `plot_bar()`
   * The `type` argument can be used to specify if a plot with `percent`s or `count`s is desired.
   * The `fill` argument can be used to choose a fill color (for a single variable plot).
+  * The `orient` argument can be used to flip the axis. Choose either "vertical" (the default) or "horizontal".
   * The `title` argument can be used to override the default title.
   * The `...` is used for other labels on the plot, namely, the x- and y-axis labels.
 * `plot_box()`

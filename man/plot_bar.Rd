@@ -9,6 +9,7 @@ plot_bar(
   formula,
   type = c("percent", "count"),
   fill = "#0032A0",
+  orient = c("vertical", "horizontal"),
   title = NULL,
   na_rm = FALSE,
   ...
@@ -23,6 +24,9 @@ plot_bar(
 
 \item{fill}{The fill of the plot. Valid options are a character color (for one variable plots) or
 a variable given in formula notation (\code{~var}), used to create a grouped bar plot.}
+
+\item{orient}{The orientation for the plot (either "vertical", the default, or "horizontal"). As a
+shortcut, "v" and "h" may be used.}
 
 \item{title}{An override for the title of the plot. A sensible default is provided.}
 
