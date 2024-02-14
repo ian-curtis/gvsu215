@@ -24,15 +24,15 @@ Pretty Plots and Charts for Introductory Statistical Concepts
 [![Netlify Status](https://api.netlify.com/api/v1/badges/2866996e-ff21-439d-9d53-f79319b52d97/deploy-status)](https://app.netlify.com/sites/transcendent-starlight-07ae23/deploys)
 <!-- badges: end -->
 
-Note: Due to the fact that some functions return tables (which are essentially HTML code), the README on GitHub does not display properly. As a result, the output is an image of the resulting table rather than the actual HTML table.
+Note: Due to the fact that some functions return tables (which are essentially HTML code), the README on GitHub does not display properly. As a result, the output is an image of the resulting table rather than the actual HTML table. These images will not include the table caption at this time.
 
-`gvsu215` contains a series of wrapper functions around select `{mosaic}` and `{ggformula}` functions, with help from `{flextable}`. The goal is to provide introductory statistics students/learners with an easy way to generate nice-looking plots and tables without focusing on the code used to create them. All tables and plots generated from this package have been doctored and have had themes pre-applied. As such, output will not print in "messy" format to the R console and can be used interactively, including in R Markdown documents.
+`gvsu215` contains a series of wrapper functions around select `{mosaic}` and `{ggformula}` functions, with help from `{flextable}` and `{ggplot2}`. The goal is to provide introductory statistics students/learners with an easy way to generate nice-looking plots and tables without focusing on the code used to create them. All tables and plots generated from this package have been doctored and have had themes pre-applied. As such, output will not print in "messy" format to the R console and can be used interactively, including in R Markdown documents.
 
 This package was designed and tailored for Grand Valley State University (course code: STA 215) but can be used by anyone.
 
 ## Installation
 
-This package is not yet on CRAN. You can install the development version of gvsu215 from [GitHub](https://github.com/ian-curtis/gvsu215) with:
+This package is not on CRAN. You can install the development version of gvsu215 from [GitHub](https://github.com/ian-curtis/gvsu215) with:
 
 ``` {r message = FALSE}
 # install.packages("devtools")
