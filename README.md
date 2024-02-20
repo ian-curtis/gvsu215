@@ -13,10 +13,10 @@ Pretty Plots and Charts for Introductory Statistical Concepts
 
 Note: Due to the fact that some functions return tables (which are
 essentially HTML code), the README on GitHub does not display properly.
-As a result, the output is an image of the resulting table rather than the actual HTML table.
+As a result, the output is an image of the resulting table rather than the actual HTML table. These images will not include the table caption at this time.
 
 `gvsu215` contains a series of wrapper functions around select
-`{mosaic}` and `{ggformula}` functions, with help from `{flextable}`.
+`{mosaic}` and `{ggformula}` functions, with help from `{flextable}` and `{ggplot2}`.
 The goal is to provide introductory statistics students/learners with an
 easy way to generate nice-looking plots and tables without focusing on
 the code used to create them. All tables and plots generated from this
@@ -29,7 +29,7 @@ This package was designed and tailored for Grand Valley State University
 
 ## Installation
 
-This package is not yet on CRAN. You can install the development version of gvsu215 from
+This package is not on CRAN. You can install the development version of gvsu215 from
 [GitHub](https://github.com/ian-curtis/gvsu215) with:
 
 ``` r
@@ -132,7 +132,7 @@ suppressWarnings(infer_chisq(mtcars, cyl~gear))
 suppressWarnings(infer_chisq(mtcars, cyl~gear, type = "expected"))
 ```
 
-<img src="man/figures/README-infer_chisq_expected.png" width="50%" />
+<img src="man/figures/README-infer_chisq_expected.png" width="40%" />
 
 ``` r
 infer_anova(mtcars, cyl~gear, digits = 2)

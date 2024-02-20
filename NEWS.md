@@ -1,3 +1,9 @@
+# gvsu215 0.4.6
+
+* A new argument was given to `plot_bar()`: `orient`, which can take on either "vertical" or "horizontal" and can be used to flip the axes of the plot.
+* `plot_bar()` and `plot_box()` have a new argument: `dodge` which will take on an integer greater than 0 (default 1) to dodge x-axis labels should they overlap.
+* `plot_hist()` will now work again with groups. Oops!
+
 # gvsu215 0.4.5
 
 * The student cheatsheet was updated. Functions that don't have an `na_rm` argument no longer show that as an option.

@@ -4,7 +4,14 @@
 \alias{plot_box}
 \title{Create a simple boxplot}
 \usage{
-plot_box(data, formula, fill = "grey80", title = NULL, ...)
+plot_box(
+  data,
+  formula,
+  fill = "grey80",
+  orient = c("vertical", "horizontal"),
+  title = NULL,
+  ...
+)
 }
 \arguments{
 \item{data}{A data frame.}
@@ -13,6 +20,9 @@ plot_box(data, formula, fill = "grey80", title = NULL, ...)
 or \code{var1~var2} for a grouped boxplot where \code{var2} is a grouping variable.}
 
 \item{fill}{The fill color for the boxplot. Entered as a character.}
+
+\item{orient}{The orientation for the plot (either "vertical", the default, or "horizontal"). As a
+shortcut, "v" and "h" may be used.}
 
 \item{title}{An override for the title of the plot. A sensible default is provided.}
 

@@ -9,6 +9,8 @@ plot_bar(
   formula,
   type = c("percent", "count"),
   fill = "#0032A0",
+  orient = c("vertical", "horizontal"),
+  dodge = 1,
   title = NULL,
   na_rm = FALSE,
   ...
@@ -23,6 +25,11 @@ plot_bar(
 
 \item{fill}{The fill of the plot. Valid options are a character color (for one variable plots) or
 a variable given in formula notation (\code{~var}), used to create a grouped bar plot.}
+
+\item{orient}{The orientation for the plot (either "vertical", the default, or "horizontal"). As a
+shortcut, "v" and "h" may be used.}
+
+\item{dodge}{The number of rows to dodge the axis labels to should they be overlapping.}
 
 \item{title}{An override for the title of the plot. A sensible default is provided.}
 
@@ -40,6 +47,8 @@ Create a simple bar plot
 plot_bar(mtcars, ~cyl)
 plot_bar(mtcars, ~cyl, type = "count")
 plot_bar(mtcars, ~cyl, type = "percent", fill = "yellowgreen")
+plot_bar(mtcars, ~cyl, orient = "horizontal")
+plot_bar(dplyr::starwars, ~hair_color, dodge = 2)
 
 plot_bar(mtcars, ~cyl, fill = ~gear)
 plot_bar(mtcars, ~cyl, type = "count", fill = ~gear)
