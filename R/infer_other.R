@@ -20,7 +20,7 @@ infer_reg <- function(data, formula, digits = 3, caption = NULL, reduced = c("ye
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
+    dplyr::mutate(dplyr::across(dplyr::where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   check_test(stats::lm(formula, data = data))
@@ -104,7 +104,7 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
+    dplyr::mutate(dplyr::across(dplyr::where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   type <- match.arg(type)
@@ -228,7 +228,7 @@ infer_anova <- function(data, formula, digits = 3, caption = NULL) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
+    dplyr::mutate(dplyr::across(dplyr::where(is.character), ~dplyr::na_if(., "")))
 
   # code
   var1 <- formula[[2]]

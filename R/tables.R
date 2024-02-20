@@ -22,7 +22,7 @@ tbl_1var <- function(data, formula, digits = 3, caption = NULL) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
+    dplyr::mutate(dplyr::across(dplyr::where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   check_test(mosaic::tally(formula, data = data, format = "count"))
@@ -71,7 +71,7 @@ tbl_2var <- function(data, formula, row_pct = c("hide", "show"), digits = 3, cap
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
+    dplyr::mutate(dplyr::across(dplyr::where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   check_test(mosaic::tally(formula, data = data))

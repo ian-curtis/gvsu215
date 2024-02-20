@@ -28,7 +28,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
+    dplyr::mutate(dplyr::across(dplyr::where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
 
@@ -90,10 +90,10 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
                            subtitle = base::paste("Missing:", na, "|", "NAs Removed:",
                                                   base::ifelse(na_rm == FALSE, "No", "Yes")),
                            y = "Percent", ...) %>%
-        ggformula::gf_refine(ggplot2::scale_x_discrete(guide = guide_axis(n.dodge = dodge))) %>%
+        ggformula::gf_refine(ggplot2::scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = dodge))) %>%
         finalize_plot()
 
-      if (orient == "vertical") return(plot) else return(plot + coord_flip())
+      if (orient == "vertical") return(plot) else return(plot + ggplot2::coord_flip())
 
 
     } else {
@@ -131,10 +131,10 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
                            ...) %>%
         ggformula::gf_refine(ggplot2::scale_fill_brewer(palette = "Dark2", na.value = "grey"),
                              ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1))),
-                             ggplot2::scale_x_discrete(guide = guide_axis(n.dodge = dodge))) %>%
+                             ggplot2::scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = dodge))) %>%
         finalize_plot()
 
-      if (orient == "vertical") return(plot) else return(plot + coord_flip())
+      if (orient == "vertical") return(plot) else return(plot + ggplot2::coord_flip())
     }
 
 
@@ -164,10 +164,10 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
                            subtitle = base::paste("Missing:", na, "|", "NAs Removed:",
                                                   base::ifelse(na_rm == FALSE, "No", "Yes")),
                            y = "Count", ...) %>%
-        ggformula::gf_refine(ggplot2::scale_x_discrete(guide = guide_axis(n.dodge = dodge))) %>%
+        ggformula::gf_refine(ggplot2::scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = dodge))) %>%
         finalize_plot()
 
-      if (orient == "vertical") return(plot) else return(plot + coord_flip())
+      if (orient == "vertical") return(plot) else return(plot + ggplot2::coord_flip())
 
     } else {
       # grouped count (variable fill)
@@ -203,10 +203,10 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
           ...) %>%
         ggformula::gf_refine(ggplot2::scale_fill_brewer(palette = "Dark2", na.value = "grey"),
                              ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1))),
-                             ggplot2::scale_x_discrete(guide = guide_axis(n.dodge = dodge))) %>%
+                             ggplot2::scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = dodge))) %>%
         finalize_plot()
 
-      if (orient == "vertical") return(plot) else return(plot + coord_flip())
+      if (orient == "vertical") return(plot) else return(plot + ggplot2::coord_flip())
     }
   }
 }
@@ -231,7 +231,7 @@ plot_box <- function(data, formula, fill = "grey80", orient = c("vertical", "hor
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
+    dplyr::mutate(dplyr::across(dplyr::where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   check_test(ggformula::gf_boxplot(formula, data = data, geom = "errorbar", linewidth = 2, width = 0))
@@ -282,7 +282,7 @@ plot_box <- function(data, formula, fill = "grey80", orient = c("vertical", "hor
                axis.text.y = ggplot2::element_blank()) +
       ggplot2::ylim(-0.4, 0.4)
 
-    if (orient == "vertical") return(plot) else return(plot + coord_flip())
+    if (orient == "vertical") return(plot) else return(plot + ggplot2::coord_flip())
 
 
   } else { # grouped boxplot
@@ -311,7 +311,7 @@ plot_box <- function(data, formula, fill = "grey80", orient = c("vertical", "hor
       finalize_plot() %>%
       ggformula::gf_refine(ggplot2::scale_y_continuous(labels = plot_labels))
 
-    if (orient == "vertical") return(plot) else return(plot + coord_flip())
+    if (orient == "vertical") return(plot) else return(plot + ggplot2::coord_flip())
 
   }
 
@@ -352,7 +352,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
+    dplyr::mutate(dplyr::across(dplyr::where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   if (is.null(breaks)) {
@@ -410,7 +410,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
                            subtitle = base::paste("Missing:", n_na, "|", "NAs Removed: Yes"),
                            ...) %>%
         finalize_plot() %>%
-        ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels, guide = guide_axis(check.overlap = TRUE)))
+        ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels, guide = ggplot2::guide_axis(check.overlap = TRUE)))
 
       return(plot)
 
@@ -425,7 +425,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
                            subtitle = base::paste("Missing:", n_na, "|", "NAs Removed: Yes"),
                            ...) %>%
         finalize_plot() %>%
-        ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels, breaks = breaks, guide = guide_axis(check.overlap = TRUE)))
+        ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels, breaks = breaks, guide = ggplot2::guide_axis(check.overlap = TRUE)))
 
       return(plot)
 
@@ -461,7 +461,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
                                                   "NAs Removed: Yes"),
                            ...) %>%
         finalize_plot() %>%
-        ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels, guide = guide_axis(check.overlap = TRUE))) %>%
+        ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels, guide = ggplot2::guide_axis(check.overlap = TRUE))) %>%
         ggformula::gf_theme(panel.border = ggplot2::element_rect(color = "black", fill = NA))
 
       return(plot)
@@ -482,7 +482,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
         finalize_plot() %>%
         ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels,
                                                          breaks = breaks,
-                                                         guide = guide_axis(check.overlap = TRUE))) %>%
+                                                         guide = ggplot2::guide_axis(check.overlap = TRUE))) %>%
         ggformula::gf_theme(panel.border = ggplot2::element_rect(color = "black", fill = NA))
 
       return(plot)
@@ -526,7 +526,7 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
+    dplyr::mutate(dplyr::across(dplyr::where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   rlang::inform("Note: NAs always removed (in pairs) for scatterplots.", .frequency = "regularly", .frequency_id = "scatter_nas")

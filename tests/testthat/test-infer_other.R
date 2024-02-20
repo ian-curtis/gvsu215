@@ -27,20 +27,23 @@ test_that("regression fails with mispelling", {
 
 # test_chisq() ####
 
-# test_that("chisq works", {
-#   expect_condition(
-#     suppressWarnings(infer_chisq(mtcars, cyl~gear))
-#   )
-# })
+test_that("chisq works", {
+  # skip("once per session")
+  expect_no_warning(
+    suppressWarnings(infer_chisq(mtcars, cyl~gear))
+  )
+})
 
 test_that("chisq works with specifying test", {
-  expect_no_condition(
+  # skip("once per session")
+  expect_no_warning(
     suppressWarnings(infer_chisq(mtcars, cyl~gear, type = "test"))
   )
 })
 
 test_that("chisq works with specifying expected", {
-  expect_no_condition(
+  # skip("once per session")
+  expect_no_warning(
     suppressWarnings(infer_chisq(mtcars, cyl~gear, type = "expected"))
   )
 })

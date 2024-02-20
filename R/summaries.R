@@ -31,7 +31,7 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
+    dplyr::mutate(dplyr::across(dplyr::where(is.character), ~dplyr::na_if(., "")))
 
   check_test(mosaic::favstats(x = formula, data = data, na.rm = na_rm))
 
@@ -168,7 +168,7 @@ tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1),
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
+    dplyr::mutate(dplyr::across(dplyr::where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
 
@@ -274,7 +274,7 @@ tbl_corr <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
-    dplyr::mutate(dplyr::across(where(is.character), ~dplyr::na_if(., "")))
+    dplyr::mutate(dplyr::across(dplyr::where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
   if (na_rm == FALSE) {
