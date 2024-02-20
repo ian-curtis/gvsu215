@@ -1,6 +1,6 @@
 Package: gvsu215
 Title: Pretty Plots and Charts for Introductory Statistical Concepts
-Version: 0.4.5
+Version: 0.4.6
 Authors@R: 
     person("Ian", "Curtis", , "curtisi@mail.gvsu.edu", role = c("cre", "aut", "cph"))
 Description: A light wrapper to 'mosaic' and 'ggformula' enabling nice
@@ -28,7 +28,7 @@ Imports:
     tidyr (>= 1.3.0)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Suggests: 
     knitr,
     rmarkdown,
