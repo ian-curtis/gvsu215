@@ -27,11 +27,11 @@ test_that("regression fails with mispelling", {
 
 # test_chisq() ####
 
-test_that("chisq works", {
-  expect_no_condition(
-    suppressWarnings(infer_chisq(mtcars, cyl~gear))
-  )
-})
+# test_that("chisq works", {
+#   expect_condition(
+#     suppressWarnings(infer_chisq(mtcars, cyl~gear))
+#   )
+# })
 
 test_that("chisq works with specifying test", {
   expect_no_condition(

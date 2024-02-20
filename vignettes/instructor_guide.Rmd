@@ -51,10 +51,12 @@ Many functions in this package have extra arguments that aren't necessary for ba
   * The `type` argument can be used to specify if a plot with `percent`s or `count`s is desired.
   * The `fill` argument can be used to choose a fill color (for a single variable plot).
   * The `orient` argument can be used to flip the axis. Choose either "vertical" (the default) or "horizontal".
+  * The `dodge` argument can be used to create more rows on the x-axis labels. This can help if your labels are overlapping. Use an integer to tell how many row to create (more than 2 is not recommened for interpretatiblity).
   * The `title` argument can be used to override the default title.
   * The `...` is used for other labels on the plot, namely, the x- and y-axis labels.
 * `plot_box()`
   * The `fill` argument can be used to choose a fill color.
+  * The `orient` argument can be used to flip the axis. Choose either "vertical" (the default) or "horizontal".
   * The `title` argument can be used to override the default title.
   * The `...` is used for other labels on the plot, namely, the x- and y-axis labels.
 * `plot_hist()`
