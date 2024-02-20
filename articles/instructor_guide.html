@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gvsu215</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.6</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -153,6 +153,12 @@ default caption.</li>
 <code>percent</code>s or <code>count</code>s is desired.</li>
 <li>The <code>fill</code> argument can be used to choose a fill color
 (for a single variable plot).</li>
+<li>The <code>orient</code> argument can be used to flip the axis.
+Choose either “vertical” (the default) or “horizontal”.</li>
+<li>The <code>dodge</code> argument can be used to create more rows on
+the x-axis labels. This can help if your labels are overlapping. Use an
+integer to tell how many row to create (more than 2 is not recommened
+for interpretatiblity).</li>
 <li>The <code>title</code> argument can be used to override the default
 title.</li>
 <li>The <code>...</code> is used for other labels on the plot, namely,
@@ -164,6 +170,8 @@ the x- and y-axis labels.</li>
 <ul>
 <li>The <code>fill</code> argument can be used to choose a fill
 color.</li>
+<li>The <code>orient</code> argument can be used to flip the axis.
+Choose either “vertical” (the default) or “horizontal”.</li>
 <li>The <code>title</code> argument can be used to override the default
 title.</li>
 <li>The <code>...</code> is used for other labels on the plot, namely,

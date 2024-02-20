@@ -30,7 +30,7 @@
     
     <a class="navbar-brand me-2" href="index.html">gvsu215</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.6</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,13 +77,13 @@
 <p>Pretty Plots and Charts for Introductory Statistical Concepts</p>
 <!-- badges: start -->
 
-<p>Note: Due to the fact that some functions return tables (which are essentially HTML code), the README on GitHub does not display properly. As a result, the output is an image of the resulting table rather than the actual HTML table.</p>
-<p><code>gvsu215</code> contains a series of wrapper functions around select <a href="https://github.com/ProjectMOSAIC/mosaic" class="external-link">mosaic</a> and <a href="https://github.com/ProjectMOSAIC/ggformula" class="external-link">ggformula</a> functions, with help from <a href="https://ardata-fr.github.io/flextable-book/" class="external-link">flextable</a>. The goal is to provide introductory statistics students/learners with an easy way to generate nice-looking plots and tables without focusing on the code used to create them. All tables and plots generated from this package have been doctored and have had themes pre-applied. As such, output will not print in “messy” format to the R console and can be used interactively, including in R Markdown documents.</p>
+<p>Note: Due to the fact that some functions return tables (which are essentially HTML code), the README on GitHub does not display properly. As a result, the output is an image of the resulting table rather than the actual HTML table. These images will not include the table caption at this time.</p>
+<p><code>gvsu215</code> contains a series of wrapper functions around select <a href="https://github.com/ProjectMOSAIC/mosaic" class="external-link">mosaic</a> and <a href="https://github.com/ProjectMOSAIC/ggformula" class="external-link">ggformula</a> functions, with help from <a href="https://ardata-fr.github.io/flextable-book/" class="external-link">flextable</a> and <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a>. The goal is to provide introductory statistics students/learners with an easy way to generate nice-looking plots and tables without focusing on the code used to create them. All tables and plots generated from this package have been doctored and have had themes pre-applied. As such, output will not print in “messy” format to the R console and can be used interactively, including in R Markdown documents.</p>
 <p>This package was designed and tailored for Grand Valley State University (course code: STA 215) but can be used by anyone.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>This package is not yet on CRAN. You can install the development version of gvsu215 from <a href="https://github.com/ian-curtis/gvsu215" class="external-link">GitHub</a> with:</p>
+<p>This package is not on CRAN. You can install the development version of gvsu215 from <a href="https://github.com/ian-curtis/gvsu215" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ian-curtis/gvsu215"</span><span class="op">)</span></span></code></pre></div>
@@ -142,7 +142,7 @@
 <p><img src="reference/figures/README-infer_chisq.png" width="50%"></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="reference/infer_chisq.html">infer_chisq</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">cyl</span><span class="op">~</span><span class="va">gear</span>, type <span class="op">=</span> <span class="st">"expected"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-infer_chisq_expected.png" width="50%"></p>
+<p><img src="reference/figures/README-infer_chisq_expected.png" width="40%"></p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/infer_anova.html">infer_anova</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">cyl</span><span class="op">~</span><span class="va">gear</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-infer_anova.png" width="70%"></p>
