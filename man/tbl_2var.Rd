@@ -9,7 +9,8 @@ tbl_2var(
   formula,
   row_pct = c("hide", "show"),
   digits = 3,
-  caption = NULL
+  caption = NULL,
+  na_rm = FALSE
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ other possible value being "show".}
 
 \item{caption}{An optional caption for the table. Defaults to \code{NULL}, but a sensible default is
 provided within the function.}
+
+\item{na_rm}{Should missing values be removed? Defaults to FALSE.}
 }
 \value{
 An object of class flextable. If in an interactive session, the table will be

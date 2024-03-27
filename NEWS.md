@@ -1,3 +1,15 @@
+# gvsu215 0.4.7
+
+* You can now see proportions in `tbl_1var()` in addition to percents. Use `with_prop = "yes"`.
+* Ever wanted to make missing values disappear in one-way and two-way tables? Now you can! `tbl_1var()` and `tbl_2var()` support the `na_rm` argument.
+* The axes for `tbl_2var()` were flipped so I flipped them back the right way.
+* NEW FUNCTIONS / RENAMED FUNCTIONS which allow for hypothesis tests for one sample proportion and one sample mean (previously we only had support for confidence intervals)
+  * `infer_1prop()` is now `infer_1prop_int()`
+  * `infer_1mean()` is now `infer_1mean_int()`
+  * NEW: `infer_1prop_test()`
+  * NEW: `infer_1mean_test()`
+* `plot_box()` now has a `breaks` argument (which works just like that of `plot_hist()`). The plot should also be a little smarter by adding some extra padding around the min and the max of the plot.
+
 # gvsu215 0.4.6
 
 * A new argument was given to `plot_bar()`: `orient`, which can take on either "vertical" or "horizontal" and can be used to flip the axes of the plot.

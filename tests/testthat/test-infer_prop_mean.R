@@ -1,31 +1,61 @@
-# infer_1prop() ####
+# infer_1prop_int() ####
 
 test_that("infer prop 1 works", {
-  expect_no_condition(infer_1prop(mtcars, ~vs, success = 1))
+  expect_no_condition(infer_1prop_int(mtcars, ~vs, success = 1))
 })
 
 test_that("infer prop 1 works with digits", {
-  expect_no_condition(infer_1prop(mtcars, ~vs, success = 1, digits = 4))
+  expect_no_condition(infer_1prop_int(mtcars, ~vs, success = 1, digits = 4))
 })
 
 test_that("infer prop 1 works with new CL", {
-  expect_no_condition(infer_1prop(mtcars, ~vs, success = 1, conf_lvl = .9))
+  expect_no_condition(infer_1prop_int(mtcars, ~vs, success = 1, conf_lvl = .9))
 })
 
 test_that("infer prop 1 works with new caption", {
-  expect_no_condition(infer_1prop(mtcars, ~vs, success = 1, caption = "hehe"))
+  expect_no_condition(infer_1prop_int(mtcars, ~vs, success = 1, caption = "hehe"))
 })
 
 test_that("infer prop 1 fails with wrong CL", {
-  expect_error(infer_1prop(mtcars, ~vs, success = 1, conf_lvl = "90%"))
+  expect_error(infer_1prop_int(mtcars, ~vs, success = 1, conf_lvl = "90%"))
 })
 
 test_that("infer prop 1 fails with no success", {
-  expect_error(infer_1prop(mtcars, ~vs))
+  expect_error(infer_1prop_int(mtcars, ~vs))
 })
 
 test_that("infer prop 1 fails with mispelling", {
-  expect_error(infer_1prop(mtcars, ~VS, success = 1))
+  expect_error(infer_1prop_int(mtcars, ~VS, success = 1))
+})
+
+# infer_1prop_test() ####
+
+test_that("infer prop 1 works", {
+  expect_no_condition(infer_1prop_test(mtcars, ~vs, success = 1))
+})
+
+test_that("infer prop 1 works with digits", {
+  expect_no_condition(infer_1prop_test(mtcars, ~vs, success = 1, digits = 4))
+})
+
+test_that("infer prop 1 works with new CL", {
+  expect_no_condition(infer_1prop_test(mtcars, ~vs, success = 1, conf_lvl = .9))
+})
+
+test_that("infer prop 1 works with new caption", {
+  expect_no_condition(infer_1prop_test(mtcars, ~vs, success = 1, caption = "hehe"))
+})
+
+test_that("infer prop 1 fails with wrong CL", {
+  expect_error(infer_1prop_test(mtcars, ~vs, success = 1, conf_lvl = "90%"))
+})
+
+test_that("infer prop 1 fails with no success", {
+  expect_error(infer_1prop_test(mtcars, ~vs))
+})
+
+test_that("infer prop 1 fails with mispelling", {
+  expect_error(infer_1prop_test(mtcars, ~VS, success = 1))
 })
 
 # infer_2prop_int() ####
@@ -88,30 +118,56 @@ test_that("infer prop 2 test fails with mispelling", {
   expect_error(infer_2prop_test(mtcars, vs~AM, success = 1))
 })
 
-# infer_1mean ####
+# infer_1mean_int ####
 
 test_that("infer mean 1 works", {
-  expect_no_condition(infer_1mean(mtcars, ~wt))
+  expect_no_condition(infer_1mean_int(mtcars, ~wt))
 })
 
 test_that("infer mean 1 works with digits", {
-  expect_no_condition(infer_1mean(mtcars, ~wt, digits = 4))
+  expect_no_condition(infer_1mean_int(mtcars, ~wt, digits = 4))
 })
 
 test_that("infer mean 1 works with new CL", {
-  expect_no_condition(infer_1mean(mtcars, ~wt, conf_lvl = .9))
+  expect_no_condition(infer_1mean_int(mtcars, ~wt, conf_lvl = .9))
 })
 
 test_that("infer mean 1 works with new caption", {
-  expect_no_condition(infer_1mean(mtcars, ~wt, caption = "hehe"))
+  expect_no_condition(infer_1mean_int(mtcars, ~wt, caption = "hehe"))
 })
 
 test_that("infer mean 1 fails with wrong CL", {
-  expect_error(infer_1mean(mtcars, ~wt, conf_lvl = "90%"))
+  expect_error(infer_1mean_int(mtcars, ~wt, conf_lvl = "90%"))
 })
 
 test_that("infer mean 1 fails with mispelling", {
-  expect_error(infer_1mean(mtcars, ~Wt))
+  expect_error(infer_1mean_int(mtcars, ~Wt))
+})
+
+# infer_1mean_test ####
+
+test_that("infer mean 1 works", {
+  expect_no_condition(infer_1mean_test(mtcars, ~wt))
+})
+
+test_that("infer mean 1 works with digits", {
+  expect_no_condition(infer_1mean_test(mtcars, ~wt, digits = 4))
+})
+
+test_that("infer mean 1 works with new CL", {
+  expect_no_condition(infer_1mean_test(mtcars, ~wt, conf_lvl = .9))
+})
+
+test_that("infer mean 1 works with new caption", {
+  expect_no_condition(infer_1mean_test(mtcars, ~wt, caption = "hehe"))
+})
+
+test_that("infer mean 1 fails with wrong CL", {
+  expect_error(infer_1mean_test(mtcars, ~wt, conf_lvl = "90%"))
+})
+
+test_that("infer mean 1 fails with mispelling", {
+  expect_error(infer_1mean_test(mtcars, ~Wt))
 })
 
 # infer_paired() ####

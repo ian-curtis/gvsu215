@@ -159,7 +159,7 @@ Note: Confidence levels default to 95% but can be overridden with `conf_lvl = _D
 ### Confidence Interval on $\mathrm{p}$
 
 ```{verbatim, lang = "r"}
-infer_1prop(_DATANAME_, ~_VARIABLE_, success = _SUCCESSCATEGORY_, conf_lvl = _CONFIDENCELEVEL_)
+infer_1prop(_DATANAME_, ~_VARIABLE_, success = "_SUCCESSCATEGORY_", conf_lvl = _CONFIDENCELEVEL_)
 ```
 
 ### Confidence Interval on &mu;
