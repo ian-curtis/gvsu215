@@ -13,10 +13,10 @@
     <loc>https://gvsu215.ianacurtis.com/articles/cheatsheet.html</loc>
   </url>
   <url>
-    <loc>https://gvsu215.ianacurtis.com/articles/index.html</loc>
+    <loc>https://gvsu215.ianacurtis.com/articles/extending_default_behavior.html</loc>
   </url>
   <url>
-    <loc>https://gvsu215.ianacurtis.com/articles/instructor_guide.html</loc>
+    <loc>https://gvsu215.ianacurtis.com/articles/index.html</loc>
   </url>
   <url>
     <loc>https://gvsu215.ianacurtis.com/authors.html</loc>
@@ -49,10 +49,16 @@
     <loc>https://gvsu215.ianacurtis.com/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/infer_1mean.html</loc>
+    <loc>https://gvsu215.ianacurtis.com/reference/infer_1mean_int.html</loc>
   </url>
   <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/infer_1prop.html</loc>
+    <loc>https://gvsu215.ianacurtis.com/reference/infer_1mean_test.html</loc>
+  </url>
+  <url>
+    <loc>https://gvsu215.ianacurtis.com/reference/infer_1prop_int.html</loc>
+  </url>
+  <url>
+    <loc>https://gvsu215.ianacurtis.com/reference/infer_1prop_test.html</loc>
   </url>
   <url>
     <loc>https://gvsu215.ianacurtis.com/reference/infer_2mean.html</loc>

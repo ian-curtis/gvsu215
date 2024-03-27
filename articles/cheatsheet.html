@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">gvsu215</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +42,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/cheatsheet.html">Cheat Sheet</a>
-    <a class="dropdown-item" href="../articles/instructor_guide.html">Extending the Default Behavior</a>
+    <a class="dropdown-item" href="../articles/extending_default_behavior.html">Extending the Default Behavior</a>
   </div>
 </li>
 <li class="nav-item">
@@ -117,21 +117,21 @@ replace them with your respective code.</p>
 </h4>
 <p>To read in data files, you will need to know the file path to the
 file. Then use</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>_DATANAME_ <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"_FILEPATH_"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>_DATANAME_ <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"_FILEPATH_"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Note: The Software Investigation starter program will include the
 code to read in the data.</p>
 </div>
 <div class="section level4">
 <h4 id="subset-observations">Subset Observations<a class="anchor" aria-label="anchor" href="#subset-observations"></a>
 </h4>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>_NEWDATANAME_ <span class="ot">&lt;-</span> _OLDDATANAME_ <span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(_CONDITION_)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>_NEWDATANAME_ <span class="ot">&lt;-</span> _OLDDATANAME_ <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">filter</span>(_CONDITION_)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="subset-variables">Subset Variables<a class="anchor" aria-label="anchor" href="#subset-variables"></a>
 </h4>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>_NEWDATANAME_ <span class="ot">&lt;-</span> _OLDDATANAME_ <span class="sc">%&gt;%</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(_VARSTOKEEP_)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>_NEWDATANAME_ <span class="ot">&lt;-</span> _OLDDATANAME_ <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">select</span>(_VARSTOKEEP_)</span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -140,31 +140,31 @@ code to read in the data.</p>
 <div class="section level4">
 <h4 id="frequency-table">Frequency Table<a class="anchor" aria-label="anchor" href="#frequency-table"></a>
 </h4>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_1var</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">tbl_1var</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="bar-graph-using-percent">Bar Graph Using Percent<a class="anchor" aria-label="anchor" href="#bar-graph-using-percent"></a>
 </h4>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_bar</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">type =</span> <span class="st">"percent"</span>, <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">plot_bar</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">type =</span> <span class="st">"percent"</span>, <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p>Note: Change to <code>na_rm = TRUE</code> to eliminate missing values
 from plot.</p>
 </div>
 <div class="section level4">
 <h4 id="bar-graph-using-counts">Bar Graph Using Counts<a class="anchor" aria-label="anchor" href="#bar-graph-using-counts"></a>
 </h4>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_bar</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">type =</span> <span class="st">"count"</span>, <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">plot_bar</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">type =</span> <span class="st">"count"</span>, <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p>Note: Change to <code>na_rm = TRUE</code> to eliminate missing values
 from plot.</p>
 </div>
 <div class="section level4">
 <h4 id="two-way-table">Two-Way Table<a class="anchor" aria-label="anchor" href="#two-way-table"></a>
 </h4>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_2var</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_EXPLANATORY_)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">tbl_2var</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_EXPLANATORY_)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="clustered-bar-graph">Clustered Bar Graph<a class="anchor" aria-label="anchor" href="#clustered-bar-graph"></a>
 </h4>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_bar</span>(_DATANAME_, <span class="sc">~</span>_RESPONSE_, <span class="at">fill =</span> <span class="sc">~</span>_EXPLANATORY_, <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">plot_bar</span>(_DATANAME_, <span class="sc">~</span>_RESPONSE_, <span class="at">fill =</span> <span class="sc">~</span>_EXPLANATORY_, <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -173,46 +173,46 @@ from plot.</p>
 <div class="section level4">
 <h4 id="basic-numerical-summaries">Basic Numerical Summaries<a class="anchor" aria-label="anchor" href="#basic-numerical-summaries"></a>
 </h4>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_num_sum</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">na_rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">tbl_num_sum</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">na_rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="percentile">Percentile<a class="anchor" aria-label="anchor" href="#percentile"></a>
 </h4>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_pctile</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">probs =</span> <span class="fu">c</span>(_PERCENTILES_))</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">tbl_pctile</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">probs =</span> <span class="fu">c</span>(_PERCENTILES_))</span></code></pre></div>
 <p>Note: Replace percentiles with the values you want separated by
 commas. For example, <code>c(0.80, 0.90, 0.95)</code></p>
 </div>
 <div class="section level4">
 <h4 id="boxplot">Boxplot<a class="anchor" aria-label="anchor" href="#boxplot"></a>
 </h4>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_box</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">plot_box</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="histogram">Histogram<a class="anchor" aria-label="anchor" href="#histogram"></a>
 </h4>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_hist</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">breaks =</span> <span class="fu">seq</span>(_START_, _STOP_, _JUMP_))</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">plot_hist</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">breaks =</span> <span class="fu">seq</span>(_START_, _STOP_, _JUMP_))</span></code></pre></div>
 <p>Note: You can use <code>breaks</code> to control how many bars there
 are.</p>
 </div>
 <div class="section level4">
 <h4 id="basic-numerical-summaries-by-group">Basic Numerical Summaries By Group<a class="anchor" aria-label="anchor" href="#basic-numerical-summaries-by-group"></a>
 </h4>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_num_sum</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_GROUPVARIABLE_, <span class="at">na_rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">tbl_num_sum</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_GROUPVARIABLE_, <span class="at">na_rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="percentiles-by-group">Percentiles By Group<a class="anchor" aria-label="anchor" href="#percentiles-by-group"></a>
 </h4>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_pctile</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_GROUPVARIABLE_)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">tbl_pctile</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_GROUPVARIABLE_)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="boxplot-by-group">Boxplot By Group<a class="anchor" aria-label="anchor" href="#boxplot-by-group"></a>
 </h4>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_box</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_GROUPVARIABLE_, <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">plot_box</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_GROUPVARIABLE_, <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="histogram-by-group">Histogram By Group<a class="anchor" aria-label="anchor" href="#histogram-by-group"></a>
 </h4>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_hist</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">group =</span> <span class="sc">~</span>_GROUPVARIABLE_, <span class="at">breaks =</span> <span class="fu">seq</span>(_START_, _STOP_, _JUMP_))</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">plot_hist</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">group =</span> <span class="sc">~</span>_GROUPVARIABLE_, <span class="at">breaks =</span> <span class="fu">seq</span>(_START_, _STOP_, _JUMP_))</span></code></pre></div>
 <p>Note: You can use <code>breaks</code> to control how many bars there
 are.</p>
 </div>
@@ -226,12 +226,12 @@ are.</p>
 <div class="section level4">
 <h4 id="confidence-interval-on-mathrmp">Confidence Interval on <span class="math inline">\(\mathrm{p}\)</span><a class="anchor" aria-label="anchor" href="#confidence-interval-on-mathrmp"></a>
 </h4>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">infer_1prop</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">success =</span> _SUCCESSCATEGORY_, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">infer_1prop</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">success =</span> <span class="st">"_SUCCESSCATEGORY_"</span>, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="confidence-interval-on-μ">Confidence Interval on μ<a class="anchor" aria-label="anchor" href="#confidence-interval-on-%CE%BC"></a>
 </h4>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">infer_1mean</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">infer_1mean</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -240,7 +240,7 @@ are.</p>
 <div class="section level4">
 <h4 id="scatterplot">Scatterplot<a class="anchor" aria-label="anchor" href="#scatterplot"></a>
 </h4>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_scatter</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_EXPLANATORY_, <span class="at">axis_lines =</span> <span class="st">"none"</span>, <span class="at">ls_line =</span> <span class="st">"hide"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">plot_scatter</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_EXPLANATORY_, <span class="at">axis_lines =</span> <span class="st">"none"</span>, <span class="at">ls_line =</span> <span class="st">"hide"</span>)</span></code></pre></div>
 <p>Note: Change to <code>axis_lines = "both"</code> to grid the
 scatterplot. Note: Change to <code>ls_line = "show"</code> to plot the
 regression line.</p>
@@ -248,19 +248,19 @@ regression line.</p>
 <div class="section level4">
 <h4 id="linear-correlation">Linear Correlation<a class="anchor" aria-label="anchor" href="#linear-correlation"></a>
 </h4>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_corr</span>(DATA, _RESPONSE_<span class="sc">~</span>_EXPLANATORY_, <span class="at">na_rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">tbl_corr</span>(DATA, _RESPONSE_<span class="sc">~</span>_EXPLANATORY_, <span class="at">na_rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="linear-regression">Linear Regression<a class="anchor" aria-label="anchor" href="#linear-regression"></a>
 </h4>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">infer_reg</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_EXPLANATORY_, <span class="at">reduced =</span> <span class="st">"yes"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">infer_reg</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_EXPLANATORY_, <span class="at">reduced =</span> <span class="st">"yes"</span>)</span></code></pre></div>
 <p>Note: Change to <code>reduced = "no"</code> to get test statistic and
 p-value.</p>
 </div>
 <div class="section level4">
 <h4 id="scatterplot-by-group">Scatterplot By Group<a class="anchor" aria-label="anchor" href="#scatterplot-by-group"></a>
 </h4>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_scatter</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_EXPLANATORY_, <span class="at">fill =</span> <span class="sc">~</span>_GROUPVARIABLE_, <span class="at">legend_title =</span> <span class="st">"_LEGEND_"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">plot_scatter</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_EXPLANATORY_, <span class="at">fill =</span> <span class="sc">~</span>_GROUPVARIABLE_, <span class="at">legend_title =</span> <span class="st">"_LEGEND_"</span>)</span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -270,12 +270,12 @@ p-value.</p>
 <h4 id="chi-2-test">
 <span class="math inline">\(\chi ^2\)</span>-Test<a class="anchor" aria-label="anchor" href="#chi-2-test"></a>
 </h4>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># standard test</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">infer_chisq</span>(_DATANAME_, _EXPLANATORY_<span class="sc">~</span>_RESPONSE_, <span class="at">type =</span> <span class="st">"test"</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># expected counts</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">infer_chisq</span>(_DATANAME_, _EXPLANATORY_<span class="sc">~</span>_RESPONSE_, <span class="at">type =</span> <span class="st">"expected"</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># observed counts</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">infer_chisq</span>(_DATANAME_, _EXPLANATORY_<span class="sc">~</span>_RESPONSE_, <span class="at">type =</span> <span class="st">"observed"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="co"># standard test</span></span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="fu">infer_chisq</span>(_DATANAME_, _EXPLANATORY_<span class="sc">~</span>_RESPONSE_, <span class="at">type =</span> <span class="st">"test"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="co"># expected counts</span></span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="fu">infer_chisq</span>(_DATANAME_, _EXPLANATORY_<span class="sc">~</span>_RESPONSE_, <span class="at">type =</span> <span class="st">"expected"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="co"># observed counts</span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="fu">infer_chisq</span>(_DATANAME_, _EXPLANATORY_<span class="sc">~</span>_RESPONSE_, <span class="at">type =</span> <span class="st">"observed"</span>)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="confidence-interval-for-the-difference-in-two-proportions">Confidence Interval for the Difference in Two Proportions<a class="anchor" aria-label="anchor" href="#confidence-interval-for-the-difference-in-two-proportions"></a>
@@ -283,7 +283,7 @@ p-value.</p>
 <p>Note: Confidence levels default to 95% but can be overridden with
 <code>conf_lvl = _DECIMAL_</code> (e.g.,
 <code>conf_lvl = 0.90</code>).</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">infer_2prop_int</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_EXPLANATORY_, <span class="at">success =</span> _SUCCESSCATEGORY_, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">infer_2prop_int</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_EXPLANATORY_, <span class="at">success =</span> _SUCCESSCATEGORY_, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
 <p>Note: For this code to work the explanatory variable must only have
 two categories.</p>
 </div>
@@ -298,22 +298,22 @@ Confidence Interval<a class="anchor" aria-label="anchor" href="#paired-mathrmt-t
 <p>Note: Confidence levels default to 95% but can be overridden with
 <code>conf_lvl = _DECIMAL_</code> (e.g.,
 <code>conf_lvl = 0.90</code>).</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">infer_paired</span>(_DATANAME_, <span class="at">var1 =</span> <span class="sc">~</span>_VARIABLE1_, <span class="at">var2 =</span> <span class="sc">~</span>_VARIABLE2_, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">infer_paired</span>(_DATANAME_, <span class="at">var1 =</span> <span class="sc">~</span>_VARIABLE1_, <span class="at">var2 =</span> <span class="sc">~</span>_VARIABLE2_, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="independent-mathrmt-test">Independent <span class="math inline">\(\mathrm{T}\)</span>-Test<a class="anchor" aria-label="anchor" href="#independent-mathrmt-test"></a>
 </h4>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">infer_2mean_test</span>(_DATANAME_, _VARIABLE_<span class="sc">~</span>_GROUPVARIABLE_)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="fu">infer_2mean_test</span>(_DATANAME_, _VARIABLE_<span class="sc">~</span>_GROUPVARIABLE_)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="independent-2-groups-confidence-interval">Independent 2 Groups Confidence Interval<a class="anchor" aria-label="anchor" href="#independent-2-groups-confidence-interval"></a>
 </h4>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">infer_2mean_int</span>(_DATANAME_, _VARIABLE_<span class="sc">~</span>_GROUPVARIABLE_, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="fu">infer_2mean_int</span>(_DATANAME_, _VARIABLE_<span class="sc">~</span>_GROUPVARIABLE_, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="anova">ANOVA<a class="anchor" aria-label="anchor" href="#anova"></a>
 </h4>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">infer_anova</span>(_DATANAME_, _VARIABLE_<span class="sc">~</span>_GROUPVARIABLE_)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">infer_anova</span>(_DATANAME_, _VARIABLE_<span class="sc">~</span>_GROUPVARIABLE_)</span></code></pre></div>
 </div>
 </div>
 </div>
