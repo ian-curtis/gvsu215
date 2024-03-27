@@ -8,6 +8,7 @@ plot_box(
   data,
   formula,
   fill = "grey80",
+  breaks = NULL,
   orient = c("vertical", "horizontal"),
   title = NULL,
   ...
@@ -20,6 +21,8 @@ plot_box(
 or \code{var1~var2} for a grouped boxplot where \code{var2} is a grouping variable.}
 
 \item{fill}{The fill color for the boxplot. Entered as a character.}
+
+\item{breaks}{A vector of length 3 (start, stop, step) specifying how the x-scale should be broken up.}
 
 \item{orient}{The orientation for the plot (either "vertical", the default, or "horizontal"). As a
 shortcut, "v" and "h" may be used.}
@@ -37,5 +40,7 @@ A ggplot object. In an interactive environment, results are viewable immediately
 \examples{
 plot_box(mtcars, ~wt)
 plot_box(mtcars, wt~gear, fill = 'orangered4')
+plot_box(mtcars, ~wt, breaks = seq(1, 6, 0.5))
 plot_box(mtcars, wt~gear)
+plot_box(mtcars, wt~gear, breaks = seq(1, 6, 0.5))
 }

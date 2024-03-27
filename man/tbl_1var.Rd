@@ -4,7 +4,14 @@
 \alias{tbl_1var}
 \title{Create a one way data table}
 \usage{
-tbl_1var(data, formula, digits = 3, caption = NULL)
+tbl_1var(
+  data,
+  formula,
+  digits = 3,
+  caption = NULL,
+  with_prop = c("no", "yes"),
+  na_rm = FALSE
+)
 }
 \arguments{
 \item{data}{A data frame.}
@@ -15,6 +22,11 @@ tbl_1var(data, formula, digits = 3, caption = NULL)
 
 \item{caption}{An optional caption for the table. Defaults to \code{NULL}, but a sensible default is
 provided within the function.}
+
+\item{with_prop}{Should proportions be supplied with instead of percents? Defaults to "no",
+could also be "yes".}
+
+\item{na_rm}{Should missing values be removed? Defaults to FALSE.}
 }
 \value{
 An object of class flextable. If in an interactive session, the table will be

@@ -219,6 +219,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
 #' @param formula Variables entered in formula notation. Either `~var` for a one-variable boxplot
 #'    or `var1~var2` for a grouped boxplot where `var2` is a grouping variable.
 #' @param fill The fill color for the boxplot. Entered as a character.
+#' @param breaks A vector of length 3 (start, stop, step) specifying how the x-scale should be broken up.
 #'
 #' @return A ggplot object. In an interactive environment, results are viewable immediately.
 #' @export
@@ -226,15 +227,17 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
 #' @examples
 #' plot_box(mtcars, ~wt)
 #' plot_box(mtcars, wt~gear, fill = 'orangered4')
+#' plot_box(mtcars, ~wt, breaks = seq(1, 6, 0.5))
 #' plot_box(mtcars, wt~gear)
-plot_box <- function(data, formula, fill = "grey80", orient = c("vertical", "horizontal"), title = NULL, ...) {
+#' plot_box(mtcars, wt~gear, breaks = seq(1, 6, 0.5))
+plot_box <- function(data, formula, fill = "grey80", breaks = NULL, orient = c("vertical", "horizontal"), title = NULL, ...) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
     dplyr::mutate(dplyr::across(dplyr::where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
-  check_test(ggformula::gf_boxplot(formula, data = data, geom = "errorbar", linewidth = 2, width = 0))
+  check_test(ggformula::gf_boxplot(formula, data = data, fill = fill))
 
   rlang::inform("Note: NAs always removed for boxplots", .frequency = "once", .frequency_id = "box-nas")
 
@@ -242,6 +245,7 @@ plot_box <- function(data, formula, fill = "grey80", orient = c("vertical", "hor
   orient <- base::match.arg(orient)
   var <- formula[[2]]
   var_str <- base::deparse(base::substitute(var))
+  px <- base::pretty(data[[var_str]])
 
   # if the data values are between 0.000001 and 1,000,000: use the raw values
   # otherwise use scientific notation
@@ -263,7 +267,6 @@ plot_box <- function(data, formula, fill = "grey80", orient = c("vertical", "hor
       dplyr::select({{ var }}) %>%
       stats::na.omit()
 
-
     plot <- ggformula::gf_boxplot(formula, data = data, geom = "errorbar", linewidth = 1.5, width = 0) %>%
       ggformula::gf_boxplot(formula, data = data, fill = fill, width = 0.5, linewidth = 1, color = "black",
                             outlier.shape = 21, outlier.size = 2.5, outlier.color = "grey70",
@@ -276,11 +279,23 @@ plot_box <- function(data, formula, fill = "grey80", orient = c("vertical", "hor
                                      "NAs Removed: Yes"),
               ...) %>%
       finalize_plot() %>%
-      ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels)) %>%
       ggformula::gf_theme(panel.grid.major.y = ggplot2::element_blank(),
                panel.grid.major.x = ggplot2::element_line(color = "grey70", linewidth = .5),
-               axis.text.y = ggplot2::element_blank()) +
-      ggplot2::ylim(-0.4, 0.4)
+               axis.text.y = ggplot2::element_blank()) %>%
+      ggformula::gf_refine(ggplot2::ylim(-0.4, 0.4))
+
+      if (base::is.null(breaks)) {
+        plot <- plot %>%
+          ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels,
+                                                           breaks = px,
+                                                           limits = range(px)))
+      } else {
+        plot <- plot %>%
+          ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels,
+                                                           breaks = breaks,
+                                                           limits = range(px)))
+      }
+
 
     if (orient == "vertical") return(plot) else return(plot + ggplot2::coord_flip())
 
@@ -308,8 +323,23 @@ plot_box <- function(data, formula, fill = "grey80", orient = c("vertical", "hor
                                           by_str, "Missing:", na[[2]], "|",
                                           "NAs Removed: Yes"),
                          ...) %>%
-      finalize_plot() %>%
-      ggformula::gf_refine(ggplot2::scale_y_continuous(labels = plot_labels))
+      finalize_plot()
+
+    if (base::is.null(breaks)) {
+
+      plot <- plot %>%
+        ggformula::gf_refine(ggplot2::scale_y_continuous(labels = plot_labels,
+                                                         breaks = px,
+                                                         limits = range(px)))
+
+    } else {
+
+      plot <- plot %>%
+        ggformula::gf_refine(ggplot2::scale_y_continuous(labels = plot_labels,
+                                                         breaks = breaks,
+                                                         limits = range(px)))
+
+    }
 
     if (orient == "vertical") return(plot) else return(plot + ggplot2::coord_flip())
 

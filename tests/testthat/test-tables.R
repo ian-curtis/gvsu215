@@ -18,6 +18,10 @@ test_that("one way fails with mispelling", {
   expect_error(tbl_1var(mtcars, ~Gear))
 })
 
+test_that("one way works with removing NAs", {
+  expect_condition(tbl_1var(mtcars, cyl~gear, na_rm = TRUE))
+})
+
 
 # tbl_2var() ####
 test_that("two way generates", {
@@ -47,3 +51,8 @@ test_that("two way fails with wrong row percent argument", {
 test_that("two way fails with mispelling", {
   expect_error(tbl_2var(mtcars, Cyl~Gear))
 })
+
+test_that("two way works with removing NAs", {
+  expect_condition(tbl_2var(mtcars, cyl~gear, na_rm = TRUE))
+})
+
