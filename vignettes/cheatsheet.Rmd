@@ -182,7 +182,7 @@ Note: Change to `ls_line = "show"` to plot the regression line.
 ### Linear Correlation
 
 ```{verbatim, lang = "r"}
-tbl_corr(DATA, _RESPONSE_~_EXPLANATORY_, na_rm = TRUE)
+tbl_corr(_DATANAME_, _RESPONSE_~_EXPLANATORY_, na_rm = TRUE)
 ```
 
 ### Linear Regression
