@@ -226,12 +226,12 @@ are.</p>
 <div class="section level4">
 <h4 id="confidence-interval-on-mathrmp">Confidence Interval on <span class="math inline">\(\mathrm{p}\)</span><a class="anchor" aria-label="anchor" href="#confidence-interval-on-mathrmp"></a>
 </h4>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">infer_1prop</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">success =</span> <span class="st">"_SUCCESSCATEGORY_"</span>, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">infer_1prop_int</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">success =</span> <span class="st">"_SUCCESSCATEGORY_"</span>, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="confidence-interval-on-μ">Confidence Interval on μ<a class="anchor" aria-label="anchor" href="#confidence-interval-on-%CE%BC"></a>
 </h4>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">infer_1mean</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">infer_1mean_int</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -315,6 +315,20 @@ Confidence Interval<a class="anchor" aria-label="anchor" href="#paired-mathrmt-t
 </h4>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">infer_anova</span>(_DATANAME_, _VARIABLE_<span class="sc">~</span>_GROUPVARIABLE_)</span></code></pre></div>
 </div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="optional-functions-topics">Optional Functions / Topics<a class="anchor" aria-label="anchor" href="#optional-functions-topics"></a>
+</h2>
+<div class="section level3">
+<h3 id="hypothesis-test-on-p">Hypothesis Test on <span class="math inline">\(p\)</span><a class="anchor" aria-label="anchor" href="#hypothesis-test-on-p"></a>
+</h3>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="fu">infer_1prop_test</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">success =</span> <span class="st">"_SUCCESSCATEGORY_"</span>, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="hypothesis-test-on-μ">Hypothesis Test on μ<a class="anchor" aria-label="anchor" href="#hypothesis-test-on-%CE%BC"></a>
+</h3>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="fu">infer_1mean_test</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
