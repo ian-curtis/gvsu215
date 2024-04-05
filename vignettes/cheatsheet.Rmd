@@ -159,13 +159,13 @@ Note: Confidence levels default to 95% but can be overridden with `conf_lvl = _D
 ### Confidence Interval on $\mathrm{p}$
 
 ```{verbatim, lang = "r"}
-infer_1prop(_DATANAME_, ~_VARIABLE_, success = "_SUCCESSCATEGORY_", conf_lvl = _CONFIDENCELEVEL_)
+infer_1prop_int(_DATANAME_, ~_VARIABLE_, success = "_SUCCESSCATEGORY_", conf_lvl = _CONFIDENCELEVEL_)
 ```
 
 ### Confidence Interval on &mu;
 
 ```{verbatim, lang = "r"}
-infer_1mean(_DATANAME_, ~_VARIABLE_, conf_lvl = _CONFIDENCELEVEL_)
+infer_1mean_int(_DATANAME_, ~_VARIABLE_, conf_lvl = _CONFIDENCELEVEL_)
 ```
 
 ## Chapter 6: Two Quantitative
@@ -257,4 +257,16 @@ infer_2mean_int(_DATANAME_, _VARIABLE_~_GROUPVARIABLE_, conf_lvl = _CONFIDENCELE
 infer_anova(_DATANAME_, _VARIABLE_~_GROUPVARIABLE_)
 ```
 
+# Optional Functions / Topics
 
+## Hypothesis Test on $p$
+
+```{verbatim, lang = "r"}
+infer_1prop_test(_DATANAME_, ~_VARIABLE_, success = "_SUCCESSCATEGORY_", conf_lvl = _CONFIDENCELEVEL_)
+```
+
+## Hypothesis Test on &mu;
+
+```{verbatim, lang = "r"}
+infer_1mean_test(_DATANAME_, ~_VARIABLE_, conf_lvl = _CONFIDENCELEVEL_)
+```
