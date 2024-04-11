@@ -22,11 +22,11 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">gvsu215</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -121,9 +121,11 @@ detailed after the function name.</p>
 value for the number of digits to round to. Defaults to 3.</li>
 <li>The <code>caption</code> argument can be used to override the
 default caption.</li>
-<li>The <code>with_prop</code> argument (defaulted to “no”) can be set
-to “yes” to replace the percent column with the corresponding
+<li>The <code>with_prop</code> argument (defaults to “no”) can be set to
+“yes” to replace the percent column with the corresponding
 proportions.</li>
+<li>The <code>na_rm</code> argument can be used to remove missing values
+from the table</li>
 </ul>
 </li>
 <li>
@@ -135,6 +137,8 @@ percentages in each cell.</li>
 value for the number of digits to round to. Defaults to 3.</li>
 <li>The <code>caption</code> argument can be used to override the
 default caption.</li>
+<li>The <code>na_rm</code> argument can be used to remove missing values
+from the table</li>
 </ul>
 </li>
 <li>
@@ -191,6 +195,9 @@ histogram to specify how many columns the faceted output should take
 up.</li>
 <li>The <code>fill</code> argument can be used to choose a fill
 color.</li>
+<li>The <code>breaks</code> can be used to specify how the x-axis labels
+should be broken. Use <code>seq(_START_, _STOP_, _JUMP_)</code>.
+Accuracy is not guaranteed.</li>
 <li>The <code>title</code> argument can be used to override the default
 title.</li>
 <li>The <code>...</code> is used for other labels on the plot, namely,
@@ -226,6 +233,14 @@ confidence level other than 0.95. (Not applicable to
 <code><a href="../reference/infer_anova.html">infer_anova()</a></code>.)</li>
 </ul>
 </li>
+<li>
+<code>infer_*mean_*</code>
+<ul>
+<li>All inference functions that handle means have a <code>null</code>
+argument. Use this to set the value of the null hypothesis (default is
+0).</li>
+</ul>
+</li>
 </ul>
 </div>
 
@@ -242,7 +257,7 @@ confidence level other than 0.95. (Not applicable to
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
 </div>
 
     </footer>

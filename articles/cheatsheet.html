@@ -22,11 +22,11 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">gvsu215</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -185,12 +185,12 @@ commas. For example, <code>c(0.80, 0.90, 0.95)</code></p>
 <div class="section level4">
 <h4 id="boxplot">Boxplot<a class="anchor" aria-label="anchor" href="#boxplot"></a>
 </h4>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">plot_box</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">plot_box</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="histogram">Histogram<a class="anchor" aria-label="anchor" href="#histogram"></a>
 </h4>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">plot_hist</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">breaks =</span> <span class="fu">seq</span>(_START_, _STOP_, _JUMP_))</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">plot_hist</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_)</span></code></pre></div>
 <p>Note: You can use <code>breaks</code> to control how many bars there
 are.</p>
 </div>
@@ -207,12 +207,12 @@ are.</p>
 <div class="section level4">
 <h4 id="boxplot-by-group">Boxplot By Group<a class="anchor" aria-label="anchor" href="#boxplot-by-group"></a>
 </h4>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">plot_box</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_GROUPVARIABLE_, <span class="at">na_rm =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">plot_box</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_GROUPVARIABLE_)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="histogram-by-group">Histogram By Group<a class="anchor" aria-label="anchor" href="#histogram-by-group"></a>
 </h4>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">plot_hist</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">group =</span> <span class="sc">~</span>_GROUPVARIABLE_, <span class="at">breaks =</span> <span class="fu">seq</span>(_START_, _STOP_, _JUMP_))</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">plot_hist</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">group =</span> <span class="sc">~</span>_GROUPVARIABLE_)</span></code></pre></div>
 <p>Note: You can use <code>breaks</code> to control how many bars there
 are.</p>
 </div>
@@ -232,6 +232,8 @@ are.</p>
 <h4 id="confidence-interval-on-μ">Confidence Interval on μ<a class="anchor" aria-label="anchor" href="#confidence-interval-on-%CE%BC"></a>
 </h4>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">infer_1mean_int</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
+<p>Use the <code>null</code> argument to specify the value of the null
+hypothesis, if different from 0. E.g., <code>null = 3</code>.</p>
 </div>
 </div>
 <div class="section level3">
@@ -299,11 +301,15 @@ Confidence Interval<a class="anchor" aria-label="anchor" href="#paired-mathrmt-t
 <code>conf_lvl = _DECIMAL_</code> (e.g.,
 <code>conf_lvl = 0.90</code>).</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">infer_paired</span>(_DATANAME_, <span class="at">var1 =</span> <span class="sc">~</span>_VARIABLE1_, <span class="at">var2 =</span> <span class="sc">~</span>_VARIABLE2_, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
+<p>Use the <code>null</code> argument to specify the value of the null
+hypothesis, if different from 0. E.g., <code>null = 3</code>.</p>
 </div>
 <div class="section level4">
 <h4 id="independent-mathrmt-test">Independent <span class="math inline">\(\mathrm{T}\)</span>-Test<a class="anchor" aria-label="anchor" href="#independent-mathrmt-test"></a>
 </h4>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="fu">infer_2mean_test</span>(_DATANAME_, _VARIABLE_<span class="sc">~</span>_GROUPVARIABLE_)</span></code></pre></div>
+<p>Use the <code>null</code> argument to specify the value of the null
+hypothesis, if different from 0. E.g., <code>null = 3</code>.</p>
 </div>
 <div class="section level4">
 <h4 id="independent-2-groups-confidence-interval">Independent 2 Groups Confidence Interval<a class="anchor" aria-label="anchor" href="#independent-2-groups-confidence-interval"></a>
@@ -329,6 +335,8 @@ Confidence Interval<a class="anchor" aria-label="anchor" href="#paired-mathrmt-t
 <h3 id="hypothesis-test-on-μ">Hypothesis Test on μ<a class="anchor" aria-label="anchor" href="#hypothesis-test-on-%CE%BC"></a>
 </h3>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="fu">infer_1mean_test</span>(_DATANAME_, <span class="sc">~</span>_VARIABLE_, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
+<p>Use the <code>null</code> argument to specify the value of the null
+hypothesis, if different from 0. E.g., <code>null = 3</code>.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -344,7 +352,7 @@ Confidence Interval<a class="anchor" aria-label="anchor" href="#paired-mathrmt-t
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
 </div>
 
     </footer>
