@@ -364,6 +364,7 @@ plot_box <- function(data, formula, fill = "grey80", breaks = NULL, orient = c("
 #' @inheritParams plot_bar
 #' @param fill The fill color of the bins, entered as a character.
 #' @param breaks A vector of length 3 (start, stop, step) specifying how the x-scale should be broken up.
+#'   A good default is provided based on the range and values of the data.
 #' @param group A grouping (faceting) variable entered in formula syntax, `~group_var`.
 #' @param group_cols The number of columns to make in a grouped (faceted) plot. Defaults to
 #'    1 (stacked vertical plots).

@@ -22,7 +22,8 @@ plot_hist(
 
 \item{fill}{The fill color of the bins, entered as a character.}
 
-\item{breaks}{A vector of length 3 (start, stop, step) specifying how the x-scale should be broken up.}
+\item{breaks}{A vector of length 3 (start, stop, step) specifying how the x-scale should be broken up.
+A good default is provided based on the range and values of the data.}
 
 \item{group}{A grouping (faceting) variable entered in formula syntax, \code{~group_var}.}
 

@@ -115,13 +115,13 @@ Note: Replace percentiles with the values you want separated by commas.  For exa
 ### Boxplot
 
 ```{verbatim, lang = "r"}
-plot_box(_DATANAME_, ~_VARIABLE_, na_rm = FALSE)
+plot_box(_DATANAME_, ~_VARIABLE_)
 ```
 
 ### Histogram
 
 ```{verbatim, lang = "r"}
-plot_hist(_DATANAME_, ~_VARIABLE_, breaks = seq(_START_, _STOP_, _JUMP_))
+plot_hist(_DATANAME_, ~_VARIABLE_)
 ```
 
 Note: You can use `breaks` to control how many bars there are.
@@ -141,13 +141,13 @@ tbl_pctile(_DATANAME_, _RESPONSE_~_GROUPVARIABLE_)
 ### Boxplot By Group
 
 ```{verbatim, lang = "r"}
-plot_box(_DATANAME_, _RESPONSE_~_GROUPVARIABLE_, na_rm = FALSE)
+plot_box(_DATANAME_, _RESPONSE_~_GROUPVARIABLE_)
 ```
 
 ### Histogram By Group
 
 ```{verbatim, lang = "r"}
-plot_hist(_DATANAME_, ~_VARIABLE_, group = ~_GROUPVARIABLE_, breaks = seq(_START_, _STOP_, _JUMP_))
+plot_hist(_DATANAME_, ~_VARIABLE_, group = ~_GROUPVARIABLE_)
 ```
 
 Note: You can use `breaks` to control how many bars there are.
@@ -167,6 +167,8 @@ infer_1prop_int(_DATANAME_, ~_VARIABLE_, success = "_SUCCESSCATEGORY_", conf_lvl
 ```{verbatim, lang = "r"}
 infer_1mean_int(_DATANAME_, ~_VARIABLE_, conf_lvl = _CONFIDENCELEVEL_)
 ```
+
+Use the `null` argument to specify the value of the null hypothesis, if different from 0. E.g., `null = 3`.
 
 ## Chapter 6: Two Quantitative
 
@@ -239,11 +241,15 @@ Note: Confidence levels default to 95% but can be overridden with `conf_lvl = _D
 infer_paired(_DATANAME_, var1 = ~_VARIABLE1_, var2 = ~_VARIABLE2_, conf_lvl = _CONFIDENCELEVEL_)
 ```
 
+Use the `null` argument to specify the value of the null hypothesis, if different from 0. E.g., `null = 3`.
+
 ### Independent $\mathrm{T}$-Test
 
 ```{verbatim, lang = "r"}
 infer_2mean_test(_DATANAME_, _VARIABLE_~_GROUPVARIABLE_)
 ```
+
+Use the `null` argument to specify the value of the null hypothesis, if different from 0. E.g., `null = 3`.
 
 ### Independent 2 Groups Confidence Interval
 
@@ -270,3 +276,5 @@ infer_1prop_test(_DATANAME_, ~_VARIABLE_, success = "_SUCCESSCATEGORY_", conf_lv
 ```{verbatim, lang = "r"}
 infer_1mean_test(_DATANAME_, ~_VARIABLE_, conf_lvl = _CONFIDENCELEVEL_)
 ```
+
+Use the `null` argument to specify the value of the null hypothesis, if different from 0. E.g., `null = 3`.

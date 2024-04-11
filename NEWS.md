@@ -1,3 +1,9 @@
+# gvsu215 0.5.0
+
+* The axes for `tbl_2var()` were flipped so I flipped them back the right way (which is the way it was before).
+* All inference functions that deal with means have a new argument: `null` which, by default, is set to zero. Use this argument
+* Corrections to cheatsheet and extending behavior articles.
+
 # gvsu215 0.4.7
 
 * You can now see proportions in `tbl_1var()` in addition to percents. Use `with_prop = "yes"`.
