@@ -116,7 +116,7 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
     stats::na.omit()
   new_n <- nrow(data)
 
-  check_test(stats::chisq.test(mosaic::tally(formula, data = data, correct = FALSE)))
+  check_test(stats::chisq.test(mosaic::tally(formula, data = data), correct = FALSE))
 
   # code
   var1 <- formula[[2]]
@@ -137,7 +137,7 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
     base::unique() %>%
     base::nrow()
 
-  chisq_test <- stats::chisq.test(mosaic::tally(formula, data = data, correct = FALSE))
+  chisq_test <- stats::chisq.test(mosaic::tally(formula, data = data), correct = FALSE)
 
   if (type == "test") { # chi sq test results
 
@@ -159,7 +159,6 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
                                      base::format.pval(.data$p.value, digits = digits))) %>%
       finalize_tbl(digits = digits, caption = caption, striped = FALSE) %>%
       flextable::set_header_labels(statistic = "\uAB53\u00b2", p.value = "p-value", parameter = "df")
-
 
   } else if (type == "expected") { # expected counts
 

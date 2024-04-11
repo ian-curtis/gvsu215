@@ -4,7 +4,14 @@
 \alias{infer_1mean_int}
 \title{Create a summary table for a one-sample mean interval}
 \usage{
-infer_1mean_int(data, formula, digits = 3, conf_lvl = 0.95, caption = NULL)
+infer_1mean_int(
+  data,
+  formula,
+  digits = 3,
+  null = 0,
+  conf_lvl = 0.95,
+  caption = NULL
+)
 }
 \arguments{
 \item{data}{A data frame (or tibble).}
@@ -12,6 +19,8 @@ infer_1mean_int(data, formula, digits = 3, conf_lvl = 0.95, caption = NULL)
 \item{formula}{The variable to run the test on, in formula syntax, \code{~var}.}
 
 \item{digits}{The number of digits to round table values to. Defaults to 3.}
+
+\item{null}{The value of the null hypothesis. Defaults to 0.}
 
 \item{conf_lvl}{The confidence level of the interval, entered as a value between 0 and 1.
 Defaults to 0.95.}

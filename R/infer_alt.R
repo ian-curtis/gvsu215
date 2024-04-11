@@ -146,7 +146,7 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
 #' infer_2mean(mtcars, wt~vs)
 #' infer_2mean(mtcars, wt~vs, conf_lvl = .9)
 #' infer_2mean(mtcars, wt~vs, conf_lvl = .9, conf_int = "hide")
-infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = c("hide", "show"), caption = NULL) {
+infer_2mean <- function(data, formula, digits = 3, null = 0, conf_lvl = 0.95, conf_int = c("hide", "show"), caption = NULL) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
@@ -181,10 +181,10 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = c
 
   }
 
-  check_test(mosaic::t_test(formula, data = data, conf.level = conf_lvl))
+  check_test(mosaic::t_test(formula, data = data, conf.level = conf_lvl, mu = null))
 
   # code
-  ind_test <- mosaic::t_test(formula, data = data, conf.level = conf_lvl)
+  ind_test <- mosaic::t_test(formula, data = data, conf.level = conf_lvl, mu = null)
 
   cl <- base::paste0(conf_lvl*100, "%")
 

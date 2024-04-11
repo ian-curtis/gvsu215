@@ -115,13 +115,13 @@ tbl_2var <- function(data, formula, row_pct = c("hide", "show"), digits = 3, cap
   var1_str <- base::deparse(base::substitute(var1))
   var2_str <- base::deparse(base::substitute(var2))
 
-  if (base::is.numeric(data[, var2_str])) {
+  if (base::is.numeric(data[, var1_str])) {
 
-    var2_lvls <- base::length(base::unique(data[, var2_str]))
+    var1_lvls <- base::length(base::unique(data[, var1_str]))
 
   } else {
 
-    var2_lvls <- base::nrow(base::unique(data[, var2_str]))
+    var1_lvls <- base::nrow(base::unique(data[, var1_str]))
 
   }
 
@@ -138,20 +138,20 @@ tbl_2var <- function(data, formula, row_pct = c("hide", "show"), digits = 3, cap
 
     starter <- mosaic::tally(formula, data = data) %>%
       tibble::as_tibble() %>%
-      tidyr::pivot_wider(names_from = {{ var2 }}, values_from = n) %>%
+      tidyr::pivot_wider(names_from = {{ var1 }}, values_from = n) %>%
       janitor::adorn_totals(c("col", "row")) %>%
       dplyr::mutate(Total = base::as.integer(Total))
 
     starter %>%
       finalize_tbl(digits = digits, caption = base::paste(caption, "\n NAs Removed:", base::ifelse(na_rm == FALSE, "No", "Yes"))) %>%
-      flextable::add_header_row(values = c("", var2_str, ""),
-                                colwidths = c(1, var2_lvls, 1)) %>%
-      flextable::vline(j = c(1, var2_lvls + 1),
+      flextable::add_header_row(values = c("", var1_str, ""),
+                                colwidths = c(1, var1_lvls, 1)) %>%
+      flextable::vline(j = c(1, var1_lvls + 1),
                        border = officer::fp_border(width = 1.5)) %>%
       flextable::hline(i = nrow(starter) - 1,
                        border = officer::fp_border(width = 1.5)) %>%
       flextable::hline(i = 1, part = "header") %>%
-      flextable::hline(i = 1, j = c(1, var2_lvls + 2), part = "header",
+      flextable::hline(i = 1, j = c(1, var1_lvls + 2), part = "header",
                        border = officer::fp_border(color = NA)) %>%
       flextable::bold(j = 1) %>%
       flextable::fontsize(size = 9, part = "all")
@@ -171,7 +171,7 @@ tbl_2var <- function(data, formula, row_pct = c("hide", "show"), digits = 3, cap
 
     starter <- mosaic::tally(formula, data = data) %>%
       tibble::as_tibble() %>%
-      tidyr::pivot_wider(names_from = {{ var2 }}, values_from = n) %>%
+      tidyr::pivot_wider(names_from = {{ var1 }}, values_from = n) %>%
       janitor::adorn_totals(c("col", "row")) %>%
       janitor::adorn_percentages("row") %>%
       janitor::adorn_pct_formatting(digits = 2) %>%
@@ -180,14 +180,14 @@ tbl_2var <- function(data, formula, row_pct = c("hide", "show"), digits = 3, cap
 
     starter %>%
       finalize_tbl(digits = digits, caption = base::paste(caption, "\n NAs Removed:", base::ifelse(na_rm == FALSE, "No", "Yes"))) %>%
-      flextable::add_header_row(values = c("", var2_str, ""),
-                                colwidths = c(1, var2_lvls, 1)) %>%
-      flextable::vline(j = c(1, var2_lvls + 1),
+      flextable::add_header_row(values = c("", var1_str, ""),
+                                colwidths = c(1, var1_lvls, 1)) %>%
+      flextable::vline(j = c(1, var1_lvls + 1),
                        border = officer::fp_border(width = 1.5)) %>%
       flextable::hline(i = nrow(starter) - 1,
                        border = officer::fp_border(width = 1.5)) %>%
       flextable::hline(i = 1, part = "header") %>%
-      flextable::hline(i = 1, j = c(1, var2_lvls + 2), part = "header",
+      flextable::hline(i = 1, j = c(1, var1_lvls + 2), part = "header",
                        border = officer::fp_border(color = NA)) %>%
       flextable::bold(j = 1) %>%
       flextable::fontsize(size = 9, part = "all")

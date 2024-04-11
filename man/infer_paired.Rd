@@ -4,7 +4,15 @@
 \alias{infer_paired}
 \title{Create a summary table for a paired means test}
 \usage{
-infer_paired(data, var1, var2, digits = 3, conf_lvl = 0.95, caption = NULL)
+infer_paired(
+  data,
+  var1,
+  var2,
+  digits = 3,
+  null = 0,
+  conf_lvl = 0.95,
+  caption = NULL
+)
 }
 \arguments{
 \item{data}{A data frame (or tibble).}
@@ -14,6 +22,8 @@ infer_paired(data, var1, var2, digits = 3, conf_lvl = 0.95, caption = NULL)
 \item{var2}{The second variable of the pair, entered in formula syntax \code{var2}.}
 
 \item{digits}{The number of digits to round table values to. Defaults to 3.}
+
+\item{null}{The value of the null hypothesis. Defaults to 0.}
 
 \item{conf_lvl}{The confidence level of the interval, entered as a value between 0 and 1.
 Defaults to 0.95.}

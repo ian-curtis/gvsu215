@@ -38,11 +38,13 @@ Many functions in this package have extra arguments that aren't necessary for ba
 * `tbl_1var()`, `tbl_corr()`, `tbl_num_sum()`
   * The `digits` argument can be specified with an integer value for the number of digits to round to. Defaults to 3.
   * The `caption` argument can be used to override the default caption.
-  * The `with_prop` argument (defaulted to "no") can be set to "yes" to replace the percent column with the corresponding proportions.
+  * The `with_prop` argument (defaults to "no") can be set to "yes" to replace the percent column with the corresponding proportions.
+  * The `na_rm` argument can be used to remove missing values from the table
 * `tbl_2var()`
   * The `row_pct` argument can be used to add in row percentages in each cell.
   * The `digits` argument can be specified with an integer value for the number of digits to round to. Defaults to 3.
   * The `caption` argument can be used to override the default caption.
+  * The `na_rm` argument can be used to remove missing values from the table
 * `tbl_pctile()`
   * The `probs` argument can be used to specify which percentiles are to be given. Simply pass in a vector of values between 0 and 1.
   * The `digits` argument can be specified with an integer value for the number of digits to round to. Defaults to 3.
@@ -64,6 +66,7 @@ Many functions in this package have extra arguments that aren't necessary for ba
 * `plot_hist()`
   * The `group_cols` argument can be used with a grouped histogram to specify how many columns the faceted output should take up.
   * The `fill` argument can be used to choose a fill color.
+  * The `breaks` can be used to specify how the x-axis labels should be broken. Use `seq(_START_, _STOP_, _JUMP_)`. Accuracy is not guaranteed.
   * The `title` argument can be used to override the default title.
   * The `...` is used for other labels on the plot, namely, the x- and y-axis labels.
 * `plot_scatter()`
@@ -78,6 +81,8 @@ Many functions in this package have extra arguments that aren't necessary for ba
   * The `digits` argument can be specified with an integer value for the number of digits to round to. Defaults to 3.
   * The `caption` argument can be used to override the default caption.
   * The `conf_lvl` argument can be used to choose a different confidence level other than 0.95. (Not applicable to `infer_anova()`.)
+* `infer_*mean_*`
+  * All inference functions that handle means have a `null` argument. Use this to set the value of the null hypothesis (default is 0).
   
 
 
