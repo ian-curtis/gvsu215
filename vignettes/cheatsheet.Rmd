@@ -168,8 +168,6 @@ infer_1prop_int(_DATANAME_, ~_VARIABLE_, success = "_SUCCESSCATEGORY_", conf_lvl
 infer_1mean_int(_DATANAME_, ~_VARIABLE_, conf_lvl = _CONFIDENCELEVEL_)
 ```
 
-Use the `null` argument to specify the value of the null hypothesis, if different from 0. E.g., `null = 3`.
-
 ## Chapter 6: Two Quantitative
 
 ### Scatterplot
@@ -241,7 +239,7 @@ Note: Confidence levels default to 95% but can be overridden with `conf_lvl = _D
 infer_paired(_DATANAME_, var1 = ~_VARIABLE1_, var2 = ~_VARIABLE2_, conf_lvl = _CONFIDENCELEVEL_)
 ```
 
-Use the `null` argument to specify the value of the null hypothesis, if different from 0. E.g., `null = 3`.
+Use the `mu0` argument to specify the value of the null hypothesis, if different from 0. E.g., `mu0 = 3`.
 
 ### Independent $\mathrm{T}$-Test
 
@@ -268,13 +266,15 @@ infer_anova(_DATANAME_, _VARIABLE_~_GROUPVARIABLE_)
 ## Hypothesis Test on $p$
 
 ```{verbatim, lang = "r"}
-infer_1prop_test(_DATANAME_, ~_VARIABLE_, success = "_SUCCESSCATEGORY_", conf_lvl = _CONFIDENCELEVEL_)
+infer_1prop_test(_DATANAME_, ~_VARIABLE_, success = "_SUCCESSCATEGORY_", conf_lvl = _CONFIDENCELEVEL_, p0 = _NULL_)
 ```
+
+Use the `p0` argument to specify the value of the null hypothesis, if different from 0.5. E.g., `null = 0.3`.
 
 ## Hypothesis Test on &mu;
 
 ```{verbatim, lang = "r"}
-infer_1mean_test(_DATANAME_, ~_VARIABLE_, conf_lvl = _CONFIDENCELEVEL_)
+infer_1mean_test(_DATANAME_, ~_VARIABLE_, conf_lvl = _CONFIDENCELEVEL_, mu0 = _NULL_)
 ```
 
-Use the `null` argument to specify the value of the null hypothesis, if different from 0. E.g., `null = 3`.
+Use the `mu0` argument to specify the value of the null hypothesis, if different from 0. E.g., `null = 3`.
