@@ -1,3 +1,9 @@
+# gvsu215 0.5.1
+
+* One-sample inference functions have a new argument. These can be used to specify the null hypothesis value you are testing against. The `null` argument no longer works.
+  * `mu0` for means
+  * `p0` for proportions
+
 # gvsu215 0.5.0
 
 * The axes for `tbl_2var()` were flipped so I flipped them back the right way (which is the way it was before).
