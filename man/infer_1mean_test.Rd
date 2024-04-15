@@ -8,7 +8,7 @@ infer_1mean_test(
   data,
   formula,
   digits = 3,
-  null = 0,
+  mu0 = 0,
   conf_lvl = 0.95,
   caption = NULL
 )
@@ -20,7 +20,7 @@ infer_1mean_test(
 
 \item{digits}{The number of digits to round table values to. Defaults to 3.}
 
-\item{null}{The value of the null hypothesis. Defaults to 0.}
+\item{mu0}{The null hypothesis value. Defaults to 0.}
 
 \item{conf_lvl}{The confidence level of the interval, entered as a value between 0 and 1.
 Defaults to 0.95.}
@@ -35,6 +35,6 @@ Create a summary table for a one-sample mean hypothesis test
 }
 \examples{
 infer_1mean_test(mtcars, ~wt)
-infer_1mean_test(mtcars, ~wt, null = 3)
+infer_1mean_test(mtcars, ~wt, mu0 = 3)
 infer_1mean_test(mtcars, ~wt, digits = 4, conf_lvl = 0.90)
 }

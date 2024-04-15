@@ -80,6 +80,7 @@ infer_1prop_int <- function(data, formula, success = NULL, digits = 3, conf_lvl 
 #' Create a summary table for a one-sample proportion test
 #'
 #' @inheritParams infer_1prop_int
+#' @param p0 The null hypothesis value. Defaults to 0.5.
 #'
 #' @return An object of class flextable. In an interactive environment, results are viewable immediately.
 #' @export
@@ -87,7 +88,8 @@ infer_1prop_int <- function(data, formula, success = NULL, digits = 3, conf_lvl 
 #' @examples
 #' infer_1prop_test(mtcars, ~vs, success = 1)
 #' infer_1prop_test(mtcars, ~vs, success = 1, conf_lvl = 0.90)
-infer_1prop_test <- function(data, formula, success = NULL, digits = 3, conf_lvl = 0.95, caption = NULL) {
+#' infer_1prop_test(mtcars, ~vs, success = 1, p0 = 0.4)
+infer_1prop_test <- function(data, formula, success = NULL, p0 = 0.5, digits = 3, conf_lvl = 0.95, caption = NULL) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
@@ -102,7 +104,7 @@ infer_1prop_test <- function(data, formula, success = NULL, digits = 3, conf_lvl
 
   }
 
-  check_test(mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success))
+  check_test(mosaic::prop.test(formula, data = data, p = p0, conf.level = conf_lvl, success = success))
 
   #code
 
@@ -113,15 +115,17 @@ infer_1prop_test <- function(data, formula, success = NULL, digits = 3, conf_lvl
   if (base::is.null(caption)) {
 
     caption <- base::paste("One-Sample Proportion Test on Variable", var_str,
-                           "\n Successes:", success)
+                           "\n Successes:", success,
+                           "\n Null Value:", p0)
 
   } else {
 
-    caption <- base::paste(caption, "\n Success:", success)
+    caption <- base::paste(caption, "\n Success:", success,
+                           "\n Null Value:", p0)
 
   }
 
-  prop_test <- mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success)
+  prop_test <- mosaic::prop.test(formula, data = data, p = p0, conf.level = conf_lvl, success = success)
 
   cl <-  base::paste0(conf_lvl*100, "%")
 
@@ -269,7 +273,7 @@ infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
   # error catching
   check_conf_lvl(conf_lvl)
 
-  check_test(mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success, correct = FALSE))
+  print(mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success, correct = FALSE))
 
 
   # code
