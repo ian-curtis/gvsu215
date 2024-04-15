@@ -1,7 +1,6 @@
 #' Create a summary table for a one-sample mean interval
 #'
 #' @inheritParams infer_1prop_int
-#' @param null The value of the null hypothesis. Defaults to 0.
 #'
 #' @return An object of class flextable. In an interactive environment, results are viewable immediately.
 #' @export
@@ -9,7 +8,7 @@
 #' @examples
 #' infer_1mean_int(mtcars, ~wt)
 #' infer_1mean_int(mtcars, ~wt, conf_lvl = .9)
-infer_1mean_int <- function(data, formula, digits = 3, null = 0, conf_lvl = 0.95, caption = NULL) {
+infer_1mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NULL) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
@@ -18,7 +17,7 @@ infer_1mean_int <- function(data, formula, digits = 3, null = 0, conf_lvl = 0.95
   # error catching
   check_conf_lvl(conf_lvl)
 
-  check_test(mosaic::t_test(formula, data = data, mu = null, conf.level = conf_lvl))
+  check_test(mosaic::t_test(formula, data = data, conf.level = conf_lvl))
 
   # code
   var <- formula[[2]]
@@ -31,7 +30,7 @@ infer_1mean_int <- function(data, formula, digits = 3, null = 0, conf_lvl = 0.95
 
   }
 
-  mu_test <- mosaic::t_test(formula, data = data, mu = null, conf.level = conf_lvl)
+  mu_test <- mosaic::t_test(formula, data = data, conf.level = conf_lvl)
 
   cl <-  base::paste0(conf_lvl*100, "%")
 
@@ -58,15 +57,16 @@ infer_1mean_int <- function(data, formula, digits = 3, null = 0, conf_lvl = 0.95
 #' Create a summary table for a one-sample mean hypothesis test
 #'
 #' @inheritParams infer_1mean_int
+#' @param mu0 The null hypothesis value. Defaults to 0.
 #'
 #' @return An object of class flextable. In an interactive environment, results are viewable immediately.
 #' @export
 #'
 #' @examples
 #' infer_1mean_test(mtcars, ~wt)
-#' infer_1mean_test(mtcars, ~wt, null = 3)
+#' infer_1mean_test(mtcars, ~wt, mu0 = 3)
 #' infer_1mean_test(mtcars, ~wt, digits = 4, conf_lvl = 0.90)
-infer_1mean_test <- function(data, formula, digits = 3, null = 0, conf_lvl = 0.95, caption = NULL) {
+infer_1mean_test <- function(data, formula, digits = 3, mu0 = 0, conf_lvl = 0.95, caption = NULL) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
@@ -75,7 +75,7 @@ infer_1mean_test <- function(data, formula, digits = 3, null = 0, conf_lvl = 0.9
   # error catching
   check_conf_lvl(conf_lvl)
 
-  check_test(mosaic::t_test(formula, data = data, conf.level = conf_lvl, mu = null))
+  check_test(mosaic::t_test(formula, data = data, conf.level = conf_lvl, mu = mu0))
 
   # code
   var <- formula[[2]]
@@ -87,16 +87,18 @@ infer_1mean_test <- function(data, formula, digits = 3, null = 0, conf_lvl = 0.9
   if (base::is.null(caption)) {
 
     caption <- base::paste("One-Sample Mean Test on Variable", var_str,
-                           "\n Confidence Level:", cl)
+                           "\n Confidence Level:", cl,
+                           "\n Null Value:", mu0)
 
   } else {
 
     caption <- base::paste(caption,
-                           "\n Confidence Level:", cl)
+                           "\n Confidence Level:", cl,
+                           "\n Null Value:", mu0)
 
   }
 
-  mu_test <- mosaic::t_test(formula, data = data, conf.level = conf_lvl, mu = null)
+  mu_test <- mosaic::t_test(formula, data = data, conf.level = conf_lvl, mu = mu0)
 
   n_na <- find_na(data, formula)
 
@@ -125,6 +127,7 @@ infer_1mean_test <- function(data, formula, digits = 3, null = 0, conf_lvl = 0.9
 #' @inheritParams infer_1mean_int
 #' @param var1 The first variable of the pair, entered in formula syntax `var1`.
 #' @param var2 The second variable of the pair, entered in formula syntax `var2`.
+#' @param mu0 The null hypothesis value. Defaults to 0.
 #'
 #' @return An object of class flextable. In an interactive environment, results are viewable immediately.
 #' @export
@@ -132,7 +135,7 @@ infer_1mean_test <- function(data, formula, digits = 3, null = 0, conf_lvl = 0.9
 #' @examples
 #' infer_paired(mtcars, var1 = ~drat, var2 = ~wt)
 #' infer_paired(mtcars, var1 = ~drat, var2 = ~wt, conf_lvl = 0.9)
-infer_paired <- function(data, var1, var2, digits = 3, null = 0, conf_lvl = 0.95, caption = NULL) {
+infer_paired <- function(data, var1, var2, digits = 3, mu0 = 0, conf_lvl = 0.95, caption = NULL) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
@@ -151,7 +154,7 @@ infer_paired <- function(data, var1, var2, digits = 3, null = 0, conf_lvl = 0.95
   data <- data %>%
     dplyr::mutate(difference = {{ var1 }} - {{ var2 }})
 
-  check_test(mosaic::t_test(formula = difference ~ 1, data = data, conf.level = conf_lvl, mu = null))
+  check_test(mosaic::t_test(formula = difference ~ 1, data = data, conf.level = conf_lvl, mu = mu0))
 
 
   # code
@@ -163,11 +166,13 @@ infer_paired <- function(data, var1, var2, digits = 3, null = 0, conf_lvl = 0.95
   if (base::is.null(caption)) {
 
     caption <- base::paste("Difference in Means Test:", var1_str, "-", var_str2,
-                           "\n", cl, "Confidence")
+                           "\n", cl, "Confidence",
+                           "\n Null Value:", mu0)
 
   } else {
 
-    caption <- base::paste(caption, "\n", cl, "Confidence")
+    caption <- base::paste(caption, "\n", cl, "Confidence",
+                           "\n Null Value:", mu0)
 
   }
 
@@ -175,7 +180,7 @@ infer_paired <- function(data, var1, var2, digits = 3, null = 0, conf_lvl = 0.95
 
   n <- base::nrow(data) - n_na
 
-  diff_t <- mosaic::t_test(formula = difference ~ 1, data = data, conf.level = conf_lvl, mu = null)
+  diff_t <- mosaic::t_test(formula = difference ~ 1, data = data, conf.level = conf_lvl, mu = mu0)
 
   # build table
   tibble::tibble(
@@ -203,7 +208,6 @@ infer_paired <- function(data, var1, var2, digits = 3, null = 0, conf_lvl = 0.95
 #' Create a summary table of a two-sample mean interval
 #'
 #' @inheritParams infer_2prop_int
-#' @param null The value of the null hypothesis. Defaults to 0.
 #'
 #' @return An object of class flextable. In an interactive environment, results are viewable immediately.
 #' @export
@@ -211,7 +215,7 @@ infer_paired <- function(data, var1, var2, digits = 3, null = 0, conf_lvl = 0.95
 #' @examples
 #' infer_2mean_int(mtcars, wt~vs)
 #' infer_2mean_int(mtcars, wt~vs, conf_lvl = .9)
-infer_2mean_int <- function(data, formula, digits = 3, null = 0, conf_lvl = 0.95, caption = NULL) {
+infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NULL) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
@@ -242,10 +246,10 @@ infer_2mean_int <- function(data, formula, digits = 3, null = 0, conf_lvl = 0.95
 
   }
 
-  check_test(mosaic::t_test(formula, data = data, conf.level = conf_lvl, mu = null))
+  check_test(mosaic::t_test(formula, data = data, conf.level = conf_lvl))
 
   #code
-  ind_test <- mosaic::t_test(formula, data = data, conf.level = conf_lvl, mu = null)
+  ind_test <- mosaic::t_test(formula, data = data, conf.level = conf_lvl)
 
   cl <- base::paste0(conf_lvl*100, "%")
 
@@ -298,16 +302,14 @@ infer_2mean_int <- function(data, formula, digits = 3, null = 0, conf_lvl = 0.95
 #' Create a summary table for a two-sample mean test
 #'
 #' @inheritParams infer_2prop_int
-#' @param null The value of the null hypothesis. Defaults to 0.
 #'
 #' @return An object of class flextable. In an interactive environment, results are viewable immediately.
 #' @export
 #'
 #' @examples
 #' infer_2mean_test(mtcars, wt~vs)
-#' infer_2mean_test(mtcars, wt~vs, null = 1)
 #' infer_2mean_test(mtcars, wt~vs, conf_lvl = .9)
-infer_2mean_test <- function(data, formula, digits = 3, null = 0, conf_lvl = 0.95, caption = NULL) {
+infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NULL) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
@@ -339,10 +341,10 @@ infer_2mean_test <- function(data, formula, digits = 3, null = 0, conf_lvl = 0.9
 
   }
 
-  check_test(mosaic::t_test(formula, data = data, conf.level = conf_lvl, mu = null))
+  check_test(mosaic::t_test(formula, data = data, conf.level = conf_lvl))
 
   # code
-  ind_test <- mosaic::t_test(formula, data = data, conf.level = conf_lvl, mu = null)
+  ind_test <- mosaic::t_test(formula, data = data, conf.level = conf_lvl)
 
   cl <- base::paste0(conf_lvl*100, "%")
 

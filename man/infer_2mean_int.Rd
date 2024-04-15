@@ -4,14 +4,7 @@
 \alias{infer_2mean_int}
 \title{Create a summary table of a two-sample mean interval}
 \usage{
-infer_2mean_int(
-  data,
-  formula,
-  digits = 3,
-  null = 0,
-  conf_lvl = 0.95,
-  caption = NULL
-)
+infer_2mean_int(data, formula, digits = 3, conf_lvl = 0.95, caption = NULL)
 }
 \arguments{
 \item{data}{A data frame (or tibble).}
@@ -19,8 +12,6 @@ infer_2mean_int(
 \item{formula}{The variables to run the test on, in formula syntax, \code{var1 ~ var2}.}
 
 \item{digits}{The number of digits to round table values to. Defaults to 3.}
-
-\item{null}{The value of the null hypothesis. Defaults to 0.}
 
 \item{conf_lvl}{The confidence level of the interval, entered as a value between 0 and 1.
 Defaults to 0.95.}

@@ -8,6 +8,7 @@ infer_1prop_test(
   data,
   formula,
   success = NULL,
+  p0 = 0.5,
   digits = 3,
   conf_lvl = 0.95,
   caption = NULL
@@ -19,6 +20,8 @@ infer_1prop_test(
 \item{formula}{The variable to run the test on, in formula syntax, \code{~var}.}
 
 \item{success}{The data value that constitutes a "success".}
+
+\item{p0}{The null hypothesis value. Defaults to 0.5.}
 
 \item{digits}{The number of digits to round table values to. Defaults to 3.}
 
@@ -36,4 +39,5 @@ Create a summary table for a one-sample proportion test
 \examples{
 infer_1prop_test(mtcars, ~vs, success = 1)
 infer_1prop_test(mtcars, ~vs, success = 1, conf_lvl = 0.90)
+infer_1prop_test(mtcars, ~vs, success = 1, p0 = 0.4)
 }
