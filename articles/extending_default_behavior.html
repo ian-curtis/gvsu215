@@ -234,11 +234,17 @@ confidence level other than 0.95. (Not applicable to
 </ul>
 </li>
 <li>
-<code>infer_*mean_*</code>
+<code><a href="../reference/infer_1mean_test.html">infer_1mean_test()</a></code> and <code><a href="../reference/infer_paired.html">infer_paired()</a></code>
 <ul>
-<li>All inference functions that handle means have a <code>null</code>
-argument. Use this to set the value of the null hypothesis (default is
-0).</li>
+<li>The <code>mu0</code> argument can be used to specify the null
+hypothesis value, if different from 0.</li>
+</ul>
+</li>
+<li>
+<code><a href="../reference/infer_1prop_test.html">infer_1prop_test()</a></code>
+<ul>
+<li>The <code>p0</code> argument can be used to specify the null
+hypothesis value, if different from 0.5.</li>
 </ul>
 </li>
 </ul>
