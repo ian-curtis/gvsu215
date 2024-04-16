@@ -81,8 +81,10 @@ Many functions in this package have extra arguments that aren't necessary for ba
   * The `digits` argument can be specified with an integer value for the number of digits to round to. Defaults to 3.
   * The `caption` argument can be used to override the default caption.
   * The `conf_lvl` argument can be used to choose a different confidence level other than 0.95. (Not applicable to `infer_anova()`.)
-* `infer_*mean_*`
-  * All inference functions that handle means have a `null` argument. Use this to set the value of the null hypothesis (default is 0).
+* `infer_1mean_test()` and `infer_paired()`
+  * The `mu0` argument can be used to specify the null hypothesis value, if different from 0.
+* `infer_1prop_test()`
+  * The `p0` argument can be used to specify the null hypothesis value, if different from 0.5.
   
 
 
