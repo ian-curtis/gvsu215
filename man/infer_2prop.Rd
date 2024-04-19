@@ -38,10 +38,10 @@ An object of class flextable. In interactive sessions, output is viewable immedi
 \code{infer_2prop()} is an alternative to \code{\link[=infer_2prop_test]{infer_2prop_test()}} and \code{\link[=infer_2prop_int]{infer_2prop_int()}}. Rather than have
 hypothesis test and confidence interval output split into two separate functions, you can now do it
 in one. For just a hypothesis test, do nothing different from \code{\link[=infer_2prop_test]{infer_2prop_test()}} (except change
-the function name). For a confidence interval provided with that, use \code{conf_int = TRUE}.
+the function name). For a confidence interval provided with that, use \code{conf_int = "show"}.
 }
 \examples{
 infer_2prop(mtcars, vs~am, success = 1)
 infer_2prop(mtcars, vs~am, success = 1, conf_lvl = .9, digits = 4)
-infer_2prop(mtcars, vs~am, success = 1, conf_lvl = .9, digits = 4, conf_int = "show")
+infer_2prop(mtcars, vs~am, success = 1, conf_lvl = .9, digits = 5, conf_int = "show")
 }

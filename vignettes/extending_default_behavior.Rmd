@@ -85,6 +85,8 @@ Many functions in this package have extra arguments that aren't necessary for ba
   * The `mu0` argument can be used to specify the null hypothesis value, if different from 0.
 * `infer_1prop_test()`
   * The `p0` argument can be used to specify the null hypothesis value, if different from 0.5.
+* `inter_2prop_test()`
+  * This is an extra function should you be interested. It does not appear in the student cheatsheet.
   
 
 

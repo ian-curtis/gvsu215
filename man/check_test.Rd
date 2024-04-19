@@ -25,3 +25,4 @@ try(check_test(head(Mtcars)))
 check_test(lm(wt~drat, data = mtcars))
 try(check_test(lm(Wt~drat, data = mtcars)))
 }
+\keyword{internal}

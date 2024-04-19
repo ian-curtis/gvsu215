@@ -32,6 +32,7 @@ Defaults to 0.95.}
 }
 \value{
 An object of class flextable. In an interactive environment, results are viewable immediately.
+P-values are one-sided.
 }
 \description{
 Create a summary table for a one-sample proportion test

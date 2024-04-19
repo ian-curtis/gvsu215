@@ -23,3 +23,4 @@ library(magrittr)
 gf_point(mpg~hp, data = mtcars) \%>\%
   finalize_plot()
 }
+\keyword{internal}

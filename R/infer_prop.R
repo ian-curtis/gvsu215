@@ -48,7 +48,7 @@ infer_1prop_int <- function(data, formula, success = NULL, digits = 3, conf_lvl 
 
   }
 
-  prop_test <- mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success)
+  prop_test <- mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success, correct = FALSE)
 
   cl <-  base::paste0(conf_lvl*100, "%")
 
@@ -58,13 +58,20 @@ infer_1prop_int <- function(data, formula, success = NULL, digits = 3, conf_lvl 
 
   n_na <- find_na(data, formula)
 
+  phat <- prop_test$estimate[[1]]
   n <- base::nrow(data) - n_na
+  se <- base::sqrt((phat * (1 - phat)) / n)
+  z_star <- round(stats::qnorm((1 - conf_lvl) / 2, lower.tail = FALSE), 3)
+  moe <- se*z_star
+
 
   broom::tidy(prop_test) %>%
     dplyr::mutate(n_success = n_success,
            na = n_na,
            n = n,
-           se = base::sqrt((prop_test$estimate * (1 - prop_test$estimate)) / n)
+           se = se,
+           conf.low = estimate - moe,
+           conf.high = estimate + moe
     ) %>%
     dplyr::select(n_success, na, n, estimate, se, conf.low, conf.high) %>%
     finalize_tbl(digits = digits,
@@ -83,6 +90,7 @@ infer_1prop_int <- function(data, formula, success = NULL, digits = 3, conf_lvl 
 #' @param p0 The null hypothesis value. Defaults to 0.5.
 #'
 #' @return An object of class flextable. In an interactive environment, results are viewable immediately.
+#'   P-values are one-sided.
 #' @export
 #'
 #' @examples
@@ -137,19 +145,32 @@ infer_1prop_test <- function(data, formula, success = NULL, p0 = 0.5, digits = 3
 
   n <- base::nrow(data) - n_na
 
+  ### Manual Calculations for Wald's Method not Wilson's ###
+
+  z_num <- prop_test$estimate - p0
+  se <- base::sqrt((p0*(1 - p0)) / n)
+  z <- z_num / se
+
+  print(prop_test$estimate)
+
+  pval <- stats::pnorm(q = z, lower.tail = base::ifelse(z <= 0, TRUE, FALSE))
+
   broom::tidy(prop_test) %>%
     dplyr::mutate(n_success = n_success,
                   na = n_na,
                   n = n,
-                  se = base::sqrt((prop_test$estimate * (1 - prop_test$estimate)) / n)
+                  se = se,
+                  z = z,
+                  pval = c(base::ifelse(pval < 0.0001,
+                                        "< 0.0001",
+                                        base::format.pval(pval, digits = digits)))
     ) %>%
-    dplyr::select(n_success, na, n, estimate, se, statistic, p.value) %>%
+    dplyr::select(n_success, na, n, estimate, se, z, pval) %>%
     finalize_tbl(digits = digits,
                  caption = caption,
                  striped = FALSE) %>%
     flextable::set_header_labels(n_success = "n Successes", na = "n Missing", n = "n Used",
-                                 estimate = "p\u0302", se = "Standard Error",
-                                 statistic = "z", p.value = "p-value")
+                                 estimate = "p\u0302", se = "Standard Error", pval = "p-value (1 tail)")
 
 }
 
@@ -233,6 +254,14 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
     dplyr::filter({{ var1 }} == success & {{ grp_var }} == grp_lvls[2]) %>%
     mosaic::tally()
 
+  # manual calculations for STA 215
+
+  se1 <- (two_prop$estimate[[1]]*(1 - two_prop$estimate[[1]])) / n1
+  se2 <- (two_prop$estimate[[2]]*(1 - two_prop$estimate[[2]])) / n2
+  se <- sqrt(se1 + se2)
+  z_star <- round(stats::qnorm((1 - conf_lvl) / 2, lower.tail = FALSE), 3)
+  moe <- se*z_star
+
   # build actual table
   tibble::tibble(
     var = base::as.character(grp_lvls),
@@ -240,9 +269,9 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
     n = c(n1, n2),
     na = c(na1, na2),
     phat = c(two_prop$estimate[[1]], two_prop$estimate[[2]]),
-    se = c(sqrt((two_prop$estimate[[1]]*(1-two_prop$estimate[[1]])/n1) + (two_prop$estimate[[2]]*(1-two_prop$estimate[[2]])/n2)), NA),
-    cil = c(two_prop$conf.int[[1]], NA),
-    ciu = c(two_prop$conf.int[[2]], NA)
+    se = c(se, NA),
+    cil = c((two_prop$estimate[[1]] - two_prop$estimate[[2]]) - moe, NA),
+    ciu = c((two_prop$estimate[[1]] - two_prop$estimate[[2]]) + moe, NA),
   ) %>%
     finalize_tbl(digits = digits,
                  caption = caption,
@@ -273,7 +302,7 @@ infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
   # error catching
   check_conf_lvl(conf_lvl)
 
-  print(mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success, correct = FALSE))
+  check_test(mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success, correct = FALSE))
 
 
   # code
@@ -327,24 +356,29 @@ infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
     dplyr::filter({{ var1 }} == success & {{ grp_var }} == grp_lvls[2]) %>%
     mosaic::tally()
 
+  se1 <- (two_prop$estimate[[1]]*(1 - two_prop$estimate[[1]])) / n1
+  se2 <- (two_prop$estimate[[2]]*(1 - two_prop$estimate[[2]])) / n2
+  se <- sqrt(se1 + se2)
+
   # build table
+  # tk check z, cil, and ciu (and point estimate)
   tibble::tibble(
     var = base::as.character(grp_lvls),
     yay = c(yay1$n, yay2$n),
     n = c(n1, n2),
     na = c(na1, na2),
     phat = c(two_prop$estimate[[1]], two_prop$estimate[[2]]),
-    se = c(sqrt((two_prop$estimate[[1]]*(1-two_prop$estimate[[1]])/n1) + (two_prop$estimate[[2]]*(1-two_prop$estimate[[2]])/n2)), NA),
+    se = c(se, NA),
     z = c(two_prop$statistic, NA),
     p = c(base::ifelse(two_prop$p.value < 0.0001,
                  "< 0.0001",
-                 base::format.pval(two_prop$p.value, digits = digits)), NA)
+                 base::format.pval(two_prop$p.value / 2, digits = digits)), NA)
   ) %>%
     finalize_tbl(digits = digits,
                  caption = caption,
                  na_str = "") %>%
     flextable::set_header_labels(var = "Variable", yay = "n Successes", na = "n Missing", phat = "p\u0302",
-                                 se = "Standard Error", p = "p-value") %>%
+                                 se = "Standard Error", p = "p-value (1 tail)") %>%
     flextable::vline(j = 5)
 
 }

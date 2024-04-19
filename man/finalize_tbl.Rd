@@ -27,3 +27,4 @@ a flextable object and adds theme choices and size specifications.
 \examples{
 finalize_tbl(mtcars, digits = 3, caption = "The mtcars Dataset")
 }
+\keyword{internal}

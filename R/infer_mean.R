@@ -113,11 +113,11 @@ infer_1mean_test <- function(data, formula, digits = 3, mu0 = 0, conf_lvl = 0.95
     df = as.integer(mu_test$parameter),
     p = c(base::ifelse(mu_test$p.value < 0.0001,
                        "< 0.0001",
-                       base::format.pval(mu_test$p.value, digits = digits)))
+                       base::format.pval(mu_test$p.value / 2, digits = digits)))
   ) %>%
     finalize_tbl(digits = digits, caption = caption, striped = FALSE) %>%
     flextable::set_header_labels(n = "n Used", na = "n Misssing", estimate = "x\u0304", se = "Standard Error",
-                                 df = "Degrees of Freedom", p = "p-value")
+                                 df = "Degrees of Freedom", p = "p-value (1 tail)")
 
 }
 
@@ -192,13 +192,13 @@ infer_paired <- function(data, var1, var2, digits = 3, mu0 = 0, conf_lvl = 0.95,
     df = as.integer(diff_t$parameter),
     p = ifelse(diff_t$p.value < 0.0001,
                "< 0.0001",
-               format.pval(diff_t$p.value, digits = digits)),
+               format.pval(diff_t$p.value / 2, digits = digits)),
     cil = diff_t$conf.int[[1]],
     ciu = diff_t$conf.int[[2]]
   ) %>%
     finalize_tbl(digits = digits, caption = caption, striped = FALSE) %>%
     flextable::set_header_labels(na = "n Missing", estimate = "x\u0304",
-                                 se = "Standard Error", p = "p-value",
+                                 se = "Standard Error", p = "p-value (1 tail)",
                                  cil = base::paste(cl, "Interval Lower"),
                                  ciu = base::paste(cl, "Interval Upper"))
 
@@ -387,13 +387,13 @@ infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
     df = c(ind_test$parameter, NA),
     p = c(base::ifelse(ind_test$p.value < 0.0001,
                        "< 0.0001",
-                       base::format.pval(ind_test$p.value, digits = digits)), NA)
+                       base::format.pval(ind_test$p.value / 2, digits = digits)), NA)
   ) %>%
     finalize_tbl(digits = digits, caption = caption, na_str = "") %>%
     flextable::set_header_labels(var = "Variable", na = "n Missing", s = "Group s",
                                  xbar = "Group Means",
                                  se = "Standard Error",
-                                 p = "p-value") %>%
+                                 p = "p-value (1 tail)") %>%
     flextable::vline(j = 4)
 
 }

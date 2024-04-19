@@ -25,3 +25,4 @@ sig_round(23.1233644, 3)
 sig_round(0.331, 4)
 sig_round(4, 5)
 }
+\keyword{internal}
