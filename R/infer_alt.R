@@ -3,7 +3,7 @@
 #' `infer_2prop()` is an alternative to [infer_2prop_test()] and [infer_2prop_int()]. Rather than have
 #'    hypothesis test and confidence interval output split into two separate functions, you can now do it
 #'    in one. For just a hypothesis test, do nothing different from [infer_2prop_test()] (except change
-#'    the function name). For a confidence interval provided with that, use `conf_int = TRUE`.
+#'    the function name). For a confidence interval provided with that, use `conf_int = "show"`.
 #'
 #' @inheritParams infer_2prop_test
 #' @param conf_int Should a confidence interval be provided in addition to the hypothesis test output?
@@ -15,7 +15,7 @@
 #' @examples
 #' infer_2prop(mtcars, vs~am, success = 1)
 #' infer_2prop(mtcars, vs~am, success = 1, conf_lvl = .9, digits = 4)
-#' infer_2prop(mtcars, vs~am, success = 1, conf_lvl = .9, digits = 4, conf_int = "show")
+#' infer_2prop(mtcars, vs~am, success = 1, conf_lvl = .9, digits = 5, conf_int = "show")
 infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, conf_int = c("hide", "show"), caption = NULL) {
 
   # check for empty strings and make them actual NAs
@@ -44,11 +44,11 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
   if (base::is.null(caption)) {
 
     caption <- base::paste("Two Sample Proportion Test Between", var1_str, "and", grp_str,
-                           "\n Successes:", success, "| Confidence:", cl)
+                           "\n Success:", success, "| Confidence:", cl)
 
   } else {
 
-    caption <- base::paste(caption, "\n Successes:", success, "| Confidence:", cl)
+    caption <- base::paste(caption, "\n Success:", success, "| Confidence:", cl)
 
   }
 
@@ -79,6 +79,12 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
     dplyr::filter({{ var1 }} == success & {{ grp_var }} == grp_lvls[2]) %>%
     mosaic::tally()
 
+  se1 <- (two_prop$estimate[[1]]*(1 - two_prop$estimate[[1]])) / n1
+  se2 <- (two_prop$estimate[[2]]*(1 - two_prop$estimate[[2]])) / n2
+  se <- sqrt(se1 + se2)
+  z_star <- round(stats::qnorm((1 - conf_lvl) / 2, lower.tail = FALSE), 3)
+  moe <- se*z_star
+
   # table without CI
   no_interval <- tibble::tibble(
     var = base::as.character(grp_lvls),
@@ -86,31 +92,32 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
     n = c(n1, n2),
     na = c(na1, na2),
     phat = c(two_prop$estimate[[1]], two_prop$estimate[[2]]),
-    se = c(sqrt((two_prop$estimate[[1]]*(1-two_prop$estimate[[1]])/n1) + (two_prop$estimate[[2]]*(1-two_prop$estimate[[2]])/n2)), NA),
+    se = c(se, NA),
     z = c(two_prop$statistic, NA),
     p = c(base::ifelse(two_prop$p.value < 0.0001,
                  "< 0.0001",
-                 base::format.pval(two_prop$p.value, digits = digits)), NA)
+                 base::format.pval(two_prop$p.value / 2, digits = digits)), NA)
   ) %>%
     finalize_tbl(digits = digits,
                  caption = caption,
                  na_str = "") %>%
     flextable::set_header_labels(var = grp_str, yay = "n Successes", na = "n Missing", phat = "p\u0302",
-                                 se = "Standard Error", p = "p-value") %>%
+                                 se = "Standard Error", p = "p-value (1 tail)") %>%
     flextable::vline(j = 5)
 
   # table with CI
+  # tk check z and cil and ciu (and point estimate)
   interval <- tibble::tibble(
     var = base::as.character(grp_lvls),
     yay = c(yay1$n, yay2$n),
     n = c(n1, n2),
     na = c(na1, na2),
     phat = c(two_prop$estimate[[1]], two_prop$estimate[[2]]),
-    se = c(sqrt((two_prop$estimate[[1]]*(1-two_prop$estimate[[1]])/n1) + (two_prop$estimate[[2]]*(1-two_prop$estimate[[2]])/n2)), NA),
+    se = c(se, NA),
     z = c(two_prop$statistic, NA),
     p = c(base::ifelse(two_prop$p.value < 0.0001,
                        "< 0.0001",
-                       base::format.pval(two_prop$p.value, digits = digits)), NA),
+                       base::format.pval(two_prop$p.value / 2, digits = digits)), NA),
     cil = c(two_prop$conf.int[[1]], NA),
     ciu = c(two_prop$conf.int[[2]], NA)
   ) %>%
@@ -118,7 +125,7 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
                  caption = caption,
                  na_str = "") %>%
     flextable::set_header_labels(var = grp_str, yay = "n Successes", na = "n Missing", phat = "p\u0302",
-                                 se = "Standard Error", p = "p-value",
+                                 se = "Standard Error", p = "p-value (1 tail)",
                                  cil = base::paste(cl, "Interval Lower"),
                                  ciu = base::paste(cl, "Interval Upper")) %>%
     flextable::vline(j = c(5, 8))
@@ -133,7 +140,7 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
 #' `infer_2mean()` is an alternative to [infer_2mean_test()] and [infer_2mean_int()]. Rather than have
 #'    hypothesis test and confidence interval output split into two separate functions, you can now do it
 #'    in one. For just a hypothesis test, do nothing different from [infer_2mean_test()] (except change
-#'    the function name). For a confidence interval provided with that, use `conf_int = TRUE`.
+#'    the function name). For a confidence interval provided with that, use `conf_int = "show`.
 #'
 #' @inheritParams infer_2mean_test
 #' @param conf_int Should a confidence interval be provided in addition to the hypothesis test output?

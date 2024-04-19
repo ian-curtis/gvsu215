@@ -21,3 +21,4 @@ check_conf_lvl(.95)
 try(check_conf_lvl("95\%"))
 try(check_conf_lvl(95))
 }
+\keyword{internal}

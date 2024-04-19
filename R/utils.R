@@ -5,6 +5,7 @@
 #'    `signif()` and rounds to number of non-zero digits. Otherwise, value is given to `round()`. If the
 #'    rounded value is shorter in length than the number of digits provided, zeroes are padded to the end.
 #'
+#' @keywords internal
 #' @return A character of the rounded number.
 #' @export
 #'
@@ -34,6 +35,7 @@ sig_round <- function(number, digits) {
 #' @param caption The table caption. Defaults to NULL (or no caption).
 #' @param na_str What string should appear when an NA appears? Defaults to "NA".
 #'
+#' @keywords internal
 #' @return An object of class flextable.
 #' @export
 #'
@@ -97,6 +99,7 @@ finalize_tbl <- function(table, digits, striped = TRUE, caption = NULL, na_str =
 #'
 #' @param plot A plot (to be piped into `ggformula::gf_theme`)
 #'
+#' @keywords internal
 #' @return A `ggplot` object..
 #' @export
 #'
@@ -133,6 +136,7 @@ finalize_plot <- function(plot) {
 #' @param formula One or two variables in formula notation: `~var1` or `var1 ~ var2`.
 #' @param n How many variables to analyze. Acceptable values are 1 or 2.
 #'
+#' @keywords internal
 #' @return An number (n = 1) or a list of two numbers (n = 2)
 #' @export
 #'
@@ -180,6 +184,7 @@ find_na <- function(data, formula, n = 1) {
 #' @return Nothing, or an error message.
 #' @export
 #'
+#' @keywords internal
 #' @examples
 #' check_conf_lvl(.95)
 #' try(check_conf_lvl("95%"))
@@ -201,6 +206,7 @@ check_conf_lvl <- function(level) {
 #'
 #' @param code The code to try to run
 #'
+#' @keywords internal
 #' @return Nothing, but may print an error message.
 #' @export
 #'

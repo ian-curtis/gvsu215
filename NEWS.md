@@ -1,3 +1,8 @@
+# gvsu215 0.5.2
+
+* Various calculation corrections. Mostly in functions dealing with proportion inference regarding standard error and confidence intervals.
+* P-values now show as one-tailed
+
 # gvsu215 0.5.1
 
 * One-sample inference functions have a new argument. These can be used to specify the null hypothesis value you are testing against. The `null` argument no longer works.

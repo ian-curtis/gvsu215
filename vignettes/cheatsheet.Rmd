@@ -266,15 +266,15 @@ infer_anova(_DATANAME_, _VARIABLE_~_GROUPVARIABLE_)
 ## Hypothesis Test on $p$
 
 ```{verbatim, lang = "r"}
-infer_1prop_test(_DATANAME_, ~_VARIABLE_, success = "_SUCCESSCATEGORY_", conf_lvl = _CONFIDENCELEVEL_, p0 = _NULL_)
+infer_1prop_test(_DATANAME_, ~_VARIABLE_, success = "_SUCCESSCATEGORY_", p0 = _NULL_)
 ```
 
-Use the `p0` argument to specify the value of the null hypothesis, if different from 0.5. E.g., `null = 0.3`.
+Use the `p0` argument to specify the value of the null hypothesis, if different from 0.5. E.g., `p0 = 0.3`.
 
 ## Hypothesis Test on &mu;
 
 ```{verbatim, lang = "r"}
-infer_1mean_test(_DATANAME_, ~_VARIABLE_, conf_lvl = _CONFIDENCELEVEL_, mu0 = _NULL_)
+infer_1mean_test(_DATANAME_, ~_VARIABLE_, mu0 = _NULL_)
 ```
 
-Use the `mu0` argument to specify the value of the null hypothesis, if different from 0. E.g., `null = 3`.
+Use the `mu0` argument to specify the value of the null hypothesis, if different from 0. E.g., `p0 = 3`.

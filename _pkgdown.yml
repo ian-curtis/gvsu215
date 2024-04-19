@@ -2,3 +2,23 @@ url: https://gvsu215.ianacurtis.com
 template:
   bootstrap: 5
 
+reference:
+- title: Summary Tables
+- contents:
+  - starts_with("tbl_")
+- title: Plots
+- contents:
+  - starts_with("plot_")
+- title: Inference with Proportions and Means
+- contents:
+  - starts_with("infer_1mean")
+  - starts_with("infer_2mean")
+  - infer_paired
+  - starts_with("infer_1prop")
+  - starts_with("infer_2prop")
+- title: Other Forms of Inference
+- contents:
+  - infer_anova
+  - infer_chisq
+  - infer_reg
+

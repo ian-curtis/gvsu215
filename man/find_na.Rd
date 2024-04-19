@@ -23,3 +23,4 @@ Used internally to calculate the number of missing values in one or two variable
 find_na(mtcars, ~cyl)
 find_na(mtcars, wt~cyl, n = 2)
 }
+\keyword{internal}
