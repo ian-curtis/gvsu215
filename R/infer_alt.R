@@ -52,7 +52,7 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
 
   }
 
-  grp_lvls <- sort(unique(dplyr::pull(data, grp_var)))
+  grp_lvls <- base::sort(base::unique(dplyr::pull(data, grp_var)))
 
   # find NAs
   na1 <- data %>%
@@ -96,13 +96,13 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
     z = c(two_prop$statistic, NA),
     p = c(base::ifelse(two_prop$p.value < 0.0001,
                  "< 0.0001",
-                 base::format.pval(two_prop$p.value / 2, digits = digits)), NA)
+                 base::format.pval(two_prop$p.value, digits = digits)), NA)
   ) %>%
     finalize_tbl(digits = digits,
                  caption = caption,
                  na_str = "") %>%
     flextable::set_header_labels(var = grp_str, yay = "n Successes", na = "n Missing", phat = "p\u0302",
-                                 se = "Standard Error", p = "p-value (1 tail)") %>%
+                                 se = "Standard Error", p = "p-value (2 tail)") %>%
     flextable::vline(j = 5)
 
   # table with CI
@@ -262,7 +262,7 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = c
     flextable::set_header_labels(var = grp_str, na = "n Missing", s = "Group s",
                                  xbar = "Group Means",
                                  se = "Standard Error",
-                                 p = "p-value",
+                                 p = "p-value (2 tail)",
                                  cil = base::paste(cl, "Interval Lower"),
                                  ciu = base::paste(cl, "Interval Upper")) %>%
     flextable::vline(j = c(4, 8))

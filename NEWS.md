@@ -1,3 +1,7 @@
+# gvsu215 0.5.3
+
+* Revert / clarify that all p-values for tests on the mean and the proportion are two-tailed
+
 # gvsu215 0.5.2
 
 * Various calculation corrections. Mostly in functions dealing with proportion inference regarding standard error and confidence intervals.

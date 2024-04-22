@@ -151,9 +151,7 @@ infer_1prop_test <- function(data, formula, success = NULL, p0 = 0.5, digits = 3
   se <- base::sqrt((p0*(1 - p0)) / n)
   z <- z_num / se
 
-  print(prop_test$estimate)
-
-  pval <- stats::pnorm(q = z, lower.tail = base::ifelse(z <= 0, TRUE, FALSE))
+  pval <- stats::pnorm(q = z, lower.tail = base::ifelse(z <= 0, TRUE, FALSE)) * 2
 
   broom::tidy(prop_test) %>%
     dplyr::mutate(n_success = n_success,
@@ -170,7 +168,7 @@ infer_1prop_test <- function(data, formula, success = NULL, p0 = 0.5, digits = 3
                  caption = caption,
                  striped = FALSE) %>%
     flextable::set_header_labels(n_success = "n Successes", na = "n Missing", n = "n Used",
-                                 estimate = "p\u0302", se = "Standard Error", pval = "p-value (1 tail)")
+                                 estimate = "p\u0302", se = "Standard Error", pval = "p-value (2 tail)")
 
 }
 
@@ -372,13 +370,13 @@ infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
     z = c(two_prop$statistic, NA),
     p = c(base::ifelse(two_prop$p.value < 0.0001,
                  "< 0.0001",
-                 base::format.pval(two_prop$p.value / 2, digits = digits)), NA)
+                 base::format.pval(two_prop$p.value, digits = digits)), NA)
   ) %>%
     finalize_tbl(digits = digits,
                  caption = caption,
                  na_str = "") %>%
     flextable::set_header_labels(var = "Variable", yay = "n Successes", na = "n Missing", phat = "p\u0302",
-                                 se = "Standard Error", p = "p-value (1 tail)") %>%
+                                 se = "Standard Error", p = "p-value (2 tail)") %>%
     flextable::vline(j = 5)
 
 }
