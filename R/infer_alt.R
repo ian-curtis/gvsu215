@@ -17,43 +17,43 @@
 #' infer_2prop(mtcars, vs~am, success = 1, conf_lvl = .9, digits = 4)
 #' infer_2prop(mtcars, vs~am, success = 1, conf_lvl = .9, digits = 5, conf_int = "show")
 infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, conf_int = c("hide", "show"), caption = NULL) {
-
+  
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
     dplyr::mutate(dplyr::across(dplyr::where(is.character), ~dplyr::na_if(., "")))
-
+  
   # error catching
   check_conf_lvl(conf_lvl)
-
+  
   check_test(mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success, correct = FALSE))
-
+  
   conf_int = base::match.arg(conf_int)
-
+  
   # code
   two_prop <- mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success, correct = FALSE)
-
+  
   var1 <- formula[[2]]
   var1_str <- base::deparse(base::substitute(var1))
-
+  
   grp_var <- formula[[3]]
   grp_str <- base::deparse(base::substitute(grp_var))
-
+  
   cl <- base::paste0(conf_lvl*100, "%")
-
+  
   # build caption
   if (base::is.null(caption)) {
-
+    
     caption <- base::paste("Two Sample Proportion Test Between", var1_str, "and", grp_str,
                            "\n Success:", success, "| Confidence:", cl)
-
+    
   } else {
-
+    
     caption <- base::paste(caption, "\n Success:", success, "| Confidence:", cl)
-
+    
   }
-
+  
   grp_lvls <- base::sort(base::unique(dplyr::pull(data, grp_var)))
-
+  
   # find NAs
   na1 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[1] & base::is.na({{ grp_var }})) %>%
@@ -61,14 +61,14 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
   na2 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[2] & base::is.na({{ grp_var }})) %>%
     base::nrow()
-
+  
   n1 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[1]) %>%
     base::nrow()
   n2 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[2]) %>%
     base::nrow()
-
+  
   # find n successes
   yay1 <- data %>%
     dplyr::select({{ var1 }}, {{ grp_var }}) %>%
@@ -78,13 +78,13 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
     dplyr::select({{ var1 }}, {{ grp_var }}) %>%
     dplyr::filter({{ var1 }} == success & {{ grp_var }} == grp_lvls[2]) %>%
     mosaic::tally()
-
+  
   se1 <- (two_prop$estimate[[1]]*(1 - two_prop$estimate[[1]])) / n1
   se2 <- (two_prop$estimate[[2]]*(1 - two_prop$estimate[[2]])) / n2
   se <- sqrt(se1 + se2)
   z_star <- round(stats::qnorm((1 - conf_lvl) / 2, lower.tail = FALSE), 3)
   moe <- se*z_star
-
+  
   # table without CI
   no_interval <- tibble::tibble(
     var = base::as.character(grp_lvls),
@@ -95,16 +95,18 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
     se = c(se, NA),
     z = c(two_prop$statistic, NA),
     p = c(base::ifelse(two_prop$p.value < 0.0001,
-                 "< 0.0001",
-                 base::format.pval(two_prop$p.value, digits = digits)), NA)
+                       "< 0.0001",
+                       base::format.pval(two_prop$p.value, digits = digits)), NA)
   ) %>%
     finalize_tbl(digits = digits,
                  caption = caption,
                  na_str = "") %>%
     flextable::set_header_labels(var = grp_str, yay = "n Successes", na = "n Missing", phat = "p\u0302",
                                  se = "Standard Error", p = "p-value (2 tail)") %>%
-    flextable::vline(j = 5)
-
+    flextable::vline(j = 5) %>% 
+    flextable::autofit() %>% 
+    flextable::fit_to_width(max_width = 7.5)
+  
   # table with CI
   # tk check z and cil and ciu (and point estimate)
   interval <- tibble::tibble(
@@ -128,11 +130,13 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
                                  se = "Standard Error", p = "p-value (1 tail)",
                                  cil = base::paste(cl, "Interval Lower"),
                                  ciu = base::paste(cl, "Interval Upper")) %>%
-    flextable::vline(j = c(5, 8))
-
+    flextable::vline(j = c(5, 8)) %>% 
+    flextable::autofit() %>% 
+    flextable::fit_to_width(max_width = 7.5)
+  
   if (conf_int == "hide") return(no_interval)
-    else return(interval)
-
+  else return(interval)
+  
 }
 
 #' All-in-one alternate two-sample means test
@@ -154,59 +158,59 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
 #' infer_2mean(mtcars, wt~vs, conf_lvl = .9)
 #' infer_2mean(mtcars, wt~vs, conf_lvl = .9, conf_int = "hide")
 infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = c("hide", "show"), caption = NULL) {
-
+  
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
     dplyr::mutate(dplyr::across(dplyr::where(is.character), ~dplyr::na_if(., "")))
-
+  
   # error catching
   check_conf_lvl(conf_lvl)
-
+  
   conf_int <- base::match.arg(conf_int)
-
+  
   var1 <- formula[[2]]
   var1_str <- base::deparse(base::substitute(var1))
-
+  
   grp_var <- formula[[3]]
   grp_str <- base::deparse(base::substitute(grp_var))
-
+  
   # error catching
   check_conf_lvl(conf_lvl)
-
+  
   base::tryCatch(data %>% dplyr::mutate("{grp_var}" := base::factor({{ grp_var }})),
                  error = function (e) cli::cli_abort("Could not convert grouping variable into a factor. Perhaps you entered the grouping variable first (instead of second)?")
   )
-
+  
   data <- data %>%
     dplyr::mutate("{grp_var}" := base::as.factor({{ grp_var }}))
-
+  
   grp_lvls <- base::levels(data[[grp_str]])
-
+  
   if (base::length(grp_lvls) != 2) {
-
+    
     cli::cli_abort("The grouping variable must have two (and only two) levels. \n Perhaps you entered the grouping variable first (instead of second)?")
-
+    
   }
-
+  
   check_test(mosaic::t_test(formula, data = data, conf.level = conf_lvl))
-
+  
   # code
   ind_test <- mosaic::t_test(formula, data = data, conf.level = conf_lvl)
-
+  
   cl <- base::paste0(conf_lvl*100, "%")
-
+  
   # build caption
   if (base::is.null(caption)) {
-
+    
     caption <- base::paste("Two Sample Independent Means Test Between", var1_str, "and", grp_str,
                            "\n Confidence Level:", cl)
-
+    
   } else {
-
+    
     caption <- base::paste(caption, "\n Confidence Level:", cl)
-
+    
   }
-
+  
   # find NAs
   na1 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[1] & base::is.na({{ grp_var }})) %>%
@@ -214,7 +218,7 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = c
   na2 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[2] & base::is.na({{ grp_var }})) %>%
     base::nrow()
-
+  
   # find sample sizes
   n1 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[1]) %>%
@@ -222,7 +226,7 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = c
   n2 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[2]) %>%
     base::nrow()
-
+  
   # table without CI
   no_interval <- tibble::tibble(
     var = base::as.character(grp_lvls),
@@ -241,8 +245,10 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = c
                                  xbar = "Group Means",
                                  se = "Standard Error",
                                  p = "p-value") %>%
-    flextable::vline(j = 4)
-
+    flextable::vline(j = 4) %>% 
+    flextable::autofit() %>% 
+    flextable::fit_to_width(max_width = 7.5)
+  
   # table with CI
   interval <- tibble::tibble(
     var = base::as.character(grp_lvls),
@@ -265,9 +271,11 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = c
                                  p = "p-value (2 tail)",
                                  cil = base::paste(cl, "Interval Lower"),
                                  ciu = base::paste(cl, "Interval Upper")) %>%
-    flextable::vline(j = c(4, 8))
-
+    flextable::vline(j = c(4, 8)) %>% 
+    flextable::autofit() %>% 
+    flextable::fit_to_width(max_width = 7.5)
+  
   if (conf_int == "hide") return(no_interval)
-    else return(interval)
-
+  else return(interval)
+  
 }
