@@ -9,35 +9,35 @@
 #' infer_1mean_int(mtcars, ~wt)
 #' infer_1mean_int(mtcars, ~wt, conf_lvl = .9)
 infer_1mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NULL) {
-
+  
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
     dplyr::mutate(dplyr::across(dplyr::where(is.character), ~dplyr::na_if(., "")))
-
+  
   # error catching
   check_conf_lvl(conf_lvl)
-
+  
   check_test(mosaic::t_test(formula, data = data, conf.level = conf_lvl))
-
+  
   # code
   var <- formula[[2]]
   var_str <- base::deparse(base::substitute(var))
-
+  
   # build caption
   if (base::is.null(caption)) {
-
+    
     caption <- base::paste("One-Sample Mean Confidence Interval on Variable", var_str)
-
+    
   }
-
+  
   mu_test <- mosaic::t_test(formula, data = data, conf.level = conf_lvl)
-
+  
   cl <-  base::paste0(conf_lvl*100, "%")
-
+  
   n_na <- find_na(data, formula)
-
+  
   n <- base::nrow(data) - n_na
-
+  
   tibble::tibble(
     n = n,
     na = n_na,
@@ -50,8 +50,10 @@ infer_1mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
     finalize_tbl(digits = digits, caption = caption, striped = FALSE) %>%
     flextable::set_header_labels(na = "n Misssing", estimate = "x\u0304", se = "Standard Error",
                                  cil = base::paste(cl, "Interval Lower"),
-                                 ciu = base::paste(cl, "Interval Upper"))
-
+                                 ciu = base::paste(cl, "Interval Upper")) %>% 
+    flextable::autofit() %>% 
+    flextable::fit_to_width(max_width = 7.5)
+  
 }
 
 #' Create a summary table for a one-sample mean hypothesis test
@@ -67,43 +69,43 @@ infer_1mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
 #' infer_1mean_test(mtcars, ~wt, mu0 = 3)
 #' infer_1mean_test(mtcars, ~wt, digits = 4, conf_lvl = 0.90)
 infer_1mean_test <- function(data, formula, digits = 3, mu0 = 0, conf_lvl = 0.95, caption = NULL) {
-
+  
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
     dplyr::mutate(dplyr::across(dplyr::where(is.character), ~dplyr::na_if(., "")))
-
+  
   # error catching
   check_conf_lvl(conf_lvl)
-
+  
   check_test(mosaic::t_test(formula, data = data, conf.level = conf_lvl, mu = mu0))
-
+  
   # code
   var <- formula[[2]]
   var_str <- base::deparse(base::substitute(var))
-
+  
   # build caption
   cl <-  base::paste0(conf_lvl*100, "%")
-
+  
   if (base::is.null(caption)) {
-
+    
     caption <- base::paste("One-Sample Mean Test on Variable", var_str,
                            "\n Confidence Level:", cl,
                            "\n Null Value:", mu0)
-
+    
   } else {
-
+    
     caption <- base::paste(caption,
                            "\n Confidence Level:", cl,
                            "\n Null Value:", mu0)
-
+    
   }
-
+  
   mu_test <- mosaic::t_test(formula, data = data, conf.level = conf_lvl, mu = mu0)
-
+  
   n_na <- find_na(data, formula)
-
+  
   n <- base::nrow(data) - n_na
-
+  
   tibble::tibble(
     n = n,
     na = n_na,
@@ -117,8 +119,10 @@ infer_1mean_test <- function(data, formula, digits = 3, mu0 = 0, conf_lvl = 0.95
   ) %>%
     finalize_tbl(digits = digits, caption = caption, striped = FALSE) %>%
     flextable::set_header_labels(n = "n Used", na = "n Misssing", estimate = "x\u0304", se = "Standard Error",
-                                 df = "Degrees of Freedom", p = "p-value (2 tail)")
-
+                                 df = "Degrees of Freedom", p = "p-value (2 tail)") %>% 
+    flextable::autofit() %>% 
+    flextable::fit_to_width(max_width = 7.5)
+  
 }
 
 
@@ -136,52 +140,52 @@ infer_1mean_test <- function(data, formula, digits = 3, mu0 = 0, conf_lvl = 0.95
 #' infer_paired(mtcars, var1 = ~drat, var2 = ~wt)
 #' infer_paired(mtcars, var1 = ~drat, var2 = ~wt, conf_lvl = 0.9)
 infer_paired <- function(data, var1, var2, digits = 3, mu0 = 0, conf_lvl = 0.95, caption = NULL) {
-
+  
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
     dplyr::mutate(dplyr::across(dplyr::where(is.character), ~dplyr::na_if(., "")))
-
+  
   # error catching
-
+  
   var1 <- var1[[2]]
   var1_str <- base::deparse(base::substitute(var1))
-
+  
   var2 <- var2[[2]]
   var_str2 <- base::deparse(base::substitute(var2))
-
+  
   check_conf_lvl(conf_lvl)
-
+  
   data <- data %>%
     dplyr::mutate(difference = {{ var1 }} - {{ var2 }})
-
+  
   check_test(mosaic::t_test(formula = difference ~ 1, data = data, conf.level = conf_lvl, mu = mu0))
-
-
+  
+  
   # code
-
-
+  
+  
   cl <- base::paste0(conf_lvl*100, "%")
-
+  
   # build caption
   if (base::is.null(caption)) {
-
+    
     caption <- base::paste("Difference in Means Test:", var1_str, "-", var_str2,
                            "\n", cl, "Confidence",
                            "\n Null Value:", mu0)
-
+    
   } else {
-
+    
     caption <- base::paste(caption, "\n", cl, "Confidence",
                            "\n Null Value:", mu0)
-
+    
   }
-
+  
   n_na <- find_na(data, ~ difference)
-
+  
   n <- base::nrow(data) - n_na
-
+  
   diff_t <- mosaic::t_test(formula = difference ~ 1, data = data, conf.level = conf_lvl, mu = mu0)
-
+  
   # build table
   tibble::tibble(
     n = n,
@@ -200,8 +204,10 @@ infer_paired <- function(data, var1, var2, digits = 3, mu0 = 0, conf_lvl = 0.95,
     flextable::set_header_labels(na = "n Missing", estimate = "x\u0304",
                                  se = "Standard Error", p = "p-value (2 tail)",
                                  cil = base::paste(cl, "Interval Lower"),
-                                 ciu = base::paste(cl, "Interval Upper"))
-
+                                 ciu = base::paste(cl, "Interval Upper")) %>% 
+    flextable::autofit() %>% 
+    flextable::fit_to_width(max_width = 7.5)
+  
 }
 
 
@@ -216,54 +222,54 @@ infer_paired <- function(data, var1, var2, digits = 3, mu0 = 0, conf_lvl = 0.95,
 #' infer_2mean_int(mtcars, wt~vs)
 #' infer_2mean_int(mtcars, wt~vs, conf_lvl = .9)
 infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NULL) {
-
+  
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
     dplyr::mutate(dplyr::across(dplyr::where(is.character), ~dplyr::na_if(., "")))
-
+  
   # error catching
   check_conf_lvl(conf_lvl)
-
+  
   var1 <- formula[[2]]
   var1_str <- base::deparse(base::substitute(var1))
-
+  
   grp_var <- formula[[3]]
   grp_str <- base::deparse(base::substitute(grp_var))
-
-
+  
+  
   base::tryCatch(data %>% dplyr::mutate("{grp_var}" := base::factor({{ grp_var }})),
                  error = function (e) cli::cli_abort("Could not convert grouping variable into a factor. Perhaps you entered the grouping variable first (instead of second)?")
   )
-
+  
   data <- data %>%
     dplyr::mutate("{grp_var}" := base::as.factor({{ grp_var }}))
-
+  
   grp_lvls <- base::sort(base::levels(data[[grp_str]]))
-
+  
   if (base::length(grp_lvls) != 2) {
-
+    
     cli::cli_abort("The grouping variable must have two (and only two) levels. \n Perhaps you entered the grouping variable first (instead of second)?")
-
+    
   }
-
+  
   check_test(mosaic::t_test(formula, data = data, conf.level = conf_lvl))
-
+  
   #code
   ind_test <- mosaic::t_test(formula, data = data, conf.level = conf_lvl)
-
+  
   cl <- base::paste0(conf_lvl*100, "%")
-
+  
   # build caption
   if (base::is.null(caption)) {
-
+    
     caption <- base::paste("Two Sample Independent Means Interval Between", var1_str, "and", grp_str)
-
+    
   } else {
-
+    
     caption <- caption
-
+    
   }
-
+  
   # find NAs
   na1 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[1] & base::is.na({{ grp_var }})) %>%
@@ -271,7 +277,7 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
   na2 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[2] & base::is.na({{ grp_var }})) %>%
     base::nrow()
-
+  
   # find sample sizes
   n1 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[1]) %>%
@@ -279,7 +285,7 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
   n2 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[2]) %>%
     base::nrow()
-
+  
   # build table
   tibble::tibble(
     var = base::as.character(grp_lvls),
@@ -295,8 +301,10 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
     flextable::set_header_labels(var = grp_str, na = "n Missing", xbar = "Group Means", se = "Standard Error",
                                  cil = base::paste(cl, "Interval Lower"),
                                  ciu = base::paste(cl, "Interval Upper")) %>%
-    flextable::vline(j = c(3, 4))
-
+    flextable::vline(j = c(3, 4)) %>% 
+    flextable::autofit() %>% 
+    flextable::fit_to_width(max_width = 7.5)
+  
 }
 
 #' Create a summary table for a two-sample mean test
@@ -310,56 +318,56 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
 #' infer_2mean_test(mtcars, wt~vs)
 #' infer_2mean_test(mtcars, wt~vs, conf_lvl = .9)
 infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NULL) {
-
+  
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
     dplyr::mutate(dplyr::across(dplyr::where(is.character), ~dplyr::na_if(., "")))
-
+  
   # error catching
   check_conf_lvl(conf_lvl)
-
+  
   var1 <- formula[[2]]
   var1_str <- base::deparse(base::substitute(var1))
-
+  
   grp_var <- formula[[3]]
   grp_str <- base::deparse(base::substitute(grp_var))
-
+  
   check_conf_lvl(conf_lvl)
-
+  
   base::tryCatch(data %>% dplyr::mutate("{grp_var}" := base::factor({{ grp_var }})),
                  error = function (e) cli::cli_abort("Could not convert grouping variable into a factor. Perhaps you entered the grouping variable first (instead of second)?")
   )
-
+  
   data <- data %>%
     dplyr::mutate("{grp_var}" := base::as.factor({{ grp_var }}))
-
+  
   grp_lvls <- base::levels(data[[grp_str]])
-
+  
   if (base::length(grp_lvls) != 2) {
-
+    
     cli::cli_abort("The grouping variable must have two (and only two) levels. \n Perhaps you entered the grouping variable first (instead of second)?")
-
+    
   }
-
+  
   check_test(mosaic::t_test(formula, data = data, conf.level = conf_lvl))
-
+  
   # code
   ind_test <- mosaic::t_test(formula, data = data, conf.level = conf_lvl)
-
+  
   cl <- base::paste0(conf_lvl*100, "%")
-
+  
   # build caption
   if (base::is.null(caption)) {
-
+    
     caption <- base::paste("Two Sample Independent Means Test Between", var1_str, "and", grp_str,
                            "\n Confidence Level:", cl)
-
+    
   } else {
-
+    
     caption <- base::paste(caption, "\n Confidence Level:", cl)
-
+    
   }
-
+  
   # find NAs
   na1 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[1] & base::is.na({{ grp_var }})) %>%
@@ -367,7 +375,7 @@ infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
   na2 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[2] & base::is.na({{ grp_var }})) %>%
     base::nrow()
-
+  
   # find sample sizes
   n1 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[1]) %>%
@@ -375,7 +383,7 @@ infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
   n2 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[2]) %>%
     base::nrow()
-
+  
   # build table
   tibble::tibble(
     var = base::as.character(grp_lvls),
@@ -394,6 +402,8 @@ infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
                                  xbar = "Group Means",
                                  se = "Standard Error",
                                  p = "p-value (2 tail)") %>%
-    flextable::vline(j = 4)
-
+    flextable::vline(j = 4) %>% 
+    flextable::autofit() %>% 
+    flextable::fit_to_width(max_width = 7.5)
+  
 }
