@@ -1,123 +1,43 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/404.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/articles/cheatsheet.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/articles/extending_default_behavior.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/index.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/check_conf_lvl.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/check_test.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/finalize_plot.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/finalize_tbl.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/find_na.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/gvsu215-package.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/infer_1mean_int.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/infer_1mean_test.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/infer_1prop_int.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/infer_1prop_test.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/infer_2mean.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/infer_2mean_int.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/infer_2mean_test.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/infer_2prop.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/infer_2prop_int.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/infer_2prop_test.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/infer_anova.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/infer_chisq.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/infer_paired.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/infer_reg.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/plot_bar.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/plot_box.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/plot_hist.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/plot_scatter.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/sig_round.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/tbl_1var.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/tbl_2var.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/tbl_corr.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/tbl_num_sum.html</loc>
-  </url>
-  <url>
-    <loc>https://gvsu215.ianacurtis.com/reference/tbl_pctile.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://gvsu215.ianacurtis.com/404.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/LICENSE-text.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/LICENSE.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/articles/cheatsheet.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/articles/extending_default_behavior.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/articles/index.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/authors.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/index.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/news/index.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/check_conf_lvl.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/check_test.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/finalize_plot.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/finalize_tbl.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/find_na.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/gvsu215-package.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/index.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/infer_1mean_int.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/infer_1mean_test.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/infer_1prop_int.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/infer_1prop_test.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/infer_2mean.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/infer_2mean_int.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/infer_2mean_test.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/infer_2prop.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/infer_2prop_int.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/infer_2prop_test.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/infer_anova.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/infer_chisq.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/infer_paired.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/infer_reg.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/plot_bar.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/plot_box.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/plot_hist.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/plot_scatter.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/sig_round.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/tbl_1var.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/tbl_2var.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/tbl_corr.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/tbl_num_sum.html</loc></url>
+<url><loc>https://gvsu215.ianacurtis.com/reference/tbl_pctile.html</loc></url>
 </urlset>
+
