@@ -1,5 +1,5 @@
 ---
-title: "Cheat Sheet"
+title: "Cheatsheet"
 subtitle: "Designed For GVSU STA 215 Students"
 output: rmarkdown::html_vignette
 vignette: >
