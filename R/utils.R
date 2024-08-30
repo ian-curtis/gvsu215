@@ -62,8 +62,6 @@ finalize_tbl <- function(table, digits, striped = TRUE, caption = NULL, na_str =
       flextable::bold(bold = TRUE, part = "header") %>%
       flextable::align(align = "center", part = "header") %>%
       flextable::align(align = "right", part = "body") %>%
-      flextable::autofit() %>%
-      flextable::fit_to_width(6) %>%
       flextable::set_caption(caption = flextable::as_paragraph(flextable::as_chunk(caption,
                                                              props = officer::fp_text(font.family = "Helvetica",
                                                                                       bold = FALSE))))
@@ -84,13 +82,41 @@ finalize_tbl <- function(table, digits, striped = TRUE, caption = NULL, na_str =
       flextable::bold(bold = TRUE, part = "header") %>%
       flextable::align(align = "center", part = "header") %>%
       flextable::align(align = "right", part = "body") %>%
-      flextable::autofit() %>%
-      flextable::fit_to_width(6) %>%
       flextable::set_caption(caption = flextable::as_paragraph(flextable::as_chunk(caption,
                                                              props = officer::fp_text(font.family = "Helvetica", bold = FALSE))))
   }
 
 }
+
+#' INTERNAL: Fit a table properly
+#'
+#' @param table A flextable object to fit.
+#'
+#' @keywords internal
+#' @return A object of class flextable, autofit if interactive or HTML output, 6.5 inches otherwise.
+#' @export
+#'
+#' @examples
+#' flextable::flextable(mtcars) %>%
+#'   fit_tbl()
+fit_tbl <- function(table) {
+
+  if (interactive() | knitr::is_html_output()) {
+
+    table %>%
+      flextable::autofit()
+
+  } else {
+
+    table %>%
+      flextable::fit_to_width(6.5)
+
+  }
+
+
+}
+
+# TUESDAY: Edit all tables to use fit_tbl() and manually specify line breaks in captions
 
 #' INTERNAL: Add default theme options to plots
 #'
