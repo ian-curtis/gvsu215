@@ -40,5 +40,5 @@ the function name). For a confidence interval provided with that, use \verb{conf
 \examples{
 infer_2mean(mtcars, wt~vs)
 infer_2mean(mtcars, wt~vs, conf_lvl = .9)
-infer_2mean(mtcars, wt~vs, conf_lvl = .9, conf_int = "hide")
+infer_2mean(mtcars, wt~vs, conf_lvl = .9, conf_int = "show")
 }
