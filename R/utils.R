@@ -109,7 +109,8 @@ fit_tbl <- function(table) {
   } else {
 
     table %>%
-      flextable::fit_to_width(6.5)
+      flextable::autofit() %>%
+      flextable::fit_to_width(6.9)
 
   }
 
