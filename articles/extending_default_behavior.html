@@ -84,6 +84,15 @@ GitHub</a>.</p>
 <pre><code><span><span class="va">output</span><span class="op">:</span></span>
 <span>  <span class="va">pdf_document</span><span class="op">:</span></span>
 <span>    <span class="va">latex_engine</span><span class="op">:</span> <span class="va">xelatex</span></span></code></pre>
+<p>If you are exporting to Word documents, it is recommended to name
+your variables wisely (i.e., short but understandable). Sometimes, line
+breaks in table headers can be a little funky with Word documents. All
+static headers have forced line breaks that will break in between words;
+however, if variable names are too long or if there are too many columns
+in the table, the table will appear too squished and might add line
+breaks in places that are not ideal. You may also wish to force a page
+break for a table, which can be done by piping the table code into the
+<code><a href="https://davidgohel.github.io/flextable/reference/paginate.html" class="external-link">flextable::paginate()</a></code> function.</p>
 </div>
 <div class="section level2">
 <h2 id="extra-function-arguments">Extra Function Arguments<a class="anchor" aria-label="anchor" href="#extra-function-arguments"></a>
