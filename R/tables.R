@@ -55,7 +55,7 @@ tbl_1var <- function(data, formula, digits = 3, caption = NULL, with_prop = c("n
       tibble::as_tibble() %>%
       dplyr::mutate(pct = (n / base::nrow(data))*100) %>%
       janitor::adorn_totals("row") %>%
-      finalize_tbl(digits = digits, caption = base::paste(caption, "\n NAs Removed: ", base::ifelse(na_rm == FALSE, "No", "Yes"))) %>%
+      finalize_tbl(digits = digits, caption = base::paste(caption, "\nNAs Removed: ", base::ifelse(na_rm == FALSE, "No", "Yes"))) %>%
       flextable::set_header_labels(n = "Count", pct = "Percent") %>%
       flextable::fontsize(size = 9, part = "all") %>%
       fit_tbl()
@@ -66,7 +66,7 @@ tbl_1var <- function(data, formula, digits = 3, caption = NULL, with_prop = c("n
       tibble::as_tibble() %>%
       dplyr::mutate(pct = (n / base::nrow(data))) %>%
       janitor::adorn_totals("row") %>%
-      finalize_tbl(digits = digits, caption = base::paste(caption, "\n NAs Removed: ", base::ifelse(na_rm == FALSE, "No", "Yes"))) %>%
+      finalize_tbl(digits = digits, caption = base::paste(caption, "\nNAs Removed: ", base::ifelse(na_rm == FALSE, "No", "Yes"))) %>%
       flextable::set_header_labels(n = "Count", pct = "Proportion") %>%
       flextable::fontsize(size = 9, part = "all") %>%
       fit_tbl()
@@ -145,7 +145,7 @@ tbl_2var <- function(data, formula, row_pct = c("hide", "show"), digits = 3, cap
       dplyr::mutate(Total = base::as.integer(Total))
 
     starter %>%
-      finalize_tbl(digits = digits, caption = base::paste(caption, "\n NAs Removed:", base::ifelse(na_rm == FALSE, "No", "Yes"))) %>%
+      finalize_tbl(digits = digits, caption = base::paste(caption, "\nNAs Removed:", base::ifelse(na_rm == FALSE, "No", "Yes"))) %>%
       flextable::add_header_row(values = c("", var1_str, ""),
                                 colwidths = c(1, var1_lvls, 1)) %>%
       flextable::vline(j = c(1, var1_lvls + 1),
@@ -182,7 +182,7 @@ tbl_2var <- function(data, formula, row_pct = c("hide", "show"), digits = 3, cap
       dplyr::mutate(dplyr::across(-1, ~sub(" ", "\n", .)))
 
     starter %>%
-      finalize_tbl(digits = digits, caption = base::paste(caption, "\n NAs Removed:", base::ifelse(na_rm == FALSE, "No", "Yes"))) %>%
+      finalize_tbl(digits = digits, caption = base::paste(caption, "\nNAs Removed:", base::ifelse(na_rm == FALSE, "No", "Yes"))) %>%
       flextable::add_header_row(values = c("", var1_str, ""),
                                 colwidths = c(1, var1_lvls, 1)) %>%
       flextable::vline(j = c(1, var1_lvls + 1),

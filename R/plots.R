@@ -39,7 +39,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
   }
 
   if (base::length(formula) > 2) {
-    cli::cli_abort("Too many variables provided. Try entering only one variable in your formula. \n If you are looking for a grouped bar plot, use the {.var fill} argument.")
+    cli::cli_abort("Too many variables provided. Try entering only one variable in your formula.\nIf you are looking for a grouped bar plot, use the {.var fill} argument.")
   }
 
   check_test(ggformula::gf_percents(formula, fill = fill))
@@ -118,6 +118,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
                       "{fill_var}" := base::factor({{ fill_var }})) %>%
         ggformula::gf_percents(formula,
                                fill = fill,
+                               width = 0.5,
                                position = ggplot2::position_dodge2(preserve = "single"),
                                denom = ~fill) %>%
         ggformula::gf_labs(title = base::ifelse(
@@ -190,8 +191,9 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
         dplyr::mutate("{var}" := base::gsub(" ", "\n", {{ var }}),
                       "{fill_var}" := base::factor({{ fill_var }})) %>%
         ggformula::gf_counts(formula,
-                               fill = fill,
-                               position = ggplot2::position_dodge2(preserve = "single")) %>%
+                             fill = fill,
+                             width = 0.5,
+                             position = ggplot2::position_dodge2(preserve = "single")) %>%
         ggformula::gf_labs(title = base::ifelse(
           base::is.null(title),
           base::paste("Clustered Bar Chart (Counts) of", var_str, "by", fill_str),
@@ -656,7 +658,7 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
       ggformula::gf_point(formula, data = data, fill = fill, color = "grey30", shape = 21, size = 2) %>%
         ggformula::gf_labs(title = ifelse(base::is.null(title),
                                           base::paste0("Grouped Scatterplot of ", var1_str, " and ",
-                                                       var2_str, "\n by ", group_str),
+                                                       var2_str, "\nby ", group_str),
                                           title),
                            fill = base::ifelse(is.null(legend_title), group_str, legend_title),
                            subtitle = base::paste0(var1_str, " Missing: ", n_na[[1]], " | ",
@@ -676,7 +678,7 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
           ggformula::gf_point(size = 2) %>%
           ggformula::gf_labs(title = ifelse(base::is.null(title),
                                             base::paste0("Grouped Scatterplot of ", var1_str, " and ",
-                                                         var2_str, "\n by ", group_str),
+                                                         var2_str, "\nby ", group_str),
                                             title),
                              fill = base::ifelse(is.null(legend_title), group_str, legend_title),
                              subtitle = base::paste0(var1_str, " Missing: ", n_na[[1]], " | ",
