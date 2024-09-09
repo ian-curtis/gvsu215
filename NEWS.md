@@ -1,3 +1,12 @@
+# gvsu215 0.5.4
+
+* Updated spacing in tables for Word output
+  * Line breaks in table headers are now forced with `\n`, users will need to specify their own line breaks in variable names
+  * Max width of tables for non-interactive and non-HTML output (e.g., PDF and Word) is 6.9 inches. No max width is given for other outputs.
+  * Note added to extending default behavior article.
+* The spacing between clusters of the grouped bar chart (`plot_bar()` used with the `fill` argument set to a variable) has been increased. This was done by decreasing the width of the actual bars so having more categories in the x-axis variable might cause this spacing to decrease.
+  
+
 # gvsu215 0.5.3
 
 * Revert / clarify that all p-values for tests on the mean and the proportion are two-tailed
