@@ -40,11 +40,11 @@ infer_1prop_int <- function(data, formula, success = NULL, digits = 3, conf_lvl 
   if (base::is.null(caption)) {
 
     caption <- base::paste("One-Sample Proportion Confidence Interval on Variable", var_str,
-                           "\n Successes:", success)
+                           "\nSuccesses:", success)
 
   } else {
 
-    caption <- base::paste(caption, "\n Successes:", success)
+    caption <- base::paste(caption, "\nSuccesses:", success)
 
   }
 
@@ -77,10 +77,10 @@ infer_1prop_int <- function(data, formula, success = NULL, digits = 3, conf_lvl 
     finalize_tbl(digits = digits,
                  caption = caption,
                  striped = FALSE) %>%
-    flextable::set_header_labels(n_success = "n \n Successes", na = "n \n Missing",
-                                 estimate = "p\u0302", se = "Standard \n Error",
-                                 conf.low = base::paste(cl, "\n Interval \n Lower"),
-                                 conf.high = base::paste(cl, "\n Interval \n Upper")) %>%
+    flextable::set_header_labels(n_success = "n\nSuccesses", na = "n\nMissing",
+                                 estimate = "p\u0302", se = "Standard\nError",
+                                 conf.low = base::paste(cl, "\nInterval\nLower"),
+                                 conf.high = base::paste(cl, "\nInterval\nUpper")) %>%
     fit_tbl()
 
 }
@@ -124,13 +124,13 @@ infer_1prop_test <- function(data, formula, success = NULL, p0 = 0.5, digits = 3
   if (base::is.null(caption)) {
 
     caption <- base::paste("One-Sample Proportion Test on Variable", var_str,
-                           "\n Successes:", success,
-                           "\n Null Value:", p0)
+                           "\nSuccesses:", success,
+                           "\nNull Value:", p0)
 
   } else {
 
-    caption <- base::paste(caption, "\n Success:", success,
-                           "\n Null Value:", p0)
+    caption <- base::paste(caption, "\nSuccess:", success,
+                           "\nNull Value:", p0)
 
   }
 
@@ -168,8 +168,8 @@ infer_1prop_test <- function(data, formula, success = NULL, p0 = 0.5, digits = 3
     finalize_tbl(digits = digits,
                  caption = caption,
                  striped = FALSE) %>%
-    flextable::set_header_labels(n_success = "n \n Successes", na = "n \n Missing", n = "n \n Used",
-                                 estimate = "p\u0302", se = "Standard \n Error", pval = "p-value \n (2 tail)") %>%
+    flextable::set_header_labels(n_success = "n\nSuccesses", na = "n\nMissing", n = "n\nUsed",
+                                 estimate = "p\u0302", se = "Standard\nError", pval = "p-value\n(2 tail)") %>%
     fit_tbl()
 
 }
@@ -216,11 +216,11 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
   if (base::is.null(caption)) {
 
     caption <- base::paste("Two Sample Proportion Interval Between", var1_str, "and", grp_str,
-                           "\n Successes:", success)
+                           "\nSuccesses:", success)
 
   } else {
 
-    caption <- base::paste(caption, "\n Successes:", success)
+    caption <- base::paste(caption, "\nSuccesses:", success)
 
   }
 
@@ -276,9 +276,9 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
     finalize_tbl(digits = digits,
                  caption = caption,
                  na_str = "") %>%
-    flextable::set_header_labels(var = grp_str, yay = "n \n Successes", na = "n \n Missing", phat = "p\u0302",
-                                 se = "Standard \n Error", cil = base::paste(cl, "\n Interval \n Lower"),
-                                 ciu = base::paste(cl, "\n Interval \n Upper")) %>%
+    flextable::set_header_labels(var = grp_str, yay = "n\nSuccesses", na = "n\nMissing", phat = "p\u0302",
+                                 se = "Standard\nError", cil = base::paste(cl, "\nInterval\nLower"),
+                                 ciu = base::paste(cl, "\nInterval\nUpper")) %>%
     flextable::vline(j = 5) %>%
     fit_tbl()
 
@@ -321,11 +321,11 @@ infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
   if (base::is.null(caption)) {
 
     caption <- base::paste("Two Sample Proportion Test Between", var1_str, "and", grp_str,
-                           "\n Successes:", success, "| Confidence:", cl)
+                           "\nSuccesses:", success, "| Confidence:", cl)
 
   } else {
 
-    caption <- base::paste(caption, "\n Successes:", success, "| Confidence:", cl)
+    caption <- base::paste(caption, "\nSuccesses:", success, "| Confidence:", cl)
 
   }
 
@@ -378,8 +378,8 @@ infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
     finalize_tbl(digits = digits,
                  caption = caption,
                  na_str = "") %>%
-    flextable::set_header_labels(var = "Variable", yay = "n \n Successes", na = "n \n Missing", phat = "p\u0302",
-                                 se = "Standard \n Error", p = "p-value \n (2 tail)") %>%
+    flextable::set_header_labels(var = "Variable", yay = "n\nSuccesses", na = "n\nMissing", phat = "p\u0302",
+                                 se = "Standard\nError", p = "p-value\n(2 tail)") %>%
     flextable::vline(j = 5) %>%
     fit_tbl()
 

@@ -31,6 +31,8 @@ output:
     latex_engine: xelatex
 ```
 
+If you are exporting to Word documents, it is recommended to name your variables wisely (i.e., short but understandable). Sometimes, line breaks in table headers can be a little funky with Word documents. All static headers have forced line breaks that will break in between words; however, if variable names are too long or if there are too many columns in the table, the table will appear too squished and might add line breaks in places that are not ideal. You may also wish to force a page break for a table, which can be done by piping the table code into the `flextable::paginate()` function.
+
 # Extra Function Arguments
 
 Many functions in this package have extra arguments that aren't necessary for basic function features but can allow for a little customization depending on your pedagogical approach and preferences, such as if you are focusing on data literacy or proper axis labeling. Each of the functions listed below have extra arguments, which are detailed after the function name.

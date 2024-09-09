@@ -69,7 +69,7 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE
       return(df %>%
         # dplyr::select(-missing) %>%
         finalize_tbl(digits, striped = FALSE,
-                     caption = base::paste(caption, "\n NAs Removed:",
+                     caption = base::paste(caption, "\nNAs Removed:",
                                            ifelse(og_na == TRUE, "Yes", "No"))) %>%
         flextable::fontsize(size = 9, part = "all") %>%
         fit_tbl())
@@ -78,7 +78,7 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE
 
       return(df %>%
         finalize_tbl(digits, striped = FALSE,
-                     caption = base::paste(caption, "\n NAs Removed:",
+                     caption = base::paste(caption, "\nNAs Removed:",
                                            ifelse(og_na == TRUE, "Yes", "No"))) %>%
         flextable::fontsize(size = 9, part = "all") %>%
         fit_tbl())
@@ -126,14 +126,14 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE
       return(df %>%
         # dplyr::select(-missing) %>%
         finalize_tbl(digits,
-                     caption = base::paste(caption, "\n NAs Removed:", base::ifelse(og_na == TRUE, "Yes", "No"))) %>%
+                     caption = base::paste(caption, "\nNAs Removed:", base::ifelse(og_na == TRUE, "Yes", "No"))) %>%
         flextable::fontsize(size = 9, part = "all") %>%
         fit_tbl())
 
     } else if (og_na == FALSE) {
       return(df %>%
         finalize_tbl(digits,
-                     caption = base::paste(caption, "\n NAs Removed:", base::ifelse(og_na == TRUE, "Yes", "No"))) %>%
+                     caption = base::paste(caption, "\nNAs Removed:", base::ifelse(og_na == TRUE, "Yes", "No"))) %>%
         flextable::fontsize(size = 9, part = "all") %>%
         fit_tbl())
     }
@@ -275,7 +275,7 @@ tbl_corr <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
 
   # error catching
   if (na_rm == FALSE) {
-    rlang::inform("Missing values *not* automatically removed from calculation. \n You may get NA values in your output.", .frequency = "once", .frequency_id = "corr-nas")
+    rlang::inform("Missing values *not* automatically removed from calculation.\nYou may get NA values in your output.", .frequency = "once", .frequency_id = "corr-nas")
   }
 
   check_test(mosaic::cor(formula, data = data))
@@ -323,10 +323,10 @@ tbl_corr <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
                  caption = caption,
                  striped = FALSE) %>%
     flextable::set_header_labels(n_ind = base::paste(var1_str, "n"),
-                                 na_ind = base::paste(var1_str, "\n missing"),
+                                 na_ind = base::paste(var1_str, "\nmissing"),
                                  n_dep = base::paste(var2_str, "n"),
-                                 na_dep = base::paste(var2_str, "\n missing"),
-                                 obs_used = "Observations \n Used",
+                                 na_dep = base::paste(var2_str, "\nmissing"),
+                                 obs_used = "Observations\nUsed",
                                  corr = "Correlation") %>%
     flextable::fontsize(size = 9, part = "all") %>%
     fit_tbl()

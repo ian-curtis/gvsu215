@@ -48,9 +48,9 @@ infer_1mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
     ciu = mu_test$conf.int[[2]]
   ) %>%
     finalize_tbl(digits = digits, caption = caption, striped = FALSE) %>%
-    flextable::set_header_labels(na = "n \n Misssing", estimate = "x\u0304", se = "Standard \n Error",
-                                 cil = base::paste(cl, "\n Interval \n Lower"),
-                                 ciu = base::paste(cl, "\n Interval \n Upper")) %>%
+    flextable::set_header_labels(na = "n\nMisssing", estimate = "x\u0304", se = "Standard\nError",
+                                 cil = base::paste(cl, "\nInterval\nLower"),
+                                 ciu = base::paste(cl, "\nInterval\nUpper")) %>%
     fit_tbl()
 
 }
@@ -88,14 +88,14 @@ infer_1mean_test <- function(data, formula, digits = 3, mu0 = 0, conf_lvl = 0.95
   if (base::is.null(caption)) {
 
     caption <- base::paste("One-Sample Mean Test on Variable", var_str,
-                           "\n Confidence Level:", cl,
-                           "\n Null Value:", mu0)
+                           "\nConfidence Level:", cl,
+                           "\nNull Value:", mu0)
 
   } else {
 
     caption <- base::paste(caption,
-                           "\n Confidence Level:", cl,
-                           "\n Null Value:", mu0)
+                           "\nConfidence Level:", cl,
+                           "\nNull Value:", mu0)
 
   }
 
@@ -117,8 +117,8 @@ infer_1mean_test <- function(data, formula, digits = 3, mu0 = 0, conf_lvl = 0.95
                        base::format.pval(mu_test$p.value, digits = digits)))
   ) %>%
     finalize_tbl(digits = digits, caption = caption, striped = FALSE) %>%
-    flextable::set_header_labels(n = "n Used", na = "n \n Misssing", estimate = "x\u0304", se = "Standard \n Error",
-                                 df = "Degrees of \n Freedom", p = "p-value \n (2 tail)") %>%
+    flextable::set_header_labels(n = "n Used", na = "n\nMisssing", estimate = "x\u0304", se = "Standard\nError",
+                                 df = "Degrees of\nFreedom", p = "p-value\n(2 tail)") %>%
     fit_tbl()
 
 }
@@ -169,12 +169,12 @@ infer_paired <- function(data, var1, var2, digits = 3, mu0 = 0, conf_lvl = 0.95,
 
     caption <- base::paste("Difference in Means Test:", var1_str, "-", var_str2,
                            "\n", cl, "Confidence",
-                           "\n Null Value:", mu0)
+                           "\nNull Value:", mu0)
 
   } else {
 
     caption <- base::paste(caption, "\n", cl, "Confidence",
-                           "\n Null Value:", mu0)
+                           "\nNull Value:", mu0)
 
   }
 
@@ -199,10 +199,10 @@ infer_paired <- function(data, var1, var2, digits = 3, mu0 = 0, conf_lvl = 0.95,
     ciu = diff_t$conf.int[[2]]
   ) %>%
     finalize_tbl(digits = digits, caption = caption, striped = FALSE) %>%
-    flextable::set_header_labels(na = "n \n Missing", estimate = "x\u0304",
-                                 se = "Standard \n Error", p = "p-value \n (2 tail)",
-                                 cil = base::paste(cl, "\n Interval \n Lower"),
-                                 ciu = base::paste(cl, "\n Interval \n Upper")) %>%
+    flextable::set_header_labels(na = "n\nMissing", estimate = "x\u0304",
+                                 se = "Standard\nError", p = "p-value\n(2 tail)",
+                                 cil = base::paste(cl, "\nInterval\nLower"),
+                                 ciu = base::paste(cl, "\nInterval\nUpper")) %>%
     fit_tbl()
 
 }
@@ -245,7 +245,7 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
 
   if (base::length(grp_lvls) != 2) {
 
-    cli::cli_abort("The grouping variable must have two (and only two) levels. \n Perhaps you entered the grouping variable first (instead of second)?")
+    cli::cli_abort("The grouping variable must have two (and only two) levels.\nPerhaps you entered the grouping variable first (instead of second)?")
 
   }
 
@@ -295,9 +295,9 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
     ciu = c(ind_test$conf.int[[2]], NA)
   ) %>%
     finalize_tbl(digits = digits, caption = caption, na_str = "") %>%
-    flextable::set_header_labels(var = grp_str, na = "n \n Missing", xbar = "Group \n Means", se = "Standard \n Error",
-                                 cil = base::paste(cl, "\n Interval \n Lower"),
-                                 ciu = base::paste(cl, "\n Interval \n Upper")) %>%
+    flextable::set_header_labels(var = grp_str, na = "n\nMissing", xbar = "Group\nMeans", se = "Standard\nError",
+                                 cil = base::paste(cl, "\nInterval\nLower"),
+                                 ciu = base::paste(cl, "\nInterval\nUpper")) %>%
     flextable::vline(j = c(3, 4)) %>%
     fit_tbl()
 
@@ -341,7 +341,7 @@ infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
 
   if (base::length(grp_lvls) != 2) {
 
-    cli::cli_abort("The grouping variable must have two (and only two) levels. \n Perhaps you entered the grouping variable first (instead of second)?")
+    cli::cli_abort("The grouping variable must have two (and only two) levels.\nPerhaps you entered the grouping variable first (instead of second)?")
 
   }
 
@@ -356,11 +356,11 @@ infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
   if (base::is.null(caption)) {
 
     caption <- base::paste("Two Sample Independent Means Test Between", var1_str, "and", grp_str,
-                           "\n Confidence Level:", cl)
+                           "\nConfidence Level:", cl)
 
   } else {
 
-    caption <- base::paste(caption, "\n Confidence Level:", cl)
+    caption <- base::paste(caption, "\nConfidence Level:", cl)
 
   }
 
@@ -394,10 +394,10 @@ infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
                        base::format.pval(ind_test$p.value, digits = digits)), NA)
   ) %>%
     finalize_tbl(digits = digits, caption = caption, na_str = "") %>%
-    flextable::set_header_labels(var = "Variable", na = "n \n Missing", s = "Group s",
-                                 xbar = "Group \n Means",
-                                 se = "Standard \n Error",
-                                 p = "p-value \n (2 tail)") %>%
+    flextable::set_header_labels(var = "Variable", na = "n\nMissing", s = "Group s",
+                                 xbar = "Group\nMeans",
+                                 se = "Standard\nError",
+                                 p = "p-value\n(2 tail)") %>%
     flextable::vline(j = 4) %>%
     fit_tbl()
 

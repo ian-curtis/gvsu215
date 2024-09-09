@@ -47,7 +47,7 @@ infer_reg <- function(data, formula, digits = 3, caption = NULL, reduced = c("ye
   # build caption
   if (base::is.null(caption)) {
 
-    caption <- base::paste("Linear Model Coefficients Table \n",
+    caption <- base::paste("Linear Model Coefficients Table\n",
                            "Degrees of Freedom:", a_glance$df, "\n",
                            "R-Squared:", round(a_glance$r.squared, digits))
 
@@ -65,7 +65,7 @@ infer_reg <- function(data, formula, digits = 3, caption = NULL, reduced = c("ye
     broom::tidy(model) %>%
       dplyr::select(-statistic, -p.value) %>%
       finalize_tbl(digits = digits, caption = caption) %>%
-      flextable::set_header_labels(term = "Term", estimate = "Estimate", std.error = "Standard \n Error") %>%
+      flextable::set_header_labels(term = "Term", estimate = "Estimate", std.error = "Standard\nError") %>%
       fit_tbl()
 
   } else if (reduced == "no") { # build table with p-value and test statistic
@@ -76,9 +76,9 @@ infer_reg <- function(data, formula, digits = 3, caption = NULL, reduced = c("ye
                                            base::format.pval(p.value, digits = digits))) %>%
       finalize_tbl(digits = digits,
                    caption = base::paste(caption,
-                                         "\n Overall F: ",
+                                         "\nOverall F: ",
                                          base::round(base::summary(model)$fstatistic, digits))) %>%
-      flextable::set_header_labels(term = "Term", estimate = "Estimate", std.error = "Standard \n Error",
+      flextable::set_header_labels(term = "Term", estimate = "Estimate", std.error = "Standard\nError",
                                    statistic = "t", p.value = "p-value") %>%
       fit_tbl()
 
@@ -146,11 +146,11 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
     if (base::is.null(caption)) {
 
       caption <- base::paste("\uAB53\u00b2 Analysis of", var1_str, "and", var2_str,
-                             "\n Total Observations:", original_n, "\n Observations Used: ", new_n)
+                             "\nTotal Observations:", original_n, "\nObservations Used: ", new_n)
 
     } else {
 
-      caption <- base::paste(caption, "\n Total Observations:", original_n, "\n Observations Used: ", new_n)
+      caption <- base::paste(caption, "\nTotal Observations:", original_n, "\nObservations Used: ", new_n)
 
     }
 
@@ -168,11 +168,11 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
     if (base::is.null(caption)) {
 
       caption <- base::paste("Expected Counts for", var1_str, "and", var2_str,
-                             "\n Total Observations:", original_n, "\n Observations Used: ", new_n)
+                             "\nTotal Observations:", original_n, "\nObservations Used: ", new_n)
 
     } else {
 
-      caption <- base::paste(caption, "\n Total Observations:", original_n, "\n Observations Used: ", new_n)
+      caption <- base::paste(caption, "\nTotal Observations:", original_n, "\nObservations Used: ", new_n)
 
     }
 
@@ -191,11 +191,11 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
     if (base::is.null(caption)) {
 
       caption <- base::paste("Observed Counts for", var1_str, "and", var2_str,
-                             "\n Total Observations:", original_n, "\n Observations Used: ", new_n)
+                             "\nTotal Observations:", original_n, "\nObservations Used: ", new_n)
 
     } else {
 
-      caption <- base::paste(caption, "\n Total Observations:", original_n, "\n Observations Used: ", new_n)
+      caption <- base::paste(caption, "\nTotal Observations:", original_n, "\nObservations Used: ", new_n)
 
     }
 
