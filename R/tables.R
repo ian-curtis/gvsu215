@@ -9,7 +9,7 @@
 #'    provided within the function.
 #' @param with_prop Should proportions be supplied with instead of percents? Defaults to "no",
 #'    could also be "yes".
-#' @param na_rm Should missing values be removed? Defaults to FALSE.
+#' @param na_rm Should missing values be removed? Defaults to TRUE.
 #'
 #' @returns An object of class flextable. If in an interactive session, the table will be
 #'    viewable immediately.
@@ -21,7 +21,7 @@
 #'
 #' # Will give an error
 #' try(tbl_1var(mtcars, ~Gear))
-tbl_1var <- function(data, formula, digits = 3, caption = NULL, with_prop = c("no", "yes"), na_rm = FALSE) {
+tbl_1var <- function(data, formula, digits = 3, caption = NULL, with_prop = c("no", "yes"), na_rm = TRUE) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
@@ -97,7 +97,7 @@ tbl_1var <- function(data, formula, digits = 3, caption = NULL, with_prop = c("n
 #'
 #' # Will give an error
 #' try(tbl_2var(mtcars, Cyl~Gear))
-tbl_2var <- function(data, formula, row_pct = c("hide", "show"), digits = 3, caption = NULL, na_rm = FALSE) {
+tbl_2var <- function(data, formula, row_pct = c("hide", "show"), digits = 3, caption = NULL, na_rm = TRUE) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%

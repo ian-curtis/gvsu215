@@ -9,7 +9,7 @@
 #'   shortcut, "v" and "h" may be used.
 #' @param dodge The number of rows to dodge the axis labels to should they be overlapping.
 #' @param title An override for the title of the plot. A sensible default is provided.
-#' @param na_rm Should missing values be removed? Defaults to FALSE.
+#' @param na_rm Should missing values be removed? Defaults to TRUE.
 #' @param ... Extra title arguments passed on to [ggformula::gf_labs()] (which feeds to [ggplot2::ggplot()]).
 #'
 #' @return A ggplot object. In an interactive session, results are viewable immediately.
@@ -24,7 +24,7 @@
 #'
 #' plot_bar(mtcars, ~cyl, fill = ~gear)
 #' plot_bar(mtcars, ~cyl, type = "count", fill = ~gear)
-plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A0', orient = c("vertical", "horizontal"), dodge = 1, title = NULL, na_rm = FALSE, ...) {
+plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A0', orient = c("vertical", "horizontal"), dodge = 1, title = NULL, na_rm = TRUE, ...) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
