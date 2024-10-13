@@ -48,7 +48,7 @@ infer_1mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
     ciu = mu_test$conf.int[[2]]
   ) %>%
     finalize_tbl(digits = digits, caption = caption, striped = FALSE) %>%
-    flextable::set_header_labels(na = "n\nMisssing", estimate = "x\u0304", se = "Standard\nError",
+    flextable::set_header_labels(na = "n\nMissing", estimate = "x\u0304", se = "Standard\nError",
                                  cil = base::paste(cl, "\nInterval\nLower"),
                                  ciu = base::paste(cl, "\nInterval\nUpper")) %>%
     fit_tbl()
@@ -117,7 +117,7 @@ infer_1mean_test <- function(data, formula, digits = 3, mu0 = 0, conf_lvl = 0.95
                        base::format.pval(mu_test$p.value, digits = digits)))
   ) %>%
     finalize_tbl(digits = digits, caption = caption, striped = FALSE) %>%
-    flextable::set_header_labels(n = "n Used", na = "n\nMisssing", estimate = "x\u0304", se = "Standard\nError",
+    flextable::set_header_labels(n = "n Used", na = "n\nMissing", estimate = "x\u0304", se = "Standard\nError",
                                  df = "Degrees of\nFreedom", p = "p-value\n(2 tail)") %>%
     fit_tbl()
 

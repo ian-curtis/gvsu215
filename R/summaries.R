@@ -7,7 +7,7 @@
 #' @param formula Variables to summarize given in formula notation: `~var1` or `var1~var2`.
 #'    `var1` should be numeric and `var2`, when supplied, should be a grouping variable.
 #' @param digits The number if digits to round to. Defaults to 3.
-#' @param na_rm Should missing values be removed? Defaults to FALSE.
+#' @param na_rm Should missing values be removed? Defaults to TRUE.
 #' @param caption An override for the table caption. A sensible default is given.
 #'
 #' @return An object of class flextable. If in an interactive session, the table will be
@@ -17,17 +17,17 @@
 #' @examples
 #' tbl_num_sum(mtcars, ~wt)
 #'
-#' tbl_num_sum(mtcars, ~wt, na_rm = TRUE)
-#' tbl_num_sum(mtcars, ~wt, na_rm = TRUE, digits = 2, caption = "This is a table")
-#' tbl_num_sum(mtcars, wt~cyl, na_rm = TRUE)
+#' tbl_num_sum(mtcars, ~wt)
+#' tbl_num_sum(mtcars, ~wt digits = 2, caption = "This is a table")
+#' tbl_num_sum(mtcars, wt~cyl)
 #'
 #' # not removing NAs is not recommended
-#' tbl_num_sum(airquality, ~Ozone)
-#' tbl_num_sum(airquality, Ozone~Month)
+#' tbl_num_sum(airquality, ~Ozone, na_rm = FALSE)
+#' tbl_num_sum(airquality, Ozone~Month, na_rm = FALSE)
 #'
 #' # easy fix
-#' tbl_num_sum(airquality, Ozone~Month, na_rm = TRUE)
-tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
+#' tbl_num_sum(airquality, Ozone~Month)
+tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = TRUE) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
@@ -264,10 +264,10 @@ tbl_pctile <- function(data, formula, digits = 3, probs = c(0, .25, .5, .75, 1),
 #'
 #' @examples
 #' # Not removing NAs is not recommended
-#' tbl_corr(airquality, Ozone~Solar.R)
+#' tbl_corr(airquality, Ozone~Solar.R, na_rm = FALSE)
 #'
-#' tbl_corr(airquality, Ozone~Solar.R, na_rm = TRUE)
-tbl_corr <- function(data, formula, digits = 3, caption = NULL, na_rm = FALSE) {
+#' tbl_corr(airquality, Ozone~Solar.R)
+tbl_corr <- function(data, formula, digits = 3, caption = NULL, na_rm = TRUE) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
