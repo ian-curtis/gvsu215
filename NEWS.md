@@ -1,3 +1,8 @@
+# gvsu215 0.5.5
+
+* All functions that have an `na_rm` argument now default to `TRUE` (rather than `FALSE`)
+* KNOWN ISSUE: Table captions in pdf output have wonky spacing. This is believed to be a bug within `flextable` and is in progress.
+
 # gvsu215 0.5.4
 
 * Updated spacing in tables for Word output
