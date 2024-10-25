@@ -11,6 +11,7 @@ plot_box(
   breaks = NULL,
   orient = c("vertical", "horizontal"),
   title = NULL,
+  subtitle = c("show", "hide"),
   ...
 )
 }
@@ -28,6 +29,8 @@ or \code{var1~var2} for a grouped boxplot where \code{var2} is a grouping variab
 shortcut, "v" and "h" may be used.}
 
 \item{title}{An override for the title of the plot. A sensible default is provided.}
+
+\item{subtitle}{A switch for hiding the default subtitle. One of "show" or "hide".}
 
 \item{...}{Extra title arguments passed on to \code{\link[ggformula:gf_aux]{ggformula::gf_labs()}} (which feeds to \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}).}
 }

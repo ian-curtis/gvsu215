@@ -9,6 +9,7 @@ plot_scatter(
   formula,
   fill = "#0032a0",
   title = NULL,
+  subtitle = c("show", "hide"),
   legend_title = NULL,
   axis_lines = c("none", "both"),
   ls_line = c("hide", "show"),
@@ -24,6 +25,8 @@ plot_scatter(
 a variable given in formula notation (\code{~var}), used to create a grouped scatterplot.}
 
 \item{title}{An override for the title of the plot. A sensible default is provided.}
+
+\item{subtitle}{A switch for hiding the default subtitle. One of "show" or "hide".}
 
 \item{legend_title}{The title of the lengend. Ignored in non-grouped plots. Default is the variable name.}
 

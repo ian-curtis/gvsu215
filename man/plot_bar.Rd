@@ -12,7 +12,8 @@ plot_bar(
   orient = c("vertical", "horizontal"),
   dodge = 1,
   title = NULL,
-  na_rm = FALSE,
+  subtitle = c("show", "hide"),
+  na_rm = TRUE,
   ...
 )
 }
@@ -33,7 +34,9 @@ shortcut, "v" and "h" may be used.}
 
 \item{title}{An override for the title of the plot. A sensible default is provided.}
 
-\item{na_rm}{Should missing values be removed? Defaults to FALSE.}
+\item{subtitle}{A switch for hiding the default subtitle. One of "show" or "hide".}
+
+\item{na_rm}{Should missing values be removed? Defaults to TRUE.}
 
 \item{...}{Extra title arguments passed on to \code{\link[ggformula:gf_aux]{ggformula::gf_labs()}} (which feeds to \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}).}
 }
@@ -49,6 +52,7 @@ plot_bar(mtcars, ~cyl, type = "count")
 plot_bar(mtcars, ~cyl, type = "percent", fill = "yellowgreen")
 plot_bar(mtcars, ~cyl, orient = "horizontal")
 plot_bar(dplyr::starwars, ~hair_color, dodge = 2)
+plot_bar(mtcars, ~cyl, subtitle = "hide")
 
 plot_bar(mtcars, ~cyl, fill = ~gear)
 plot_bar(mtcars, ~cyl, type = "count", fill = ~gear)

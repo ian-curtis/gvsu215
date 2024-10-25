@@ -10,7 +10,7 @@ tbl_1var(
   digits = 3,
   caption = NULL,
   with_prop = c("no", "yes"),
-  na_rm = FALSE
+  na_rm = TRUE
 )
 }
 \arguments{
@@ -26,7 +26,7 @@ provided within the function.}
 \item{with_prop}{Should proportions be supplied with instead of percents? Defaults to "no",
 could also be "yes".}
 
-\item{na_rm}{Should missing values be removed? Defaults to FALSE.}
+\item{na_rm}{Should missing values be removed? Defaults to TRUE.}
 }
 \value{
 An object of class flextable. If in an interactive session, the table will be

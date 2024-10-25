@@ -4,7 +4,7 @@
 \alias{tbl_corr}
 \title{Create a simple correlation table}
 \usage{
-tbl_corr(data, formula, digits = 3, caption = NULL, na_rm = FALSE)
+tbl_corr(data, formula, digits = 3, caption = NULL, na_rm = TRUE)
 }
 \arguments{
 \item{data}{A data frame (or tibble).}
@@ -15,7 +15,7 @@ tbl_corr(data, formula, digits = 3, caption = NULL, na_rm = FALSE)
 
 \item{caption}{An override for the table caption. A sensible default is given.}
 
-\item{na_rm}{Should missing values be removed? Defaults to FALSE.}
+\item{na_rm}{Should missing values be removed? Defaults to TRUE.}
 }
 \value{
 An object of class flextable. If in an interactive session, the table will be
@@ -26,7 +26,7 @@ Create a simple correlation table
 }
 \examples{
 # Not removing NAs is not recommended
-tbl_corr(airquality, Ozone~Solar.R)
+tbl_corr(airquality, Ozone~Solar.R, na_rm = FALSE)
 
-tbl_corr(airquality, Ozone~Solar.R, na_rm = TRUE)
+tbl_corr(airquality, Ozone~Solar.R)
 }

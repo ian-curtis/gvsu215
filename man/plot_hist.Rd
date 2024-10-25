@@ -12,6 +12,7 @@ plot_hist(
   group = NULL,
   group_cols = 1,
   title = NULL,
+  subtitle = c("show", "hide"),
   ...
 )
 }
@@ -31,6 +32,8 @@ A good default is provided based on the range and values of the data.}
 1 (stacked vertical plots).}
 
 \item{title}{An override for the title of the plot. A sensible default is provided.}
+
+\item{subtitle}{A switch for hiding the default subtitle. One of "show" or "hide".}
 
 \item{...}{Extra title arguments passed on to \code{\link[ggformula:gf_aux]{ggformula::gf_labs()}} (which feeds to \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}).}
 }
