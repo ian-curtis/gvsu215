@@ -90,6 +90,9 @@ Many functions in this package have extra arguments that aren't necessary for ba
 * `inter_2prop_test()`
   * This is an extra function should you be interested. It does not appear in the student cheatsheet.
   
+# Useful Features that are Part of Another Function / Package
 
+* To take a random sample from a dataset, use `dplyr::slice_sample()` with the `n` argument set to the number of rows you'd like to sample.
+* To make a pie chart (not recommended) you might want to use your own plot code. Use `ggplot2::geom_bar()` with `coord_polar()`
 
 
