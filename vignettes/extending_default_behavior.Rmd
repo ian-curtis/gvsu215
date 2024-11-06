@@ -2,7 +2,7 @@
 title: "Extending the Default Behavior"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{extending behavior}
+  %\VignetteIndexEntry{Extending the Default Behavior}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

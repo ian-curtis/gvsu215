@@ -10,3 +10,4 @@
 README.html
 temp/
 generate.R
+^vignettes/articles$

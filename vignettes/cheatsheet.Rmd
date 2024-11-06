@@ -3,7 +3,7 @@ title: "Cheatsheet"
 subtitle: "Designed For GVSU STA 215 Students"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Cheat Sheet}
+  %\VignetteIndexEntry{Cheatsheet}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
