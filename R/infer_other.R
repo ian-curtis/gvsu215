@@ -114,12 +114,6 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
   rlang::inform("Note: NAs always removed for chi squared tests.", .frequency = "once", .frequency_id = "chisq-nas")
   original_n <- nrow(data)
 
-  data <- data %>%
-    stats::na.omit()
-  new_n <- nrow(data)
-
-  check_test(stats::chisq.test(mosaic::tally(formula, data = data), correct = FALSE))
-
   # code
   var1 <- formula[[2]]
   var1_str <- base::deparse(base::substitute(var1))
@@ -138,6 +132,13 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
     dplyr::select({{ var2 }}) %>%
     base::unique() %>%
     base::nrow()
+
+  data <- data %>%
+    dplyr::select({{ var1 }}, {{ var2 }}) %>%
+    stats::na.omit()
+  new_n <- nrow(data)
+
+  check_test(stats::chisq.test(mosaic::tally(formula, data = data), correct = FALSE))
 
   chisq_test <- stats::chisq.test(mosaic::tally(formula, data = data), correct = FALSE)
 
