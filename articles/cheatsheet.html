@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gvsu215</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,7 @@
 Students</h3>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/ian-curtis/gvsu215/blob/v0.5.5/vignettes/cheatsheet.Rmd" class="external-link"><code>vignettes/cheatsheet.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ian-curtis/gvsu215/blob/main/vignettes/cheatsheet.Rmd" class="external-link"><code>vignettes/cheatsheet.Rmd</code></a></small>
       <div class="d-none name"><code>cheatsheet.Rmd</code></div>
     </div>
 
@@ -269,7 +269,7 @@ p-value.</p>
 <p>Note: Confidence levels default to 95% but can be overridden with
 <code>conf_lvl = _DECIMAL_</code> (e.g.,
 <code>conf_lvl = 0.90</code>).</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">infer_2prop_int</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_EXPLANATORY_, <span class="at">success =</span> _SUCCESSCATEGORY_, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">infer_2prop_int</span>(_DATANAME_, _RESPONSE_<span class="sc">~</span>_EXPLANATORY_, <span class="at">success =</span> <span class="st">"_SUCCESSCATEGORY_"</span>, <span class="at">conf_lvl =</span> _CONFIDENCELEVEL_)</span></code></pre></div>
 <p>Note: For this code to work the explanatory variable must only have
 two categories.</p>
 </div>

@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gvsu215</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,7 @@
       <h1>Extending the Default Behavior</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/ian-curtis/gvsu215/blob/v0.5.5/vignettes/extending_default_behavior.Rmd" class="external-link"><code>vignettes/extending_default_behavior.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ian-curtis/gvsu215/blob/main/vignettes/extending_default_behavior.Rmd" class="external-link"><code>vignettes/extending_default_behavior.Rmd</code></a></small>
       <div class="d-none name"><code>extending_default_behavior.Rmd</code></div>
     </div>
 
@@ -115,8 +115,9 @@ default caption.</li>
 <li>The <code>with_prop</code> argument (defaults to “no”) can be set to
 “yes” to replace the percent column with the corresponding
 proportions.</li>
-<li>The <code>na_rm</code> argument can be used to remove missing values
-from the table</li>
+<li>The <code>na_rm</code> argument can be used to NOT remove missing
+values from the table (note that these functions remove missing values
+by default)</li>
 </ul>
 </li>
 <li>
@@ -128,8 +129,9 @@ percentages in each cell.</li>
 value for the number of digits to round to. Defaults to 3.</li>
 <li>The <code>caption</code> argument can be used to override the
 default caption.</li>
-<li>The <code>na_rm</code> argument can be used to remove missing values
-from the table</li>
+<li>The <code>na_rm</code> argument can be used to NOT remove missing
+values from the table (note that missing values are removed by
+default)</li>
 </ul>
 </li>
 <li>
@@ -151,6 +153,9 @@ default caption.</li>
 <code>percent</code>s or <code>count</code>s is desired.</li>
 <li>The <code>fill</code> argument can be used to choose a fill color
 (for a single variable plot).</li>
+<li>The <code>layout</code> argument can be used to swap between
+side-by-side (<code>sbs</code>, the default) and stacked bar plots
+(<code>stack</code>).</li>
 <li>The <code>orient</code> argument can be used to flip the axis.
 Choose either “vertical” (the default) or “horizontal”.</li>
 <li>The <code>dodge</code> argument can be used to create more rows on
@@ -244,6 +249,19 @@ hypothesis value, if different from 0.5.</li>
 <li>This is an extra function should you be interested. It does not
 appear in the student cheatsheet.</li>
 </ul>
+</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="useful-features-that-are-part-of-another-function-package">Useful Features that are Part of Another Function / Package<a class="anchor" aria-label="anchor" href="#useful-features-that-are-part-of-another-function-package"></a>
+</h2>
+<ul>
+<li>To take a random sample from a dataset, use
+<code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">dplyr::slice_sample()</a></code> with the <code>n</code> argument set
+to the number of rows you’d like to sample.</li>
+<li>To make a pie chart (not recommended) you might want to use your own
+plot code. Use <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">ggplot2::geom_bar()</a></code> with
+<code><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html" class="external-link">coord_polar()</a></code>
 </li>
 </ul>
 </div>

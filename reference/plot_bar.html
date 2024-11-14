@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gvsu215</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +34,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Create a simple bar plot</h1>
-      <small class="dont-index">Source: <a href="https://github.com/ian-curtis/gvsu215/blob/v0.5.5/R/plots.R" class="external-link"><code>R/plots.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ian-curtis/gvsu215/blob/main/R/plots.R" class="external-link"><code>R/plots.R</code></a></small>
       <div class="d-none name"><code>plot_bar.Rd</code></div>
     </div>
 
@@ -49,10 +49,12 @@
 <span>  <span class="va">formula</span>,</span>
 <span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"percent"</span>, <span class="st">"count"</span><span class="op">)</span>,</span>
 <span>  fill <span class="op">=</span> <span class="st">"#0032A0"</span>,</span>
+<span>  layout <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sbs"</span>, <span class="st">"stack"</span><span class="op">)</span>,</span>
 <span>  orient <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vertical"</span>, <span class="st">"horizontal"</span><span class="op">)</span>,</span>
 <span>  dodge <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  title <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  na_rm <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  subtitle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"show"</span>, <span class="st">"hide"</span><span class="op">)</span>,</span>
+<span>  na_rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -78,21 +80,29 @@
 a variable given in formula notation (<code>~var</code>), used to create a grouped bar plot.</p></dd>
 
 
+<dt id="arg-layout">layout<a class="anchor" aria-label="anchor" href="#arg-layout"></a></dt>
+<dd><p>The bar type for grouped plots. Either <code>"sbs"</code> for side-by-side bars or <code>"stack"</code> for stacked bars. <code>fill</code> must be a variable for this to go into effect.</p></dd>
+
+
 <dt id="arg-orient">orient<a class="anchor" aria-label="anchor" href="#arg-orient"></a></dt>
 <dd><p>The orientation for the plot (either "vertical", the default, or "horizontal"). As a
 shortcut, "v" and "h" may be used.</p></dd>
 
 
 <dt id="arg-dodge">dodge<a class="anchor" aria-label="anchor" href="#arg-dodge"></a></dt>
-<dd><p>The number of rows to dodge the axis labels to should they be overlapping.</p></dd>
+<dd><p>The number of rows to dodge the axis labels to, should they be overlapping.</p></dd>
 
 
 <dt id="arg-title">title<a class="anchor" aria-label="anchor" href="#arg-title"></a></dt>
 <dd><p>An override for the title of the plot. A sensible default is provided.</p></dd>
 
 
+<dt id="arg-subtitle">subtitle<a class="anchor" aria-label="anchor" href="#arg-subtitle"></a></dt>
+<dd><p>A switch for hiding the default subtitle. One of "show" or "hide".</p></dd>
+
+
 <dt id="arg-na-rm">na_rm<a class="anchor" aria-label="anchor" href="#arg-na-rm"></a></dt>
-<dd><p>Should missing values be removed? Defaults to FALSE.</p></dd>
+<dd><p>Should missing values be removed? Defaults to TRUE.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -118,11 +128,15 @@ shortcut, "v" and "h" may be used.</p></dd>
 <span class="r-plt img"><img src="plot_bar-4.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu">plot_bar</span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/starwars.html" class="external-link">starwars</a></span>, <span class="op">~</span><span class="va">hair_color</span>, dodge <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_bar-5.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">plot_bar</span><span class="op">(</span><span class="va">mtcars</span>, <span class="op">~</span><span class="va">cyl</span>, subtitle <span class="op">=</span> <span class="st">"hide"</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot_bar-6.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">plot_bar</span><span class="op">(</span><span class="va">mtcars</span>, <span class="op">~</span><span class="va">cyl</span>, fill <span class="op">=</span> <span class="op">~</span><span class="va">gear</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_bar-6.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">plot_bar</span><span class="op">(</span><span class="va">mtcars</span>, <span class="op">~</span><span class="va">cyl</span>, type <span class="op">=</span> <span class="st">"count"</span>, fill <span class="op">=</span> <span class="op">~</span><span class="va">gear</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_bar-7.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">plot_bar</span><span class="op">(</span><span class="va">mtcars</span>, <span class="op">~</span><span class="va">cyl</span>, fill <span class="op">=</span> <span class="op">~</span><span class="va">gear</span>, layout <span class="op">=</span> <span class="st">"stack"</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot_bar-8.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">plot_bar</span><span class="op">(</span><span class="va">mtcars</span>, <span class="op">~</span><span class="va">cyl</span>, type <span class="op">=</span> <span class="st">"count"</span>, fill <span class="op">=</span> <span class="op">~</span><span class="va">gear</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot_bar-9.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -19,7 +19,7 @@ value to display, and the third is the "step" distance.'></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">gvsu215</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,7 +46,7 @@ value to display, and the third is the "step" distance.'></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Create a simple histogram</h1>
-      <small class="dont-index">Source: <a href="https://github.com/ian-curtis/gvsu215/blob/v0.5.5/R/plots.R" class="external-link"><code>R/plots.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ian-curtis/gvsu215/blob/main/R/plots.R" class="external-link"><code>R/plots.R</code></a></small>
       <div class="d-none name"><code>plot_hist.Rd</code></div>
     </div>
 
@@ -70,6 +70,7 @@ value to display, and the third is the "step" distance.</p>
 <span>  group <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  group_cols <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  title <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  subtitle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"show"</span>, <span class="st">"hide"</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -91,7 +92,7 @@ value to display, and the third is the "step" distance.</p>
 
 
 <dt id="arg-breaks">breaks<a class="anchor" aria-label="anchor" href="#arg-breaks"></a></dt>
-<dd><p>A vector of length 3 (start, stop, step) specifying how the x-scale should be broken up.
+<dd><p>A use of the <code>seq</code> function (start, stop, step) specifying how the x-scale should be broken up.
 A good default is provided based on the range and values of the data.</p></dd>
 
 
@@ -106,6 +107,10 @@ A good default is provided based on the range and values of the data.</p></dd>
 
 <dt id="arg-title">title<a class="anchor" aria-label="anchor" href="#arg-title"></a></dt>
 <dd><p>An override for the title of the plot. A sensible default is provided.</p></dd>
+
+
+<dt id="arg-subtitle">subtitle<a class="anchor" aria-label="anchor" href="#arg-subtitle"></a></dt>
+<dd><p>A switch for hiding the default subtitle. One of "show" or "hide".</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
