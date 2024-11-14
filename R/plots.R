@@ -5,10 +5,10 @@
 #' @param type The type of plot to create. Valid options are "percent" (the default) or "count".
 #' @param fill The fill of the plot. Valid options are a character color (for one variable plots) or
 #'    a variable given in formula notation (`~var`), used to create a grouped bar plot.
-#' @param fill_position The bar type for grouped plots. Either `"sbs"` for side-by-side bars or `"stack"` for stacked bars. `fill` must be a variable for this to go into effect.
+#' @param layout The bar type for grouped plots. Either `"sbs"` for side-by-side bars or `"stack"` for stacked bars. `fill` must be a variable for this to go into effect.
 #' @param orient The orientation for the plot (either "vertical", the default, or "horizontal"). As a
 #'   shortcut, "v" and "h" may be used.
-#' @param dodge The number of rows to dodge the axis labels to should they be overlapping.
+#' @param dodge The number of rows to dodge the axis labels to, should they be overlapping.
 #' @param title An override for the title of the plot. A sensible default is provided.
 #' @param subtitle A switch for hiding the default subtitle. One of "show" or "hide".
 #' @param na_rm Should missing values be removed? Defaults to TRUE.
@@ -26,9 +26,9 @@
 #' plot_bar(mtcars, ~cyl, subtitle = "hide")
 #'
 #' plot_bar(mtcars, ~cyl, fill = ~gear)
-#' plot_bar(mtcars, ~cyl, fill = ~gear, fill_position = "stack")
+#' plot_bar(mtcars, ~cyl, fill = ~gear, layout = "stack")
 #' plot_bar(mtcars, ~cyl, type = "count", fill = ~gear)
-plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A0', fill_position = c("sbs", "stack"), orient = c("vertical", "horizontal"), dodge = 1, title = NULL, subtitle = c("show", "hide"), na_rm = TRUE, ...) {
+plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A0', layout = c("sbs", "stack"), orient = c("vertical", "horizontal"), dodge = 1, title = NULL, subtitle = c("show", "hide"), na_rm = TRUE, ...) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
@@ -55,10 +55,10 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
   subtitle_display <- base::match.arg(subtitle)
   var <- formula[[2]]
   var_str <- base::deparse(base::substitute(var))
-  fill_position <- base::match.arg(fill_position)
+  layout <- base::match.arg(layout)
 
-  if (base::is.character(fill) & fill_position == "stack") {
-    cli::cli_warn("{.var fill} must be a variable (not a character) for {.var fill_position} to have an effect.")
+  if (base::is.character(fill) & layout == "stack") {
+    cli::cli_warn("{.var fill} must be a variable (not a character) for {.var layout} to have an effect.")
   }
 
   # find the levels of the variable
@@ -133,7 +133,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
         ggformula::gf_percents(formula,
                                fill = fill,
                                width = 0.5,
-                               position = if(fill_position == "sbs") ggplot2::position_dodge2(preserve = "single") else "stack",
+                               position = if(layout == "sbs") ggplot2::position_dodge2(preserve = "single") else "stack",
                                denom = ~fill) %>%
         ggformula::gf_labs(title = base::ifelse(
                              base::is.null(title),
@@ -215,7 +215,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
         ggformula::gf_counts(formula,
                              fill = fill,
                              width = 0.5,
-                             position = if(fill_position == "sbs") ggplot2::position_dodge2(preserve = "single") else "stack") %>%
+                             position = if(layout == "sbs") ggplot2::position_dodge2(preserve = "single") else "stack") %>%
         ggformula::gf_labs(title = base::ifelse(
           base::is.null(title),
           base::paste("Clustered Bar Chart (Counts) of", var_str, "by", fill_str),
