@@ -1,3 +1,8 @@
+# gvsu215 0.6.0
+
+* `plot_bar()` now includes the ability to specify a stacked bar chart. `fill` must be a variable, then use the `layout` argument set to `stack`. (`sbs`, side-by-side, is the default).
+* Various small fixes to documentation and vignettes
+
 # gvsu215 0.5.5
 
 * All functions that have an `na_rm` argument now default to `TRUE` (rather than `FALSE`)
