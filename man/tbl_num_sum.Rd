@@ -30,13 +30,10 @@ including the min, q1, median, q3, max, mean, standard deviation, n, and missing
 tbl_num_sum(mtcars, ~wt)
 
 tbl_num_sum(mtcars, ~wt)
-tbl_num_sum(mtcars, ~wt digits = 2, caption = "This is a table")
+tbl_num_sum(mtcars, ~wt, digits = 2, caption = "This is a table")
 tbl_num_sum(mtcars, wt~cyl)
 
-# not removing NAs is not recommended
+# not removing NAs is an option but not recommended
 tbl_num_sum(airquality, ~Ozone, na_rm = FALSE)
 tbl_num_sum(airquality, Ozone~Month, na_rm = FALSE)
-
-# easy fix
-tbl_num_sum(airquality, Ozone~Month)
 }
