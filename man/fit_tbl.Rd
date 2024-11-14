@@ -16,7 +16,7 @@ A object of class flextable, autofit if interactive or HTML output, 6.5 inches o
 INTERNAL: Fit a table properly
 }
 \examples{
-flextable::flextable(mtcars) \%>\%
+flextable::flextable(mtcars) |>
   fit_tbl()
 }
 \keyword{internal}

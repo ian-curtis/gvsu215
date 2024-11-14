@@ -56,6 +56,16 @@ test_that("bar works with label change", {
   expect_no_warning(plot_box(mtcars, wt~gear, x = "yay", y = "yay"))
 })
 
+test_that("bar works with group fill and stack position", {
+  expect_no_warning(plot_bar(mtcars, ~cyl, fill = ~gear, layout = "stack"))
+})
+
+test_that("bar warns with variable fill and stack position", {
+  expect_warning(plot_bar(mtcars, ~cyl, fill = "red", layout = "stack"))
+})
+
+
+
 
 # plot_box() ####
 

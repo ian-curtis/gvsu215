@@ -12,6 +12,7 @@ plot_hist(
   group = NULL,
   group_cols = 1,
   title = NULL,
+  subtitle = c("show", "hide"),
   ...
 )
 }
@@ -22,7 +23,7 @@ plot_hist(
 
 \item{fill}{The fill color of the bins, entered as a character.}
 
-\item{breaks}{A vector of length 3 (start, stop, step) specifying how the x-scale should be broken up.
+\item{breaks}{A use of the \code{seq} function (start, stop, step) specifying how the x-scale should be broken up.
 A good default is provided based on the range and values of the data.}
 
 \item{group}{A grouping (faceting) variable entered in formula syntax, \code{~group_var}.}
@@ -31,6 +32,8 @@ A good default is provided based on the range and values of the data.}
 1 (stacked vertical plots).}
 
 \item{title}{An override for the title of the plot. A sensible default is provided.}
+
+\item{subtitle}{A switch for hiding the default subtitle. One of "show" or "hide".}
 
 \item{...}{Extra title arguments passed on to \code{\link[ggformula:gf_aux]{ggformula::gf_labs()}} (which feeds to \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}).}
 }

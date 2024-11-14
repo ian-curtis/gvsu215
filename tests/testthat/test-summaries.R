@@ -81,8 +81,8 @@ test_that("tbl_pctile fails with invalid probs", {
 
 # tbl_corr() ####
 
-test_that("corr informs with NAs not removed", {
-  expect_condition(tbl_corr(mtcars, wt~qsec))
+test_that("corr works with NAs removed by default", {
+  expect_no_condition(tbl_corr(mtcars, wt~qsec))
 })
 
 test_that("corr works with NAs removed", {

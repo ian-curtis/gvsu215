@@ -5,10 +5,12 @@
 #' @param type The type of plot to create. Valid options are "percent" (the default) or "count".
 #' @param fill The fill of the plot. Valid options are a character color (for one variable plots) or
 #'    a variable given in formula notation (`~var`), used to create a grouped bar plot.
+#' @param layout The bar type for grouped plots. Either `"sbs"` for side-by-side bars or `"stack"` for stacked bars. `fill` must be a variable for this to go into effect.
 #' @param orient The orientation for the plot (either "vertical", the default, or "horizontal"). As a
 #'   shortcut, "v" and "h" may be used.
-#' @param dodge The number of rows to dodge the axis labels to should they be overlapping.
+#' @param dodge The number of rows to dodge the axis labels to, should they be overlapping.
 #' @param title An override for the title of the plot. A sensible default is provided.
+#' @param subtitle A switch for hiding the default subtitle. One of "show" or "hide".
 #' @param na_rm Should missing values be removed? Defaults to TRUE.
 #' @param ... Extra title arguments passed on to [ggformula::gf_labs()] (which feeds to [ggplot2::ggplot()]).
 #'
@@ -21,10 +23,12 @@
 #' plot_bar(mtcars, ~cyl, type = "percent", fill = "yellowgreen")
 #' plot_bar(mtcars, ~cyl, orient = "horizontal")
 #' plot_bar(dplyr::starwars, ~hair_color, dodge = 2)
+#' plot_bar(mtcars, ~cyl, subtitle = "hide")
 #'
 #' plot_bar(mtcars, ~cyl, fill = ~gear)
+#' plot_bar(mtcars, ~cyl, fill = ~gear, layout = "stack")
 #' plot_bar(mtcars, ~cyl, type = "count", fill = ~gear)
-plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A0', orient = c("vertical", "horizontal"), dodge = 1, title = NULL, na_rm = TRUE, ...) {
+plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A0', layout = c("sbs", "stack"), orient = c("vertical", "horizontal"), dodge = 1, title = NULL, subtitle = c("show", "hide"), na_rm = TRUE, ...) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
@@ -48,8 +52,14 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
   # code
   type <- base::match.arg(type)
   orient <- base::match.arg(orient)
+  subtitle_display <- base::match.arg(subtitle)
   var <- formula[[2]]
   var_str <- base::deparse(base::substitute(var))
+  layout <- base::match.arg(layout)
+
+  if (base::is.character(fill) & layout == "stack") {
+    cli::cli_warn("{.var fill} must be a variable (not a character) for {.var layout} to have an effect.")
+  }
 
   # find the levels of the variable
   lvls <- dplyr::pull(data, var)
@@ -87,11 +97,15 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
         ggformula::gf_labs(title = ifelse(base::is.null(title),
                                           paste0("Bar Chart (Percents) of ",
                                                  var_str), title),
-                           subtitle = base::paste("Missing:", na, "|", "NAs Removed:",
-                                                  base::ifelse(na_rm == FALSE, "No", "Yes")),
+                           subtitle = ,
                            y = "Percent", ...) %>%
         ggformula::gf_refine(ggplot2::scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = dodge))) %>%
         finalize_plot()
+
+      if (subtitle_display == "show") {
+        plot <- plot + ggplot2::labs(subtitle = base::paste("Missing:", na, "|", "NAs Removed:",
+                                                  base::ifelse(na_rm == FALSE, "No", "Yes")))
+      }
 
       if (orient == "vertical") return(plot) else return(plot + ggplot2::coord_flip())
 
@@ -119,21 +133,26 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
         ggformula::gf_percents(formula,
                                fill = fill,
                                width = 0.5,
-                               position = ggplot2::position_dodge2(preserve = "single"),
+                               position = if(layout == "sbs") ggplot2::position_dodge2(preserve = "single") else "stack",
                                denom = ~fill) %>%
         ggformula::gf_labs(title = base::ifelse(
                              base::is.null(title),
                              base::paste("Clustered Bar Chart (Percents) of", var_str, "by", fill_str),
                              title),
                            y = "Percent",
-                           subtitle = base::paste(var_str, "Missing:", var_na, "|",
-                                                  fill_str, "Missing:", fill_na, "|",
-                                                  "NAs Removed:", base::ifelse(na_rm == FALSE, "No", "Yes")),
                            ...) %>%
         ggformula::gf_refine(ggplot2::scale_fill_brewer(palette = "Dark2", na.value = "grey"),
                              ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1))),
                              ggplot2::scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = dodge))) %>%
         finalize_plot()
+
+      if (subtitle_display == "show") {
+        plot <- plot + ggplot2::labs(subtitle = base::paste(var_str, "Missing:", var_na, "|",
+                                                   fill_str, "Missing:", fill_na, "|",
+                                                   "NAs Removed:", base::ifelse(na_rm == FALSE,
+                                                                                "No",
+                                                                                "Yes")))
+      }
 
       if (orient == "vertical") return(plot) else return(plot + ggplot2::coord_flip())
     }
@@ -162,11 +181,14 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
         ggformula::gf_labs(title = ifelse(base::is.null(title),
                                           paste0("Bar Chart (Counts) of ",
                                                  var_str), title),
-                           subtitle = base::paste("Missing:", na, "|", "NAs Removed:",
-                                                  base::ifelse(na_rm == FALSE, "No", "Yes")),
                            y = "Count", ...) %>%
         ggformula::gf_refine(ggplot2::scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = dodge))) %>%
         finalize_plot()
+
+      if (subtitle_display == "show") {
+        plot <- plot + ggplot2::labs(subtitle = base::paste("Missing:", na, "|", "NAs Removed:",
+                                                   base::ifelse(na_rm == FALSE, "No", "Yes")))
+      }
 
       if (orient == "vertical") return(plot) else return(plot + ggplot2::coord_flip())
 
@@ -193,7 +215,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
         ggformula::gf_counts(formula,
                              fill = fill,
                              width = 0.5,
-                             position = ggplot2::position_dodge2(preserve = "single")) %>%
+                             position = if(layout == "sbs") ggplot2::position_dodge2(preserve = "single") else "stack") %>%
         ggformula::gf_labs(title = base::ifelse(
           base::is.null(title),
           base::paste("Clustered Bar Chart (Counts) of", var_str, "by", fill_str),
@@ -207,6 +229,14 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
                              ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1))),
                              ggplot2::scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = dodge))) %>%
         finalize_plot()
+
+      if (subtitle_display == "show") {
+        plot <- plot + ggplot2::labs(subtitle = base::paste(var_str, "Missing:", var_na, "|",
+                                                   fill_str, "Missing:", fill_na, "|",
+                                                   "NAs Removed:", base::ifelse(na_rm == FALSE,
+                                                                                "No",
+                                                                                "Yes")))
+      }
 
       if (orient == "vertical") return(plot) else return(plot + ggplot2::coord_flip())
     }
@@ -232,7 +262,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
 #' plot_box(mtcars, ~wt, breaks = seq(1, 6, 0.5))
 #' plot_box(mtcars, wt~gear)
 #' plot_box(mtcars, wt~gear, breaks = seq(1, 6, 0.5))
-plot_box <- function(data, formula, fill = "grey80", breaks = NULL, orient = c("vertical", "horizontal"), title = NULL, ...) {
+plot_box <- function(data, formula, fill = "grey80", breaks = NULL, orient = c("vertical", "horizontal"), title = NULL, subtitle = c("show", "hide"), ...) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
@@ -245,6 +275,7 @@ plot_box <- function(data, formula, fill = "grey80", breaks = NULL, orient = c("
 
   # code
   orient <- base::match.arg(orient)
+  subtitle_display <- base::match.arg(subtitle)
   var <- formula[[2]]
   var_str <- base::deparse(base::substitute(var))
   px <- base::pretty(data[[var_str]])
@@ -277,8 +308,6 @@ plot_box <- function(data, formula, fill = "grey80", breaks = NULL, orient = c("
               title = base::ifelse(base::is.null(title),
                                    base::paste("Boxplot of", var_str),
                                    title),
-              subtitle = base::paste("Missing:", na, "|",
-                                     "NAs Removed: Yes"),
               ...) %>%
       finalize_plot() %>%
       ggformula::gf_theme(panel.grid.major.y = ggplot2::element_blank(),
@@ -298,6 +327,10 @@ plot_box <- function(data, formula, fill = "grey80", breaks = NULL, orient = c("
                                                            limits = range(px)))
       }
 
+    if (subtitle_display == "show") {
+      plot <- plot + ggplot2::labs(subtitle = base::paste("Missing:", na, "|",
+                                                 "NAs Removed: Yes"))
+    }
 
     if (orient == "vertical") return(plot) else return(plot + ggplot2::coord_flip())
 
@@ -321,9 +354,6 @@ plot_box <- function(data, formula, fill = "grey80", breaks = NULL, orient = c("
       ggformula::gf_labs(title = ifelse(base::is.null(title),
                              paste("Boxplot of", var_str, "by", by_str),
                              title),
-                         subtitle = paste(var_str, "Missing:", na[[1]], "|",
-                                          by_str, "Missing:", na[[2]], "|",
-                                          "NAs Removed: Yes"),
                          ...) %>%
       finalize_plot()
 
@@ -341,6 +371,12 @@ plot_box <- function(data, formula, fill = "grey80", breaks = NULL, orient = c("
                                                          breaks = breaks,
                                                          limits = range(px)))
 
+    }
+
+    if (subtitle_display == "show") {
+      plot <- plot + ggplot2::labs(subtitle = paste(var_str, "Missing:", na[[1]], "|",
+                                           by_str, "Missing:", na[[2]], "|",
+                                           "NAs Removed: Yes"))
     }
 
     if (orient == "vertical") return(plot) else return(plot + ggplot2::coord_flip())
@@ -365,7 +401,7 @@ plot_box <- function(data, formula, fill = "grey80", breaks = NULL, orient = c("
 #'
 #' @inheritParams plot_bar
 #' @param fill The fill color of the bins, entered as a character.
-#' @param breaks A vector of length 3 (start, stop, step) specifying how the x-scale should be broken up.
+#' @param breaks A use of the `seq` function (start, stop, step) specifying how the x-scale should be broken up.
 #'   A good default is provided based on the range and values of the data.
 #' @param group A grouping (faceting) variable entered in formula syntax, `~group_var`.
 #' @param group_cols The number of columns to make in a grouped (faceted) plot. Defaults to
@@ -381,11 +417,13 @@ plot_box <- function(data, formula, fill = "grey80", breaks = NULL, orient = c("
 #'
 #' plot_hist(mtcars, ~drat, group = ~cyl, breaks = seq(2, 5, 0.25))
 #' plot_hist(mtcars, ~drat, group = ~cyl, breaks = seq(2, 5, 0.25), group_cols = 2)
-plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NULL, group_cols = 1, title = NULL, ...) {
+plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NULL, group_cols = 1, title = NULL, subtitle = c("show", "hide"), ...) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
     dplyr::mutate(dplyr::across(dplyr::where(is.character), ~dplyr::na_if(., "")))
+
+  subtitle_display <- base::match.arg(subtitle)
 
   # error catching
   if (is.null(breaks)) {
@@ -440,11 +478,13 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
                            title = base::ifelse(base::is.null(title),
                                                 base::paste("Histogram of", var_str),
                                                 title),
-                           subtitle = base::paste("Missing:", n_na, "|", "NAs Removed: Yes"),
                            ...) %>%
         finalize_plot() %>%
         ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels, guide = ggplot2::guide_axis(check.overlap = TRUE)))
 
+      if (subtitle_display == "show") {
+        plot <- plot + ggplot2::labs(subtitle = base::paste("Missing:", n_na, "|", "NAs Removed: Yes"))
+      }
       return(plot)
 
     } else {
@@ -455,10 +495,14 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
                            title = base::ifelse(base::is.null(title),
                                                 base::paste("Histogram of", var_str),
                                                 title),
-                           subtitle = base::paste("Missing:", n_na, "|", "NAs Removed: Yes"),
                            ...) %>%
         finalize_plot() %>%
         ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels, breaks = breaks, guide = ggplot2::guide_axis(check.overlap = TRUE)))
+
+
+      if (subtitle_display == "show") {
+        plot <- plot + ggplot2::labs(subtitle = base::paste("Missing:", n_na, "|", "NAs Removed: Yes"))
+      }
 
       return(plot)
 
@@ -489,13 +533,16 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
                            title = base::ifelse(base::is.null(title),
                                                 base::paste("Histogram of", var_str, "by", facet_str),
                                                 title),
-                           subtitle = base::paste(var_str, "Missing:", var_na, "|",
-                                                  facet_str, "Missing:", facet_na, "|",
-                                                  "NAs Removed: Yes"),
                            ...) %>%
         finalize_plot() %>%
         ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels, guide = ggplot2::guide_axis(check.overlap = TRUE))) %>%
         ggformula::gf_theme(panel.border = ggplot2::element_rect(color = "black", fill = NA))
+
+      if (subtitle_display == "show") {
+        plot <- plot + ggplot2::labs(subtitle = base::paste(var_str, "Missing:", var_na, "|",
+                                                            facet_str, "Missing:", facet_na, "|",
+                                                            "NAs Removed: Yes"))
+      }
 
       return(plot)
 
@@ -508,15 +555,18 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
                            title = base::ifelse(base::is.null(title),
                                                 base::paste("Histogram of", var_str, "by", facet_str),
                                                 title),
-                           subtitle = base::paste(var_str, "Missing:", var_na, "|",
-                                                  facet_str, "Missing:", facet_na, "|",
-                                                  "NAs Removed: Yes"),
                            ...) %>%
         finalize_plot() %>%
         ggformula::gf_refine(ggplot2::scale_x_continuous(labels = plot_labels,
                                                          breaks = breaks,
                                                          guide = ggplot2::guide_axis(check.overlap = TRUE))) %>%
         ggformula::gf_theme(panel.border = ggplot2::element_rect(color = "black", fill = NA))
+
+      if (subtitle_display == "show") {
+        plot <- plot + ggplot2::labs(subtitle = base::paste(var_str, "Missing:", var_na, "|",
+                                                            facet_str, "Missing:", facet_na, "|",
+                                                            "NAs Removed: Yes"))
+      }
 
       return(plot)
 
@@ -555,7 +605,7 @@ plot_hist <- function(data, formula, fill = "#0032A0", breaks = NULL, group = NU
 #' plot_scatter(mtcars, wt~drat, fill = ~cyl)
 #' plot_scatter(mtcars, wt~drat, fill = ~cyl, ls_line = "show")
 #' plot_scatter(mtcars, wt~drat, fill = ~cyl, legend_title = "Cylinders")
-plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_title = NULL, axis_lines = c("none", "both"), ls_line = c("hide", "show"), ...) {
+plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, subtitle = c("show", "hide"), legend_title = NULL, axis_lines = c("none", "both"), ls_line = c("hide", "show"), ...) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
@@ -571,6 +621,7 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
   check_test(ggformula::gf_point(formula, data = data, fill = fill, color = "grey80", shape = 21, size = 2))
 
   # code
+  subtitle_display <- base::match.arg(subtitle)
   var1 <- formula[[2]]
   var1_str <- base::deparse(base::substitute(var1))
 
@@ -602,30 +653,40 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
 
     if (ls_line == "hide") {
 
-      ggformula::gf_point(formula, data = data, fill = fill, color = "grey60", shape = 21, size = 2) %>%
+      plot <- ggformula::gf_point(formula, data = data, fill = fill, color = "grey60", shape = 21, size = 2) %>%
         ggformula::gf_labs(title = base::ifelse(base::is.null(title),
                                                 base::paste("Scatterplot of", var1_str, "by", var2_str),
                                                 title),
-                           subtitle = base::paste(var1_str, "Missing:", n_na[[1]], "|",
-                                                  var2_str, "Missing:", n_na[[2]],
-                                                  "\nObservations Used:", obs_used, "| NAs Removed: Yes"),
                            ...) %>%
         finalize_plot() %>%
         ggformula::gf_theme(axis_theme)
 
+      if (subtitle_display == "show") {
+        plot <- plot + ggplot2::labs(subtitle = base::paste(var1_str, "Missing:", n_na[[1]], "|",
+                                                            var2_str, "Missing:", n_na[[2]],
+                                                            "\nObservations Used:", obs_used, "| NAs Removed: Yes"))
+      }
+
+      return(plot)
+
     } else if (ls_line == "show") {
 
-      ggformula::gf_point(formula, data = data, fill = fill, color = "grey60", shape = 21, size = 2) %>%
+      plot <- ggformula::gf_point(formula, data = data, fill = fill, color = "grey60", shape = 21, size = 2) %>%
         ggformula::gf_lm(color = "darkred") %>%
         ggformula::gf_labs(title = base::ifelse(base::is.null(title),
                                                 base::paste("Scatterplot of", var1_str, "by", var2_str),
                                                 title),
-                           subtitle = base::paste(var1_str, "Missing:", n_na[[1]], "|",
-                                                  var2_str, "Missing:", n_na[[2]],
-                                                  "\nObservations Used:", obs_used, "| NAs Removed: Yes"),
                            ...) %>%
         finalize_plot() %>%
         ggformula::gf_theme(axis_theme)
+
+      if (subtitle_display == "show") {
+        plot <- plot + ggplot2::labs(subtitle = base::paste(var1_str, "Missing:", n_na[[1]], "|",
+                                                            var2_str, "Missing:", n_na[[2]],
+                                                            "\nObservations Used:", obs_used, "| NAs Removed: Yes"))
+      }
+
+      return(plot)
 
     }
 
@@ -655,41 +716,49 @@ plot_scatter <- function(data, formula, fill = "#0032a0", title = NULL, legend_t
 
     if (ls_line == "hide") {
 
-      ggformula::gf_point(formula, data = data, fill = fill, color = "grey30", shape = 21, size = 2) %>%
+      plot <- ggformula::gf_point(formula, data = data, fill = fill, color = "grey30", shape = 21, size = 2) %>%
         ggformula::gf_labs(title = ifelse(base::is.null(title),
                                           base::paste0("Grouped Scatterplot of ", var1_str, " and ",
                                                        var2_str, "\nby ", group_str),
                                           title),
                            fill = base::ifelse(is.null(legend_title), group_str, legend_title),
-                           subtitle = base::paste0(var1_str, " Missing: ", n_na[[1]], " | ",
-                                                  var2_str, " Missing: ", n_na[[2]], " | ",
-                                                  group_str, " Missing: ", group_na, "\n",
-                                                  "Observations Used: ", obs_used, " | NAs Removed: Yes"),
                            ...) %>%
         finalize_plot() %>%
         ggformula::gf_theme(axis_theme) %>%
         ggformula::gf_refine(ggplot2::scale_fill_viridis_d())
 
+      if (subtitle_display == "show") {
+        plot <- plot + ggplot2::labs(subtitle = base::paste0(var1_str, " Missing: ", n_na[[1]], " | ",
+                                                             var2_str, " Missing: ", n_na[[2]], " | ",
+                                                             group_str, " Missing: ", group_na, "\n",
+                                                             "Observations Used: ", obs_used, " | NAs Removed: Yes"))
+
+        return(plot)
+      }
+
     } else if (ls_line == "show") {
 
         # ggformula::gf_point(formula, data = data, fill = fill, color = "grey80", shape = 21, size = 2) %>%
         #   ggformula::gf_lm(color = fill) %>%
-        ggformula::gf_lm(formula, data = data, color = fill) %>%
+        plot <- ggformula::gf_lm(formula, data = data, color = fill) %>%
           ggformula::gf_point(size = 2) %>%
           ggformula::gf_labs(title = ifelse(base::is.null(title),
                                             base::paste0("Grouped Scatterplot of ", var1_str, " and ",
                                                          var2_str, "\nby ", group_str),
                                             title),
                              fill = base::ifelse(is.null(legend_title), group_str, legend_title),
-                             subtitle = base::paste0(var1_str, " Missing: ", n_na[[1]], " | ",
-                                                     var2_str, " Missing: ", n_na[[2]], " | ",
-                                                     group_str, " Missing: ", group_na, "\n",
-                                                     "Observations Used: ", obs_used, " | NAs Removed: Yes"),
                              ...) %>%
           finalize_plot() %>%
           ggformula::gf_theme(axis_theme) %>%
           ggformula::gf_refine(ggplot2::scale_color_viridis_d()) %>%
           ggformula::gf_point(color = "grey30", shape = 21, size = 2)
+
+      if (subtitle_display == "show") {
+        plot <- plot + ggplot2::labs(subtitle = base::paste0(var1_str, " Missing: ", n_na[[1]], " | ",
+                                                             var2_str, " Missing: ", n_na[[2]], " | ",
+                                                             group_str, " Missing: ", group_na, "\n",
+                                                             "Observations Used: ", obs_used, " | NAs Removed: Yes"))
+      }
 
     }
 

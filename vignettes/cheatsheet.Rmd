@@ -3,7 +3,7 @@ title: "Cheatsheet"
 subtitle: "Designed For GVSU STA 215 Students"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Cheat Sheet}
+  %\VignetteIndexEntry{Cheatsheet}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -223,7 +223,7 @@ infer_chisq(_DATANAME_, _EXPLANATORY_~_RESPONSE_, type = "observed")
 Note: Confidence levels default to 95% but can be overridden with `conf_lvl = _DECIMAL_` (e.g., `conf_lvl = 0.90`). 
 
 ```{verbatim, lang = "r"}
-infer_2prop_int(_DATANAME_, _RESPONSE_~_EXPLANATORY_, success = _SUCCESSCATEGORY_, conf_lvl = _CONFIDENCELEVEL_)
+infer_2prop_int(_DATANAME_, _RESPONSE_~_EXPLANATORY_, success = "_SUCCESSCATEGORY_", conf_lvl = _CONFIDENCELEVEL_)
 ```
 
 Note: For this code to work the explanatory variable must only have two categories.

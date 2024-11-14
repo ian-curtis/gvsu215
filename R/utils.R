@@ -97,7 +97,7 @@ finalize_tbl <- function(table, digits, striped = TRUE, caption = NULL, na_str =
 #' @export
 #'
 #' @examples
-#' flextable::flextable(mtcars) %>%
+#' flextable::flextable(mtcars) |>
 #'   fit_tbl()
 fit_tbl <- function(table) {
 

@@ -4,7 +4,7 @@
 \alias{tbl_num_sum}
 \title{Create numerical summaries}
 \usage{
-tbl_num_sum(data, formula, digits = 3, caption = NULL, na_rm = FALSE)
+tbl_num_sum(data, formula, digits = 3, caption = NULL, na_rm = TRUE)
 }
 \arguments{
 \item{data}{A data frame (or tibble).}
@@ -16,7 +16,7 @@ tbl_num_sum(data, formula, digits = 3, caption = NULL, na_rm = FALSE)
 
 \item{caption}{An override for the table caption. A sensible default is given.}
 
-\item{na_rm}{Should missing values be removed? Defaults to FALSE.}
+\item{na_rm}{Should missing values be removed? Defaults to TRUE.}
 }
 \value{
 An object of class flextable. If in an interactive session, the table will be
@@ -29,14 +29,11 @@ including the min, q1, median, q3, max, mean, standard deviation, n, and missing
 \examples{
 tbl_num_sum(mtcars, ~wt)
 
-tbl_num_sum(mtcars, ~wt, na_rm = TRUE)
-tbl_num_sum(mtcars, ~wt, na_rm = TRUE, digits = 2, caption = "This is a table")
-tbl_num_sum(mtcars, wt~cyl, na_rm = TRUE)
+tbl_num_sum(mtcars, ~wt)
+tbl_num_sum(mtcars, ~wt, digits = 2, caption = "This is a table")
+tbl_num_sum(mtcars, wt~cyl)
 
-# not removing NAs is not recommended
-tbl_num_sum(airquality, ~Ozone)
-tbl_num_sum(airquality, Ozone~Month)
-
-# easy fix
-tbl_num_sum(airquality, Ozone~Month, na_rm = TRUE)
+# not removing NAs is an option but not recommended
+tbl_num_sum(airquality, ~Ozone, na_rm = FALSE)
+tbl_num_sum(airquality, Ozone~Month, na_rm = FALSE)
 }
