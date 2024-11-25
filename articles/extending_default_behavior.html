@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gvsu215</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,11 +76,14 @@ advantage of if you so choose.</p>
 <h2 id="different-r-markdown-export-formats">Different R Markdown Export Formats<a class="anchor" aria-label="anchor" href="#different-r-markdown-export-formats"></a>
 </h2>
 <p>This package should be able to be used in any output format using R
-Markdown, including HTML<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Best results will come from HTML output.&lt;/p&gt;"><sup>1</sup></a>, PDF<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;If using PDF output, you will want to make sure student
-R Markdown files have the following in the YAML header which will allow
-the compiler to use the &lt;code&gt;xelatex&lt;/code&gt; engine. As such, you will
-avoid messages printing out from every function call.&lt;/p&gt;"><sup>2</sup></a>, and Word. If this is not the case, <a href="mailto:gabrosej@gvsu.edu">reach out to Dr. John Gabrosek</a> or <a href="https://github.com/ian-curtis/gvsu215/issues" class="external-link">submit an issue on
+Markdown, including HTML<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Best results will come from HTML output.&lt;/p&gt;"><sup>1</sup></a>, PDF, and Word. If this is not the case, <a href="mailto:gabrosej@gvsu.edu">reach out to Dr. John Gabrosek</a> or <a href="https://github.com/ian-curtis/gvsu215/issues" class="external-link">submit an issue on
 GitHub</a>.</p>
+<p>If using PDF output, you will want to make sure student R Markdown
+files have the following in the YAML header which will allow the
+compiler to use the <code>xelatex</code> engine. As such, you will avoid
+messages printing out from every function call and you will be able to
+see special characters such as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>x</mi><mo accent="true">‾</mo></mover><annotation encoding="application/x-tex">\bar{x}</annotation></semantics></math>.</p>
 <pre><code><span><span class="va">output</span><span class="op">:</span></span>
 <span>  <span class="va">pdf_document</span><span class="op">:</span></span>
 <span>    <span class="va">latex_engine</span><span class="op">:</span> <span class="va">xelatex</span></span></code></pre>
