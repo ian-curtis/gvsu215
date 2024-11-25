@@ -18,7 +18,7 @@ infer_1mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
   check_conf_lvl(conf_lvl)
 
   check_test(mosaic::t_test(formula, data = data, conf.level = conf_lvl))
-
+  cl <-  base::paste0(conf_lvl*100, "%")
   # code
   var <- formula[[2]]
   var_str <- base::deparse(base::substitute(var))
@@ -26,13 +26,19 @@ infer_1mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
   # build caption
   if (base::is.null(caption)) {
 
-    caption <- base::paste("One-Sample Mean Confidence Interval on Variable", var_str)
+    caption <- base::paste("One-Sample Mean Interval on Variable", var_str,
+                           "\nConfidence Level:", cl)
+
+  } else {
+
+    caption <- base::paste(caption,
+                           "\nConfidence Level:", cl)
 
   }
 
   mu_test <- mosaic::t_test(formula, data = data, conf.level = conf_lvl)
 
-  cl <-  base::paste0(conf_lvl*100, "%")
+
 
   n_na <- find_na(data, formula)
 
@@ -87,15 +93,7 @@ infer_1mean_test <- function(data, formula, digits = 3, mu0 = 0, conf_lvl = 0.95
 
   if (base::is.null(caption)) {
 
-    caption <- base::paste("One-Sample Mean Test on Variable", var_str,
-                           "\nConfidence Level:", cl,
-                           "\nNull Value:", mu0)
-
-  } else {
-
-    caption <- base::paste(caption,
-                           "\nConfidence Level:", cl,
-                           "\nNull Value:", mu0)
+    caption <- base::paste("One-Sample Mean Test on Variable", var_str)
 
   }
 
@@ -259,11 +257,12 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
   # build caption
   if (base::is.null(caption)) {
 
-    caption <- base::paste("Two Sample Independent Means Interval Between", var1_str, "and", grp_str)
+    caption <- base::paste("Two Sample Independent Means Interval Between", var1_str, "and", grp_str,
+                           "\nConfidence Level:", cl)
 
   } else {
 
-    caption <- caption
+    caption <- base::paste(caption, "\nConfidence Level:", cl)
 
   }
 
@@ -355,8 +354,7 @@ infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
   # build caption
   if (base::is.null(caption)) {
 
-    caption <- base::paste("Two Sample Independent Means Test Between", var1_str, "and", grp_str,
-                           "\nConfidence Level:", cl)
+    caption <- base::paste("Two Sample Independent Means Test Between", var1_str, "and", grp_str)
 
   } else {
 
