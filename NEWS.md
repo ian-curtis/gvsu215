@@ -1,3 +1,8 @@
+# gvsu215 0.6.1
+
+* Adjusted captions in `infer_mean_*` and `infer_prop_*`. Some intervals were not showing confidence levels and some tests were. These should be back in their regular places.
+* `infer_2mean_test()` now has a `mu0` argument to be used with the difference between the means is not equal to 0.
+
 # gvsu215 0.6.0
 
 * `plot_bar()` now includes the ability to specify a stacked bar chart. `fill` must be a variable, then use the `layout` argument set to `stack`. (`sbs`, side-by-side, is the default).
