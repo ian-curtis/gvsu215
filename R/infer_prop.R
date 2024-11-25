@@ -291,6 +291,7 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
 #' Create a summary table for a two-sample proportion test
 #'
 #' @inheritParams infer_2prop_int
+#' @param p0 THe null hypothesis value. Defaults to 0.5.
 #'
 #' @return An object of class flextable. In an interactive environment, results are viewable immediately.
 #' @export

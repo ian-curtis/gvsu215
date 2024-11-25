@@ -93,7 +93,8 @@ infer_1mean_test <- function(data, formula, digits = 3, mu0 = 0, conf_lvl = 0.95
 
   if (base::is.null(caption)) {
 
-    caption <- base::paste("One-Sample Mean Test on Variable", var_str)
+    caption <- base::paste("One-Sample Mean Test on Variable", var_str,
+                           "\nNull Value:", mu0)
 
   }
 
@@ -305,6 +306,7 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
 #' Create a summary table for a two-sample mean test
 #'
 #' @inheritParams infer_2prop_int
+#' @param mu0 The null hypothesis value. Defaults to 0.
 #'
 #' @return An object of class flextable. In an interactive environment, results are viewable immediately.
 #' @export
@@ -312,7 +314,7 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
 #' @examples
 #' infer_2mean_test(mtcars, wt~vs)
 #' infer_2mean_test(mtcars, wt~vs, conf_lvl = .9)
-infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption = NULL) {
+infer_2mean_test <- function(data, formula, digits = 3, mu0 = 0, conf_lvl = 0.95, caption = NULL) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
@@ -344,21 +346,22 @@ infer_2mean_test <- function(data, formula, digits = 3, conf_lvl = 0.95, caption
 
   }
 
-  check_test(mosaic::t_test(formula, data = data, conf.level = conf_lvl))
+  check_test(mosaic::t_test(formula, data = data, conf.level = conf_lvl, mu = mu0))
 
   # code
-  ind_test <- mosaic::t_test(formula, data = data, conf.level = conf_lvl)
+  ind_test <- mosaic::t_test(formula, data = data, conf.level = conf_lvl, mu = mu0)
 
   cl <- base::paste0(conf_lvl*100, "%")
 
   # build caption
   if (base::is.null(caption)) {
 
-    caption <- base::paste("Two Sample Independent Means Test Between", var1_str, "and", grp_str)
+    caption <- base::paste("Two Sample Independent Means Test Between", var1_str, "and", grp_str,
+                           "\nNull Hypothesis Value (Difference in Means):", mu0)
 
   } else {
 
-    caption <- base::paste(caption, "\nConfidence Level:", cl)
+    caption <- base::paste(caption, "\nNull Hypothesis Value (Difference in Means):", mu0)
 
   }
 
