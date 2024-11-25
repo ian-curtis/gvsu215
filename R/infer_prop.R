@@ -36,21 +36,23 @@ infer_1prop_int <- function(data, formula, success = NULL, digits = 3, conf_lvl 
   var <- formula[[2]]
   var_str <- base::deparse(base::substitute(var))
 
+  prop_test <- mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success, correct = FALSE)
+  cl <-  base::paste0(conf_lvl*100, "%")
+
   # build caption
   if (base::is.null(caption)) {
 
     caption <- base::paste("One-Sample Proportion Confidence Interval on Variable", var_str,
-                           "\nSuccesses:", success)
+                           "\nSuccesses:", success,
+                           "\nConfidence Level:", cl)
 
   } else {
 
-    caption <- base::paste(caption, "\nSuccesses:", success)
+    caption <- base::paste(caption, "\nSuccesses:", success,
+                           "\nConfidence Level:", cl)
 
   }
 
-  prop_test <- mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success, correct = FALSE)
-
-  cl <-  base::paste0(conf_lvl*100, "%")
 
   n_success <- data %>%
     dplyr::filter({{ var }} == success) %>%
@@ -211,20 +213,22 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
 
   # code
   two_prop <- mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success, correct = FALSE)
-
+  cl <- base::paste0(conf_lvl*100, "%")
   # build caption
   if (base::is.null(caption)) {
 
     caption <- base::paste("Two Sample Proportion Interval Between", var1_str, "and", grp_str,
-                           "\nSuccesses:", success)
+                           "\nSuccesses:", success,
+                           "\nConfidence Level:", cl)
 
   } else {
 
-    caption <- base::paste(caption, "\nSuccesses:", success)
+    caption <- base::paste(caption, "\nSuccesses:", success,
+                           "\nConfidence Level:", cl)
 
   }
 
-  cl <- base::paste0(conf_lvl*100, "%")
+
 
   grp_lvls <- sort(unique(dplyr::pull(data, grp_var)))
 
@@ -287,6 +291,7 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
 #' Create a summary table for a two-sample proportion test
 #'
 #' @inheritParams infer_2prop_int
+#' @param p0 THe null hypothesis value. Defaults to 0.5.
 #'
 #' @return An object of class flextable. In an interactive environment, results are viewable immediately.
 #' @export
@@ -321,11 +326,11 @@ infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
   if (base::is.null(caption)) {
 
     caption <- base::paste("Two Sample Proportion Test Between", var1_str, "and", grp_str,
-                           "\nSuccesses:", success, "| Confidence:", cl)
+                           "\nSuccesses:", success)
 
   } else {
 
-    caption <- base::paste(caption, "\nSuccesses:", success, "| Confidence:", cl)
+    caption <- base::paste(caption, "\nSuccesses:", success)
 
   }
 

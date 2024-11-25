@@ -26,6 +26,8 @@ infer_2prop_test(
 Defaults to 0.95.}
 
 \item{caption}{An override to the table caption. A sensible default is provided.}
+
+\item{p0}{THe null hypothesis value. Defaults to 0.5.}
 }
 \value{
 An object of class flextable. In an interactive environment, results are viewable immediately.
