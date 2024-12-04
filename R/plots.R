@@ -28,19 +28,26 @@
 #' plot_bar(mtcars, ~cyl, fill = ~gear)
 #' plot_bar(mtcars, ~cyl, fill = ~gear, layout = "stack")
 #' plot_bar(mtcars, ~cyl, type = "count", fill = ~gear)
-plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A0', layout = c("sbs", "stack"), orient = c("vertical", "horizontal"), dodge = 1, title = NULL, subtitle = c("show", "hide"), na_rm = TRUE, ...) {
+#' plot_bar(mtcars, ~cyl, type = "count", fill = ~gear, layout = "stack")
+plot_bar <- function(data,
+                     formula,
+                     type = c("percent", "count"),
+                     fill = '#0032A0',
+                     layout = c("sbs", "stack"),
+                     orient = c("vertical", "horizontal"),
+                     dodge = 1,
+                     title = NULL,
+                     subtitle = c("show", "hide"),
+                     na_rm = TRUE,
+                     ...) {
+
+  # Initial Stuff ####
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
     dplyr::mutate(dplyr::across(dplyr::where(is.character), ~dplyr::na_if(., "")))
 
   # error catching
-
-  if (base::length(type) == 2) {
-    rlang::inform("When no value for `type` is provided, a 'percent' plot is created.",
-                  .frequency = "regularly",
-                  .frequency_id = "bar-type")
-  }
 
   if (base::length(formula) > 2) {
     cli::cli_abort("Too many variables provided. Try entering only one variable in your formula.\nIf you are looking for a grouped bar plot, use the {.var fill} argument.")
@@ -58,7 +65,7 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
   layout <- base::match.arg(layout)
 
   if (base::is.character(fill) & layout == "stack") {
-    cli::cli_warn("{.var fill} must be a variable (not a character) for {.var layout} to have an effect.")
+    cli::cli_abort("{.var fill} must be a variable (not a character) for {.var layout} set to 'stack' to work properly.")
   }
 
   # find the levels of the variable
@@ -68,50 +75,54 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
 
   # if the biggest level has more than 20 characters, add new lines at each space
   if (big_lvl > 20) {
-
     data <- data %>%
       dplyr::mutate("{var}" := base::gsub(" ", "\n", {{ var }}))
-
   }
 
-  # percent plot
+  # Percent Plots ####
+
   if (type == 'percent') {
 
-    # ungrouped plot (color fill)
+    ## One-Var Percent Plots ####
     if (base::is.character(fill)) {
 
       na <- find_na(data, formula)
 
       if (na_rm == TRUE) {
-
         data <- data %>%
           dplyr::select({{ var }}) %>%
           stats::na.omit()
-
       }
 
       plot <- data %>%
         dplyr::mutate("{var}" := base::factor({{ var }})) %>%
         ggformula::gf_percents(formula, fill = fill) %>%
-        ggformula::gf_refine(ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))) %>%
+        ggformula::gf_refine(
+          ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))
+        ) %>%
         ggformula::gf_labs(title = ifelse(base::is.null(title),
-                                          paste0("Bar Chart (Percents) of ",
-                                                 var_str), title),
-                           subtitle = ,
-                           y = "Percent", ...) %>%
-        ggformula::gf_refine(ggplot2::scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = dodge))) %>%
+                                          paste0("Bar Chart (Percents) of ", var_str),
+                                          title),
+                           y = "Percent",
+                           ...) %>%
+        ggformula::gf_refine(
+          ggplot2::scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = dodge)),
+          ggplot2::scale_y_continuous(labels = scales::label_percent(scale = 1))
+        ) %>%
         finalize_plot()
 
       if (subtitle_display == "show") {
-        plot <- plot + ggplot2::labs(subtitle = base::paste("Missing:", na, "|", "NAs Removed:",
-                                                  base::ifelse(na_rm == FALSE, "No", "Yes")))
+        plot <- plot +
+          ggplot2::labs(subtitle = base::paste("Missing:", na, "|", "NAs Removed:",
+                                               base::ifelse(na_rm == FALSE, "No", "Yes")))
       }
 
       if (orient == "vertical") return(plot) else return(plot + ggplot2::coord_flip())
 
 
-    } else {
-      # grouped plot (variable fill)
+    }
+    ## Grouped Percent Plots ####
+    else if (layout == "sbs"){
 
       var_na <- find_na(data, formula)
       fill_na <- find_na(data, fill)
@@ -133,67 +144,37 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
         ggformula::gf_percents(formula,
                                fill = fill,
                                width = 0.5,
-                               position = if(layout == "sbs") ggplot2::position_dodge2(preserve = "single") else "stack",
+                               position = ggplot2::position_dodge2(preserve = "single"),
                                denom = ~fill) %>%
         ggformula::gf_labs(title = base::ifelse(
-                             base::is.null(title),
-                             base::paste("Clustered Bar Chart (Percents) of", var_str, "by", fill_str),
-                             title),
-                           y = "Percent",
-                           ...) %>%
+          base::is.null(title),
+          base::paste("Clustered Bar Chart (Percents) of",
+                      var_str, "by", fill_str),
+          title),
+          y = "Percent",
+          ...) %>%
         ggformula::gf_refine(ggplot2::scale_fill_brewer(palette = "Dark2", na.value = "grey"),
-                             ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1))),
-                             ggplot2::scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = dodge))) %>%
+                             ggplot2::scale_y_continuous(
+                               expand = ggplot2::expansion(mult = c(0, 0.1))
+                             ),
+                             ggplot2::scale_x_discrete(
+                               guide = ggplot2::guide_axis(n.dodge = dodge))
+        ) %>%
         finalize_plot()
 
       if (subtitle_display == "show") {
-        plot <- plot + ggplot2::labs(subtitle = base::paste(var_str, "Missing:", var_na, "|",
-                                                   fill_str, "Missing:", fill_na, "|",
-                                                   "NAs Removed:", base::ifelse(na_rm == FALSE,
-                                                                                "No",
-                                                                                "Yes")))
+        plot <- plot +
+          ggplot2::labs(subtitle = base::paste(var_str, "Missing:", var_na, "|",
+                                               fill_str, "Missing:", fill_na, "|",
+                                               "NAs Removed:", base::ifelse(na_rm == FALSE,
+                                                                            "No", "Yes")))
       }
 
       if (orient == "vertical") return(plot) else return(plot + ggplot2::coord_flip())
     }
 
-
-  } # count plot
-  else if (type == 'count') {
-
-    if (base::is.character(fill)) {
-      # one-var count (color fill)
-
-      na <- find_na(data, formula)
-
-      if (na_rm == TRUE) {
-
-        data <- data %>%
-          dplyr::select({{ var }}) %>%
-          stats::na.omit()
-
-      }
-
-      plot <- data %>%
-        dplyr::mutate("{var}" := base::factor({{ var }})) %>%
-        ggformula::gf_counts(formula, fill = fill) %>%
-        ggformula::gf_refine(ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))) %>%
-        ggformula::gf_labs(title = ifelse(base::is.null(title),
-                                          paste0("Bar Chart (Counts) of ",
-                                                 var_str), title),
-                           y = "Count", ...) %>%
-        ggformula::gf_refine(ggplot2::scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = dodge))) %>%
-        finalize_plot()
-
-      if (subtitle_display == "show") {
-        plot <- plot + ggplot2::labs(subtitle = base::paste("Missing:", na, "|", "NAs Removed:",
-                                                   base::ifelse(na_rm == FALSE, "No", "Yes")))
-      }
-
-      if (orient == "vertical") return(plot) else return(plot + ggplot2::coord_flip())
-
-    } else {
-      # grouped count (variable fill)
+    ## Stacked Grouped Percent Plots ####
+    else if (layout == "stack") {
 
       var_na <- find_na(data, formula)
       fill_na <- find_na(data, fill)
@@ -209,38 +190,184 @@ plot_bar <- function(data, formula, type = c("percent", "count"), fill = '#0032A
 
       }
 
+      data <- data %>%
+        dplyr::mutate("{var}" := base::gsub(" ", "\n", {{ var }}),
+                      "{fill_var}" := forcats::fct_rev(base::factor({{ fill_var }})))
+
+      plot <- data %>%
+        ggformula::gf_percents(formula,
+                               fill = fill,
+                               width = 0.5,
+                               position = "fill",
+                               denom = ~fill) %>%
+        ggformula::gf_labs(title = base::ifelse(
+          base::is.null(title),
+          base::paste("Stacked Bar Chart (Percents) of",
+                      var_str, "by", fill_str),
+          title),
+          y = "Percent",
+          ...) %>%
+        ggformula::gf_refine(ggplot2::scale_fill_brewer(palette = "Dark2", na.value = "grey"),
+                             ggplot2::scale_y_continuous(
+                               expand = ggplot2::expansion(mult = c(0, 0.1)),
+                               labels = scales::label_percent()
+                             ),
+                             ggplot2::scale_x_discrete(
+                               guide = ggplot2::guide_axis(n.dodge = dodge))
+        ) %>%
+        finalize_plot()
+
+      if (subtitle_display == "show") {
+        plot <- plot +
+          ggplot2::labs(subtitle = base::paste(var_str, "Missing:", var_na, "|",
+                                               fill_str, "Missing:", fill_na, "|",
+                                               "NAs Removed:", base::ifelse(na_rm == FALSE,
+                                                                            "No", "Yes")))
+      }
+
+      if (orient == "vertical") return(plot) else return(plot + ggplot2::coord_flip())
+    }
+
+
+
+
+  } else if (type == 'count') { # Count Plots ####
+
+    if (base::is.character(fill)) {
+      ## One-Var Count Plots ####
+
+      na <- find_na(data, formula)
+
+      if (na_rm == TRUE) {
+        data <- data %>%
+          dplyr::select({{ var }}) %>%
+          stats::na.omit()
+      }
+
+      plot <- data %>%
+        dplyr::mutate("{var}" := base::factor({{ var }})) %>%
+        ggformula::gf_counts(formula, fill = fill) %>%
+        ggformula::gf_refine(
+          ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))
+        ) %>%
+        ggformula::gf_labs(title = ifelse(base::is.null(title),
+                                          paste0("Bar Chart (Counts) of ", var_str),
+                                          title),
+                           y = "Count",
+                           ...) %>%
+        ggformula::gf_refine(
+          ggplot2::scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = dodge))
+        ) %>%
+        finalize_plot()
+
+      if (subtitle_display == "show") {
+        plot <- plot +
+          ggplot2::labs(subtitle = base::paste("Missing:", na, "|", "NAs Removed:",
+                                               base::ifelse(na_rm == FALSE, "No", "Yes")))
+      }
+
+      if (orient == "vertical") return(plot) else return(plot + ggplot2::coord_flip())
+
+    } else if (layout == "sbs") {
+      ## Grouped Count Plots ####
+
+      var_na <- find_na(data, formula)
+      fill_na <- find_na(data, fill)
+
+      fill_var <- fill[[2]]
+      fill_str <- base::deparse(base::substitute(fill_var))
+
+      if (na_rm == TRUE) {
+        data <- data %>%
+          dplyr::select({{ var }}, {{ fill_var }}) %>%
+          stats::na.omit()
+      }
+
       plot <- data %>%
         dplyr::mutate("{var}" := base::gsub(" ", "\n", {{ var }}),
                       "{fill_var}" := base::factor({{ fill_var }})) %>%
         ggformula::gf_counts(formula,
                              fill = fill,
                              width = 0.5,
-                             position = if(layout == "sbs") ggplot2::position_dodge2(preserve = "single") else "stack") %>%
-        ggformula::gf_labs(title = base::ifelse(
-          base::is.null(title),
-          base::paste("Clustered Bar Chart (Counts) of", var_str, "by", fill_str),
-          title),
+                             position = ggplot2::position_dodge2(preserve = "single")) %>%
+        ggformula::gf_labs(
+          title = base::ifelse(base::is.null(title),
+                               base::paste("Clustered Bar Chart (Counts) of",
+                                           var_str, "by", fill_str),
+                               title),
           y = "Count",
-          subtitle = base::paste(var_str, "Missing:", var_na, "|",
-                                 fill_str, "Missing:", fill_na, "|",
-                                 "NAs Removed:", base::ifelse(na_rm == FALSE, "No", "Yes")),
           ...) %>%
         ggformula::gf_refine(ggplot2::scale_fill_brewer(palette = "Dark2", na.value = "grey"),
-                             ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1))),
-                             ggplot2::scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = dodge))) %>%
+                             ggplot2::scale_y_continuous(
+                               expand = ggplot2::expansion(mult = c(0, 0.1))
+                             ),
+                             ggplot2::scale_x_discrete(
+                               guide = ggplot2::guide_axis(n.dodge = dodge))
+        ) %>%
         finalize_plot()
 
       if (subtitle_display == "show") {
-        plot <- plot + ggplot2::labs(subtitle = base::paste(var_str, "Missing:", var_na, "|",
-                                                   fill_str, "Missing:", fill_na, "|",
-                                                   "NAs Removed:", base::ifelse(na_rm == FALSE,
-                                                                                "No",
-                                                                                "Yes")))
+        plot <- plot +
+          ggplot2::labs(subtitle = base::paste(var_str, "Missing:", var_na, "|",
+                                               fill_str, "Missing:", fill_na, "|",
+                                               "NAs Removed:",
+                                               base::ifelse(na_rm == FALSE, "No", "Yes")))
       }
 
       if (orient == "vertical") return(plot) else return(plot + ggplot2::coord_flip())
+
+    } else if (layout == "stack") {
+      ## Stacked Grouped Count Plots ####
+
+      var_na <- find_na(data, formula)
+      fill_na <- find_na(data, fill)
+
+      fill_var <- fill[[2]]
+      fill_str <- base::deparse(base::substitute(fill_var))
+
+      if (na_rm == TRUE) {
+        data <- data %>%
+          dplyr::select({{ var }}, {{ fill_var }}) %>%
+          stats::na.omit()
+      }
+
+      plot <- data %>%
+        dplyr::mutate("{var}" := base::gsub(" ", "\n", {{ var }}),
+                      "{fill_var}" := base::factor({{ fill_var }})) %>%
+        ggformula::gf_counts(formula,
+                             fill = fill,
+                             width = 0.5,
+                             position = "stack") %>%
+        ggformula::gf_labs(
+          title = base::ifelse(base::is.null(title),
+                               base::paste("Stacked Bar Chart (Counts) of",
+                                           var_str, "by", fill_str),
+                               title),
+          y = "Count",
+          ...) %>%
+        ggformula::gf_refine(ggplot2::scale_fill_brewer(palette = "Dark2", na.value = "grey"),
+                             ggplot2::scale_y_continuous(
+                               expand = ggplot2::expansion(mult = c(0, 0.1))
+                             ),
+                             ggplot2::scale_x_discrete(
+                               guide = ggplot2::guide_axis(n.dodge = dodge))
+        ) %>%
+        finalize_plot()
+
+      if (subtitle_display == "show") {
+        plot <- plot +
+          ggplot2::labs(subtitle = base::paste(var_str, "Missing:", var_na, "|",
+                                               fill_str, "Missing:", fill_na, "|",
+                                               "NAs Removed:",
+                                               base::ifelse(na_rm == FALSE, "No", "Yes")))
+      }
+
+      if (orient == "vertical") return(plot) else return(plot + ggplot2::coord_flip())
+
     }
+
   }
+
 }
 
 #' Create a simple boxplot
