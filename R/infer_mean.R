@@ -298,7 +298,12 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
     flextable::set_header_labels(var = grp_str, na = "n\nMissing", xbar = "Group\nMeans", se = "Standard\nError",
                                  cil = base::paste(cl, "\nInterval\nLower"),
                                  ciu = base::paste(cl, "\nInterval\nUpper")) %>%
-    flextable::vline(j = c(3, 4)) %>%
+    flextable::vline(j = 4, border = officer::fp_border(width = 2)) %>%
+    flextable::merge_at(i = 1:2, j = 5) %>%
+    flextable::merge_at(i = 1:2, j = 6) %>%
+    flextable::merge_at(i = 1:2, j = 7) %>%
+    flextable::merge_at(i = 1:2, j = 8) %>%
+    flextable::align(j = 5:8, align = "center") %>%
     fit_tbl()
 
 }
@@ -399,7 +404,12 @@ infer_2mean_test <- function(data, formula, digits = 3, mu0 = 0, conf_lvl = 0.95
                                  xbar = "Group\nMeans",
                                  se = "Standard\nError",
                                  p = "p-value\n(2 tail)") %>%
-    flextable::vline(j = 4) %>%
+    flextable::vline(j = 4, border = officer::fp_border(width = 2)) %>%
+    flextable::merge_at(i = 1:2, j = 5) %>%
+    flextable::merge_at(i = 1:2, j = 6) %>%
+    flextable::merge_at(i = 1:2, j = 7) %>%
+    flextable::merge_at(i = 1:2, j = 8) %>%
+    flextable::align(j = 5:8, align = "center") %>%
     fit_tbl()
 
 }

@@ -283,7 +283,11 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
     flextable::set_header_labels(var = grp_str, yay = "n\nSuccesses", na = "n\nMissing", phat = "p\u0302",
                                  se = "Standard\nError", cil = base::paste(cl, "\nInterval\nLower"),
                                  ciu = base::paste(cl, "\nInterval\nUpper")) %>%
-    flextable::vline(j = 5) %>%
+    flextable::vline(j = 5, border = officer::fp_border(width = 2)) %>%
+    flextable::merge_at(i = 1:2, j = 6) %>%
+    flextable::merge_at(i = 1:2, j = 7) %>%
+    flextable::merge_at(i = 1:2, j = 8) %>%
+    flextable::align(j = 6:8, align = "center") %>%
     fit_tbl()
 
 }
@@ -385,7 +389,11 @@ infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
                  na_str = "") %>%
     flextable::set_header_labels(var = "Variable", yay = "n\nSuccesses", na = "n\nMissing", phat = "p\u0302",
                                  se = "Standard\nError", p = "p-value\n(2 tail)") %>%
-    flextable::vline(j = 5) %>%
+    flextable::vline(j = 5, border = officer::fp_border(width = 2)) %>%
+    flextable::merge_at(i = 1:2, j = 6) %>%
+    flextable::merge_at(i = 1:2, j = 7) %>%
+    flextable::merge_at(i = 1:2, j = 8) %>%
+    flextable::align(j = 6:8, align = "center") %>%
     fit_tbl()
 
 }

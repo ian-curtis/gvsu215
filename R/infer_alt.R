@@ -103,7 +103,11 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
                  na_str = "") %>%
     flextable::set_header_labels(var = grp_str, yay = "n\nSuccesses", na = "n\nMissing", phat = "p\u0302",
                                  se = "Standard\nError", p = "p-value\n(2 tail)") %>%
-    flextable::vline(j = 5) %>%
+    flextable::vline(j = 5, border = officer::fp_border(width = 2)) %>%
+    flextable::merge_at(i = 1:2, j = 6) %>%
+    flextable::merge_at(i = 1:2, j = 7) %>%
+    flextable::merge_at(i = 1:2, j = 8) %>%
+    flextable::align(j = 5:8, align = "center") %>%
     fit_tbl()
 
   # table with CI
@@ -118,7 +122,7 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
     z = c(two_prop$statistic, NA),
     p = c(base::ifelse(two_prop$p.value < 0.0001,
                        "< 0.0001",
-                       base::format.pval(two_prop$p.value / 2, digits = digits)), NA),
+                       base::format.pval(two_prop$p.value, digits = digits)), NA),
     cil = c(two_prop$conf.int[[1]], NA),
     ciu = c(two_prop$conf.int[[2]], NA)
   ) %>%
@@ -126,10 +130,16 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
                  caption = caption,
                  na_str = "") %>%
     flextable::set_header_labels(var = grp_str, yay = "n\nSuccesses", na = "n\nMissing", phat = "p\u0302",
-                                 se = "Standard\nError", p = "p-value\n(1 tail)",
+                                 se = "Standard\nError", p = "p-value\n(2 tail)",
                                  cil = base::paste(cl, "\nInterval\nLower"),
                                  ciu = base::paste(cl, "\nInterval\nUpper")) %>%
-    flextable::vline(j = c(5, 8)) %>%
+    flextable::vline(j = 5, border = officer::fp_border(width = 2)) %>%
+    flextable::merge_at(i = 1:2, j = 6) %>%
+    flextable::merge_at(i = 1:2, j = 7) %>%
+    flextable::merge_at(i = 1:2, j = 8) %>%
+    flextable::merge_at(i = 1:2, j = 9) %>%
+    flextable::merge_at(i = 1:2, j = 10) %>%
+    flextable::align(j = 5:10, align = "center") %>%
     fit_tbl()
 
   if (conf_int == "hide") return(no_interval)
@@ -243,7 +253,12 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = c
                                  xbar = "Group\nMeans",
                                  se = "Standard\nError",
                                  p = "p-value") %>%
-    flextable::vline(j = 4) %>%
+    flextable::vline(j = 4, border = officer::fp_border(width = 2)) %>%
+    flextable::merge_at(i = 1:2, j = 5) %>%
+    flextable::merge_at(i = 1:2, j = 6) %>%
+    flextable::merge_at(i = 1:2, j = 7) %>%
+    flextable::merge_at(i = 1:2, j = 8) %>%
+    flextable::align(j = 5:8, align = "center") %>%
     fit_tbl()
 
   # table with CI
@@ -268,7 +283,14 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = c
                                  p = "p-value (2 tail)",
                                  cil = base::paste(cl, "\nInterval\nLower"),
                                  ciu = base::paste(cl, "\nInterval\nUpper")) %>%
-    flextable::vline(j = c(4, 8)) %>%
+    flextable::vline(j = 4, border = officer::fp_border(width = 2)) %>%
+    flextable::merge_at(i = 1:2, j = 5) %>%
+    flextable::merge_at(i = 1:2, j = 6) %>%
+    flextable::merge_at(i = 1:2, j = 7) %>%
+    flextable::merge_at(i = 1:2, j = 8) %>%
+    flextable::merge_at(i = 1:2, j = 9) %>%
+    flextable::merge_at(i = 1:2, j = 10) %>%
+    flextable::align(j = 5:10, align = "center") %>%
     fit_tbl()
 
   if (conf_int == "hide") return(no_interval)
