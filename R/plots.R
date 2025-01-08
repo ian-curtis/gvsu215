@@ -198,8 +198,7 @@ plot_bar <- function(data,
         ggformula::gf_percents(formula,
                                fill = fill,
                                width = 0.5,
-                               position = "fill",
-                               denom = ~fill) %>%
+                               position = "fill") %>%
         ggformula::gf_labs(title = base::ifelse(
           base::is.null(title),
           base::paste("Stacked Bar Chart (Percents) of",
