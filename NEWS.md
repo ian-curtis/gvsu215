@@ -1,3 +1,9 @@
+# gvsu216 0.6.2
+
+* Corrected error in `plot_bar()` when a stacked bar chart was requested. Bar section heights will now match the actual proportion of the respective values.
+* Two-sample tests and intervals now have merged, centered, grey cells to differentiate them from the group statistics.
+* Flip-flopped the variable names in the titles of stacked bar charts to read \*fill variable\* by \*x-axis variable\*.
+
 # gvsu215 0.6.1
 
 * Adjusted captions in `infer_mean_*` and `infer_prop_*`. Some intervals were not showing confidence levels and some tests were. These should be back in their regular places.

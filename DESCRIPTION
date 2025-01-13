@@ -1,6 +1,6 @@
 Package: gvsu215
 Title: Pretty Plots and Charts for Introductory Statistical Concepts
-Version: 0.6.2.9999
+Version: 0.6.2
 Authors@R: 
     person("Ian", "Curtis", , "curtisi@mail.gvsu.edu", role = c("cre", "aut", "cph"))
 Description: A light wrapper to 'mosaic' and 'ggformula' enabling nice
