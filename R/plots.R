@@ -202,7 +202,7 @@ plot_bar <- function(data,
         ggformula::gf_labs(title = base::ifelse(
           base::is.null(title),
           base::paste("Stacked Bar Chart (Percents) of",
-                      var_str, "by", fill_str),
+                      fill_str, "by", var_str),
           title),
           y = "Percent",
           ...) %>%
@@ -340,7 +340,7 @@ plot_bar <- function(data,
         ggformula::gf_labs(
           title = base::ifelse(base::is.null(title),
                                base::paste("Stacked Bar Chart (Counts) of",
-                                           var_str, "by", fill_str),
+                                           fill_str, "by", var_str),
                                title),
           y = "Count",
           ...) %>%
