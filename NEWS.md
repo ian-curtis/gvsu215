@@ -1,4 +1,4 @@
-# gvsu216 0.6.2
+# gvsu215 0.6.2
 
 * Corrected error in `plot_bar()` when a stacked bar chart was requested. Bar section heights will now match the actual proportion of the respective values.
 * Two-sample tests and intervals now have merged, centered, grey cells to differentiate them from the group statistics.
