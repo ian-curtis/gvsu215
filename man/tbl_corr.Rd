@@ -11,7 +11,7 @@ tbl_corr(data, formula, digits = 3, caption = NULL, na_rm = TRUE)
 
 \item{formula}{Two variables given in formula notation: \code{var1~var2}.}
 
-\item{digits}{The number if digits to round to. Defaults to 3.}
+\item{digits}{The number of digits to round to. Defaults to 3.}
 
 \item{caption}{An override for the table caption. A sensible default is given.}
 
