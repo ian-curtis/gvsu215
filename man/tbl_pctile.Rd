@@ -18,7 +18,7 @@ tbl_pctile(
 \item{formula}{Variables to summarize given in formula notation: \code{~var1} or \code{var1~var2}.
 \code{var1} should be numeric and \code{var2}, when supplied, should be a grouping variable.}
 
-\item{digits}{The number if digits to round to. Defaults to 3.}
+\item{digits}{The number of digits to round to. Defaults to 3.}
 
 \item{probs}{A vector of percentiles to compute. Each value must be between 0 and 1, inclusive.
 Defaults to 0, 25\%, 50\%, 75\%, and 100\%.}

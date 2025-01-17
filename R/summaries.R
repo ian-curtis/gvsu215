@@ -6,7 +6,7 @@
 #' @param data A data frame (or tibble).
 #' @param formula Variables to summarize given in formula notation: `~var1` or `var1~var2`.
 #'    `var1` should be numeric and `var2`, when supplied, should be a grouping variable.
-#' @param digits The number if digits to round to. Defaults to 3.
+#' @param digits The number of digits to round to. Defaults to 3.
 #' @param na_rm Should missing values be removed? Defaults to TRUE.
 #' @param caption An override for the table caption. A sensible default is given.
 #'

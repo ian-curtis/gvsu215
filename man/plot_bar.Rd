@@ -60,4 +60,5 @@ plot_bar(mtcars, ~cyl, subtitle = "hide")
 plot_bar(mtcars, ~cyl, fill = ~gear)
 plot_bar(mtcars, ~cyl, fill = ~gear, layout = "stack")
 plot_bar(mtcars, ~cyl, type = "count", fill = ~gear)
+plot_bar(mtcars, ~cyl, type = "count", fill = ~gear, layout = "stack")
 }

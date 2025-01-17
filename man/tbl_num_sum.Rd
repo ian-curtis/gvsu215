@@ -12,7 +12,7 @@ tbl_num_sum(data, formula, digits = 3, caption = NULL, na_rm = TRUE)
 \item{formula}{Variables to summarize given in formula notation: \code{~var1} or \code{var1~var2}.
 \code{var1} should be numeric and \code{var2}, when supplied, should be a grouping variable.}
 
-\item{digits}{The number if digits to round to. Defaults to 3.}
+\item{digits}{The number of digits to round to. Defaults to 3.}
 
 \item{caption}{An override for the table caption. A sensible default is given.}
 
