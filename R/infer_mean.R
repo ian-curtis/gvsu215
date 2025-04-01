@@ -65,6 +65,8 @@ infer_1mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
 #'
 #' @inheritParams infer_1mean_int
 #' @param mu0 The null hypothesis value. Defaults to 0.
+#' @param alternative The alternative hypothesis. Defaults to "notequal" (two sided p-value).
+#'    Other options include "greater" or "less". Use depends on your test.
 #'
 #' @return An object of class flextable. In an interactive environment, results are viewable immediately.
 #' @export
@@ -73,7 +75,9 @@ infer_1mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
 #' infer_1mean_test(mtcars, ~wt)
 #' infer_1mean_test(mtcars, ~wt, mu0 = 3)
 #' infer_1mean_test(mtcars, ~wt, digits = 4, conf_lvl = 0.90)
-infer_1mean_test <- function(data, formula, digits = 3, mu0 = 0, conf_lvl = 0.95, caption = NULL) {
+infer_1mean_test <- function(data, formula, digits = 3, mu0 = 0,
+                             alternative = c("notequal", "greater", "less"),
+                             conf_lvl = 0.95, caption = NULL) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
@@ -82,7 +86,21 @@ infer_1mean_test <- function(data, formula, digits = 3, mu0 = 0, conf_lvl = 0.95
   # error catching
   check_conf_lvl(conf_lvl)
 
-  check_test(mosaic::t_test(formula, data = data, conf.level = conf_lvl, mu = mu0))
+  alternative = base::match.arg(alternative)
+
+  if (alternative == "notequal") {
+    alt_hyp <- "two.sided"
+    p_header <- "Two Sided"
+  } else if (alternative == "greater") {
+    alt_hyp <- alternative
+    p_header <- "One Sided (Greater Than)"
+  } else {
+    alt_hyp <- alternative
+    p_header <- "One Sided (Less Than)"
+  }
+
+  check_test(mosaic::t_test(formula, data = data, conf.level = conf_lvl, mu = mu0,
+                            alternative = alt_hyp))
 
   # code
   var <- formula[[2]]
@@ -94,11 +112,13 @@ infer_1mean_test <- function(data, formula, digits = 3, mu0 = 0, conf_lvl = 0.95
   if (base::is.null(caption)) {
 
     caption <- base::paste("One-Sample Mean Test on Variable", var_str,
-                           "\nNull Value:", mu0)
+                           "\nNull Value:", mu0,
+                           "\np-value Reported:", p_header)
 
   }
 
-  mu_test <- mosaic::t_test(formula, data = data, conf.level = conf_lvl, mu = mu0)
+  mu_test <- mosaic::t_test(formula, data = data, conf.level = conf_lvl, mu = mu0,
+                            alternative = alt_hyp)
 
   n_na <- find_na(data, formula)
 
@@ -117,7 +137,7 @@ infer_1mean_test <- function(data, formula, digits = 3, mu0 = 0, conf_lvl = 0.95
   ) %>%
     finalize_tbl(digits = digits, caption = caption, striped = FALSE) %>%
     flextable::set_header_labels(n = "n Used", na = "n\nMissing", estimate = "x\u0304", se = "Standard\nError",
-                                 df = "Degrees of\nFreedom", p = "p-value\n(2 tail)") %>%
+                                 df = "Degrees of\nFreedom", p = "p-value") %>%
     fit_tbl()
 
 }
@@ -312,6 +332,9 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
 #'
 #' @inheritParams infer_2prop_int
 #' @param mu0 The null hypothesis value. Defaults to 0.
+#' @param alternative The alternative hypothesis. Defaults to "notequal" (two sided p-value).
+#'    Other options include "greater" or "less". Use depends on your test.
+#'
 #'
 #' @return An object of class flextable. In an interactive environment, results are viewable immediately.
 #' @export
@@ -319,7 +342,9 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
 #' @examples
 #' infer_2mean_test(mtcars, wt~vs)
 #' infer_2mean_test(mtcars, wt~vs, conf_lvl = .9)
-infer_2mean_test <- function(data, formula, digits = 3, mu0 = 0, conf_lvl = 0.95, caption = NULL) {
+infer_2mean_test <- function(data, formula, digits = 3, mu0 = 0,
+                             alternative = c("notequal", "greater", "less"),
+                             conf_lvl = 0.95, caption = NULL) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
@@ -327,6 +352,19 @@ infer_2mean_test <- function(data, formula, digits = 3, mu0 = 0, conf_lvl = 0.95
 
   # error catching
   check_conf_lvl(conf_lvl)
+
+  alternative = base::match.arg(alternative)
+
+  if (alternative == "notequal") {
+    alt_hyp <- "two.sided"
+    p_header <- "Two Sided"
+  } else if (alternative == "greater") {
+    alt_hyp <- alternative
+    p_header <- "One Sided (Greater Than)"
+  } else {
+    alt_hyp <- alternative
+    p_header <- "One Sided (Less Than)"
+  }
 
   var1 <- formula[[2]]
   var1_str <- base::deparse(base::substitute(var1))
@@ -351,10 +389,12 @@ infer_2mean_test <- function(data, formula, digits = 3, mu0 = 0, conf_lvl = 0.95
 
   }
 
-  check_test(mosaic::t_test(formula, data = data, conf.level = conf_lvl, mu = mu0))
+  check_test(mosaic::t_test(formula, data = data, conf.level = conf_lvl, mu = mu0,
+                            alternative = alt_hyp))
 
   # code
-  ind_test <- mosaic::t_test(formula, data = data, conf.level = conf_lvl, mu = mu0)
+  ind_test <- mosaic::t_test(formula, data = data, conf.level = conf_lvl, mu = mu0,
+                             alternative = alt_hyp)
 
   cl <- base::paste0(conf_lvl*100, "%")
 
@@ -362,11 +402,13 @@ infer_2mean_test <- function(data, formula, digits = 3, mu0 = 0, conf_lvl = 0.95
   if (base::is.null(caption)) {
 
     caption <- base::paste("Two Sample Independent Means Test Between", var1_str, "and", grp_str,
-                           "\nNull Hypothesis Value (Difference in Means):", mu0)
+                           "\nNull Hypothesis Value (Difference in Means):", mu0,
+                           "\np-value Reported:", p_header)
 
   } else {
 
-    caption <- base::paste(caption, "\nNull Hypothesis Value (Difference in Means):", mu0)
+    caption <- base::paste(caption, "\nNull Hypothesis Value (Difference in Means):", mu0,
+                           "\np-value Reported:", p_header)
 
   }
 
@@ -403,7 +445,7 @@ infer_2mean_test <- function(data, formula, digits = 3, mu0 = 0, conf_lvl = 0.95
     flextable::set_header_labels(var = "Variable", na = "n\nMissing", s = "Group s",
                                  xbar = "Group\nMeans",
                                  se = "Standard\nError",
-                                 p = "p-value\n(2 tail)") %>%
+                                 p = "p-value") %>%
     flextable::vline(j = 4, border = officer::fp_border(width = 2)) %>%
     flextable::merge_at(i = 1:2, j = 5) %>%
     flextable::merge_at(i = 1:2, j = 6) %>%

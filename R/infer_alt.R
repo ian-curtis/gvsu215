@@ -16,7 +16,9 @@
 #' infer_2prop(mtcars, vs~am, success = 1)
 #' infer_2prop(mtcars, vs~am, success = 1, conf_lvl = .9, digits = 4)
 #' infer_2prop(mtcars, vs~am, success = 1, conf_lvl = .9, digits = 5, conf_int = "show")
-infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, conf_int = c("hide", "show"), caption = NULL) {
+infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
+                        alternative = c("notequal", "greater", "less"),
+                        conf_int = c("hide", "show"), caption = NULL) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
@@ -25,12 +27,28 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
   # error catching
   check_conf_lvl(conf_lvl)
 
-  check_test(mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success, correct = FALSE))
-
   conf_int = base::match.arg(conf_int)
+  alternative = base::match.arg(alternative)
+
+  if (alternative == "notequal") {
+    alt_hyp <- "two.sided"
+    p_header <- "Two Sided"
+  } else if (alternative == "greater") {
+    alt_hyp <- alternative
+    p_header <- "One Sided (Greater Than)"
+  } else {
+    alt_hyp <- alternative
+    p_header <- "One Sided (Less Than)"
+  }
+
+  check_test(mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success,
+                               correct = FALSE, alternative = alt_hyp))
+
+
 
   # code
-  two_prop <- mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success, correct = FALSE)
+  two_prop <- mosaic::prop.test(formula, data = data, conf.level = conf_lvl,
+                                success = success, correct = FALSE, alternative = alt_hyp)
 
   var1 <- formula[[2]]
   var1_str <- base::deparse(base::substitute(var1))
@@ -44,11 +62,13 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
   if (base::is.null(caption)) {
 
     caption <- base::paste("Two Sample Proportion Test Between", var1_str, "and", grp_str,
-                           "\nSuccess:", success, "| Confidence:", cl)
+                           "\nSuccess:", success, "| Confidence:", cl,
+                           "\n p-value Reported:", p_header)
 
   } else {
 
-    caption <- base::paste(caption, "\nSuccess:", success, "| Confidence:", cl)
+    caption <- base::paste(caption, "\nSuccess:", success, "| Confidence:", cl,
+                           "\n p-value Reported:", p_header)
 
   }
 
@@ -102,7 +122,7 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
                  caption = caption,
                  na_str = "") %>%
     flextable::set_header_labels(var = grp_str, yay = "n\nSuccesses", na = "n\nMissing", phat = "p\u0302",
-                                 se = "Standard\nError", p = "p-value\n(2 tail)") %>%
+                                 se = "Standard\nError", p = "p-value") %>%
     flextable::vline(j = 5, border = officer::fp_border(width = 2)) %>%
     flextable::merge_at(i = 1:2, j = 6) %>%
     flextable::merge_at(i = 1:2, j = 7) %>%
@@ -130,7 +150,7 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
                  caption = caption,
                  na_str = "") %>%
     flextable::set_header_labels(var = grp_str, yay = "n\nSuccesses", na = "n\nMissing", phat = "p\u0302",
-                                 se = "Standard\nError", p = "p-value\n(2 tail)",
+                                 se = "Standard\nError", p = "p-value",
                                  cil = base::paste(cl, "\nInterval\nLower"),
                                  ciu = base::paste(cl, "\nInterval\nUpper")) %>%
     flextable::vline(j = 5, border = officer::fp_border(width = 2)) %>%
@@ -165,7 +185,9 @@ infer_2prop <- function(data, formula, success, digits = 3, conf_lvl = 0.95, con
 #' infer_2mean(mtcars, wt~vs)
 #' infer_2mean(mtcars, wt~vs, conf_lvl = .9)
 #' infer_2mean(mtcars, wt~vs, conf_lvl = .9, conf_int = "show")
-infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = c("hide", "show"), caption = NULL) {
+infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95,
+                        alternative = c("notequal", "greater", "less"),
+                        conf_int = c("hide", "show"), caption = NULL) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
@@ -175,6 +197,18 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = c
   check_conf_lvl(conf_lvl)
 
   conf_int <- base::match.arg(conf_int)
+  alternative <- base::match.arg(alternative)
+
+  if (alternative == "notequal") {
+    alt_hyp <- "two.sided"
+    p_header <- "Two Sided"
+  } else if (alternative == "greater") {
+    alt_hyp <- alternative
+    p_header <- "One Sided (Greater Than)"
+  } else {
+    alt_hyp <- alternative
+    p_header <- "One Sided (Less Than)"
+  }
 
   var1 <- formula[[2]]
   var1_str <- base::deparse(base::substitute(var1))
@@ -200,10 +234,10 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = c
 
   }
 
-  check_test(mosaic::t_test(formula, data = data, conf.level = conf_lvl))
+  check_test(mosaic::t_test(formula, data = data, conf.level = conf_lvl, alternative = alt_hyp))
 
   # code
-  ind_test <- mosaic::t_test(formula, data = data, conf.level = conf_lvl)
+  ind_test <- mosaic::t_test(formula, data = data, conf.level = conf_lvl, alternative = alt_hyp)
 
   cl <- base::paste0(conf_lvl*100, "%")
 
@@ -211,7 +245,8 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = c
   if (base::is.null(caption)) {
 
     caption <- base::paste("Two Sample Independent Means Test Between", var1_str, "and", grp_str,
-                           "\nConfidence Level:", cl)
+                           "\nConfidence Level:", cl,
+                           "\np-value Reported:", p_header)
 
   } else {
 
@@ -280,7 +315,7 @@ infer_2mean <- function(data, formula, digits = 3, conf_lvl = 0.95, conf_int = c
     flextable::set_header_labels(var = grp_str, na = "n\nMissing", s = "Group s",
                                  xbar = "Group\nMeans",
                                  se = "Standard\nError",
-                                 p = "p-value (2 tail)",
+                                 p = "p-value",
                                  cil = base::paste(cl, "\nInterval\nLower"),
                                  ciu = base::paste(cl, "\nInterval\nUpper")) %>%
     flextable::vline(j = 4, border = officer::fp_border(width = 2)) %>%

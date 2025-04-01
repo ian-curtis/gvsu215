@@ -97,17 +97,15 @@ plot_bar <- function(data,
       plot <- data %>%
         dplyr::mutate("{var}" := base::factor({{ var }})) %>%
         ggformula::gf_percents(formula, fill = fill) %>%
-        ggformula::gf_refine(
-          ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)))
-        ) %>%
         ggformula::gf_labs(title = ifelse(base::is.null(title),
                                           paste0("Bar Chart (Percents) of ", var_str),
                                           title),
                            y = "Percent",
                            ...) %>%
         ggformula::gf_refine(
-          ggplot2::scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = dodge)),
-          ggplot2::scale_y_continuous(labels = scales::label_percent(scale = 1))
+          ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1)),
+                                      labels = scales::label_percent(scale = 1)),
+          ggplot2::scale_x_discrete(guide = ggplot2::guide_axis(n.dodge = dodge))
         ) %>%
         finalize_plot()
 

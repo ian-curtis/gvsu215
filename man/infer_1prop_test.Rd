@@ -10,6 +10,7 @@ infer_1prop_test(
   success = NULL,
   p0 = 0.5,
   digits = 3,
+  alternative = c("notequal", "greater", "less"),
   conf_lvl = 0.95,
   caption = NULL
 )
@@ -25,6 +26,9 @@ infer_1prop_test(
 
 \item{digits}{The number of digits to round table values to. Defaults to 3.}
 
+\item{alternative}{The alternative hypothesis. Defaults to "notequal" (two sided p-value).
+Other options include "greater" or "less". Use depends on your test.}
+
 \item{conf_lvl}{The confidence level of the interval, entered as a value between 0 and 1.
 Defaults to 0.95.}
 
@@ -32,7 +36,6 @@ Defaults to 0.95.}
 }
 \value{
 An object of class flextable. In an interactive environment, results are viewable immediately.
-P-values are one-sided.
 }
 \description{
 Create a summary table for a one-sample proportion test

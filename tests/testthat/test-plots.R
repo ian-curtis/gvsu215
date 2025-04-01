@@ -61,7 +61,7 @@ test_that("bar works with group fill and stack position", {
 })
 
 test_that("bar warns with variable fill and stack position", {
-  expect_warning(plot_bar(mtcars, ~cyl, fill = "red", layout = "stack"))
+  expect_error(plot_bar(mtcars, ~cyl, fill = "red", layout = "stack"))
 })
 
 
