@@ -1,3 +1,8 @@
+# gvsu215 0.6.3
+
+* Small axis adjustment to `plot_bar()` when using `type = "percent"`
+* Proportion and mean hypothesis test functions now have a new argument `alternative` to specify which direction the test is. Options are `"notequal"` (the default), `"greater"`, or `"less"`
+
 # gvsu215 0.6.2
 
 * Corrected error in `plot_bar()` when a stacked bar chart was requested. Bar section heights will now match the actual proportion of the respective values.
