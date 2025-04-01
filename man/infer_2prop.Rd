@@ -10,6 +10,7 @@ infer_2prop(
   success,
   digits = 3,
   conf_lvl = 0.95,
+  alternative = c("notequal", "greater", "less"),
   conf_int = c("hide", "show"),
   caption = NULL
 )
@@ -25,6 +26,9 @@ infer_2prop(
 
 \item{conf_lvl}{The confidence level of the interval, entered as a value between 0 and 1.
 Defaults to 0.95.}
+
+\item{alternative}{The alternative hypothesis. Defaults to "notequal" (two sided p-value).
+Other options include "greater" or "less". Use depends on your test.}
 
 \item{conf_int}{Should a confidence interval be provided in addition to the hypothesis test output?
 Defaults to "hide" with the other option being "show".}

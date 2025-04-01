@@ -14,7 +14,8 @@
 #' @examples
 #' infer_1prop_int(mtcars, ~vs, success = 1)
 #' infer_1prop_int(mtcars, ~vs, success = 1, conf_lvl = 0.90)
-infer_1prop_int <- function(data, formula, success = NULL, digits = 3, conf_lvl = 0.95, caption = NULL) {
+infer_1prop_int <- function(data, formula, success = NULL, digits = 3,
+                            conf_lvl = 0.95, caption = NULL) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
@@ -29,14 +30,16 @@ infer_1prop_int <- function(data, formula, success = NULL, digits = 3, conf_lvl 
 
   }
 
-  check_test(mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success))
+  check_test(mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success,
+                               correct = FALSE))
 
   #code
 
   var <- formula[[2]]
   var_str <- base::deparse(base::substitute(var))
 
-  prop_test <- mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success, correct = FALSE)
+  prop_test <- mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success,
+                                 correct = FALSE)
   cl <-  base::paste0(conf_lvl*100, "%")
 
   # build caption
@@ -91,16 +94,18 @@ infer_1prop_int <- function(data, formula, success = NULL, digits = 3, conf_lvl 
 #'
 #' @inheritParams infer_1prop_int
 #' @param p0 The null hypothesis value. Defaults to 0.5.
-#'
+#' @param alternative The alternative hypothesis. Defaults to "notequal" (two sided p-value).
+#'    Other options include "greater" or "less". Use depends on your test.
 #' @return An object of class flextable. In an interactive environment, results are viewable immediately.
-#'   P-values are one-sided.
 #' @export
 #'
 #' @examples
 #' infer_1prop_test(mtcars, ~vs, success = 1)
 #' infer_1prop_test(mtcars, ~vs, success = 1, conf_lvl = 0.90)
 #' infer_1prop_test(mtcars, ~vs, success = 1, p0 = 0.4)
-infer_1prop_test <- function(data, formula, success = NULL, p0 = 0.5, digits = 3, conf_lvl = 0.95, caption = NULL) {
+infer_1prop_test <- function(data, formula, success = NULL, p0 = 0.5, digits = 3,
+                             alternative = c("notequal", "greater", "less"),
+                             conf_lvl = 0.95, caption = NULL) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
@@ -109,13 +114,27 @@ infer_1prop_test <- function(data, formula, success = NULL, p0 = 0.5, digits = 3
   # error catching
   check_conf_lvl(conf_lvl)
 
+  alternative = base::match.arg(alternative)
+
+  if (alternative == "notequal") {
+    alt_hyp <- "two.sided"
+    p_header <- "Two Sided"
+  } else if (alternative == "greater") {
+    alt_hyp <- alternative
+    p_header <- "One Sided (Greater Than)"
+  } else {
+    alt_hyp <- alternative
+    p_header <- "One Sided (Less Than)"
+  }
+
   if (base::is.null(success)) {
 
     cli::cli_abort("A value for what a success is in this situation must be provided.")
 
   }
 
-  check_test(mosaic::prop.test(formula, data = data, p = p0, conf.level = conf_lvl, success = success))
+  check_test(mosaic::prop.test(formula, data = data, p = p0, conf.level = conf_lvl,
+                               alternative = alt_hyp, success = success))
 
   #code
 
@@ -127,16 +146,19 @@ infer_1prop_test <- function(data, formula, success = NULL, p0 = 0.5, digits = 3
 
     caption <- base::paste("One-Sample Proportion Test on Variable", var_str,
                            "\nSuccesses:", success,
-                           "\nNull Value:", p0)
+                           "\nNull Value:", p0,
+                           "\np-value Reported:", p_header)
 
   } else {
 
     caption <- base::paste(caption, "\nSuccess:", success,
-                           "\nNull Value:", p0)
+                           "\nNull Value:", p0,
+                           "\np-value Reported:", p_header)
 
   }
 
-  prop_test <- mosaic::prop.test(formula, data = data, p = p0, conf.level = conf_lvl, success = success)
+  prop_test <- mosaic::prop.test(formula, data = data, p = p0, conf.level = conf_lvl,
+                                 alternative = alt_hyp, success = success)
 
   cl <-  base::paste0(conf_lvl*100, "%")
 
@@ -171,7 +193,7 @@ infer_1prop_test <- function(data, formula, success = NULL, p0 = 0.5, digits = 3
                  caption = caption,
                  striped = FALSE) %>%
     flextable::set_header_labels(n_success = "n\nSuccesses", na = "n\nMissing", n = "n\nUsed",
-                                 estimate = "p\u0302", se = "Standard\nError", pval = "p-value\n(2 tail)") %>%
+                                 estimate = "p\u0302", se = "Standard\nError", pval = "p-value") %>%
     fit_tbl()
 
 }
@@ -295,7 +317,8 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
 #' Create a summary table for a two-sample proportion test
 #'
 #' @inheritParams infer_2prop_int
-#' @param p0 THe null hypothesis value. Defaults to 0.5.
+#' @param alternative The alternative hypothesis. Defaults to "notequal" (two sided p-value).
+#'    Other options include "greater" or "less". Use depends on your test.
 #'
 #' @return An object of class flextable. In an interactive environment, results are viewable immediately.
 #' @export
@@ -303,7 +326,8 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
 #' @examples
 #' infer_2prop_test(mtcars, vs~am, success = 1)
 #' infer_2prop_test(mtcars, vs~am, success = 1, conf_lvl = .9, digits = 4)
-infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95, caption = NULL) {
+infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
+                             alternative = c("notequal", "greater", "less"), caption = NULL) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
@@ -312,11 +336,28 @@ infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
   # error catching
   check_conf_lvl(conf_lvl)
 
-  check_test(mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success, correct = FALSE))
+  alternative = base::match.arg(alternative)
+
+  if (alternative == "notequal") {
+    alt_hyp <- "two.sided"
+    p_header <- "Two Sided"
+  } else if (alternative == "greater") {
+    alt_hyp <- alternative
+    p_header <- "One Sided (Greater Than)"
+  } else {
+    alt_hyp <- alternative
+    p_header <- "One Sided (Less Than)"
+  }
+
+  check_test(mosaic::prop.test(formula, data = data, conf.level = conf_lvl,
+                               alternative = alt_hyp,
+                               success = success, correct = FALSE))
 
 
   # code
-  two_prop <- mosaic::prop.test(formula, data = data, conf.level = conf_lvl, success = success, correct = FALSE)
+  two_prop <- mosaic::prop.test(formula, data = data, conf.level = conf_lvl,
+                                alternative = alt_hyp,
+                                success = success, correct = FALSE)
 
   var1 <- formula[[2]]
   var1_str <- base::deparse(base::substitute(var1))
@@ -330,11 +371,13 @@ infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
   if (base::is.null(caption)) {
 
     caption <- base::paste("Two Sample Proportion Test Between", var1_str, "and", grp_str,
-                           "\nSuccesses:", success)
+                           "\nSuccesses:", success,
+                           "\np-value Reported:", p_header)
 
   } else {
 
-    caption <- base::paste(caption, "\nSuccesses:", success)
+    caption <- base::paste(caption, "\nSuccesses:", success,
+                           "\np-value Reported:", p_header)
 
   }
 
@@ -388,7 +431,7 @@ infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95
                  caption = caption,
                  na_str = "") %>%
     flextable::set_header_labels(var = "Variable", yay = "n\nSuccesses", na = "n\nMissing", phat = "p\u0302",
-                                 se = "Standard\nError", p = "p-value\n(2 tail)") %>%
+                                 se = "Standard\nError", p = "p-value") %>%
     flextable::vline(j = 5, border = officer::fp_border(width = 2)) %>%
     flextable::merge_at(i = 1:2, j = 6) %>%
     flextable::merge_at(i = 1:2, j = 7) %>%

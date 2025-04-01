@@ -9,6 +9,7 @@ infer_1mean_test(
   formula,
   digits = 3,
   mu0 = 0,
+  alternative = c("notequal", "greater", "less"),
   conf_lvl = 0.95,
   caption = NULL
 )
@@ -21,6 +22,9 @@ infer_1mean_test(
 \item{digits}{The number of digits to round table values to. Defaults to 3.}
 
 \item{mu0}{The null hypothesis value. Defaults to 0.}
+
+\item{alternative}{The alternative hypothesis. Defaults to "notequal" (two sided p-value).
+Other options include "greater" or "less". Use depends on your test.}
 
 \item{conf_lvl}{The confidence level of the interval, entered as a value between 0 and 1.
 Defaults to 0.95.}

@@ -10,6 +10,7 @@ infer_2prop_test(
   success,
   digits = 3,
   conf_lvl = 0.95,
+  alternative = c("notequal", "greater", "less"),
   caption = NULL
 )
 }
@@ -25,9 +26,10 @@ infer_2prop_test(
 \item{conf_lvl}{The confidence level of the interval, entered as a value between 0 and 1.
 Defaults to 0.95.}
 
-\item{caption}{An override to the table caption. A sensible default is provided.}
+\item{alternative}{The alternative hypothesis. Defaults to "notequal" (two sided p-value).
+Other options include "greater" or "less". Use depends on your test.}
 
-\item{p0}{THe null hypothesis value. Defaults to 0.5.}
+\item{caption}{An override to the table caption. A sensible default is provided.}
 }
 \value{
 An object of class flextable. In an interactive environment, results are viewable immediately.
