@@ -149,6 +149,8 @@ infer_1mean_test <- function(data, formula, digits = 3, mu0 = 0,
 #' @param var1 The first variable of the pair, entered in formula syntax `var1`.
 #' @param var2 The second variable of the pair, entered in formula syntax `var2`.
 #' @param mu0 The null hypothesis value. Defaults to 0.
+#' @param alternative The alternative hypothesis. Defaults to "notequal" (two sided p-value).
+#'    Other options include "greater" or "less". Use depends on your test.
 #'
 #' @return An object of class flextable. In an interactive environment, results are viewable immediately.
 #' @export
@@ -156,11 +158,26 @@ infer_1mean_test <- function(data, formula, digits = 3, mu0 = 0,
 #' @examples
 #' infer_paired(mtcars, var1 = ~drat, var2 = ~wt)
 #' infer_paired(mtcars, var1 = ~drat, var2 = ~wt, conf_lvl = 0.9)
-infer_paired <- function(data, var1, var2, digits = 3, mu0 = 0, conf_lvl = 0.95, caption = NULL) {
+infer_paired <- function(data, var1, var2, digits = 3, mu0 = 0,
+                         alternative = c("notequal", "greater", "less"),
+                         conf_lvl = 0.95, caption = NULL) {
 
   # check for empty strings and make them actual NAs
   data <- tibble::as_tibble(data) %>%
     dplyr::mutate(dplyr::across(dplyr::where(is.character), ~dplyr::na_if(., "")))
+
+  alternative = base::match.arg(alternative)
+
+  if (alternative == "notequal") {
+    alt_hyp <- "two.sided"
+    p_header <- "Two Sided"
+  } else if (alternative == "greater") {
+    alt_hyp <- alternative
+    p_header <- "One Sided (Greater Than)"
+  } else {
+    alt_hyp <- alternative
+    p_header <- "One Sided (Less Than)"
+  }
 
   # error catching
 
@@ -175,7 +192,8 @@ infer_paired <- function(data, var1, var2, digits = 3, mu0 = 0, conf_lvl = 0.95,
   data <- data %>%
     dplyr::mutate(difference = {{ var1 }} - {{ var2 }})
 
-  check_test(mosaic::t_test(formula = difference ~ 1, data = data, conf.level = conf_lvl, mu = mu0))
+  check_test(mosaic::t_test(formula = difference ~ 1, data = data, conf.level = conf_lvl, mu = mu0,
+                            alternative = alt_hyp))
 
 
   # code
@@ -188,12 +206,14 @@ infer_paired <- function(data, var1, var2, digits = 3, mu0 = 0, conf_lvl = 0.95,
 
     caption <- base::paste("Difference in Means Test:", var1_str, "-", var_str2,
                            "\n", cl, "Confidence",
-                           "\nNull Value:", mu0)
+                           "\nNull Value:", mu0,
+                           "\np-value Reported:", p_header)
 
   } else {
 
     caption <- base::paste(caption, "\n", cl, "Confidence",
-                           "\nNull Value:", mu0)
+                           "\nNull Value:", mu0,
+                           "\np-value Reported:", p_header)
 
   }
 
@@ -201,7 +221,8 @@ infer_paired <- function(data, var1, var2, digits = 3, mu0 = 0, conf_lvl = 0.95,
 
   n <- base::nrow(data) - n_na
 
-  diff_t <- mosaic::t_test(formula = difference ~ 1, data = data, conf.level = conf_lvl, mu = mu0)
+  diff_t <- mosaic::t_test(formula = difference ~ 1, data = data, conf.level = conf_lvl, mu = mu0,
+                           alternative = alt_hyp)
 
   # build table
   tibble::tibble(
@@ -219,7 +240,7 @@ infer_paired <- function(data, var1, var2, digits = 3, mu0 = 0, conf_lvl = 0.95,
   ) %>%
     finalize_tbl(digits = digits, caption = caption, striped = FALSE) %>%
     flextable::set_header_labels(na = "n\nMissing", estimate = "x\u0304",
-                                 se = "Standard\nError", p = "p-value\n(2 tail)",
+                                 se = "Standard\nError", p = "p-value",
                                  cil = base::paste(cl, "\nInterval\nLower"),
                                  ciu = base::paste(cl, "\nInterval\nUpper")) %>%
     fit_tbl()
