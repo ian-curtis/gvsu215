@@ -1,3 +1,8 @@
+# gvsu215 0.6.4
+
+* correct error in proportion inference functions with the `alternative` arugment not working properly
+* add in examples of using the `alternative` argument
+
 # gvsu215 0.6.3
 
 * Small axis adjustment to `plot_bar()` when using `type = "percent"`
@@ -75,7 +80,7 @@
 # gvsu215 0.4.5
 
 * The student cheatsheet was updated. Functions that don't have an `na_rm` argument no longer show that as an option.
-* The Instructor's Guide was renamed to accurately describe it's content.
+* The Instructor's Guide was renamed to accurately describe its content.
 * Histograms now default to showing non-overlapping x-axis values, if necessary.
 * `infer_chisq` now removes all NAs automatically. Output now shows how many observations there were originally as well as how many were used for the output. 
 

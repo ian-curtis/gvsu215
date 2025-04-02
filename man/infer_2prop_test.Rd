@@ -39,5 +39,6 @@ Create a summary table for a two-sample proportion test
 }
 \examples{
 infer_2prop_test(mtcars, vs~am, success = 1)
+infer_2prop_test(mtcars, vs~am, success = 1, alternative = "less")
 infer_2prop_test(mtcars, vs~am, success = 1, conf_lvl = .9, digits = 4)
 }

@@ -42,5 +42,6 @@ Create a summary table for a paired means test
 }
 \examples{
 infer_paired(mtcars, var1 = ~drat, var2 = ~wt)
+infer_paired(mtcars, var1 = ~drat, var2 = ~wt, alternative = "greater")
 infer_paired(mtcars, var1 = ~drat, var2 = ~wt, conf_lvl = 0.9)
 }

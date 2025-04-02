@@ -42,6 +42,7 @@ Create a summary table for a one-sample proportion test
 }
 \examples{
 infer_1prop_test(mtcars, ~vs, success = 1)
+infer_1prop_test(mtcars, ~vs, success = 1, alternative = "less")
 infer_1prop_test(mtcars, ~vs, success = 1, conf_lvl = 0.90)
 infer_1prop_test(mtcars, ~vs, success = 1, p0 = 0.4)
 }

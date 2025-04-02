@@ -39,6 +39,7 @@ Create a summary table for a one-sample mean hypothesis test
 }
 \examples{
 infer_1mean_test(mtcars, ~wt)
+infer_1mean_test(mtcars, ~wt, alternative = "less")
 infer_1mean_test(mtcars, ~wt, mu0 = 3)
 infer_1mean_test(mtcars, ~wt, digits = 4, conf_lvl = 0.90)
 }

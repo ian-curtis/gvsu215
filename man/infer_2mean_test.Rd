@@ -39,5 +39,6 @@ Create a summary table for a two-sample mean test
 }
 \examples{
 infer_2mean_test(mtcars, wt~vs)
+infer_2mean_test(mtcars, wt~vs, alternative = "greater")
 infer_2mean_test(mtcars, wt~vs, conf_lvl = .9)
 }
