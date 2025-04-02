@@ -101,6 +101,7 @@ infer_1prop_int <- function(data, formula, success = NULL, digits = 3,
 #'
 #' @examples
 #' infer_1prop_test(mtcars, ~vs, success = 1)
+#' infer_1prop_test(mtcars, ~vs, success = 1, alternative = "less")
 #' infer_1prop_test(mtcars, ~vs, success = 1, conf_lvl = 0.90)
 #' infer_1prop_test(mtcars, ~vs, success = 1, p0 = 0.4)
 infer_1prop_test <- function(data, formula, success = NULL, p0 = 0.5, digits = 3,
@@ -134,7 +135,8 @@ infer_1prop_test <- function(data, formula, success = NULL, p0 = 0.5, digits = 3
   }
 
   check_test(mosaic::prop.test(formula, data = data, p = p0, conf.level = conf_lvl,
-                               alternative = alt_hyp, success = success))
+                               alternative = alt_hyp, success = success,
+                               correct = FALSE))
 
   #code
 
@@ -158,7 +160,8 @@ infer_1prop_test <- function(data, formula, success = NULL, p0 = 0.5, digits = 3
   }
 
   prop_test <- mosaic::prop.test(formula, data = data, p = p0, conf.level = conf_lvl,
-                                 alternative = alt_hyp, success = success)
+                                 alternative = alt_hyp, success = success,
+                                 correct = FALSE)
 
   cl <-  base::paste0(conf_lvl*100, "%")
 
@@ -176,19 +179,17 @@ infer_1prop_test <- function(data, formula, success = NULL, p0 = 0.5, digits = 3
   se <- base::sqrt((p0*(1 - p0)) / n)
   z <- z_num / se
 
-  pval <- stats::pnorm(q = z, lower.tail = base::ifelse(z <= 0, TRUE, FALSE)) * 2
-
   broom::tidy(prop_test) %>%
     dplyr::mutate(n_success = n_success,
                   na = n_na,
                   n = n,
                   se = se,
                   z = z,
-                  pval = c(base::ifelse(pval < 0.0001,
+                  p.value = c(base::ifelse(p.value < 0.0001,
                                         "< 0.0001",
-                                        base::format.pval(pval, digits = digits)))
+                                        base::format.pval(p.value, digits = digits)))
     ) %>%
-    dplyr::select(n_success, na, n, estimate, se, z, pval) %>%
+    dplyr::select(n_success, na, n, estimate, se, z, p.value) %>%
     finalize_tbl(digits = digits,
                  caption = caption,
                  striped = FALSE) %>%
@@ -325,6 +326,7 @@ infer_2prop_int <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
 #'
 #' @examples
 #' infer_2prop_test(mtcars, vs~am, success = 1)
+#' infer_2prop_test(mtcars, vs~am, success = 1, alternative = "less")
 #' infer_2prop_test(mtcars, vs~am, success = 1, conf_lvl = .9, digits = 4)
 infer_2prop_test <- function(data, formula, success, digits = 3, conf_lvl = 0.95,
                              alternative = c("notequal", "greater", "less"), caption = NULL) {

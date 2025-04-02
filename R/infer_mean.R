@@ -73,6 +73,7 @@ infer_1mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
 #'
 #' @examples
 #' infer_1mean_test(mtcars, ~wt)
+#' infer_1mean_test(mtcars, ~wt, alternative = "less")
 #' infer_1mean_test(mtcars, ~wt, mu0 = 3)
 #' infer_1mean_test(mtcars, ~wt, digits = 4, conf_lvl = 0.90)
 infer_1mean_test <- function(data, formula, digits = 3, mu0 = 0,
@@ -157,6 +158,7 @@ infer_1mean_test <- function(data, formula, digits = 3, mu0 = 0,
 #'
 #' @examples
 #' infer_paired(mtcars, var1 = ~drat, var2 = ~wt)
+#' infer_paired(mtcars, var1 = ~drat, var2 = ~wt, alternative = "greater")
 #' infer_paired(mtcars, var1 = ~drat, var2 = ~wt, conf_lvl = 0.9)
 infer_paired <- function(data, var1, var2, digits = 3, mu0 = 0,
                          alternative = c("notequal", "greater", "less"),
@@ -362,6 +364,7 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
 #'
 #' @examples
 #' infer_2mean_test(mtcars, wt~vs)
+#' infer_2mean_test(mtcars, wt~vs, alternative = "greater")
 #' infer_2mean_test(mtcars, wt~vs, conf_lvl = .9)
 infer_2mean_test <- function(data, formula, digits = 3, mu0 = 0,
                              alternative = c("notequal", "greater", "less"),
