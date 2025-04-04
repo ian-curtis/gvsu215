@@ -1,6 +1,10 @@
+# gvsu215 0.6.5
+
+* `tbl_1var()` and `tbl_2var()` will now only remove NAs for the variable(s) specified in the function call, not all NAs in the dataset
+
 # gvsu215 0.6.4
 
-* correct error in proportion inference functions with the `alternative` arugment not working properly
+* correct error in proportion inference functions with the `alternative` argument not working properly
 * add in examples of using the `alternative` argument
 
 # gvsu215 0.6.3
