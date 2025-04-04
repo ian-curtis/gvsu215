@@ -33,11 +33,17 @@ tbl_1var <- function(data, formula, digits = 3, caption = NULL, with_prop = c("n
 
   na <- find_na(data, formula)
 
-  if (na_rm == TRUE) data <- data %>% stats::na.omit()
 
   # code
   var <- formula[[2]]
   var_str <- base::deparse(base::substitute(var))
+
+  if (na_rm == TRUE) {
+
+    data <- data %>%
+      dplyr::select({{ var }}) %>%
+      stats::na.omit()
+  }
 
   if (base::is.null(caption)) {
 
@@ -109,13 +115,19 @@ tbl_2var <- function(data, formula, row_pct = c("hide", "show"), digits = 3, cap
   row_pct <- base::match.arg(row_pct)
 
   na <- find_na(data, formula, n = 2)
-  if (na_rm == TRUE) data <- data %>% stats::na.omit()
 
   # code
   var1 <- formula[[2]]
   var2 <- formula[[3]]
   var1_str <- base::deparse(base::substitute(var1))
   var2_str <- base::deparse(base::substitute(var2))
+
+  if (na_rm == TRUE) {
+
+    data <- data %>%
+      dplyr::select({{ var1 }}, {{ var2 }}) %>%
+      stats::na.omit()
+  }
 
   if (base::is.numeric(data[, var1_str])) {
 
