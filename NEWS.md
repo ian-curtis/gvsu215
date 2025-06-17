@@ -1,3 +1,7 @@
+#gvsu215 0.6.6
+
+* Correct table generation for expected chi-squared used with missing values.
+
 # gvsu215 0.6.5
 
 * `tbl_1var()` and `tbl_2var()` will now only remove NAs for the variable(s) specified in the function call, not all NAs in the dataset
