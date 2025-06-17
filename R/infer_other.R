@@ -119,6 +119,7 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
   var1_str <- base::deparse(base::substitute(var1))
   var1_lvls <- data %>%
     tibble::as_tibble() %>%
+    stats::na.omit() %>%
     dplyr::mutate("{var1}" := base::factor({{ var1 }})) %>%
     dplyr::select({{ var1 }}) %>%
     base::unique() %>%
@@ -128,10 +129,12 @@ infer_chisq <- function(data, formula, type = c("test", "expected", "observed"),
   var2_str <- base::deparse(base::substitute(var2))
   var2_lvls <- data %>%
     tibble::as_tibble() %>%
+    stats::na.omit() %>%
     dplyr::mutate("{var2}" := base::factor({{ var2 }})) %>%
     dplyr::select({{ var2 }}) %>%
     base::unique() %>%
     base::nrow()
+  print(var2_lvls)
 
   data <- data %>%
     dplyr::select({{ var1 }}, {{ var2 }}) %>%
