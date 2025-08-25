@@ -1,4 +1,9 @@
-#gvsu215 0.6.6
+# gvsu216 0.7.0
+
+* `tbl_num_sum()` now clarifies which variable it is reporting missing values for
+* All two-sample inference tests on the proportion or mean have been updated to properly calculate missing values. Actual test output remains unchanged but the total observations vs. observations used now appears in the table caption rather than as a column in the table itself
+
+# gvsu215 0.6.6
 
 * Correct table generation for expected chi-squared used with missing values.
 

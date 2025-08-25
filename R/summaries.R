@@ -20,6 +20,7 @@
 #' tbl_num_sum(mtcars, ~wt)
 #' tbl_num_sum(mtcars, ~wt, digits = 2, caption = "This is a table")
 #' tbl_num_sum(mtcars, wt~cyl)
+#' tbl_num_sum(airquality, Ozone~Month)
 #'
 #' # not removing NAs is an option but not recommended
 #' tbl_num_sum(airquality, ~Ozone, na_rm = FALSE)
@@ -125,6 +126,7 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = TRUE)
         finalize_tbl(digits,
                      caption = base::paste(caption, "\nNAs Removed:", base::ifelse(og_na == TRUE, "Yes", "No"))) %>%
         flextable::fontsize(size = 9, part = "all") %>%
+        flextable::set_header_labels(missing = paste(var1_str, "missing")) %>%
         fit_tbl())
 
     } else if (og_na == FALSE) {
@@ -132,6 +134,7 @@ tbl_num_sum <- function(data, formula, digits = 3, caption = NULL, na_rm = TRUE)
         finalize_tbl(digits,
                      caption = base::paste(caption, "\nNAs Removed:", base::ifelse(og_na == TRUE, "Yes", "No"))) %>%
         flextable::fontsize(size = 9, part = "all") %>%
+        flextable::set_header_labels(missing = paste(var1_str, "missing")) %>%
         fit_tbl())
     }
   }
