@@ -298,27 +298,20 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
 
   cl <- base::paste0(conf_lvl*100, "%")
 
-  # build caption
-  if (base::is.null(caption)) {
-
-    caption <- base::paste("Two Sample Independent Means Interval Between", var1_str, "and", grp_str,
-                           "\nConfidence Level:", cl)
-
-  } else {
-
-    caption <- base::paste(caption, "\nConfidence Level:", cl)
-
-  }
-
-  # find NAs
-  na1 <- data %>%
-    dplyr::filter({{ grp_var }} == grp_lvls[1] & base::is.na({{ grp_var }})) %>%
-    base::nrow()
-  na2 <- data %>%
-    dplyr::filter({{ grp_var }} == grp_lvls[2] & base::is.na({{ grp_var }})) %>%
+  # find total obs
+  total_obs <- data %>%
     base::nrow()
 
-  # find sample sizes
+  # find obs used (pull out missing values)
+  obs_used <- data %>%
+    dplyr::select({{ grp_var }}, {{ var1 }}) %>%
+    stats::na.omit() %>%
+    base::nrow()
+
+  data <- data %>%
+    dplyr::select({{ grp_var }}, {{ var1 }}) %>%
+    stats::na.omit()
+
   n1 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[1]) %>%
     base::nrow()
@@ -326,11 +319,26 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
     dplyr::filter({{ grp_var }} == grp_lvls[2]) %>%
     base::nrow()
 
+  # build caption
+  if (base::is.null(caption)) {
+
+    caption <- base::paste("Two Sample Independent Means Interval Between", var1_str, "and", grp_str,
+                           "\nConfidence Level:", cl,
+                           "\nTotal Observations:", total_obs,
+                           "\nObservations Used:", obs_used)
+
+  } else {
+
+    caption <- base::paste(caption, "\nConfidence Level:", cl,
+                           "\nTotal Observations:", total_obs,
+                           "\nObservations Used:", obs_used)
+
+  }
+
   # build table
   tibble::tibble(
     var = base::as.character(grp_lvls),
     n = c(n1, n2),
-    na = c(na1, na2),
     xbar = c(ind_test$estimate[[1]], ind_test$estimate[[2]]),
     se = c(ind_test$stderr, NA),
     df = c(ind_test$parameter, NA),
@@ -338,15 +346,15 @@ infer_2mean_int <- function(data, formula, digits = 3, conf_lvl = 0.95, caption 
     ciu = c(ind_test$conf.int[[2]], NA)
   ) %>%
     finalize_tbl(digits = digits, caption = caption, na_str = "") %>%
-    flextable::set_header_labels(var = grp_str, na = "n\nMissing", xbar = "Group\nMeans", se = "Standard\nError",
+    flextable::set_header_labels(var = grp_str, xbar = "Group\nMeans", se = "Standard\nError",
                                  cil = base::paste(cl, "\nInterval\nLower"),
                                  ciu = base::paste(cl, "\nInterval\nUpper")) %>%
     flextable::vline(j = 4, border = officer::fp_border(width = 2)) %>%
     flextable::merge_at(i = 1:2, j = 5) %>%
     flextable::merge_at(i = 1:2, j = 6) %>%
     flextable::merge_at(i = 1:2, j = 7) %>%
-    flextable::merge_at(i = 1:2, j = 8) %>%
-    flextable::align(j = 5:8, align = "center") %>%
+    #flextable::merge_at(i = 1:2, j = 8) %>%
+    flextable::align(j = 5:7, align = "center") %>%
     fit_tbl()
 
 }
@@ -422,29 +430,19 @@ infer_2mean_test <- function(data, formula, digits = 3, mu0 = 0,
 
   cl <- base::paste0(conf_lvl*100, "%")
 
-  # build caption
-  if (base::is.null(caption)) {
-
-    caption <- base::paste("Two Sample Independent Means Test Between", var1_str, "and", grp_str,
-                           "\nNull Hypothesis Value (Difference in Means):", mu0,
-                           "\np-value Reported:", p_header)
-
-  } else {
-
-    caption <- base::paste(caption, "\nNull Hypothesis Value (Difference in Means):", mu0,
-                           "\np-value Reported:", p_header)
-
-  }
-
-  # find NAs
-  na1 <- data %>%
-    dplyr::filter({{ grp_var }} == grp_lvls[1] & base::is.na({{ grp_var }})) %>%
-    base::nrow()
-  na2 <- data %>%
-    dplyr::filter({{ grp_var }} == grp_lvls[2] & base::is.na({{ grp_var }})) %>%
+  total_obs <- data %>%
     base::nrow()
 
-  # find sample sizes
+  # find obs used (pull out missing values)
+  obs_used <- data %>%
+    dplyr::select({{ grp_var }}, {{ var1 }}) %>%
+    stats::na.omit() %>%
+    base::nrow()
+
+  data <- data %>%
+    dplyr::select({{ grp_var }}, {{ var1 }}) %>%
+    stats::na.omit()
+
   n1 <- data %>%
     dplyr::filter({{ grp_var }} == grp_lvls[1]) %>%
     base::nrow()
@@ -452,11 +450,28 @@ infer_2mean_test <- function(data, formula, digits = 3, mu0 = 0,
     dplyr::filter({{ grp_var }} == grp_lvls[2]) %>%
     base::nrow()
 
+  # build caption
+  if (base::is.null(caption)) {
+
+    caption <- base::paste("Two Sample Independent Means Test Between", var1_str, "and", grp_str,
+                           "\nNull Hypothesis Value (Difference in Means):", mu0,
+                           "\np-value Reported:", p_header,
+                           "\nTotal Observations:", total_obs,
+                           "\nObservations Used:", obs_used)
+
+  } else {
+
+    caption <- base::paste(caption, "\nNull Hypothesis Value (Difference in Means):", mu0,
+                           "\np-value Reported:", p_header,
+                           "\nTotal Observations:", total_obs,
+                           "\nObservations Used:", obs_used)
+
+  }
+
   # build table
   tibble::tibble(
     var = base::as.character(grp_lvls),
     n = c(n1, n2),
-    na = c(na1, na2),
     xbar = c(ind_test$estimate[[1]], ind_test$estimate[[2]]),
     se = c(ind_test$stderr, NA),
     t = c(ind_test$statistic, NA),
@@ -466,7 +481,7 @@ infer_2mean_test <- function(data, formula, digits = 3, mu0 = 0,
                        base::format.pval(ind_test$p.value, digits = digits)), NA)
   ) %>%
     finalize_tbl(digits = digits, caption = caption, na_str = "") %>%
-    flextable::set_header_labels(var = "Variable", na = "n\nMissing", s = "Group s",
+    flextable::set_header_labels(var = "Variable", s = "Group s",
                                  xbar = "Group\nMeans",
                                  se = "Standard\nError",
                                  p = "p-value") %>%
@@ -474,8 +489,7 @@ infer_2mean_test <- function(data, formula, digits = 3, mu0 = 0,
     flextable::merge_at(i = 1:2, j = 5) %>%
     flextable::merge_at(i = 1:2, j = 6) %>%
     flextable::merge_at(i = 1:2, j = 7) %>%
-    flextable::merge_at(i = 1:2, j = 8) %>%
-    flextable::align(j = 5:8, align = "center") %>%
+    flextable::align(j = 5:7, align = "center") %>%
     fit_tbl()
 
 }
